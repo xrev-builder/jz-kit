@@ -20,7 +20,7 @@ and these load into `~/.claude/` identically.
 ## Install
 
 ```bash
-git clone https://github.com/mgpartners-admin/jz-kit.git
+git clone https://github.com/xrev-builder/jz-kit.git
 cd jz-kit
 ./install.sh          # symlinks into ~/.claude (repo edits go live)
 # or:
