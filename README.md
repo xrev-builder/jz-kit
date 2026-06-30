@@ -1,4 +1,4 @@
-# mgp-claude-kit
+# jz-kit
 
 Portable Claude Code skills + swarm workflows. Clone on any machine, run `install.sh`,
 and these load into `~/.claude/` identically.
@@ -20,8 +20,8 @@ and these load into `~/.claude/` identically.
 ## Install
 
 ```bash
-git clone https://github.com/<you>/mgp-claude-kit.git
-cd mgp-claude-kit
+git clone https://github.com/mgpartners-admin/jz-kit.git
+cd jz-kit
 ./install.sh          # symlinks into ~/.claude (repo edits go live)
 # or:
 ./install.sh --copy   # copies instead
