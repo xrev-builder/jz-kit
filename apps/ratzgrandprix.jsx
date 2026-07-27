@@ -155,7 +155,7 @@ const NAMES = ["Jamal", "Ronny", "Pubes", "Muss", "Pit", "Saleh", "Aoc", "Joe", 
 const JERSEYS = ["#FF2D95", "#22E4E4", "#FFC53D", "#7C5CFF", "#4ADE80", "#FF7A45", "#38BDF8", "#F472B6", "#A3E635", "#FB7185"];
 const SKINS = ["#E8B98A", "#C98B5E", "#8C5A33", "#F2CBA0", "#6E4526"];
 const CONFETTI_COLORS = ["#FF2D95", "#22E4E4", "#FFC53D", "#7C5CFF", "#4ADE80", "#F5EDE4"];
-const ROULETTE_ICONS = ["🚀", "💥", "🍌", "🔥", "💩", "🌀", "⚡", "🔀", "🚀"];
+const ROULETTE_ICONS = ["🚀", "💥", "🍌", "🔥", "💩", "🌀", "🔮", "🔀", "🚀"];
 
 const FINISH = 1000;
 const TICK_MS = 100;
@@ -175,18 +175,12 @@ const ITEMS = [
   { t: "boost", w: 3, icon: "🔥" },
   { t: "pigeon", w: 2, icon: "💩" },
   { t: "portal", w: 2, icon: "🌀" },
-  { t: "bolt", w: 1, icon: "⚡" },
+  { t: "bolt", w: 1, icon: "🔮" },
   { t: "switcheroo", w: 1, icon: "🔀" },
 ];
 
-const LEAD_LINES = [
-  "{t} TAKES THE LEAD.",
-  "NEW LEADER: {t}.",
-  "{t} to the front! This race is chaos.",
-  "{t} seizes P1 like he pays rent there.",
-  "{t} out front — for now. Nothing is safe.",
-];
-const FINISH_LINES = ["{t} crosses the line — P{p}.", "{t} home in P{p}.", "P{p} locked for {t}."];
+const LEAD_LINES = ["{t} takes the lead!", "New leader, {t}!", "{t} to the front!", "{t} is in P1!"];
+const FINISH_LINES = ["P{p} for {t}!", "{t} takes P{p}!"];
 
 function makeSfx() {
   let ctx = null;
@@ -302,11 +296,13 @@ function makeAnnouncer(music) {
     return String(text).replace(/[^\w\s.,!?'"%:-]/g, " ").replace(/\s+/g, " ").trim();
   }
   function next() {
-    if (!supported || speaking || !queue.length) return;
+    if (!supported || speaking) return;
+    while (queue.length && Date.now() - queue[0].born > 4500) queue.shift();
+    if (!queue.length) return;
     const item = queue.shift();
     const u = new SpeechSynthesisUtterance(item.text);
     if (voice) u.voice = voice;
-    u.rate = 1.12; u.pitch = 0.9; u.volume = 1;
+    u.rate = 1.22; u.pitch = 0.9; u.volume = 1;
     speaking = true;
     music.duck(true);
     let finished = false;
@@ -329,8 +325,11 @@ function makeAnnouncer(music) {
       if (pri >= 2 && (speaking || queue.length)) return;
       queue = queue.filter(function (q) { return q.pri <= pri; });
       if (queue.length >= 2) queue.length = 1;
-      queue.push({ text: clean(text), pri: pri });
-      next();
+      queue.push({ text: clean(text), pri: pri, born: Date.now() });
+      if (pri === 0 && speaking) {
+        queue = queue.filter(function (q) { return q.pri === 0; });
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      } else next();
     },
     cancel: function () {
       queue = [];
@@ -480,6 +479,7 @@ export default function RatzGrandPrix() {
       breakSaid: false, closeSaid: false,
       jeansPlaced: false, jeansDone: false, jeansPos: 0, jeansOwner: null,
       sewerPlan: plan, sewerQ: [], rankSnap: {}, rankSnapAt: 0, fallSlamAt: {},
+      pitDone: false, pitAt: rand(430, 500), pitBoostAt: 0, pitRat: null,
       leadSince: 0, dwellRank: {}, dwellSince: {}, lastJockey: 0, heartbeatAt: 0,
     };
     setRacers(rs.slice());
@@ -503,7 +503,7 @@ export default function RatzGrandPrix() {
       s.pending.push({ rid: r.id, item: weightedItem(false), fireAt: now0 + 2000 + i * 700 });
     });
     s.racers.forEach(function (r) { s.bursts.push({ id: now0 + Math.random() + r.id, p: r.progress + 4, lane: r.id, icon: "💨", until: now0 + 700 }); });
-    say("GREEN FLAG! Ten rats, three laps, one first pick on the line!", 0);
+    say("GREEN FLAG! Three laps for the first pick!", 0);
     s.nextRowAt = now0 + 1500;
     setRunning(true);
   }
@@ -541,22 +541,22 @@ export default function RatzGrandPrix() {
     }
 
     if (item.t === "rocket") {
-      if (ahead) launchProjectile(s, c, ahead.id, "🚀", now, { kind: "stop", dur: 1700, icon: "🚀", burst: "💥", msg: c.name + " FIRES A ROCKET — " + ahead.name + " takes it in the tailpipe." });
-      else boostSelf(c.name + " fires a rocket into open road and rides the exhaust. BOOST.");
+      if (ahead) launchProjectile(s, c, ahead.id, "🚀", now, { kind: "stop", dur: 1700, icon: "🚀", burst: "💥", msg: "ROCKET from " + c.name + "! " + ahead.name + " takes it!" });
+      else boostSelf(c.name + " rides his own rocket! Boost!");
     } else if (item.t === "seeker") {
-      if (leader && leader.id !== c.id) launchProjectile(s, c, leader.id, "💥", now, { kind: "stop", dur: 2000, icon: "💥", burst: "💥", msg: c.name + " launches the HEAT SEEKER. " + leader.name + " was leading. Was." });
-      else boostSelf(c.name + " grabs a seeker while leading — nothing to hunt. Converts to pure speed.");
+      if (leader && leader.id !== c.id) launchProjectile(s, c, leader.id, "💥", now, { kind: "stop", dur: 2000, icon: "💥", burst: "💥", msg: "HEAT SEEKER! " + leader.name + " is DOWN!" });
+      else boostSelf(c.name + " converts the seeker to pure speed!");
     } else if (item.t === "banana") {
-      if (behind) launchProjectile(s, c, behind.id, "🍌", now, { kind: "stop", dur: 1500, icon: "🍌", burst: "🍌", msg: c.name + " drops a banana right on " + behind.name + "'s line. Spinout." });
-      else say(c.name + " drops a banana into the void. Nobody home.", 2);
+      if (behind) launchProjectile(s, c, behind.id, "🍌", now, { kind: "stop", dur: 1500, icon: "🍌", burst: "🍌", msg: "REVERSE NAHAS from " + c.name + "! " + behind.name + " spins out!" });
+      else say(c.name + " drops a Reverse Nahas into the void. Nobody home.", 2);
     } else if (item.t === "boost") {
       c.effect = { kind: "boost", until: now + 2600, icon: "🔥" };
-      say(c.name + " slams the boost pad. GONE!", 2);
+      say(c.name + " hits the boost!", 2);
       sfx().sweep(250, 1100, 0.35);
     } else if (item.t === "pigeon") {
       const targets = ord.slice(0, 3).filter(function (r) { return r.id !== c.id; });
       const v = targets.length ? pick(targets) : (ahead || behind);
-      if (v) launchProjectile(s, c, v.id, "💩", now, { kind: "slow", dur: 2400, icon: "💩", burst: "💩", msg: c.name + " releases the pigeon. It finds " + v.name + ". Splat." });
+      if (v) launchProjectile(s, c, v.id, "💩", now, { kind: "slow", dur: 2400, icon: "💩", burst: "💩", msg: "The pigeon finds " + v.name + "! Splat!" });
     } else if (item.t === "portal") {
       const others = alive.filter(function (r) { return r.id !== c.id; });
       const v = ahead || (others.length ? pick(others) : null);
@@ -565,7 +565,7 @@ export default function RatzGrandPrix() {
         s.warpIds[c.id] = now + 700; s.warpIds[v.id] = now + 700;
         slam(c.name + " 🌀 " + v.name);
         sfx().sweep(800, 200, 0.3);
-        say(c.name + " portals with " + v.name + "! Positions traded, dignity lost.", 1);
+        say(c.name + " portals with " + v.name + "!", 1);
       }
     } else if (item.t === "switcheroo") {
       const rank = ord.findIndex(function (r) { return r.id === c.id; });
@@ -574,15 +574,15 @@ export default function RatzGrandPrix() {
         s.warpIds[c.id] = now + 700; s.warpIds[leader.id] = now + 700;
         s.fallSlamAt[leader.id] = now;
         slam(c.name + " 🔀 " + leader.name);
-        say(c.name + " pulls the SWITCHEROO on " + leader.name + "! The king is in the mud!", 1);
+        say("SWITCHEROO! " + c.name + " trades lives with " + leader.name + "!", 1);
         sfx().sweep(900, 150, 0.4);
-      } else boostSelf(c.name + " fumbles the switcheroo. Consolation boost.");
+      } else boostSelf(c.name + " fumbles the switcheroo! Boost!");
     } else if (item.t === "bolt") {
       s.zapUntil = now + 550;
-      slam(c.name + " ⚡ EVERYONE");
-      say(c.name + " calls down LIGHTNING! Everyone else eats it!", 1);
+      slam(c.name + " 🔮 BLACK MAGIC");
+      say(c.name + " uses BLACK MAGIC! He sacrifices his best player just to win this race!", 1);
       alive.filter(function (r) { return r.id !== c.id; }).forEach(function (r) {
-        s.impacts.push({ at: now + 260, vid: r.id, aname: c.name, aicon: "⚡", kind: "slow", dur: 1500, icon: "⚡", burst: "⚡", msg: null, silent: true });
+        s.impacts.push({ at: now + 260, vid: r.id, aname: c.name, aicon: "🔮", kind: "slow", dur: 1500, icon: "🔮", burst: "🔮", msg: null, silent: true });
       });
       sfx().tone(150, 0.18, "sawtooth", 0.055);
     }
@@ -606,7 +606,7 @@ export default function RatzGrandPrix() {
         slam("FINAL LAP");
         sfx().sweep(300, 1200, 0.5);
         if (musicRef.current) musicRef.current.setFast(true);
-        say("FINAL LAP! Item boxes everywhere. Pray for your rat!", 0);
+        say("FINAL LAP!", 0);
       }
 
       // THE SEWER — a top rat plunges to dead last
@@ -619,8 +619,31 @@ export default function RatzGrandPrix() {
         s.bursts.push({ id: now + Math.random(), p: sv.progress, lane: sv.id, icon: "🕳️", until: now + 850 });
         slam(sv.name + " 🕳️ SEWER");
         sfx().sweep(600, 80, 0.6, "sawtooth", 0.06);
-        say(sv.name + " found the ONE open manhole. He's going DOWN!", 1);
+        say(sv.name + " found the manhole! He's going DOWN!", 1);
       }
+      // WING FELLAS PIT STOP — 8th place, near halfway: 3s stop, then flames
+      if (!s.pitDone && leadProg >= s.pitAt && s.nextPlace === 1 && ordAlive.length >= 8) {
+        s.pitDone = true;
+        const pv = ordAlive[7];
+        pv.effect = { kind: "stop", until: now + 3000, icon: "🍗" };
+        s.pitBoostAt = now + 3000;
+        s.pitRat = pv.id;
+        s.bursts.push({ id: now + Math.random(), p: pv.progress, lane: pv.id, icon: "🍗", until: now + 900 });
+        slam(pv.name + " 🍗 PIT STOP");
+        sfx().sweep(500, 150, 0.5, "sawtooth", 0.05);
+        say(pv.name + " takes a pit stop at Wing Fellas... his asshole catches fire!", 1);
+      }
+      if (s.pitBoostAt && now >= s.pitBoostAt) {
+        s.pitBoostAt = 0;
+        const pv2 = s.racers.find(function (x) { return x.id === s.pitRat && x.place === null; });
+        if (pv2) {
+          pv2.effect = { kind: "boost", until: now + 2800, icon: "🔥" };
+          pv2.mo = { kind: "hot", mult: 1.6, until: now + 4500 };
+          s.bursts.push({ id: now + Math.random(), p: pv2.progress, lane: pv2.id, icon: "🔥", until: now + 700 });
+          sfx().sweep(250, 1100, 0.35);
+        }
+      }
+
       const drops = s.sewerQ.filter(function (q) { return q.at <= now; });
       s.sewerQ = s.sewerQ.filter(function (q) { return q.at > now; });
       drops.forEach(function (q) {
@@ -634,7 +657,7 @@ export default function RatzGrandPrix() {
         v.mo = { kind: "cold", mult: 0.9, until: now + 1500 };
         s.fallSlamAt[v.id] = now;
         s.bursts.push({ id: now + Math.random(), p: v.progress, lane: v.id, icon: "💫", until: now + 750 });
-        say(v.name + " spat out of the pipe in DEAD LAST!", 2);
+        say(v.name + " spat out in DEAD LAST!", 2);
         sfx().sweep(140, 700, 0.4, "square", 0.05);
       });
 
@@ -652,7 +675,7 @@ export default function RatzGrandPrix() {
               sfx().sweep(900, 110, 0.55, "sawtooth", 0.05);
               s.shakeIds[rr.id] = now + 450;
               s.bursts.push({ id: now + Math.random(), p: rr.progress, lane: rr.id, icon: "📉", until: now + 800 });
-              say(rr.name + " is in FREE FALL, from P" + old + " to P" + ranks[idk] + "!", 1);
+              say(rr.name + " is in FREE FALL!", 1);
             }
           }
         });
@@ -689,13 +712,13 @@ export default function RatzGrandPrix() {
         s.jeansOwner = last.id;
         s.jeansPos = Math.min(last.progress + 55, 930);
         s.jeansPlaced = true;
-        say("Something DENIM shimmers on the road... and only " + last.name + " can reach it!", 1);
+        say("Something DENIM shimmers... only " + last.name + " can touch it!", 1);
         sfx().sweep(90, 400, 0.7, "sine", 0.05);
       }
 
       if (!s.halfSaid && mean > 500 && ordAlive.length) {
         s.halfSaid = true;
-        say("Halfway report: " + ordAlive[0].name + " leads, " + ordAlive[ordAlive.length - 1].name + " is buried. Plenty of race left.", 2);
+        say("Halfway! " + ordAlive[0].name + " leads!", 2);
       }
 
       if (!s.comebackFired && mean > 500 && ordAlive.length >= 4 && s.nextPlace === 1) {
@@ -705,18 +728,18 @@ export default function RatzGrandPrix() {
         kid.effect = { kind: "boost", until: now + 5200, icon: "😤" };
         slam("THE COMEBACK");
         sfx().sweep(180, 1000, 0.6);
-        say(kid.name + " has been quiet all race. NOT ANYMORE. Here he comes!", 1);
+        say("Here comes " + kid.name + "! The comeback is ON!", 1);
       }
 
       if (ordAlive.length >= 2 && s.nextPlace === 1) {
         const gap = ordAlive[0].progress - ordAlive[1].progress;
         if (!s.breakSaid && gap > 160) {
           s.breakSaid = true;
-          say(ordAlive[0].name + " has BROKEN AWAY! Can anyone answer?", 2);
+          say(ordAlive[0].name + " has BROKEN AWAY!", 2);
         }
         if (s.breakSaid && !s.closeSaid && gap < 45) {
           s.closeSaid = true;
-          say("The pack has CLOSED! " + ordAlive[0].name + "'s cushion is gone. It's a dogfight!", 2);
+          say("The pack has CLOSED! Dogfight!", 2);
         }
       }
 
@@ -732,7 +755,7 @@ export default function RatzGrandPrix() {
         });
         slam("FINISH CAM");
         sfx().sweep(1000, 200, 0.8, "sine", 0.05);
-        say("PHOTO FINISH! " + ordAlive[0].name + " and " + ordAlive[1].name + " nose to nose at the line!", 0);
+        say("PHOTO FINISH! " + ordAlive[0].name + " and " + ordAlive[1].name + "!", 0);
       }
       if (s.slowmo && s.nextPlace === 1) {
         if (now - s.lastJockey > 750) {
@@ -798,13 +821,13 @@ export default function RatzGrandPrix() {
           const leadJ = aliveJ.slice().sort(function (a, b) { return b.progress - a.progress; })[0];
           if (leadJ && leadJ.id !== r.id) {
             s.projectiles.push({ id: now + Math.random(), icon: "👖", vid: leadJ.id, fromP: r.progress, fromLane: r.id, born: now, color: "#FFC53D" });
-            s.impacts.push({ at: now + 480, vid: leadJ.id, aname: r.name, aicon: "👖", kind: "flat", dur: 4500, icon: "👖", burst: "👖", msg: r.name + " pulls on THE CURSED JEANS and ROCKETS forward! " + leadJ.name + " is wearing the curse. Tire GONE!" });
+            s.impacts.push({ at: now + 480, vid: leadJ.id, aname: r.name, aicon: "👖", kind: "flat", dur: 4500, icon: "👖", burst: "👖", pri: 0, msg: r.name + " summons the CURSED JEANS! " + leadJ.name + " is COMPLETELY CURSED... and his tire BLOWS!" });
             s.impacts.push({ at: now + 480 + 4500, vid: leadJ.id, aname: r.name, aicon: "👖", kind: "slow", dur: 2000, icon: "💫", burst: "💫", msg: null, silent: true });
             sfx().sting();
             setJeansCard({ owner: r.name, victim: leadJ.name });
             setTimeout(function () { setJeansCard(null); }, 2800);
           } else {
-            say(r.name + " pulls on the cursed jeans with nobody left to curse. Pure denim speed!", 1);
+            say(r.name + " pulls on the jeans! Pure denim speed!", 1);
           }
         }
 
@@ -817,7 +840,7 @@ export default function RatzGrandPrix() {
           if (r.place === 2 || r.place === 3) say(fmt(pick(FINISH_LINES), { t: r.name, p: r.place }), 2);
           if (r.place === 1) {
             slam(r.name + " WINS");
-            say(r.name + " WINS THE RATZ GRAND PRIX! First overall pick!", 0);
+            say(r.name + " WINS! First overall pick!", 0);
           }
           if (r.place === 2 && s.slowmo) { s.slowmo = false; setSlowmo(false); }
         }
@@ -843,7 +866,7 @@ export default function RatzGrandPrix() {
         s.shakeIds[v.id] = now + 420;
         s.bursts.push({ id: now + Math.random(), p: v.progress, lane: v.id, icon: im.burst, until: now + 620 });
         if (!im.silent) { slam(im.aname + " " + im.aicon + " " + v.name); sfx().tone(150, 0.18, "sawtooth", 0.055); }
-        if (im.msg) say(im.msg, 1);
+        if (im.msg) say(im.msg, im.pri === undefined ? 1 : im.pri);
       });
 
       // prune fx
@@ -963,9 +986,9 @@ export default function RatzGrandPrix() {
             <h1 className="gp-title">Ratz Grand Prix</h1>
             <p className="gp-sub">
               Ten rat mobiles. Three laps. Item boxes on the road — drive through one, get a weapon,
-              use it on your friends. Rockets, seekers, pigeons, portals, an open sewer with a taste
-              for front-runners... and one cursed denim artifact only last place can touch.
-              Finishing order is the draft order.
+              use it on your friends. Rockets, seekers, the Reverse Nahas, pigeons, portals, black
+              magic, an open sewer with a taste for front-runners, a Wing Fellas pit stop... and one
+              cursed denim artifact only last place can touch. Finishing order is the draft order.
             </p>
             <div className="gp-entrants">
               {NAMES.map(function (n, i) {
