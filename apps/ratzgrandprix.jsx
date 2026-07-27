@@ -480,7 +480,7 @@ export default function RatzGrandPrix() {
       jeansPlaced: false, jeansDone: false, jeansPos: 0, jeansOwner: null,
       sewerPlan: plan, sewerQ: [], rankSnap: {}, rankSnapAt: 0, fallSlamAt: {},
       pitDone: false, pitAt: rand(430, 500), pitBoostAt: 0, pitRat: null,
-      leadSince: 0, dwellRank: {}, dwellSince: {}, lastJockey: 0, heartbeatAt: 0,
+      leadSince: 0, dwellRank: {}, dwellSince: {}, dwellHits: {}, lastJockey: 0, heartbeatAt: 0, slowmoStartAt: 0,
     };
     setRacers(rs.slice());
     setLap(1); setFinalLap(false); setSlowmo(false); setLeaderId(null);
@@ -680,13 +680,14 @@ export default function RatzGrandPrix() {
           }
         });
         Object.keys(ranks).forEach(function (idk) {
-          if (s.dwellRank[idk] !== ranks[idk]) { s.dwellRank[idk] = ranks[idk]; s.dwellSince[idk] = now; }
+          if (s.dwellRank[idk] !== ranks[idk]) { s.dwellRank[idk] = ranks[idk]; s.dwellSince[idk] = now; s.dwellHits[idk] = 0; }
           else if (now - (s.dwellSince[idk] || now) > 9000 && !s.slowmo) {
             s.dwellSince[idk] = now;
+            s.dwellHits[idk] = (s.dwellHits[idk] || 0) + 1;
             const rr2 = s.racers.find(function (x) { return String(x.id) === String(idk) && x.place === null; });
             if (rr2) {
-              if (ranks[idk] <= 2) rr2.mo = { kind: "cold", mult: 0.6, until: now + 2600 };
-              else rr2.mo = { kind: "hot", mult: 1.75, until: now + 2600 };
+              if (ranks[idk] <= 2) rr2.mo = { kind: "cold", mult: Math.max(0.45, 0.6 - s.dwellHits[idk] * 0.07), until: now + 2600 };
+              else rr2.mo = { kind: "hot", mult: Math.min(2.6, 1.75 + s.dwellHits[idk] * 0.3), until: now + 3000 };
               s.bursts.push({ id: now + Math.random(), p: rr2.progress, lane: rr2.id, icon: "💨", until: now + 650 });
             }
           }
@@ -746,6 +747,7 @@ export default function RatzGrandPrix() {
       if (!s.photoDone && s.nextPlace === 1 && ordAlive.length >= 2 && leadProg >= 962) {
         s.photoDone = true;
         s.slowmo = true;
+        s.slowmoStartAt = now;
         setSlowmo(true);
         const L0 = ordAlive[0].progress;
         ordAlive.forEach(function (r2, i2) {
@@ -768,6 +770,7 @@ export default function RatzGrandPrix() {
         }
       }
       if (s.slowmo && now - s.heartbeatAt > 600) { s.heartbeatAt = now; sfx().tone(75, 0.22, "sine", 0.07); }
+      if (s.slowmo && s.slowmoStartAt && now - s.slowmoStartAt > 7000) { s.slowmo = false; setSlowmo(false); }
 
       // movement
       const phaseK = leadProg < 334 ? 0.45 : leadProg < 667 ? 0.7 : 1.5;
@@ -848,7 +851,7 @@ export default function RatzGrandPrix() {
 
       // fire pending items — one at a time, min 900ms apart
       s.pending.sort(function (a, b) { return a.fireAt - b.fireAt; });
-      if (s.pending.length && s.pending[0].fireAt <= now && now - s.lastFireAt >= 700) {
+      if (!s.slowmo && s.pending.length && s.pending[0].fireAt <= now && now - s.lastFireAt >= 700) {
         const pnext = s.pending.shift();
         s.lastFireAt = now;
         const cc = s.racers.find(function (r) { return r.id === pnext.rid; });
