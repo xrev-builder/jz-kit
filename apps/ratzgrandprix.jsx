@@ -658,7 +658,7 @@ export default function RatzGrandPrix() {
         });
         Object.keys(ranks).forEach(function (idk) {
           if (s.dwellRank[idk] !== ranks[idk]) { s.dwellRank[idk] = ranks[idk]; s.dwellSince[idk] = now; }
-          else if (now - (s.dwellSince[idk] || now) > 12000 && !s.slowmo) {
+          else if (now - (s.dwellSince[idk] || now) > 9000 && !s.slowmo) {
             s.dwellSince[idk] = now;
             const rr2 = s.racers.find(function (x) { return String(x.id) === String(idk) && x.place === null; });
             if (rr2) {
