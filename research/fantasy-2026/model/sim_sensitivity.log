@@ -1,0 +1,37 @@
+baseline plan 0.937 0.183
+baseline zero-RB 0.894 0.134
+baseline robust-RB 0.926 0.153
+baseline sheet 0.703 0.081
+blend 0.8 production / 0.2 consensus plan 0.946 0.19
+blend 0.8 production / 0.2 consensus zero-RB 0.903 0.147
+blend 0.8 production / 0.2 consensus robust-RB 0.9 0.136
+blend 0.8 production / 0.2 consensus sheet 0.691 0.076
+blend 0.2 production / 0.8 consensus plan 0.936 0.16
+blend 0.2 production / 0.8 consensus zero-RB 0.896 0.116
+blend 0.2 production / 0.8 consensus robust-RB 0.94 0.177
+blend 0.2 production / 0.8 consensus sheet 0.717 0.083
+weekly sd x1.3 plan 0.923 0.151
+weekly sd x1.3 zero-RB 0.896 0.137
+weekly sd x1.3 robust-RB 0.907 0.143
+weekly sd x1.3 sheet 0.731 0.073
+waiver level 11.5 (deeper wire) plan 0.936 0.171
+waiver level 11.5 (deeper wire) zero-RB 0.893 0.137
+waiver level 11.5 (deeper wire) robust-RB 0.924 0.161
+waiver level 11.5 (deeper wire) sheet 0.713 0.079
+injuries x1.5 duration plan 0.936 0.163
+injuries x1.5 duration zero-RB 0.886 0.134
+injuries x1.5 duration robust-RB 0.946 0.166
+injuries x1.5 duration sheet 0.8 0.077
+opponents draft by ECR (no ESPN skew) plan 0.929 0.18
+opponents draft by ECR (no ESPN skew) zero-RB 0.919 0.141
+opponents draft by ECR (no ESPN skew) robust-RB 0.941 0.163
+opponents draft by ECR (no ESPN skew) sheet 0.833 0.114
+label                                   plan  robust-RB  sheet  zero-RB
+setting                                                                
+baseline                               0.183      0.153  0.081    0.134
+blend 0.2 production / 0.8 consensus   0.160      0.177  0.083    0.116
+blend 0.8 production / 0.2 consensus   0.190      0.136  0.076    0.147
+injuries x1.5 duration                 0.163      0.166  0.077    0.134
+opponents draft by ECR (no ESPN skew)  0.180      0.163  0.114    0.141
+waiver level 11.5 (deeper wire)        0.171      0.161  0.079    0.137
+weekly sd x1.3                         0.151      0.143  0.073    0.137
