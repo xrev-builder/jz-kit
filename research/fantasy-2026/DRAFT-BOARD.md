@@ -909,27 +909,27 @@ What happens the season after a good one. Coefficients are fitted controlling fo
 | RB career year (jump 4+ to 14+ ppg) vs steady 14+ | 67 / 37 | 90% | -4.0 vs -2.9 |  |
 | WR career year vs steady | 77 / 91 | 91% | -3.5 vs -2.3 |  |
 
-### Injury model: games missed the following season by fantasy-relevant players (2023-24 and 2024-25 transitions, top 70 RB/WR and top 24 TE/QB by prior-year points)
+### Injury model: games missed the following season by fantasy-relevant players (2013-2025, twelve transitions, top 70 RB/WR and top 24 TE/QB by prior-year points)
 
-Each player's Inj column is the mean for his bucket (position, age band, games missed the prior year), shrunk toward the position mean when the bucket is small. Prior-year missed games predict next-year missed games only weakly (r = 0.22), which is why age and position carry most of the weight. Zero-game seasons (camp injuries, cuts) are included for RB/WR/TE, so these are availability numbers, not pure injury numbers.
+Each player's Inj column is the mean for his bucket (position, age band, games missed the prior year), shrunk toward the position mean. Holdout test (fit 2013-23, predict 2024-25): bucket model error 3.82 games vs 3.89 for a flat position average, correlation 0.20 vs 0.11. Availability is mostly unpredictable; the column is a weak prior. Era check: RB and WR rates are the same in 2013-18 and 2019-25; QB missed games rose from 2.0 to 3.5.
 
-| Bucket | n | Mean games missed | P(miss 4+) | P(miss 8+) | P(miss 0) |
+| Bucket | n | Mean games missed | P(miss 4+) | P(miss 8+) |  |
 |---|---|---|---|---|---|
-| RB under 27, 0 missed last year | 27 | 2.3 | 15% | 7% | 37% |
-| RB under 27, 1-3 missed | 37 | 4.4 | 41% | 24% | 35% |
-| RB under 27, 4+ missed | 24 | 6.0 | 58% | 33% | 12% |
-| RB 27-28, 0-3 missed | 20 | 4.3 | 30% | 20% | 30% |
-| RB 29+, 1-3 missed (Barkley) | 12 | 9.1 | 83% | 42% | 0% |
-| RB 29+, 4+ missed | 10 | 6.3 | 40% | 30% | 20% |
-| WR under 30, 0 missed | 39 | 3.5 | 36% | 15% | 31% |
-| WR under 30, 1-3 missed | 56 | 3.3 | 29% | 16% | 25% |
-| WR under 30, 4+ missed | 20 | 4.6 | 45% | 25% | 10% |
-| WR 30+ (all) | 25 | 4.6 | 43% | 24% | 24% |
-| TE, 0 missed | 18 | 2.3 | 28% | 11% | 33% |
-| TE, 1-3 missed | 26 | 4.8 | 54% | 23% | 23% |
-| QB (all, excluding benchings) | 48 | 3.9 | 35% | 19% | 29% |
-| All RB | 140 | 4.9 | 42% | 24% |  |
-| All WR | 140 | 3.8 | 36% | 19% |  |
+| RB under 27, 0 missed last year | 170 | 3.5 | 33% | 17% |  |
+| RB under 27, 1-3 missed | 217 | 4.6 | 46% | 25% |  |
+| RB under 27, 4+ missed | 162 | 5.9 | 54% | 35% |  |
+| RB 27-28, 0 missed | 65 | 4.4 | 40% | 23% |  |
+| RB 27-28, 1-3 missed | 72 | 5.7 | 51% | 36% |  |
+| RB 29+, 0 missed (McCaffrey, Henry) | 51 | 6.2 | 53% | 33% |  |
+| RB 29+, 1-3 missed (Barkley) | 75 | 7.6 | 65% | 41% |  |
+| RB 29+, 4+ missed | 52 | 8.7 | 65% | 54% |  |
+| WR under 30, 0 missed | 331 | 2.9 | 29% | 12% |  |
+| WR under 30, 1-3 missed | 303 | 3.4 | 34% | 17% |  |
+| WR under 30, 4+ missed | 95 | 4.8 | 44% | 26% |  |
+| WR 30+, 0 missed | 71 | 4.3 | 32% | 25% |  |
+| WR 30+, 1-3 missed | 74 | 5.7 | 51% | 32% |  |
+| TE, 0 / 1-3 / 4+ missed | 131 / 147 / 34 | 3.1 / 4.0 / 5.5 | 28% / 43% / 50% | 14% / 17% / 32% |  |
+| QB, 0 / 1-3 missed | 175 / 100 | 2.3 / 3.7 | 23% / 38% | 12% / 18% |  |
 
 ### Title odds conditional on your key players' health (Ratz plan roster, 1,500 seasons)
 
@@ -1010,15 +1010,17 @@ Positional picks by round. The room is the model for pick 4: WRs go early, QBs r
 | 10-13 | 15/19/4/0/2 | 15/13/5/4/3 | Skattebo 101, Warren 110, Loveland 118 |
 | 14-15 | 2/6/1/3/8 | 4/2/1/3/10 | Goff 135, Dak 144, Lawrence 145; 7 DSTs in round 14 |
 
-### Factor tests: which proposed data points carry signal (2023-2025, within-player comparisons)
+### Factor tests: which proposed data points carry signal (2012-2025, within-player comparisons; earlier 3-year figures corrected)
 
-- Thursday games: players scored +1.5 ppg MORE than in their own other games (282 player-seasons, 95% CI +0.5 to +2.4; QB +2.3, WR +1.3, TE +1.3, RB +0.9). No Thursday penalty exists in this data; do not fade a Thursday player. Monday: no effect (-0.4, CI crosses zero).
-- International games: +0.3 ppg, CI -1.4 to +2.0 across 104 player-seasons. No detectable effect either way; zero weight.
-- Game script (proxy: team lost by 7+ vs won by 7+, same player): RB -7.3 ppg, QB -5.8, WR -2.6, TE -0.8. This is the largest effect in the set and the reason team win totals belong in the model, weighted most for RBs and rushing QBs and least for WR/TE.
+- Thursday games: over 13 seasons (1,455 player-seasons) the same-player difference is +0.15 ppg with a confidence interval of -0.28 to +0.58. The +1.5 found on 2023-25 alone was a small-sample artifact. Monday: -0.4 (CI -0.83 to 0.00). Neither gets a weight.
+- International games: +0.3 ppg, CI -0.5 to +1.1 across 379 player-seasons. No effect; zero weight.
+- Game script (team lost by 7+ vs won by 7+, same player, 2012-2025): RB -6.0 ppg, QB -5.8, WR -2.4, TE -1.2 (n = 422 / 412 / 647 / 156). Stable across eras and the largest effect in the set; enter it through team win totals, weighted RB and QB > WR > TE.
 - Age: controlling for last year's ppg and opportunity, each year of age costs about 0.7 ppg for RBs and WRs; TE 0.3; QB none. Within-player declines accelerate at RB 28-29 (-2.9 ppg) and 30+ (-4.9). Already in the board; the regression confirms the weight.
 - Head coach tendencies: pass rate persists year to year only moderately (r = 0.51 in 2023-24, 0.37 in 2024-25) and plays per game barely persist (r = 0.29, then -0.03). Coaches matter through the opportunity they create (Sean Payton's RB target share 32% in 2023, McVay's RB target share ~10%), not as a separate factor; once opportunity is in the model, a coaching change adds no reliable signal (coefficients near zero and unstable). Offensive-coordinator data is not in the files.
 - Supporting cast and team change: after controlling for opportunity, 'new team' is unstable across positions (RB -1.9, WR +2.4, TE -3.4 on samples of 20-58). Treat as a manual adjustment for specific cases (A.J. Brown to Maye, Jefferson to Murray) rather than a fixed weight.
 - Predictive weighting (2024 features predicting 2025 ppg): last year's ppg plus opportunity per game plus age explains 50-56% of RB/WR variance vs 36-41% for last year's ppg alone; for TE 46% vs 19%; for QB 41% vs 10% (QB is mostly opportunity and rushing). Opportunity per game carries about as much weight as last year's points.
+- Weekly variance over 13 seasons: a player's coefficient of variation persists year to year at r = 0.26 (1,091 pairs), weaker than the 0.52 seen in the 2024-25 pair alone. The simulator's per-player variance is therefore shrunk toward the position average (mean CV 0.57).
+- Positional scoring curves are kept to 2024-25 deliberately: the 13-year table shows RB12 drifting between 13.8 and 17.0 ppg and TE1 between 14.5 and 21.5 by year, so old curves would import a different scoring environment. Age, injury, game-script and variance effects are structural and use the full window.
 
 ### Pressure test of the model (holdout backtests on 2024 and 2025, plus simulation sensitivity)
 
