@@ -1,0 +1,12 @@
+label,league,injuries,p_playoffs,p_title,avg_wins,avg_ppg
+Plan (reference),A,True,0.9355,0.163,8.1725,129.62657072567427
+No Gibbs handcuff (Vaki -> Wan'Dale Robinson),A,True,0.9475,0.1835,8.374,130.13316895472195
+Third RB at 59 (Price instead of Higgins),A,True,0.909,0.147,7.8495,127.3769590165553
+Bijan at 2 instead of Gibbs,A,True,0.929,0.171,8.1735,128.97479299600064
+Streaming QB (no Herbert; extra WR Odunze),A,True,0.9145,0.1355,7.9105,127.60335793940754
+Two handcuffs (Corum -> Brian Robinson... n/a) : Dowdle -> Emmett Johnson,A,True,0.896,0.1535,7.7675,127.2182732255756
+"Plan (JSN at 4, reference)",B,True,0.703,0.1095,7.4745,128.47257958187132
+"Taylor at 4, London at 17",B,True,0.6435,0.1205,7.154,127.06795548322445
+Nacua at 4,B,True,0.715,0.1355,7.5335,129.20772394913502
+McCaffrey at 4,B,True,0.6465,0.1115,7.208,127.16673108442446
+"WR-heavy: JSN, London, Allen, G.Wilson, then RBs",B,True,0.6435,0.1115,7.125,126.59627071609617

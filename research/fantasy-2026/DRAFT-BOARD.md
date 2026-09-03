@@ -974,6 +974,16 @@ Positional picks by round. The room is the model for pick 4: WRs go early, QBs r
 | 10-13 | 15/19/4/0/2 | 15/13/5/4/3 | Skattebo 101, Warren 110, Loveland 118 |
 | 14-15 | 2/6/1/3/8 | 4/2/1/3/10 | Goff 135, Dak 144, Lawrence 145; 7 DSTs in round 14 |
 
+### Factor tests: which proposed data points carry signal (2023-2025, within-player comparisons)
+
+- Thursday games: players scored +1.5 ppg MORE than in their own other games (282 player-seasons, 95% CI +0.5 to +2.4; QB +2.3, WR +1.3, TE +1.3, RB +0.9). No Thursday penalty exists in this data; do not fade a Thursday player. Monday: no effect (-0.4, CI crosses zero).
+- International games: +0.3 ppg, CI -1.4 to +2.0 across 104 player-seasons. No detectable effect either way; zero weight.
+- Game script (proxy: team lost by 7+ vs won by 7+, same player): RB -7.3 ppg, QB -5.8, WR -2.6, TE -0.8. This is the largest effect in the set and the reason team win totals belong in the model, weighted most for RBs and rushing QBs and least for WR/TE.
+- Age: controlling for last year's ppg and opportunity, each year of age costs about 0.7 ppg for RBs and WRs; TE 0.3; QB none. Within-player declines accelerate at RB 28-29 (-2.9 ppg) and 30+ (-4.9). Already in the board; the regression confirms the weight.
+- Head coach tendencies: pass rate persists year to year only moderately (r = 0.51 in 2023-24, 0.37 in 2024-25) and plays per game barely persist (r = 0.29, then -0.03). Coaches matter through the opportunity they create (Sean Payton's RB target share 32% in 2023, McVay's RB target share ~10%), not as a separate factor; once opportunity is in the model, a coaching change adds no reliable signal (coefficients near zero and unstable). Offensive-coordinator data is not in the files.
+- Supporting cast and team change: after controlling for opportunity, 'new team' is unstable across positions (RB -1.9, WR +2.4, TE -3.4 on samples of 20-58). Treat as a manual adjustment for specific cases (A.J. Brown to Maye, Jefferson to Murray) rather than a fixed weight.
+- Predictive weighting (2024 features predicting 2025 ppg): last year's ppg plus opportunity per game plus age explains 50-56% of RB/WR variance vs 36-41% for last year's ppg alone; for TE 46% vs 19%; for QB 41% vs 10% (QB is mostly opportunity and rushing). Opportunity per game carries about as much weight as last year's points.
+
 ---
 
 Sources: nflverse weekly player stats 2024-2025 (points recomputed under each league's exact scoring), nflverse 2026 rosters, depth charts (Sept 2), draft picks and schedule; FantasyPros expert consensus rankings via DynastyProcess (Aug 28, 2026); ESPN staff ranks (Yates, Clay, Aug 31) and ESPN-specific ADP anchors from FantasyPros, RotoWire, FantasySixPack, FTN (Aug 2026); injury and transaction reporting dated Aug 15 - Sept 3, 2026 (ESPN, NFL.com, CBS, NBC Sports, team sites); strategy studies from Underdog Best Ball Mania, 4for4, FantasyPros, Footballguys, RotoViz. ECR = expert consensus overall rank. Room = estimated pick where an ESPN cheat-sheet room takes the player (verified anchors where available, modelled otherwise, about +/-10 picks). 25 ppg = 2025 points per game under this league's scoring.
