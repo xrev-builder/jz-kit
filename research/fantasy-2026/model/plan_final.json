@@ -652,126 +652,112 @@
   },
   {
    "type": "table",
-   "title": "Long-run age and regression effects (2019-2025, six season-to-season transitions, within-player)",
-   "caption": "What happens the season after a good one. Mean change in ppg for players who played 8+ games both years; 'top-12' rows are players who finished top-12 at RB/WR (top-6 at TE/QB). These effects are now applied to the production half of every projection (RB -0.33 ppg per year of age plus -0.32 per year past 28; WR -0.36 per year; TE -0.10; QB -0.27; and an extra -1.5 RB / -1.0 WR after a career-year jump of 4+ ppg).",
+   "title": "Long-run age and regression effects (2013-2025, thirteen season-to-season transitions, within-player)",
+   "caption": "What happens the season after a good one. Coefficients are fitted controlling for last year's ppg and are stable across eras (RB -0.25 per year of age in 2013-18 vs -0.32 in 2019-25; WR -0.39 vs -0.32). They are applied to the production half of every projection: RB -0.30 ppg per year of age, WR -0.35, TE -0.09, QB -0.15, plus an extra -1.1 (RB) / -1.2 (WR) the year after a career-year jump of 4+ ppg. The RB cliff at 29-30 shows up mainly as availability, which the injury model carries separately.",
    "header": [
     "Group",
     "n",
     "Played 8+ next year",
-    "Mean ppg change",
+    "Mean ppg change next year",
     "Dropped 5+ ppg"
    ],
    "rows": [
     [
      "RB top-12, age 24 or under",
-     "16",
-     "81%",
-     "-1.0",
-     "15%"
+     "39",
+     "90%",
+     "-1.7",
+     "23%"
     ],
     [
      "RB top-12, 25-26",
-     "29",
-     "97%",
-     "-1.7",
-     "25%"
+     "55",
+     "91%",
+     "-2.1",
+     "36%"
     ],
     [
      "RB top-12, 27-28",
-     "18",
+     "37",
      "89%",
-     "-1.4",
-     "19%"
+     "-2.5",
+     "36%"
     ],
     [
      "RB top-12, 29-30",
-     "7",
-     "71%",
-     "-5.1",
-     "60%"
+     "20",
+     "70%",
+     "-5.7",
+     "64%"
     ],
     [
      "WR top-12, 24 or under",
-     "14",
-     "93%",
-     "+0.3",
-     "8%"
+     "25",
+     "88%",
+     "-1.5",
+     "23%"
     ],
     [
      "WR top-12, 25-27",
-     "31",
-     "87%",
-     "-2.5",
-     "19%"
+     "72",
+     "92%",
+     "-1.8",
+     "18%"
     ],
     [
      "WR top-12, 28-29",
-     "14",
+     "28",
      "100%",
-     "-0.8",
-     "0%"
+     "-1.5",
+     "7%"
     ],
     [
      "WR top-12, 30-31",
-     "9",
-     "100%",
-     "-2.9",
-     "22%"
+     "18",
+     "89%",
+     "-2.8",
+     "25%"
     ],
     [
-     "TE top-6 (all ages)",
-     "36",
-     "92%",
+     "WR top-12, 32+",
+     "13",
+     "85%",
+     "-5.0",
+     "55%"
+    ],
+    [
+     "TE top-6 (all)",
+     "78",
+     "87%",
      "-2.2",
-     "30%"
+     "24%"
     ],
     [
-     "QB top-6 (all ages)",
-     "36",
-     "92%",
-     "-2.6",
-     "33%"
-    ],
-    [
-     "RB career year (jump 4+ to 14+ ppg)",
-     "25",
-     "96%",
-     "-4.3",
-     "see text"
-    ],
-    [
-     "RB steady 14+ ppg (no jump)",
-     "21",
-     "",
-     "-2.7",
-     ""
-    ],
-    [
-     "WR career year (jump 4+ to 14+ ppg)",
-     "30",
+     "QB top-6 (all)",
+     "78",
      "90%",
-     "-3.5",
+     "-2.9",
+     "29%"
+    ],
+    [
+     "Repeat rate next year: RB top-12 / WR top-12 / TE top-6 / QB top-6",
+     "156 / 156 / 78 / 78",
+     "",
+     "46% / 51% / 44% / 38%",
      ""
     ],
     [
-     "WR steady 14+ ppg (no jump)",
-     "46",
-     "",
-     "-2.5",
+     "RB career year (jump 4+ to 14+ ppg) vs steady 14+",
+     "67 / 37",
+     "90%",
+     "-4.0 vs -2.9",
      ""
     ],
     [
-     "All RB by age band: 25-26 / 27-28 / 29-30 / 31+",
-     "103 / 49 / 20 / 12",
-     "",
-     "-1.1 / -2.2 / -3.7 / -4.2",
-     ""
-    ],
-    [
-     "All WR by age band: 25-27 / 28-29 / 30-31 / 32+",
-     "156 / 61 / 31 / 22",
-     "",
-     "-1.1 / -2.2 / -2.2 / -4.1",
+     "WR career year vs steady",
+     "77 / 91",
+     "91%",
+     "-3.5 vs -2.3",
      ""
     ]
    ]

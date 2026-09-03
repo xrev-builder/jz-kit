@@ -57,11 +57,12 @@ def project(lg):
         cv=curves[lg][r.pos][pr]
         # age and career-year adjustments on the production half (fitted 2019-2025, within-player, controlling for prior ppg)
         age=r.age if pd.notna(r.age) else 25
-        if r.pos=='RB': adj=-0.33*(age-26)-0.32*max(0,age-28)
-        elif r.pos=='WR': adj=-0.36*(age-26)
-        elif r.pos=='TE': adj=-0.10*(age-27)
-        else: adj=-0.27*(age-28)
-        if pd.notna(getattr(r,ppg24)) and r.g_24>=8 and g>=8 and (p25-getattr(r,ppg24))>=4 and p25>=14: adj+=(-1.5 if r.pos=='RB' else -1.0)
+        # coefficients fitted on 2013-2025 (13 transitions), stable across eras
+        if r.pos=='RB': adj=-0.30*(age-26)
+        elif r.pos=='WR': adj=-0.35*(age-26)
+        elif r.pos=='TE': adj=-0.09*(age-27)
+        else: adj=-0.15*(age-28)
+        if pd.notna(getattr(r,ppg24)) and r.g_24>=8 and g>=8 and (p25-getattr(r,ppg24))>=4 and p25>=14: adj+=(-1.1 if r.pos=='RB' else -1.2)
         shrunk=shrunk+adj
         mean=0.5*shrunk+0.5*cv if g>0 else cv
         mean=ROLE.get(r.player,mean)
