@@ -17,7 +17,7 @@ Pick 2 · draft Thursday Sept 4 · 4-pt passing TD · +3 per 100-yd rushing game
 
 1. Eight of ten make the playoffs. In a 20,000-run simulation, +3 ppg in Weeks 15-17 was worth 2.2x as much title equity as +3 ppg in the regular season. Draft ceiling, not September floor; an early suspension (Nacua) costs almost nothing here.
 2. Elite RB and WR are the scarce assets. Value over a 2-FLEX replacement (about the 71st RB/WR, 11.5 ppg) was +13 for the RB1/WR1 and +4 to +7 by RB10/WR10 across 2024-25, then flat. McBride's TE1 edge (+7.8) is a round-2 asset; a QB1's realized +4.9 shrinks to ~+3 because QB edges persist only half as well.
-3. ESPN rooms take RBs about 30% earlier than experts and WRs later. So: elite RB at 2, WR or McBride at 19 and 22, best WR2 at 39, then RB2 at 42 (the only window where Judkins, Montgomery, Irving, Skattebo, Swift are still there), WR3-WR5 in rounds 6-11 where the discount lives, QB at 82-99, DST last.
+3. What survives randomized rooms: open with a running back, and do not go WR-WR or wait on RB until round 5 (those cost 5-8 points of title odds in every run). Whether the second and third picks are an RB1-tier back, McBride, or a top WR is inside the noise, so at 19 and 22 take the best of those three that is actually there. RB2 by 42, WR3-WR5 in rounds 6-11, QB at 82-99, DST last.
 4. Bell-cows get the +3 rushing bonus (Cook +32 points last year, Henry +29, Taylor +8): a tiebreak, not a tier.
 5. Bench: 3 RB, 2 WR, 1 swing. No second QB, TE, or DST. The IR slot is a 16th roster spot: draft an IR-tagged stash at 139 and your RB1's handcuff at 142, then move the stash to IR after the draft.
 
@@ -26,7 +26,7 @@ Pick 2 · draft Thursday Sept 4 · 4-pt passing TD · +3 per 100-yd rushing game
 | Rd | Pick | Targets, in order | If they are gone | Rule |
 |---|---|---|---|---|
 | R1 | 2 | Gibbs; Bijan if Gibbs went 1.01 (happens about half the time) | Never reached | Workhorse with Montgomery traded and Pacheco on IR; age 24 |
-| R2 | 19 | McBride if there (TE1 by 4 ppg), else London, Chase Brown, A.J. Brown, Collins; Jefferson only if he slid past 15 | Olave, Pickens, Rice | Slot 1 picks twice between your 19 and 22: take the one slot 1 is likelier to want, collect the survivor at 22 |
+| R2 | 19 | Best of: an RB1-tier back if one fell (Chase Brown, Cook, Achane, Jeanty), McBride, or London / A.J. Brown / Collins. Jefferson only if he slid past 15 | Olave, Pickens, Rice | RB-first openings won every randomized-room run; RB, McBride, or WR at 19 are within noise of each other. Slot 1 picks twice between your 19 and 22 |
 | R3 | 22 | A.J. Brown, Collins, Olave, Pickens (85-100% there in RB-heavy or balanced rooms); Chase Brown if he is still there | Rice, Nabers (only with good Wk-1 news), DeVonta Smith | Leave R3 with RB1 + two of (elite WR / McBride). WR-savvy room: Olave/Pickens/Rice |
 | R4 | 39 | DeVonta Smith (coin flip), Flowers, Garrett Wilson, McMillan, Egbuka | Tee Higgins, Loveland only if TE-less and nothing else; Hall if a WR run left him | Best WR2; the RB run on ESPN starts right after this pick |
 | R5 | 42 | RB2: Judkins, Montgomery, Irving, Skattebo, Swift (Kyren/Javonte/Etienne if they fell) | Egbuka, McConkey, Loveland | This is the RB2 window. Round 6 has 0-5% of these names left |
@@ -424,10 +424,11 @@ Pick 4 · draft Sunday Sept 6 · 6-pt passing TD, +2 per 300-yd passing game, +2
 ### Game plan
 
 1. This room, not the ESPN average, is the model now: two years of the same ten drafters (2024 and 2025 boards transcribed). Rounds 1-3 are half WRs, so WRs do not slide; the QB run comes in rounds 3-5 (six QBs between picks 30 and 47 last year); elite TEs go in round 3; DST goes in round 14.
-2. Pick 4: last year picks 1-3 were Chase, Barkley, Bijan and pick 4 was Gibbs. Expect Chase, Bijan, Gibbs gone. The simulation prefers Nacua (13.6% title) to JSN (11.0%) even with a 35% chance of a 3-game suspension priced in: take Nacua unless a suspension of 4+ games is announced before Sunday, then JSN. Taylor is a legitimate third option (12.0%).
-3. Six-point passing TDs lift every QB, including replacement: the QB1-vs-QB11 gap is the same as in 4-pt scoring. Allen went 30th here last year (Billy, at the turn). Allen at 24 is the one QB worth a round-3 pick; Maye at 37 is the second and last chance before the run; if both are gone, wait. Kass, Sleiman, and Doug let Dak, Lawrence, and Goff reach picks 135-145 last year.
-4. Chase Brown went 23rd here last year (Sleiman) and is the one RB1-ceiling back likely to reach 17. Jeanty went 9th last year and is cheaper now after the ankle; Ish or Betto will take him if he is there at 17.
-5. Bench: 3 RB, 2 WR, 1 swing that is a Weeks 1-4 starter. IR-tagged stash at 137 only if a handcuff is already rostered. Six of ten make the playoffs, so regular-season points count about 1.2x playoff points here.
+2. Against randomized rooms, RB-first openings won here too (Robust-RB 18%, Hero-RB 15%, RB-RB 15%) and WR-WR or Zero-RB lost (9-10%). Pick 4 is the exception where the elite WR is the right pick because the RB1 tier is gone; the RB must then come at 17 (Chase Brown, Jeanty, Cook) rather than after the QB.
+3. Pick 4: last year picks 1-3 were Chase, Barkley, Bijan and pick 4 was Gibbs. Expect Chase, Bijan, Gibbs gone. The simulation prefers Nacua (13.6% title) to JSN (11.0%) even with a 35% chance of a 3-game suspension priced in: take Nacua unless a suspension of 4+ games is announced before Sunday, then JSN. Taylor is a legitimate third option (12.0%).
+4. Six-point passing TDs lift every QB, including replacement: the QB1-vs-QB11 gap is the same as in 4-pt scoring. Allen went 30th here last year (Billy, at the turn). Allen at 24 is the one QB worth a round-3 pick; Maye at 37 is the second and last chance before the run; if both are gone, wait. Kass, Sleiman, and Doug let Dak, Lawrence, and Goff reach picks 135-145 last year.
+5. Chase Brown went 23rd here last year (Sleiman) and is the one RB1-ceiling back likely to reach 17. Jeanty went 9th last year and is cheaper now after the ankle; Ish or Betto will take him if he is there at 17.
+6. Bench: 3 RB, 2 WR, 1 swing that is a Weeks 1-4 starter. IR-tagged stash at 137 only if a handcuff is already rostered. Six of ten make the playoffs, so regular-season points count about 1.2x playoff points here.
 
 ### Round by round
 
@@ -827,6 +828,20 @@ ECR = expert consensus rank (Aug 28). Room = estimated pick where an ESPN cheat-
 
 ## Evidence appendix
 
+
+### Opening structure vs randomized rooms: playoff and title probability by drafting rule (600 seasons each)
+
+Here the roster is not assumed. The draft itself is simulated: you follow a rule for the opening rounds, then best-available by this board with lineup needs; the other nine drafters pick around their price with noise (sd 8 picks) and the room is randomly RB-heavy, balanced, or WR-savvy each run. Then the season and bracket are played with injuries. Sampling error is about +/-3 points on title odds.
+
+| Opening rule | Ratz playoffs | Ratz title | Footborn playoffs | Footborn title |
+|---|---|---|---|---|
+| Robust-RB (RB in 3 of first 4) | 93% | 16.5% | 78% | 18.0% |
+| RB-RB then best available | 92% | 15.2% | 74% | 14.7% |
+| Hero-RB (RB, then WR/TE twice) | 88% | 14.5% | 71% | 15.0% |
+| Best available by board, no rule | 87% | 13.0% | 74% | 15.3% |
+| Zero-RB (no RB before round 5) | 85% | 11.0% | 58% | 10.0% |
+| WR-WR-WR | 79% | 9.7% | 60% | 10.0% |
+| WR-WR then best available | 80% | 9.0% | 59% | 9.2% |
 
 ### Points per game by positional finish, 2025 (League A scoring; QB also shown under League B scoring)
 
