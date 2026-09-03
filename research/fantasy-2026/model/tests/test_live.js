@@ -1,0 +1,15 @@
+const {JSDOM}=require('jsdom'); const fs=require('fs');
+const html='<!doctype html><html><head><meta charset="utf-8"></head><body>'+fs.readFileSync('draft-live.html','utf8')+'</body></html>';
+const dom=new JSDOM(html,{runScripts:'dangerously',pretendToBeVisual:true}); const errs=[]; dom.window.addEventListener('error',e=>errs.push(e.message));
+dom.window.confirm=()=>true;
+setTimeout(()=>{const d=dom.window.document; const rows=()=>[...d.querySelectorAll('#tbl tbody tr')];
+ console.log('errors',errs,'rows',rows().length,'first rec:',rows()[0].querySelector('td.nm b').textContent,'cur',d.getElementById('cur').textContent,'next',d.getElementById('nextp').textContent);
+ rows()[0].querySelector('[data-a="taken"]').click(); console.log('after taken: cur',d.getElementById('cur').textContent,'who',d.getElementById('curwho').textContent,'first',rows()[0].querySelector('td.nm b').textContent);
+ rows()[0].querySelector('[data-a="mine"]').click(); console.log('after mine: cur',d.getElementById('cur').textContent,'ppg',d.getElementById('tppg').textContent,'odds',d.getElementById('odds').textContent,'roster slots',d.querySelectorAll('#roster .slot').length,'first slot',d.querySelector('#roster .slot b').textContent);
+ d.querySelector('#chips button[data-pos="TE"]').click(); console.log('TE filter first:',rows()[0].querySelector('td.nm b').textContent, rows()[0].querySelector('td.nm small').textContent);
+ d.querySelector('#chips button[data-pos="ALL"]').click(); const q=d.getElementById('q'); q.value='mcbride'; q.dispatchEvent(new dom.window.Event('input')); console.log('search rows',rows().length);
+ q.value=''; q.dispatchEvent(new dom.window.Event('input'));
+ d.querySelectorAll('#lgseg button')[1].click(); console.log('league B: slot',d.getElementById('slot').value,'next',d.getElementById('nextp').textContent,'first rec',rows()[0].querySelector('td.nm b').textContent);
+ d.getElementById('undo').click(); console.log('undo: cur',d.getElementById('cur').textContent,'log',d.querySelectorAll('#log button').length);
+ console.log('top 8 for B now:',rows().slice(0,8).map(r=>r.querySelector('td.nm b').textContent+' '+r.children[3].textContent+' '+r.children[5].textContent).join(' | '));
+},80);

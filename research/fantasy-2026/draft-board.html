@@ -80,7 +80,7 @@ Object.keys(store).forEach(k=>applyKey(k,!!store[k]));
 $$('tr.p input').forEach(c=>c.addEventListener('change',e=>{const k=c.closest('tr').dataset.key;store[k]=c.checked;save();applyKey(k,c.checked)}));
 $$('.tabs button').forEach(b=>b.addEventListener('click',()=>{$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));$$('.league').forEach(l=>l.hidden=(l.id!=='lg-'+b.dataset.lg));try{localStorage.setItem('tab',b.dataset.lg)}catch(e){}}));
 try{const t=localStorage.getItem('tab');if(t){const b=$('.tabs button[data-lg="'+t+'"]');if(b)b.click()}}catch(e){}
-$$('.chips').forEach(ch=>{const lg=ch.dataset.chips;$$('button',ch).forEach(b=>b.addEventListener('click',()=>{$$('button',ch).forEach(x=>x.classList.toggle('on',x===b));const p=b.dataset.pos;$$('#lg-'+lg+' .pos').forEach(s=>s.hidden=(p!=='ALL'&&!s.id.endsWith('-'+p))}))});
+$$('.chips').forEach(ch=>{const lg=ch.dataset.chips;$$('button',ch).forEach(b=>b.addEventListener('click',()=>{$$('button',ch).forEach(x=>x.classList.toggle('on',x===b));const p=b.dataset.pos;$$('#lg-'+lg+' .pos').forEach(s=>s.hidden=(p!=='ALL'&&!s.id.endsWith('-'+p)))}))});
 $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{const q=inp.value.trim().toLowerCase();$$('#lg-'+inp.dataset.search+' tr.p').forEach(tr=>{tr.style.display=(!q||tr.dataset.name.includes(q))?'':'none'})}));
 })();
 </script>
