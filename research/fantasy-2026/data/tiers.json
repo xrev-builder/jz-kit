@@ -1,0 +1,450 @@
+{
+ "shared": {
+  "RB": [
+   [
+    "Workhorse, 100-target ceiling",
+    [
+     "Jahmyr Gibbs",
+     "Bijan Robinson"
+    ]
+   ],
+   [
+    "Elite volume with one flag",
+    [
+     "Jonathan Taylor",
+     "Christian McCaffrey",
+     "James Cook III"
+    ]
+   ],
+   [
+    "RB1 upside, room price inflated or aging",
+    [
+     "Chase Brown",
+     "De'Von Achane",
+     "Derrick Henry"
+    ]
+   ],
+   [
+    "RB2 window: picks 39-44",
+    [
+     "Saquon Barkley",
+     "Ashton Jeanty",
+     "Kenneth Walker III",
+     "Breece Hall",
+     "Kyren Williams"
+    ]
+   ],
+   [
+    "Committee leads / role backs",
+    [
+     "Javonte Williams",
+     "Omarion Hampton",
+     "Cam Skattebo",
+     "Jeremiyah Love",
+     "Travis Etienne Jr.",
+     "Bucky Irving",
+     "Jadarian Price"
+    ]
+   ],
+   [
+    "Handcuff-plus and darts",
+    [
+     "Quinshon Judkins",
+     "D'Andre Swift",
+     "David Montgomery",
+     "MarShawn Lloyd",
+     "TreVeyon Henderson",
+     "Bhayshul Tuten",
+     "Rhamondre Stevenson",
+     "Rico Dowdle",
+     "Jaylen Warren",
+     "Kenny Gainwell",
+     "Tony Pollard",
+     "Josh Jacobs"
+    ]
+   ]
+  ],
+  "WR": [
+   [
+    "28%+ share, same QB",
+    [
+     "Ja'Marr Chase",
+     "Puka Nacua",
+     "Jaxon Smith-Njigba",
+     "Amon-Ra St. Brown"
+    ]
+   ],
+   [
+    "WR1 volume, new situation",
+    [
+     "CeeDee Lamb",
+     "Drake London",
+     "A.J. Brown",
+     "Justin Jefferson",
+     "Nico Collins"
+    ]
+   ],
+   [
+    "WR2 with WR1 weeks",
+    [
+     "George Pickens",
+     "Chris Olave",
+     "Rashee Rice",
+     "DeVonta Smith",
+     "Garrett Wilson",
+     "Zay Flowers"
+    ]
+   ],
+   [
+    "Breakout and volume WR3",
+    [
+     "Tetairoa McMillan",
+     "Malik Nabers",
+     "Emeka Egbuka",
+     "Ladd McConkey",
+     "Tee Higgins",
+     "Jaylen Waddle",
+     "Luther Burden III"
+    ]
+   ],
+   [
+    "WR4 floor / TD swing",
+    [
+     "DJ Moore",
+     "Jameson Williams",
+     "Terry McLaurin",
+     "Davante Adams",
+     "Wan'Dale Robinson",
+     "Rome Odunze",
+     "Christian Watson",
+     "Mike Evans"
+    ]
+   ],
+   [
+    "Late volume and darts",
+    [
+     "Michael Wilson",
+     "Parker Washington",
+     "Carnell Tate",
+     "Brian Thomas Jr.",
+     "Marvin Harrison Jr.",
+     "DK Metcalf",
+     "Courtland Sutton",
+     "Michael Pittman Jr.",
+     "Josh Downs",
+     "Stefon Diggs",
+     "Quentin Johnston",
+     "Alec Pierce"
+    ]
+   ]
+  ],
+  "TE": [
+   [
+    "TE1 by 4 ppg (round 2)",
+    [
+     "Trey McBride"
+    ]
+   ],
+   [
+    "Elite ceiling, injury discount",
+    [
+     "Brock Bowers"
+    ]
+   ],
+   [
+    "Role bets, not production",
+    [
+     "Colston Loveland",
+     "Tyler Warren"
+    ]
+   ],
+   [
+    "Streamer-plus (Kraft is the fallback)",
+    [
+     "Kyle Pitts Sr.",
+     "Tucker Kraft",
+     "Harold Fannin Jr.",
+     "Sam LaPorta"
+    ]
+   ],
+   [
+    "Only if cheap",
+    [
+     "George Kittle",
+     "Travis Kelce",
+     "Dalton Kincaid",
+     "Jake Ferguson",
+     "Dallas Goedert",
+     "Mark Andrews"
+    ]
+   ]
+  ],
+  "QB": [
+   [
+    "QB1 both formats",
+    [
+     "Josh Allen"
+    ]
+   ],
+   [
+    "Round-4 only if they fall",
+    [
+     "Drake Maye",
+     "Lamar Jackson"
+    ]
+   ],
+   [
+    "Wait-and-win tier (picks 82-99)",
+    [
+     "Joe Burrow",
+     "Jalen Hurts",
+     "Justin Herbert",
+     "Trevor Lawrence",
+     "Matthew Stafford"
+    ]
+   ],
+   [
+    "Free QB1 upside (R11-13)",
+    [
+     "Jayden Daniels",
+     "Patrick Mahomes II",
+     "Caleb Williams",
+     "Dak Prescott",
+     "Jaxson Dart"
+    ]
+   ],
+   [
+    "Streamers",
+    [
+     "Kyler Murray",
+     "Brock Purdy",
+     "Bo Nix",
+     "Jared Goff",
+     "Daniel Jones",
+     "Baker Mayfield",
+     "Jordan Love"
+    ]
+   ]
+  ],
+  "DST": [
+   [
+    "Round-15 picks (Weeks 1-2 opponents)",
+    [
+     "Los Angeles Chargers",
+     "Cleveland Browns",
+     "Seattle Seahawks",
+     "Minnesota Vikings",
+     "Chicago Bears"
+    ]
+   ],
+   [
+    "If those are gone",
+    [
+     "Philadelphia Eagles",
+     "Pittsburgh Steelers",
+     "Detroit Lions"
+    ]
+   ],
+   [
+    "Week-5 waiver targets, not round-15 picks",
+    [
+     "Houston Texans",
+     "Denver Broncos"
+    ]
+   ]
+  ]
+ },
+ "B": {
+  "QB": [
+   [
+    "Allen at 24 if there",
+    [
+     "Josh Allen"
+    ]
+   ],
+   [
+    "Maye at 37",
+    [
+     "Drake Maye"
+    ]
+   ],
+   [
+    "Round-4 pass, round-8 targets",
+    [
+     "Lamar Jackson",
+     "Joe Burrow"
+    ]
+   ],
+   [
+    "300-yd bonus passers (64-77)",
+    [
+     "Jalen Hurts",
+     "Justin Herbert",
+     "Patrick Mahomes II",
+     "Matthew Stafford",
+     "Trevor Lawrence"
+    ]
+   ],
+   [
+    "Value tier (R10-12)",
+    [
+     "Dak Prescott",
+     "Jayden Daniels",
+     "Caleb Williams",
+     "Brock Purdy",
+     "Jared Goff"
+    ]
+   ],
+   [
+    "Streamers",
+    [
+     "Bo Nix",
+     "Jaxson Dart",
+     "Kyler Murray",
+     "Daniel Jones",
+     "Baker Mayfield",
+     "Jordan Love"
+    ]
+   ]
+  ],
+  "RB": [
+   [
+    "Workhorse, 100-target ceiling",
+    [
+     "Bijan Robinson",
+     "Jahmyr Gibbs"
+    ]
+   ],
+   [
+    "Elite volume with one flag",
+    [
+     "Christian McCaffrey",
+     "Jonathan Taylor",
+     "De'Von Achane"
+    ]
+   ],
+   [
+    "RB1 upside, room price inflated or aging",
+    [
+     "Chase Brown",
+     "James Cook III",
+     "Saquon Barkley"
+    ]
+   ],
+   [
+    "RB2 window: picks 39-44",
+    [
+     "Ashton Jeanty",
+     "Kenneth Walker III",
+     "Derrick Henry",
+     "Breece Hall",
+     "Kyren Williams"
+    ]
+   ],
+   [
+    "Committee leads / role backs",
+    [
+     "Javonte Williams",
+     "Omarion Hampton",
+     "Cam Skattebo",
+     "Jeremiyah Love",
+     "Travis Etienne Jr.",
+     "Bucky Irving",
+     "Jadarian Price"
+    ]
+   ],
+   [
+    "Handcuff-plus and darts",
+    [
+     "Quinshon Judkins",
+     "D'Andre Swift",
+     "David Montgomery",
+     "MarShawn Lloyd",
+     "TreVeyon Henderson",
+     "Bhayshul Tuten",
+     "Rhamondre Stevenson",
+     "Rico Dowdle",
+     "Jaylen Warren",
+     "Kenny Gainwell",
+     "Tony Pollard",
+     "J.K. Dobbins"
+    ]
+   ]
+  ],
+  "WR": [
+   [
+    "28%+ share, same QB",
+    [
+     "Ja'Marr Chase",
+     "Jaxon Smith-Njigba",
+     "Puka Nacua",
+     "Amon-Ra St. Brown"
+    ]
+   ],
+   [
+    "WR1 volume, new situation",
+    [
+     "CeeDee Lamb",
+     "Drake London",
+     "A.J. Brown",
+     "Justin Jefferson",
+     "Nico Collins"
+    ]
+   ],
+   [
+    "WR2 with WR1 weeks",
+    [
+     "George Pickens",
+     "Chris Olave",
+     "Rashee Rice",
+     "DeVonta Smith",
+     "Garrett Wilson",
+     "Zay Flowers"
+    ]
+   ],
+   [
+    "Breakout and volume WR3",
+    [
+     "Tetairoa McMillan",
+     "Emeka Egbuka",
+     "Ladd McConkey",
+     "Malik Nabers",
+     "Jaylen Waddle",
+     "Tee Higgins",
+     "Luther Burden III"
+    ]
+   ],
+   [
+    "WR4 floor / TD swing",
+    [
+     "DJ Moore",
+     "Jameson Williams",
+     "Terry McLaurin",
+     "Davante Adams",
+     "Rome Odunze",
+     "Wan'Dale Robinson",
+     "Christian Watson",
+     "Mike Evans"
+    ]
+   ],
+   [
+    "Late volume and darts",
+    [
+     "Michael Wilson",
+     "Parker Washington",
+     "Carnell Tate",
+     "Brian Thomas Jr.",
+     "Marvin Harrison Jr.",
+     "DK Metcalf",
+     "Courtland Sutton",
+     "Michael Pittman Jr.",
+     "Josh Downs",
+     "Stefon Diggs",
+     "Quentin Johnston",
+     "Alec Pierce"
+    ]
+   ]
+  ]
+ },
+ "A": {}
+}

@@ -1,0 +1,91 @@
+rank,player,team,pos,espn_adp,consensus_adp,ecr_rank,source_url,espn_staff_rank_proxy,note
+1,Jahmyr Gibbs,DET,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay #1 / Yates #2,FantasyPros ADP composite: Gibbs/Bijan/Taylor spread of 1 across sites (fantasypros.com/nfl/adp/ppr-overall.php); no numeric ADP verified
+2,Bijan Robinson,ATL,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #1 / Clay #2,no numeric ADP verified
+3,Ja'Marr Chase,CIN,WR,,4.1,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Yates #4 / Clay WR1,consensus_adp = seahawks.com early-Sept PPR ADP (search snippet)
+4,Puka Nacua,LAR,WR,,4.6,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Clay WR2,
+5,Jonathan Taylor,IND,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay #4 / Yates #7,no numeric ADP verified
+6,Jaxon Smith-Njigba,SEA,WR,,6.4,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Yates #6 / Clay WR3,
+7,Christian McCaffrey,SF,RB,,7.75,,https://www.cbssports.com/fantasy/football/news/fantasy-football-running-back-adp-rb-2026-best-values/,Clay RB3 / Yates RB3,consensus_adp = CBS Sports ADP review (search snippet)
+8,Amon-Ra St. Brown,DET,WR,,8.8,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Clay WR4,
+9,De'Von Achane,MIA,RB,,11,,https://clutchpoints.com/fantasy-sports/5-overvalued-fantasy-football-running-backs-2026-adp,Clay RB5 / Yates RB5,clutchpoints PPR ADP 11; NFFC ADP 11.7 per CBS snippet
+10,James Cook III,BUF,RB,,11.25,,https://www.si.com/onsi/fantasy/rankings/james-cook-vs-devon-achane-better-pick-adp-2026-fantasy-football-drafts,Clay RB6 / Yates RB6,ADP 11.25 from search snippet; exact source page uncertain (SI or CBS)
+11,CeeDee Lamb,DAL,WR,,14.7,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Clay WR5,
+12,Omarion Hampton,LAC,RB,,15.5,,https://www.seahawks.com/news/fantasy-football-rb-rankings-and-analysis-for-2026,Clay RB13 / Yates RB12,ADP 15.5 from search snippet; page attribution uncertain
+13,Justin Jefferson,MIN,WR,,15.7,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Clay WR6,
+14,Chase Brown,CIN,RB,,15.9,,https://www.seahawks.com/news/fantasy-football-rb-rankings-and-analysis-for-2026,Clay RB12 / Yates RB8,ADP 15.9 from search snippet; page attribution uncertain
+15,Brock Bowers,LV,TE,,16,,https://www.prizepicks.com/playbook-article/2026-ppr-fantasy-football-rankings-top-200-draft-cheat-sheet,TE1,snippet: "TE1 - Round 2 Pick 16"; interpreted as overall pick 16; attribution uncertain
+16,Kenneth Walker III,KC,RB,,18.0,,https://www.seahawks.com/news/fantasy-football-rb-rankings-and-analysis-for-2026,Clay RB11 / Yates RB9,ADP 18.0 from search snippet; page attribution uncertain
+17,Josh Allen,BUF,QB,,19,,https://www.cbssports.com/fantasy/football/news/fantasy-football-2026-rankings-draft-prep-model-reveals-best-qb-rb-wr-te-picks-cheat-sheets-adp-tiers/,Clay QB1,snippet: "ADP of No. 19 overall"; attribution uncertain
+18,Trey McBride,ARI,TE,,19,,https://www.prizepicks.com/playbook-article/2026-ppr-fantasy-football-rankings-top-200-draft-cheat-sheet,TE2,snippet: "TE2 - Round 2 Pick 19"; attribution uncertain
+19,Derrick Henry,BAL,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates RB7 / Clay RB9,no numeric ADP verified
+20,Saquon Barkley,PHI,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB8 / Yates RB11,no numeric ADP verified
+21,Ashton Jeanty,LV,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB10 / Yates RB13,no numeric ADP verified
+22,Drake London,ATL,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #18 (WR7) / Clay WR8,no numeric ADP verified
+23,Nico Collins,HOU,WR,,23.1,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Yates #40 (WR15) / Clay WR10 / Karabell WR8,FantasyPros: ESPN ADP ~1 round (12 picks) later than ECR (fantasypros.com/2026/08/top-3-fantasy-football-draft-values-on-espn-2026-picks/)
+24,Rashee Rice,KC,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #20 (WR8) / Clay WR9,no numeric ADP verified
+25,Jeremiyah Love,ARI,RB,,27,,https://www.cbssports.com/fantasy/football/news/fantasy-football-running-back-adp-rb-2026-best-values/,Clay RB7 / Yates RB10,PPR ADP 27 (standard 23) per snippet; FantasyPros: most overvalued on ESPN (67% ECR-vs-ESPN-ADP gap)
+26,Malik Nabers,NYG,WR,,28.0,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,Yates #26 (WR9) / Clay WR13,ADP 28.0 from search snippet; attribution uncertain
+27,A.J. Brown,NE,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #27 (WR10) / Clay WR11,no numeric ADP verified
+28,Javonte Williams,DAL,RB,,29,,https://www.espn.com/fantasy/football/story/_/page/FFMockDraft-48610592/2026-fantasy-football-mock-draft-post-nfl-draft,Yates RB14 / Clay RB16,pick 29 from search snippet listing 3rd/4th-round RBs; attribution uncertain
+29,Breece Hall,NYJ,RB,,31.5,,https://www.seahawks.com/news/fantasy-football-rb-rankings-and-analysis-for-2026,Yates RB15 / Clay RB14,ADP 31.5 (another snippet: 31); attribution uncertain
+30,Josh Jacobs,GB,RB,,33,,https://clutchpoints.com/fantasy-sports/5-overvalued-fantasy-football-running-backs-2026-adp,Clay RB26 / Yahoo RB11,clutchpoints PPR ADP 33 (RB15); another snippet lists pick 37
+31,Kyren Williams,LAR,RB,,34,,https://www.espn.com/fantasy/football/story/_/page/FFMockDraft-48610592/2026-fantasy-football-mock-draft-post-nfl-draft,Yates RB16 / Clay RB17,pick 34 from search snippet; attribution uncertain
+32,Lamar Jackson,BAL,QB,,37,,https://www.prizepicks.com/playbook-article/2026-ppr-fantasy-football-rankings-top-200-draft-cheat-sheet,Clay QB3,snippet: "QB2 - Pick 37"; attribution uncertain
+33,Travis Etienne Jr.,NO,RB,,38,,https://www.espn.com/fantasy/football/story/_/page/FFMockDraft-48610592/2026-fantasy-football-mock-draft-post-nfl-draft,Yates RB17 / Clay RB17,pick 38 from search snippet; attribution uncertain
+34,Tetairoa McMillan,CAR,WR,,40,,https://fantasyfootballcalculator.com/players/tetairoa-mcmillan,Yates #43 (WR17) / Clay WR16,FFC redraft ADP 40 (WR18)
+35,Colston Loveland,CHI,TE,,41.0,,https://www.seahawks.com/news/fantasy-football-rankings-and-analysis-for-2026-tight-ends-defenses-and-kickers,Clay TE3,
+36,Cam Skattebo,NYG,RB,,41,,https://www.espn.com/fantasy/football/story/_/page/FFMockDraft-48610592/2026-fantasy-football-mock-draft-post-nfl-draft,Yates RB20 / Clay RB20,pick 41 from search snippet; SI lists him among overvalued ADPs
+37,Zay Flowers,BAL,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #42 (WR16) / Clay WR16,no numeric ADP verified
+38,Jaylen Waddle,DEN,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #45 (WR19) / Clay WR24,no numeric ADP verified
+39,Quinshon Judkins,CLE,RB,,47,,https://www.espn.com/fantasy/football/story/_/page/FFMockDraft-48610592/2026-fantasy-football-mock-draft-post-nfl-draft,Yates RB18 / Clay RB19,pick 47 from search snippet; attribution uncertain
+40,Bhayshul Tuten,JAC,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #50 (RB22) / Clay RB23 / Karabell RB22,no numeric ADP verified
+41,Davante Adams,LAR,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #51 (WR20) / Clay WR20,FantasyPros: only top-50 WR drafted BEFORE his ECR on ESPN
+42,Tyler Warren,IND,TE,,52.5,,https://www.seahawks.com/news/fantasy-football-rankings-and-analysis-for-2026-tight-ends-defenses-and-kickers,Clay TE4,
+43,David Montgomery,HOU,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #57 (RB25) / Clay RB24,no numeric ADP verified
+44,Tee Higgins,CIN,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #58 (WR22) / Clay WR23,no numeric ADP verified
+45,Jayden Daniels,WAS,QB,,63,,https://www.cbssports.com/fantasy/football/news/fantasy-football-2026-rankings-draft-prep-model-reveals-best-qb-rb-wr-te-picks-cheat-sheets-adp-tiers/,Clay QB2,snippet: "ADP of 63"; attribution uncertain
+46,Chuba Hubbard,CAR,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #66 (RB28) / Clay RB35 / Karabell #37,no numeric ADP verified
+47,Carnell Tate,TEN,WR,,67,,https://clutchpoints.com/fantasy-sports/5-overvalued-fantasy-football-wide-receivers-2026-adp,,clutchpoints PPR ADP 67; flagged overvalued
+48,Rome Odunze,CHI,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #68 (WR25) / Clay WR25,no numeric ADP verified
+49,DK Metcalf,PIT,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #69 (WR26) / Clay WR33,no numeric ADP verified
+50,Marvin Harrison Jr.,ARI,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #74 / Clay WR31 / Yahoo WR28,no numeric ADP verified
+51,Tucker Kraft,GB,TE,,74.3,,https://www.seahawks.com/news/fantasy-football-rankings-and-analysis-for-2026-tight-ends-defenses-and-kickers,Clay TE10,
+52,Christian Watson,GB,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #76,no numeric ADP verified
+53,Sam LaPorta,DET,TE,,77.9,,https://www.seahawks.com/news/fantasy-football-rankings-and-analysis-for-2026-tight-ends-defenses-and-kickers,Clay TE8,
+54,Brian Thomas Jr.,JAC,WR,,78.2,,https://www.seahawks.com/news/fantasy-football-wr-rankings-and-analysis-for-2026,,ADP 78.2 from search snippet; attribution uncertain
+55,Jameson Williams,DET,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #80 (WR32) / Clay WR26,no numeric ADP verified
+56,Courtland Sutton,DEN,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #88 (WR37) / Clay WR30,no numeric ADP verified
+57,Jakobi Meyers,,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #93 / Clay WR40 / Yahoo WR40,team not verified in snippets
+58,George Kittle,SF,TE,,97.8,,https://www.seahawks.com/news/fantasy-football-rankings-and-analysis-for-2026-tight-ends-defenses-and-kickers,Clay TE9,
+59,RJ Harvey,DEN,RB,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #110 (RB38) / Karabell #41,no numeric ADP verified
+60,Xavier Worthy,KC,WR,,,,https://www.espn.com/fantasy/football/story/_/id/48711830/2026-fantasy-football-rankings-ppr-field-yates,Yates #136 / Clay WR46 / Yahoo WR35,no numeric ADP verified
+61,Chris Godwin,TB,WR,146.8,,,https://www.fantasypros.com/2026/08/top-3-fantasy-football-draft-values-on-espn-2026-picks/,,ONLY verified actual ESPN ADP in this file: fell from 104.4 to 146.8 (FantasyPros Aug 2026 ESPN values article)
+,Jalen Hurts,PHI,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB5,no ADP verified
+,Drake Maye,NE,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB4,no ADP verified
+,Joe Burrow,CIN,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB6,ECR QB6 per search snippet; no ADP verified
+,Justin Herbert,LAC,QB,,,,https://www.fantasypros.com/2026/08/top-3-fantasy-football-draft-values-on-espn-2026-picks/,Clay QB14 / Yates QB6 / Karabell QB8 (superflex),FantasyPros: ECR QB7 vs ESPN ADP QB15; 58-pick gap = largest in top 300
+,Jaxson Dart,NYG,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB7,no ADP verified
+,Trevor Lawrence,JAC,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB8,no ADP verified
+,Dak Prescott,DAL,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB9,no ADP verified
+,Bo Nix,DEN,QB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay QB10,no ADP verified
+,Brock Purdy,SF,QB,,,,https://www.fantasypros.com/2026/08/5-must-have-quarterbacks-tight-ends-2026-fantasy-football-picks/,,FantasyPros: "overlooked on draft day"; no ADP number verified
+,Bucky Irving,TB,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB20 / Yates RB21,no ADP verified
+,D'Andre Swift,CHI,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB22 / Yates RB19 / Yahoo RB22,no ADP verified
+,TreVeyon Henderson,NE,RB,,,,https://sports.yahoo.com/fantasy/article/2026-fantasy-football-full-ppr-rankings-consensus-top-300-players-175205585.html,Yahoo RB15,no ADP verified
+,Jaylen Warren,PIT,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB28,no ADP verified
+,Rico Dowdle,PIT,RB,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay RB29,no ADP verified
+,Jordan Mason,MIN,RB,,,,https://www.espn.com/fantasy/football/story/_/id/49614875/2026-fantasy-football-rankings-running-back-tiers-rb,Karabell #44,no ADP verified
+,Alvin Kamara,NO,RB,,,,https://www.espn.com/fantasy/football/story/_/id/49614875/2026-fantasy-football-rankings-running-back-tiers-rb,Karabell tiers (unranked in snippet),no ADP verified
+,Jadarian Price,SEA,RB,,,,https://nflfantasyedge.com/rookie-rankings/,,rookie; no ADP verified
+,Chris Rodriguez Jr.,JAC,RB,,,,https://www.cbssports.com/fantasy/football/news/fantasy-football-running-back-adp-rb-2026-best-values/,,snippet: RB45 ADP (positional only)
+,Garrett Wilson,NYJ,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR13,no ADP verified
+,George Pickens,DAL,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR15,no ADP verified
+,DeVonta Smith,PHI,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR17 / Yahoo WR18,no ADP verified
+,Emeka Egbuka,TB,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR19,no ADP verified
+,Ladd McConkey,LAC,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR21,no ADP verified
+,Chris Olave,NO,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR11 / Yahoo WR16,no ADP verified
+,Mike Evans,SF,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR37,no ADP verified
+,Michael Wilson,ARI,WR,,,,https://www.espn.com/fantasy/football/story/_/id/47513496/2026-fantasy-football-rankings-ppr-mike-clay,Clay WR40,no ADP verified
+,Jerry Jeudy,CLE,WR,,,,https://sports.yahoo.com/fantasy/article/2026-fantasy-football-full-ppr-rankings-consensus-top-300-players-175205585.html,Yahoo WR49,no ADP verified
+,Kenyon Sadiq,NYJ,TE,,,,https://www.si.com/onsi/fantasy/rankings/overvalued-adp-rankings-avoid-espn-kenyon-sadiq-2026,Clay TE20 / PFN TE22,SI: overvalued in ESPN rankings
+,Juwan Johnson,NO,TE,,,,https://www.fantasypros.com/2026/08/5-must-have-quarterbacks-tight-ends-2026-fantasy-football-picks/,,FantasyPros: TE16 in ADP (positional only)
