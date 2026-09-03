@@ -39,6 +39,50 @@ for lg in 'AB':
             v=s[s.pos==pos][f'ppg{lg}_{suf}'].sort_values(ascending=False).values[:60]
             cur.setdefault(pos,[]).append(v)
     curves[lg]={p:np.mean([np.pad(a,(0,60-len(a)),constant_values=a[-1]) for a in v],axis=0) for p,v in cur.items()}
+# usage-history model projections (fitted 2013-2025) keyed by normalized name
+UP=pd.read_csv(O+'usage_proj_2026.csv'); UP['key']=UP.name.map(norm); UPA=dict(zip(UP.key,UP.model_A)); UPB=dict(zip(UP.key,UP.model_B))
+# 2025 injury-report flags by category (weeks listed, weeks Out)
+IF=pd.read_csv(O+'injury_flags_2025.csv'); IF['key']=IF.full_name.map(norm)
+INJADD={('RB','knee'):1.5,('WR','knee'):1.3,('TE','knee'):0.8,('QB','knee'):0.8,('RB','hamstring'):0.5,('WR','hamstring'):0.8,('TE','hamstring'):0.8,('QB','concussion'):1.0,('WR','ankle'):0.8,('RB','ankle'):0.3,('WR','ribs'):0.8,('QB','shoulder'):1.0,('RB','achilles'):2.0,('WR','achilles'):2.0,('TE','achilles'):2.0,('RB','back'):0.8,('WR','back'):0.6,('QB','back'):0.8}
+def inj_add(key,pos):
+    t=IF[(IF.key==key)&(IF.outs>0)]
+    return float(min(3.0,sum(INJADD.get((pos,c),0.2) for c in t.cat)))
+# team for correlation
+TEAM=dict(zip(m.key,m.team_26.fillna('FA')))
+# 2026 win totals (FOX/CBS, Sept 2) -> game-script tilt per position (per win above 8.5)
+_v=pd.read_csv('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/research/09-vegas.csv')
+WINTOT={('LA' if t=='LAR' else t):float(re.match(r'\s*([\d.]+)',str(w)).group(1)) for t,w in zip(_v.team,_v.win_total)}
+GS={'RB':0.22,'QB':0.20,'WR':0.09,'TE':0.04}
+# late news flags (Sept 3): extra expected games missed
+NEWS_MISSED={'Rome Odunze':1.0,"D'Andre Swift":1.0,'Kyle Monangai':2.0,'Malik Nabers':0.5,'Emeka Egbuka':0.5}
+# Lingering-injury literature (research/08-injury-evidence.md, 08-injury-types.csv): (production multiplier, extra expected games missed)
+# for injuries the 2025 report flags cannot see (postseason/offseason/camp) or where the literature says the year-1 haircut outlasts the games missed.
+LING={
+ 'George Kittle':(0.85,1.5),      # Achilles Jan-26, TE: 71% RTP but 20%+ Y1 decline in matched cohort
+ 'Malik Nabers':(0.90,0.5),       # ACL+meniscus Oct-25, WR: largest/most persistent Y1 loss; age 23 moderates
+ 'Tucker Kraft':(0.93,0.5),       # ACL Nov-25, TE: RTP fine, likely snap count early
+ 'Cam Skattebo':(0.90,1.0),       # open tib/fib + dislocation Oct-25; 'not 100% twitchy'
+ 'Patrick Mahomes II':(0.97,0.5), # ACL+LCL Dec-25, QB: 92% RTP, ~0 production loss
+ 'Rashee Rice':(0.97,0.5),        # May-26 scope on the repaired knee
+ 'Joe Burrow':(0.97,0.0),         # surgical grade-3 turf toe: post-op cohort underperformed
+ 'Sam LaPorta':(0.95,1.5),        # lumbar disc surgery + new hip; Campbell unsure on Wk 1
+ 'Chris Godwin Jr.':(0.95,0.5),   # two ankle surgeries
+ 'Mike Evans':(1.0,1.0),          # 3 hamstrings + camp groin, age 33: 38% any-season hamstring recurrence
+ 'MarShawn Lloyd':(1.0,1.0),      # two hamstrings, one career game
+ 'A.J. Brown':(1.0,0.5),          # hamstring x3 in 3 yrs + thumb
+ 'Nico Collins':(1.0,0.5),        # never a full 17; hamstring + 2 concussions
+ 'Tee Higgins':(1.0,0.5),         # hamstring/quad history + heel now
+ 'Christian McCaffrey':(1.0,0.5), # bilateral Achilles tendinitis 24, calf camp 26, age 30
+ 'Jonathan Taylor':(1.0,0.5),     # three high-ankle sprains 22-24
+ 'Kenneth Walker III':(1.0,0.5),  # foot soreness now; calf/ankle/oblique history
+ 'Davante Adams':(1.0,0.5),       # hamstring 24 and 25, age 33
+ 'Christian Watson':(1.0,0.5),    # hamstring x3 + ACL
+ 'Rome Odunze':(1.0,0.5),         # foot stress fracture 25; leg Sept 3 (also NEWS_MISSED)
+ 'Matthew Stafford':(1.0,0.8),    # disc, age 38
+ 'Jayden Daniels':(1.0,0.5),      # elbow dislocation + re-injury 25
+ 'Jeremiyah Love':(1.0,0.5),      # high-ankle: early returners rarely regain form quickly
+ 'Lamar Jackson':(1.0,0.3),'Justin Jefferson':(1.0,0.3),'Zay Flowers':(1.0,0.3),'Terry McLaurin':(1.0,0.3),'Saquon Barkley':(1.0,0.3),'TreVeyon Henderson':(1.0,0.3),'Garrett Wilson':(1.0,0.5),'Omarion Hampton':(1.0,0.3),
+}
 # role overrides where the Aug-28 consensus predates a verified depth-chart change (ppg)
 ROLE={'MarShawn Lloyd':10.5,'Tyler Allgeier':8.0,'Jadarian Price':12.5,'Sione Vaki':4.0,'Blake Corum':6.5}
 POOL={'A':{'RB':12,'WR':12,'TE':9,'QB':17},'B':{'RB':12,'WR':12,'TE':9,'QB':20.5}}
@@ -64,14 +108,18 @@ def project(lg):
         else: adj=-0.15*(age-28)
         if pd.notna(getattr(r,ppg24)) and r.g_24>=8 and g>=8 and (p25-getattr(r,ppg24))>=4 and p25>=14: adj+=(-1.1 if r.pos=='RB' else -1.2)
         shrunk=shrunk+adj
-        mean=0.5*shrunk+0.5*cv if g>0 else cv
+        um=(UPA if lg=='A' else UPB).get(r.key)
+        prod=um if um is not None else shrunk   # usage model where available (age inside the model), else shrunk production
+        mean=0.5*prod+0.5*cv if g>0 else cv
         mean=ROLE.get(r.player,mean)
+        mean=mean+GS.get(r.pos,0)*(WINTOT.get(TEAM.get(r.key,''),8.5)-8.5)
+        mean=mean*LING.get(r.player,(1.0,0.0))[0]
         sd=getattr(r,'sdA' if lg=='A' else 'sdB')
         if not (pd.notna(sd) and g>=8): sd=CV[r.pos]*mean
         sd=max(sd,3.0)
-        rows[r.player]=dict(pos=r.pos,mean=mean,sd=sd,bye=int(r.bye) if pd.notna(r.bye) else 0,age=r.age if pd.notna(r.age) else 25,g25=g,exp_missed=r.exp_missed if pd.notna(r.exp_missed) else 4,adp=r.espn_adp if pd.notna(r.espn_adp) else (r.ecr_ovr if pd.notna(r.ecr_ovr) else 300),ecr=r.ecr_ovr)
+        rows[r.player]=dict(pos=r.pos,team=TEAM.get(r.key,'FA'),mean=mean,sd=sd,bye=int(r.bye) if pd.notna(r.bye) else 0,age=r.age if pd.notna(r.age) else 25,g25=g,exp_missed=(r.exp_missed if pd.notna(r.exp_missed) else 4)+inj_add(r.key,r.pos)+NEWS_MISSED.get(r.player,0)+LING.get(r.player,(1.0,0.0))[1],adp=r.espn_adp if pd.notna(r.espn_adp) else (r.ecr_ovr if pd.notna(r.ecr_ovr) else 300),ecr=r.ecr_ovr)
     for r in m[m.pos=='DST'].itertuples():
-        rows[r.player]=dict(pos='DST',mean=7.0,sd=6.0,bye=int(r.bye) if pd.notna(r.bye) else 0,age=0,g25=17,exp_missed=0,adp=r.espn_adp if pd.notna(r.espn_adp) else r.ecr_ovr,ecr=r.ecr_ovr)
+        rows[r.player]=dict(pos='DST',team='DST',mean=7.0,sd=6.0,bye=int(r.bye) if pd.notna(r.bye) else 0,age=0,g25=17,exp_missed=0,adp=r.espn_adp if pd.notna(r.espn_adp) else r.ecr_ovr,ecr=r.ecr_ovr)
     return rows
 
 # injury sampling: nonparametric from transitions by bucket
@@ -101,6 +149,17 @@ def sample_missed(name,p):
         if rng.random()<pr: out[1:1+n]=True
     return out
 
+# RB depth (Sept 2 depth charts): team -> [RB1,RB2] as P keys
+_dc=pd.read_csv(D+'depth_charts_2026.csv',low_memory=False); _dc=_dc[_dc.pos_abb=='RB']; _dc=_dc[_dc.dt==_dc.groupby('team').dt.transform('max')]
+_k2p={norm(k):k for k in m.player}
+DEPTH={}
+for tm,g in _dc.sort_values('pos_rank').groupby('team'):
+    names=[_k2p.get(norm(n)) for n in g.player_name.tolist()[:3]]; names=[n for n in names if n]
+    if len(names)>=2: DEPTH[tm]=names
+HANDCUFF={v[0]:v[1] for v in DEPTH.values()}
+HC_RATIO=0.81   # backup scores 81% of the starter's ppg when the starter is out (2012-2025, n=258)
+EMERGE_PER_SEASON=4.0; EMERGE_MEAN=13.0
+TEAMCORR_SD=0.12
 WAIVER={'A':{'QB':15,'RB':9.5,'WR':9.5,'TE':8,'DST':6},'B':{'QB':18.5,'RB':9.5,'WR':9.5,'TE':8,'DST':6}}
 CAPS={'QB':2,'RB':6,'WR':7,'TE':2,'DST':1}
 def draft_opponents(P,user_slot,user_roster,nteams=10,rounds=15):
@@ -134,10 +193,17 @@ def draft_opponents(P,user_slot,user_roster,nteams=10,rounds=15):
     return teams
 
 SLOTS=[('QB',1),('RB',2),('WR',2),('TE',1),('FLEX',2),('DST',1)]
-def lineup_points(roster,P,week,avail,lg):
-    # choose starters by projected mean among available; realized points sampled
-    cands=[k for k in roster if avail[k][week] and P[k]['bye']!=week]
-    cands.sort(key=lambda k:-P[k]['mean'])
+def wk_mean(k,P,week,avail,over):
+    # projected mean this week: handcuff promotion if the team's RB1 is out; emergence overrides
+    mu=over.get(k,P[k]['mean'])
+    for rb1,rb2 in HANDCUFF.items():
+        if rb2==k and rb1 in avail and not avail[rb1][week]: mu=max(mu,HC_RATIO*P[rb1]['mean'])
+    return mu
+def lineup_points(roster,P,week,avail,lg,over=None,tf=None):
+    over=over or {}; tf=tf or {}
+    cands=[k for k in roster if avail.get(k,np.ones(18,bool))[week] and P[k]['bye']!=week]
+    mus={k:wk_mean(k,P,week,avail,over) for k in cands}
+    cands.sort(key=lambda k:-mus[k])
     used=set(); total=0.0
     def take(pos_ok,n):
         nonlocal total
@@ -145,12 +211,50 @@ def lineup_points(roster,P,week,avail,lg):
         for k in cands:
             if k in used or P[k]['pos'] not in pos_ok: continue
             used.add(k); got+=1
-            total+=max(-2,rng.normal(P[k]['mean'],P[k]['sd']))
+            f=tf.get(P[k]['team'],1.0)
+            total+=max(-2,rng.normal(mus[k]*f,P[k]['sd']))
             if got==n: break
         for _ in range(n-got):
             wl=WAIVER[lg][pos_ok[0]]; total+=max(-2,rng.normal(wl,6))
     take(['QB'],1); take(['RB'],2); take(['WR'],2); take(['TE'],1); take(['RB','WR','TE'],2); take(['DST'],1)
     return total
+def team_factors(P):
+    return {t:max(0.5,rng.normal(1.0,TEAMCORR_SD)) for t in set(v['team'] for v in P.values())}
+def waiver_round(teams,P,avail,over,week,W,PF,fa):
+    # after week's games: each team, worst record first, may add the best free agent that improves its lineup for next week
+    order=sorted(teams,key=lambda t:(W[t],PF[t]))
+    for t in order:
+        ro=teams[t]; nxt=week+1
+        if nxt>17: break
+        # find weakest projected starter-slot value next week
+        def best_lineup_value(names):
+            cands=[k for k in names if avail.get(k,np.ones(18,bool))[nxt] and P[k]['bye']!=nxt]
+            mus={k:wk_mean(k,P,nxt,avail,over) for k in cands}; cands.sort(key=lambda k:-mus[k]); used=set(); tot=0
+            for ok,n in (('QB',1),('RB',2),('WR',2),('TE',1),('FLEX',2)):
+                oks=['RB','WR','TE'] if ok=='FLEX' else [ok]; g=0
+                for k in cands:
+                    if k in used or P[k]['pos'] not in oks: continue
+                    used.add(k); tot+=mus[k]; g+=1
+                    if g==n: break
+                tot+=(n-g)*9.0
+            return tot
+        # only teams with a hole next week look: a starter-quality player unavailable, or thin at a position
+        need_pos=set()
+        top=sorted([k for k in ro if P[k]['pos']!='DST'],key=lambda k:-P[k]['mean'])[:9]
+        for k in top:
+            if not avail.get(k,np.ones(18,bool))[nxt] or P[k]['bye']==nxt: need_pos.add(P[k]['pos'])
+        if not need_pos: continue
+        base=best_lineup_value(ro)
+        cands=sorted([k for k in fa if P[k]['pos'] in need_pos or (P[k]['pos'] in ('RB','WR') and 'TE' not in need_pos)],key=lambda k:-wk_mean(k,P,nxt,avail,over))[:6]
+        best=None; gain=0.5
+        for k in cands:
+            v=best_lineup_value(ro+[k])-base
+            if v>gain: gain=v; best=k
+        if best:
+            # drop the lowest-value healthy non-starter
+            drop=min((k for k in ro if P[k]['pos']!='DST'),key=lambda k:wk_mean(k,P,nxt,avail,over)+ (0 if avail.get(k,np.ones(18,bool))[nxt] else -5))
+            ro.remove(drop); ro.append(best); fa.discard(best); fa.add(drop)
+    return teams
 
 def simulate(lg,user_roster,user_slot,injuries=True,n=NSEASONS,label=''):
     P=project(lg); nteams=10; nplay=8 if lg=='A' else 6
@@ -158,22 +262,32 @@ def simulate(lg,user_roster,user_slot,injuries=True,n=NSEASONS,label=''):
     for s in range(n):
         teams=draft_opponents(P,user_slot,user_roster)
         allp=set(k for t in teams.values() for k in t)
-        avail={k:(~sample_missed(k,P[k]) if injuries else np.ones(18,bool)) for k in allp}
+        fa=set(k for k in P if k not in allp and P[k]['pos']!='DST')
+        avail={k:(~sample_missed(k,P[k]) if injuries else np.ones(18,bool)) for k in P}
+        over={}
+        # in-season emergences (undrafted players who become 12+ ppg starters), ~4 per season at weeks 2-10
+        n_em=rng.poisson(EMERGE_PER_SEASON); em_weeks=rng.integers(2,11,size=n_em)
         W=np.zeros(nteams); PF=np.zeros(nteams)
         for wk in range(1,15):
+            for ew in em_weeks[em_weeks==wk]:
+                pool=[k for k in fa if P[k]['pos'] in ('RB','WR')]
+                if pool: over[rng.choice(pool)]=float(rng.normal(EMERGE_MEAN,2.0))
+            tf=team_factors(P)
+            sc={t:lineup_points(teams[t],P,wk,avail,lg,over,tf) for t in range(nteams)}
             perm=rng.permutation(nteams)
-            sc={t:lineup_points(teams[t],P,wk,avail,lg) for t in range(nteams)}
             for i in range(0,nteams,2):
                 a,b=perm[i],perm[i+1]; PF[a]+=sc[a]; PF[b]+=sc[b]
                 if sc[a]>sc[b]: W[a]+=1
                 else: W[b]+=1
+            waiver_round(teams,P,avail,over,wk,W,PF,fa)
         seed=sorted(range(nteams),key=lambda t:(-W[t],-PF[t]))
         po=seed[:nplay]
         if user_slot in po: made+=1
         wins_hist.append(W[user_slot]); pts_hist.append(PF[user_slot]/14)
         # playoffs
         def game(a,b,wk):
-            return a if lineup_points(teams[a],P,wk,avail,lg)>=lineup_points(teams[b],P,wk,avail,lg) else b
+            tf=team_factors(P)
+            return a if lineup_points(teams[a],P,wk,avail,lg,over,tf)>=lineup_points(teams[b],P,wk,avail,lg,over,tf) else b
         if nplay==8:
             r1=[game(po[0],po[7],15),game(po[1],po[6],15),game(po[2],po[5],15),game(po[3],po[4],15)]
             r2=[game(r1[0],r1[3],16),game(r1[1],r1[2],16)]

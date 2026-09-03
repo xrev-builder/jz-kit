@@ -27,7 +27,7 @@ for r in bA.itertuples():
         adpA=round(adp,0),adpB=round(roomB(r.player,r.pos,adp),0),
         pA=round(p['mean'],1),pB=round(q['mean'],1),inj=round(float(p['exp_missed']),1),
         note=(r.note if isinstance(r.note,str) else '')[:160]))
-rows=[x for x in rows if x['rA']<=260]
+rows=[x for x in rows if x['rA']<=340]
 data=json.dumps(rows,separators=(',',':'))
 esc=html.escape
 page=r'''<title>Draft Day Assistant</title>

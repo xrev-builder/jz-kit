@@ -1,5 +1,5 @@
 """Policy-based draft simulation: the user's roster emerges from a drafting rule against randomized opponents (price noise sd 8, random room type), then the season is simulated."""
-import sys; sys.argv=['x','1']
+import sys; LGARG=sys.argv[1] if len(sys.argv)>1 else 'AB'; sys.argv=['x','1']
 exec(open('sim_season.py').read().split("if __name__=='__main__':")[0])
 import pandas as pd, numpy as np
 N=600
@@ -93,7 +93,7 @@ def run(lg,policy,slot,n):
     return dict(league=lg,policy=policy,p_playoffs=made/n,p_title=titles/n,avg_ppg=float(np.mean(pf)),example=first)
 pols=['Hero-RB (RB, then WR/TE x2)','RB-RB','WR-WR','WR-WR-WR','Robust-RB (RB in 3 of first 4)','Zero-RB (no RB before R5)','Best available by board']
 out=[]
-for lg,slot in (('A',1),('B',3)):
+for lg,slot in [x for x in (('A',1),('B',3)) if x[0] in LGARG]:
     for pol in pols:
         r=run(lg,pol,slot,N); out.append(r); print(lg,pol,round(r['p_playoffs'],3),round(r['p_title'],3),round(r['avg_ppg'],1),'e.g.',r['example'][:6],flush=True)
-pd.DataFrame(out).to_csv(O+'sim_policies.csv',index=False)
+pd.DataFrame(out).to_csv(O+('sim_policies.csv' if LGARG=='AB' else f'sim_policies_{LGARG}.csv'),index=False)
