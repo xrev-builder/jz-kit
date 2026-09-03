@@ -888,6 +888,29 @@ Why the first two rounds are RB/WR, why McBride is a round-2 pick, and why QB wa
 | 6 of 10 | 0 | +3 | 0.605 | 0.123 |
 | 6 of 10 | -3 | +3 | 0.465 | 0.091 |
 
+### Long-run age and regression effects (2019-2025, six season-to-season transitions, within-player)
+
+What happens the season after a good one. Mean change in ppg for players who played 8+ games both years; 'top-12' rows are players who finished top-12 at RB/WR (top-6 at TE/QB). These effects are now applied to the production half of every projection (RB -0.33 ppg per year of age plus -0.32 per year past 28; WR -0.36 per year; TE -0.10; QB -0.27; and an extra -1.5 RB / -1.0 WR after a career-year jump of 4+ ppg).
+
+| Group | n | Played 8+ next year | Mean ppg change | Dropped 5+ ppg |
+|---|---|---|---|---|
+| RB top-12, age 24 or under | 16 | 81% | -1.0 | 15% |
+| RB top-12, 25-26 | 29 | 97% | -1.7 | 25% |
+| RB top-12, 27-28 | 18 | 89% | -1.4 | 19% |
+| RB top-12, 29-30 | 7 | 71% | -5.1 | 60% |
+| WR top-12, 24 or under | 14 | 93% | +0.3 | 8% |
+| WR top-12, 25-27 | 31 | 87% | -2.5 | 19% |
+| WR top-12, 28-29 | 14 | 100% | -0.8 | 0% |
+| WR top-12, 30-31 | 9 | 100% | -2.9 | 22% |
+| TE top-6 (all ages) | 36 | 92% | -2.2 | 30% |
+| QB top-6 (all ages) | 36 | 92% | -2.6 | 33% |
+| RB career year (jump 4+ to 14+ ppg) | 25 | 96% | -4.3 | see text |
+| RB steady 14+ ppg (no jump) | 21 |  | -2.7 |  |
+| WR career year (jump 4+ to 14+ ppg) | 30 | 90% | -3.5 |  |
+| WR steady 14+ ppg (no jump) | 46 |  | -2.5 |  |
+| All RB by age band: 25-26 / 27-28 / 29-30 / 31+ | 103 / 49 / 20 / 12 |  | -1.1 / -2.2 / -3.7 / -4.2 |  |
+| All WR by age band: 25-27 / 28-29 / 30-31 / 32+ | 156 / 61 / 31 / 22 |  | -1.1 / -2.2 / -2.2 / -4.1 |  |
+
 ### Injury model: games missed the following season by fantasy-relevant players (2023-24 and 2024-25 transitions, top 70 RB/WR and top 24 TE/QB by prior-year points)
 
 Each player's Inj column is the mean for his bucket (position, age band, games missed the prior year), shrunk toward the position mean when the bucket is small. Prior-year missed games predict next-year missed games only weakly (r = 0.22), which is why age and position carry most of the weight. Zero-game seasons (camp injuries, cuts) are included for RB/WR/TE, so these are availability numbers, not pure injury numbers.
