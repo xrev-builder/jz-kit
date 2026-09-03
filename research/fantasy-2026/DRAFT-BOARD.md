@@ -423,70 +423,76 @@ Pick 4 · draft Sunday Sept 6 · 6-pt passing TD, +2 per 300-yd passing game, +2
 
 ### Game plan
 
-1. Six of ten make the playoffs, so regular-season points are worth about 1.2x playoff points here: keep the ceiling-first posture but pay for floor inside a tier (Bijan over Gibbs, JSN over Chase, Achane up).
-2. Six-point passing TDs lift every QB, including replacement: the QB1-vs-QB11 gap was 4.8 ppg in this format, the same as 4-pt. What changes is the order: Allen 26.3, Maye 24.5, Mahomes 23.8, Lawrence 23.4, Dak 22.7, Goff 22.2, Herbert 21.8. Stafford's 26.6 came on a 7.7% TD rate (league 4.6%) and ESPN rooms already price him QB8: he is a pick-64/77 target, not a reach.
-3. QB fork: Allen at 24 if there (about 60% in simulated rooms), otherwise Maye at 37 (88-98%). Never both. If neither, wait for Mahomes/Lawrence/Dak/Stafford at 64-77.
-4. At pick 4, ESPN's printed top three are Bijan/Gibbs/CMC. Expect JSN; Chase is the bonus. Decide JSN over Nacua now (open conduct review costs more in a 6-team playoff league) so there is no clock panic.
-5. Bench: 3 RB, 2 WR, 1 swing that is a Weeks 1-4 starter, never a Week-8 return. IR-tagged stash at 137 only if a handcuff is already on the roster.
+1. This room, not the ESPN average, is the model now: two years of the same ten drafters (2024 and 2025 boards transcribed). Rounds 1-3 are half WRs, so WRs do not slide; the QB run comes in rounds 3-5 (six QBs between picks 30 and 47 last year); elite TEs go in round 3; DST goes in round 14.
+2. Pick 4: last year picks 1-3 were Chase, Barkley, Bijan and pick 4 was Gibbs. Expect Chase, Bijan, Gibbs gone. The simulation prefers Nacua (13.6% title) to JSN (11.0%) even with a 35% chance of a 3-game suspension priced in: take Nacua unless a suspension of 4+ games is announced before Sunday, then JSN. Taylor is a legitimate third option (12.0%).
+3. Six-point passing TDs lift every QB, including replacement: the QB1-vs-QB11 gap is the same as in 4-pt scoring. Allen went 30th here last year (Billy, at the turn). Allen at 24 is the one QB worth a round-3 pick; Maye at 37 is the second and last chance before the run; if both are gone, wait. Kass, Sleiman, and Doug let Dak, Lawrence, and Goff reach picks 135-145 last year.
+4. Chase Brown went 23rd here last year (Sleiman) and is the one RB1-ceiling back likely to reach 17. Jeanty went 9th last year and is cheaper now after the ankle; Ish or Betto will take him if he is there at 17.
+5. Bench: 3 RB, 2 WR, 1 swing that is a Weeks 1-4 starter. IR-tagged stash at 137 only if a handcuff is already rostered. Six of ten make the playoffs, so regular-season points count about 1.2x playoff points here.
 
 ### Round by round
 
 | Rd | Pick | Targets, in order | If they are gone | Rule |
 |---|---|---|---|---|
-| R1 | 4 | Bijan, Gibbs, Chase, JSN, Nacua, McCaffrey (in that order). Expect JSN | Never reached | McCaffrey only on clean practice reports; Nacua behind JSN because of the open conduct review |
-| R2 | 17 | If R1 was a WR: Chase Brown (91%), Jeanty (48%), McBride (45-64%). If R1 was an RB: London, A.J. Brown, Collins | Olave, Pickens | Take the scarcer tier at 17; the 17/24 gap is 6 picks, treat them as independent |
-| R3 | 24 | Josh Allen if there (~60%); else Collins, A.J. Brown, Olave, Pickens, Nabers | Rice, DeVonta Smith | Allen at 24 is the one QB worth a round-3 pick in 6-pt scoring |
-| R4 | 37 | Maye if you did not get Allen (88-98% there); else DeVonta Smith, Garrett Wilson, Flowers, McMillan | Egbuka, Tee Higgins | Maye is a pick-37 decision: the QB run (Burrow 58, Hurts 60, Daniels 62) starts two rounds later |
-| R5 | 44 | RB2: Judkins, Montgomery, Irving, Skattebo, Swift | Egbuka, McConkey, Waddle, Loveland | The ESPN RB run is picks 44-53; enter at the front |
-| R6 | 57 | WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore; Price if RB2 is still open | Odunze, Jameson Williams | WR discount window |
-| R7 | 64 | Lloyd; Stafford only if you have no QB (ESPN rooms take him ~76); else Stevenson, Henderson, Jameson Williams, Odunze | Kraft, Pitts if TE-less | RB3 or WR4 |
-| R8 | 77 | If no QB: Mahomes, Lawrence, Dak, Stafford, Herbert. Otherwise RB3/WR4 (Lloyd if still there, Stevenson, Henderson, Tate, BTJ) | Kraft, Fannin, Pitts | Starters done by R9 |
+| R1 | 4 | Bijan, Gibbs, Chase if any fell; else Nacua (default), JSN if a 4+ game suspension is announced, Taylor if you want the RB | McCaffrey only on clean practice reports | Decide Nacua vs JSN before you sit down; the room takes ~30 seconds |
+| R2 | 17 | Chase Brown (went 23 here last year), Jeanty, McBride (went 31), Cook if he fell | Collins, A.J. Brown, London if one is still there (they went 10-16 last year) | Take the scarcer piece at 17; this room does not let WR1s slide to 24 |
+| R3 | 24 | Josh Allen if there (went 30 last year); else McBride if there; else Pickens, Olave, Rice, DeVonta Smith | Nabers with good Wk-1 news, Garrett Wilson | Allen at 24 is the only QB worth a round-3 pick; Billy takes him at the turn if you do not |
+| R4 | 37 | Maye if you did not take Allen; else Garrett Wilson, Flowers, DeVonta Smith, McMillan, Tee Higgins | Egbuka, McConkey; Judkins/Montgomery if the RB2 tier is thinning | The QB run was picks 30-47 last year: Maye is a 37 decision, never a 44 decision |
+| R5 | 44 | RB2: Judkins, Montgomery, Irving, Skattebo, Swift (Hall, Hubbard, Pollard went 41-50 here last year) | Egbuka, McConkey, Waddle; do NOT take Burrow/Lamar/Hurts/Daniels in the run | Enter the RB run at 44 |
+| R6 | 57 | WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore; Price if RB2 is still open | Odunze, Jameson Williams (Kittle/LaPorta/Kelce went 56-62 here; let them go) | WR discount window |
+| R7 | 64 | Lloyd; else Stevenson, Henderson, Jameson Williams, Odunze; Kraft if TE-less (never drafted here last year) | Pitts, Fannin | RB3 or WR4 |
+| R8 | 77 | If no QB: Mahomes, Lawrence, Dak, Stafford, Herbert (Mayfield went 73 and Nix 85 here; Dak/Lawrence went 144). Otherwise RB3/WR4: Stevenson, Henderson, Tate, BTJ | Kraft, Fannin, Pitts | Starters done by round 9 |
 | R9 | 84 | The other of QB / WR4 / TE | Parker Washington, Sutton, Wan'Dale Robinson, Michael Wilson | Fill the lineup |
-| R10 | 97 | RB4: Dowdle, Dobbins, Harvey, Gainwell, Hubbard, Pollard, Croskey-Merritt | Purdy, Goff, Nix if no QB (all score well in 6-pt) | Late RB volume |
-| R11 | 104 | WR5: Michael Wilson, Diggs, Pittman, Q. Johnston, Pierce (50-yd TD bonus), Meyers | Kyler or Daniel Jones as QB2 only if Stafford is your QB1 | Volume |
+| R10 | 97 | RB4: Dowdle, Dobbins, Harvey, Gainwell, Hubbard, Pollard, Croskey-Merritt | Purdy, Goff, Nix if no QB (this room leaves them to 135+) | Late RB volume |
+| R11 | 104 | WR5: Michael Wilson, Diggs, Pittman, Q. Johnston, Pierce, Meyers | QB if still none: Purdy, Goff, Dak, Lawrence will be there | Volume |
 | R12 | 117 | Handcuff-plus: Corum, Mason, Allgeier, Emmett Johnson, Bigsby, Monangai, Marks | Concepcion, Golden, Reed | Backups with standalone value |
 | R13 | 124 | Upside WR: Concepcion, Golden, Reed, Doubs, Coker, Stribling, Deebo, Worthy | Kelce, Goedert, Ferguson if TE-less | Ceiling swings |
-| R14 | 137 | Your RB1's handcuff (Brian Robinson for Bijan, Vaki for Gibbs, Kaelon Black for CMC) or a Weeks 1-4 starter (Allgeier, Croskey-Merritt) | IR stash (Tyson) if the handcuff is already rostered | Jacobs is a pass in this league |
-| R15 | 144 | DST: Chargers, Browns, Seahawks, Vikings, Bears | Eagles, Steelers, Lions | Stream from Week 3 |
+| R14 | 137 | Your RB1's handcuff (Black for CMC, Vaki for Gibbs, B. Robinson for Bijan, McGowan for Taylor) or a Weeks 1-4 starter (Allgeier, Croskey-Merritt) | IR stash (Tyson) if the handcuff is rostered | Jacobs is a pass here |
+| R15 | 144 | DST: Chargers, Browns, Seahawks, Vikings, Bears (seven of ten DSTs went in round 14 here last year) | Eagles, Steelers, Lions | Stream from Week 3 |
 
-### ESPN-room buys
+### Footborn room profile (2024 and 2025 boards)
 
-- Josh Allen at 24 (room ~24; ~60% there)
-- Drake Maye at 37 (room ~48)
-- Chase Brown at 17 (room ~26)
-- Collins, A.J. Brown, Olave, Pickens at 24
+- Rounds 1-3: 15 WR / 13 RB last year, 14 / 14 the year before. WR1s went 10-19; JSN went 29 after his 2024 season.
+- QB run: picks 30-47 last year (Allen, Daniels, Lamar, Burrow, Hurts, Mahomes), then Mayfield 73, Nix 85, and nothing until 135-145 (Goff, Dak, Lawrence). Two years ago the run was 49-64.
+- TE: Bowers 28, McBride 31; Kittle/LaPorta/Kelce 56-62; Loveland and Warren went 110-118 before their breakouts.
+- RB2 tier went 41-50 (Hall, Hubbard, Pollard, Kamara). Rookies go at consensus price (Jeanty 9, Henderson 34, Hampton 37, Egbuka 56).
+- DST: one at 112, the rest 130-146. Nobody takes a second QB before round 14.
+
+### Who does what
+
+- Ish: RB-first (Bijan, Jacobs, Walker in rounds 1-3), QB in round 5. Expect him on Love/Jeanty/Chase Brown early.
+- Billy: QB and TE early (Allen round 3, McBride round 4). If he picks between your 17 and 24, Allen is gone.
+- Betto: young upside (Jeanty round 1, JSN round 3, Daniels round 4); the other Jeanty/Love threat.
+- Moe: WR, WR, then Bowers in round 3; late QB (Mayfield round 8).
+- Abu Ali and Ach: a QB in round 4 (Lamar, Burrow) and a name-brand WR in round 3.
+- Kass, Sleiman, Doug: never take a QB before round 9; Kass drafts veterans (Adams, Kamara-types), Sleiman is RB-early and grabbed Chase Brown at 23.
+- You (2025): Lamb, BTJ, Cook, Hampton, Mahomes at 47. Your leaguemates expect you to take a QB in round 5; use that.
+
+### ESPN-room buys, adjusted to this room
+
+- Josh Allen at 24 (about a coin flip; Billy at the turn is the risk)
+- Drake Maye at 37 (must happen at 37)
+- Chase Brown at 17
 - Judkins / Montgomery / Irving / Skattebo at 44
 - MarShawn Lloyd at 57-64
-- Mahomes, Lawrence, Dak at 64-77 if you missed Allen/Maye (all 22.7-23.8 ppg here)
-- Purdy, Goff, Nix at 97+ (300-yd and 6-pt TD scoring)
-- Alec Pierce, Xavier Worthy late (50-yd TD bonus)
+- Mahomes, Lawrence, Dak, Stafford at 77 if you missed Allen/Maye
+- Purdy, Goff at 97+ (they reached 135+ here last year)
+- Kraft at 64-84 (undrafted here last year)
 
-### Do not pay the ESPN price
+### Do not pay this room's price
 
-- Jeremiyah Love (room ~25)
-- Omarion Hampton at 20
-- Derrick Henry at 19
-- Lamar Jackson at 38 (2 rush TD in 13 games last year)
-- Stafford before 64 (room prices him QB8; 46 TD came on a 7.7% TD rate)
+- Jeanty above 17 (went 9 last year)
+- Any QB other than Allen/Maye between 30 and 47
+- Bowers/McBride before 17
+- Kittle/LaPorta/Kelce at 56-62 when Kraft is free later
 - Josh Jacobs (misses 6+ in a 6-team playoff league)
-- Davante Adams at 46
-- Any DST before round 14
+- Any DST before 137
 
 ### Status watch (as of Sept 3)
 
-- Nacua: NFL review open, no ruling (opener Sept 10)
+- Nacua: NFL review open, no ruling (opener Sept 10); the pick-4 decision hinges on it
 - Chase, Higgins: limited, expected Wk 1
 - Jeanty, Love, Nabers, Kittle, Walker, Egbuka, McCaffrey: see Ratz tab
-- Mahomes: ACL/LCL rehab, no preseason snaps, on track for Mon Sept 14
-- Stafford: 38, no injury news
-
-### Room tactics
-
-- Decide JSN vs Nacua vs CMC before the draft; at pick 4 you will have about 30 seconds.
-- The 17/24 gap is six picks: do not 'wait' on anyone priced under 30 by the room.
-- If Allen is gone at 24, Maye at 37 is the plan; if Maye is also gone, do not chase Burrow/Hurts/Daniels at 44, wait for 64-77.
-- Enter the RB run at 44, not 57.
-- Cross names off the ESPN printed sheet; it is the room's model.
+- Mahomes: ACL/LCL rehab, on track for Mon Sept 14
 
 ### Rankings by position
 
@@ -951,6 +957,22 @@ League A playoff weeks. League average is 83.4. Tiebreak only; defenses change.
 - Per player, derived: shrunken projection (8-game prior toward own 2024 or the positional pool), value over the 2-FLEX replacement, TD-rate regression, expected-points gap, and availability-weighted season points (projection times 17 minus expected games missed).
 - Not modeled, and worth adding before Sunday if time allows: (1) a per-player weekly injury hazard instead of one contiguous block; (2) opponent-specific weekly projections (the schedule strength above is only used as a tiebreak); (3) target and carry share stability across QB changes (Jefferson with Murray, A.J. Brown with Maye) using route-participation data from the FTN charting file already on disk; (4) explicit 50-yard TD rates for League B from play-by-play; (5) a proper ESPN ADP feed for the room model (today's room prices are verified anchors plus a modelled skew, about +/-10 picks); (6) correlation between teammates in the weekly sim (stacks and anti-stacks currently score independently); (7) waiver-wire replacement modeled as a draft of the undrafted pool rather than a flat 9.5 ppg.
 - Where more data lives: nflverse (play-by-play, FTN charting, snap counts, injuries, participation), ffopportunity (expected points), DynastyProcess (daily expert-consensus and ADP snapshots), all reachable from this environment; ESPN's own ADP and the 2026 injury file were not reachable today.
+
+### Footborn draft-room history (transcribed from the 2024 and 2025 boards)
+
+Positional picks by round. The room is the model for pick 4: WRs go early, QBs run in rounds 3-5, DSTs in round 14.
+
+| Round | 2025 RB/WR/TE/QB/DST | 2024 RB/WR/TE/QB/DST | Notable 2025 picks |
+|---|---|---|---|
+| 1 | 5/5/0/0/0 | 5/5/0/0/0 | Chase 1, Barkley 2, Bijan 3, Gibbs 4, Jefferson 5, CMC 6, Lamb 7, Nabers 8, Jeanty 9, Collins 10 |
+| 2 | 5/5/0/0/0 | 4/6/0/0/0 | Henry 11, ASB 12, Nacua 13, BTJ 14, AJB 15, Achane 16, London 17, Jacobs 18, Irving 19, Taylor 20 |
+| 3 | 3/5/1/1/0 | 5/3/2/0/0 | Hill 21, Higgins 22, Walker 23, C. Brown 24, McConkey 25, Adams 26, Cook 27, Bowers 28, JSN 29, Allen 30 |
+| 4 | 3/3/1/3/0 | 3/7/0/0/0 | McBride 31, Daniels 32, Kyren 33, Hampton 34, MHJ 35, McLaurin 36, Henderson 37, G. Wilson 38, Lamar 39, Burrow 40 |
+| 5 | 4/4/0/2/0 | 3/5/1/1/0 | Metcalf 41, McMillan 42, Hurts 43, Sutton 44, Pollard 45, Hall 46, Mahomes 47, Kamara 48, Hubbard 49, Evans 50 |
+| 6-7 | 6/11/3/0/0 | 3/12/2/3/0 | Kittle 56, LaPorta 61, Kelce 62; Egbuka 56, Rice 66, Golden 67 |
+| 8-9 | 8/9/1/2/0 | 6/9/3/2/0 | Mayfield 73, Nix 85; Olave 74, Odunze 88 |
+| 10-13 | 15/19/4/0/2 | 15/13/5/4/3 | Skattebo 101, Warren 110, Loveland 118 |
+| 14-15 | 2/6/1/3/8 | 4/2/1/3/10 | Goff 135, Dak 144, Lawrence 145; 7 DSTs in round 14 |
 
 ---
 
