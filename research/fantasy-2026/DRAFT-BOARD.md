@@ -867,6 +867,50 @@ Why the first two rounds are RB/WR, why McBride is a round-2 pick, and why QB wa
 | 6 of 10 | 0 | +3 | 0.605 | 0.123 |
 | 6 of 10 | -3 | +3 | 0.465 | 0.091 |
 
+### Injury model: games missed the following season by fantasy-relevant players (2023-24 and 2024-25 transitions, top 70 RB/WR and top 24 TE/QB by prior-year points)
+
+Each player's Inj column is the mean for his bucket (position, age band, games missed the prior year), shrunk toward the position mean when the bucket is small. Prior-year missed games predict next-year missed games only weakly (r = 0.22), which is why age and position carry most of the weight. Zero-game seasons (camp injuries, cuts) are included for RB/WR/TE, so these are availability numbers, not pure injury numbers.
+
+| Bucket | n | Mean games missed | P(miss 4+) | P(miss 8+) | P(miss 0) |
+|---|---|---|---|---|---|
+| RB under 27, 0 missed last year | 27 | 2.3 | 15% | 7% | 37% |
+| RB under 27, 1-3 missed | 37 | 4.4 | 41% | 24% | 35% |
+| RB under 27, 4+ missed | 24 | 6.0 | 58% | 33% | 12% |
+| RB 27-28, 0-3 missed | 20 | 4.3 | 30% | 20% | 30% |
+| RB 29+, 1-3 missed (Barkley) | 12 | 9.1 | 83% | 42% | 0% |
+| RB 29+, 4+ missed | 10 | 6.3 | 40% | 30% | 20% |
+| WR under 30, 0 missed | 39 | 3.5 | 36% | 15% | 31% |
+| WR under 30, 1-3 missed | 56 | 3.3 | 29% | 16% | 25% |
+| WR under 30, 4+ missed | 20 | 4.6 | 45% | 25% | 10% |
+| WR 30+ (all) | 25 | 4.6 | 43% | 24% | 24% |
+| TE, 0 missed | 18 | 2.3 | 28% | 11% | 33% |
+| TE, 1-3 missed | 26 | 4.8 | 54% | 23% | 23% |
+| QB (all, excluding benchings) | 48 | 3.9 | 35% | 19% | 29% |
+| All RB | 140 | 4.9 | 42% | 24% |  |
+| All WR | 140 | 3.8 | 36% | 19% |  |
+
+### Title odds conditional on your key players' health (Ratz plan roster, 1,500 seasons)
+
+Same simulator. Read with the base rates: 24% of fantasy-relevant RBs missed 8+ games the following season across 2023-25. The plan's edge survives a mid-season Gibbs injury because the RB2 at 42 and the handcuff at 142 backstop it; it does not survive losing him for half the year.
+
+| Condition | Seasons | Make playoffs | Win title |
+|---|---|---|---|
+| Gibbs plays all 17 | 556 | 96% | 22.3% |
+| Gibbs misses 1-3 | 714 | 95% | 15.4% |
+| Gibbs misses 4-7 | 104 | 87% | 15.4% |
+| Gibbs misses 8+ | 126 | 71% | 10.3% |
+| Gibbs out for any of Weeks 15-17 | 257 | 88% | 13.6% |
+| Gibbs available all playoff weeks | 1,243 | 94% | 18.3% |
+| McBride misses 4+ | 422 | 89% | 15.4% |
+| McBride plays all 17 | 544 | 94% | 20.8% |
+| All seasons | 1,500 | 93% | 17.5% |
+
+### 2025 actual vs expected fantasy points (ffopportunity expected-points model, PPR, players with 8+ games incl. playoffs)
+
+- Outperformed expectation by 3+ ppg (usage did not justify the points; regression risk): Gibbs +3.6, Achane +3.5, Taylor +3.3, Bijan +2.5, Cook +2.1; Nacua +3.7, JSN +3.3, Higgins +2.3, Flowers +2.2, Pickens +1.8; Kraft +5.8, Kincaid +3.2, LaPorta +3.0, Kittle +2.9; Allen +2.3.
+- Underperformed expectation (usage justified more points; bounce candidates): Jefferson -2.8, Odunze -2.8, Adams -2.5, Egbuka -2.5, Lamb -1.7; Barkley -1.7, Javonte -1.3, Judkins -0.8, McCaffrey -0.8; Warren -1.5, Ferguson -0.8; Dak -2.4, Lawrence -1.4.
+- How it was used: as a cross-check, not a rank driver. It agrees with the board on Jefferson, Odunze, Egbuka, Lamb (already ranked above their 2025 ppg) and on Higgins/Kraft/Goedert (already discounted). It argues for a little more caution on the elite RBs' 2025 totals and a little more optimism on Barkley's volume, which the age model overrides.
+
 ### Draft-strategy evidence (2018-2025)
 
 - Round-1 RBs and WRs finish top-12 at their position about half the time (RB 54%, WR 48%) and bust ~36%; the WR edge is small, so take the elite RB when the RB tier is thinner.
@@ -900,6 +944,13 @@ League A playoff weeks. League average is 83.4. Tiebreak only; defenses change.
 - Contrarian drafter: Hero-RB with the RB2 at 39-44 beat Zero-RB by ~5 ppg and Robust-RB in both leagues; McBride at 19 made the default; Kraft (not Loveland) as the TE fallback; handcuff and IR stash are both draftable because the IR slot is a 16th spot; Gibbs-injury contingency = Vaki at 142.
 - Settings specialist: confirmed the scoring model term by term (League B's +2 per 50-yd TD is not in the data and is treated as a tiebreak); Monte Carlo on playoff formats; DST order rebuilt on 2025 DST points under this exact scale plus Weeks 1-4 opponents; ESPN IR rule (IR/O-tagged only) applied.
 - News auditor: all 150 skill players in the top 160 matched Sept 2 depth charts and rosters; fixed JSN's OC, Hall's extension, Love's 50/50 status, Egbuka/Godwin, Achane's WR corps, Jacobs' open-ended exempt list, Pacheco's Week-7 return.
+
+### What was analyzed for each player, and what would sharpen it
+
+- Per player, from verified data: 2025 and 2024 games, points per game under each league's exact scoring (yardage bonuses included), weekly standard deviation, 25th-percentile week, best-6-week average, targets, target share, receptions, receiving yards and TDs, carries, rushing yards and TDs, 100-yard rushing and receiving game counts, passing yards/TDs/INTs and 300-yard games, offensive snap share, age on Sept 10, draft year and round, 2026 team, Sept 2 depth-chart slot, roster status (active / IR / PUP / exempt), bye week, expert consensus overall and positional rank (Aug 28), estimated ESPN room price, expected games missed (injury model), 2026 Weeks 15-17 opponents' 2025 points allowed by position, and dated Sept 1-3 injury and role reporting.
+- Per player, derived: shrunken projection (8-game prior toward own 2024 or the positional pool), value over the 2-FLEX replacement, TD-rate regression, expected-points gap, and availability-weighted season points (projection times 17 minus expected games missed).
+- Not modeled, and worth adding before Sunday if time allows: (1) a per-player weekly injury hazard instead of one contiguous block; (2) opponent-specific weekly projections (the schedule strength above is only used as a tiebreak); (3) target and carry share stability across QB changes (Jefferson with Murray, A.J. Brown with Maye) using route-participation data from the FTN charting file already on disk; (4) explicit 50-yard TD rates for League B from play-by-play; (5) a proper ESPN ADP feed for the room model (today's room prices are verified anchors plus a modelled skew, about +/-10 picks); (6) correlation between teammates in the weekly sim (stacks and anti-stacks currently score independently); (7) waiver-wire replacement modeled as a draft of the undrafted pool rather than a flat 9.5 ppg.
+- Where more data lives: nflverse (play-by-play, FTN charting, snap counts, injuries, participation), ffopportunity (expected points), DynastyProcess (daily expert-consensus and ADP snapshots), all reachable from this environment; ESPN's own ADP and the 2026 injury file were not reachable today.
 
 ---
 

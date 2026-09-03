@@ -1,0 +1,9 @@
+Gibbs plays all 17                            n=  556  P(playoffs)=0.962  P(title)=0.223
+Gibbs misses 1-3                              n=  714  P(playoffs)=0.945  P(title)=0.154
+Gibbs misses 4-7                              n=  104  P(playoffs)=0.865  P(title)=0.154
+Gibbs misses 8+                               n=  126  P(playoffs)=0.706  P(title)=0.103
+Gibbs misses any playoff week (15-17)         n=  257  P(playoffs)=0.875  P(title)=0.136
+Gibbs available all playoff weeks             n= 1243  P(playoffs)=0.936  P(title)=0.183
+McBride misses 4+                             n=  422  P(playoffs)=0.891  P(title)=0.154
+McBride plays all 17                          n=  544  P(playoffs)=0.936  P(title)=0.208
+overall 0.926 0.175

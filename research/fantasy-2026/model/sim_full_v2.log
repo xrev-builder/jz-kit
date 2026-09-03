@@ -1,0 +1,29 @@
+{'label': 'Plan (McBride at 19)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.945, 'p_title': 0.177, 'avg_wins': 8.15, 'avg_ppg': 129.43848934202026}
+{'label': 'Plan (London at 19, Kraft TE)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.901, 'p_title': 0.142, 'avg_wins': 7.8455, 'avg_ppg': 127.75687772679215}
+{'label': 'Zero-RB (Chase at 2)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.9105, 'p_title': 0.1455, 'avg_wins': 7.8025, 'avg_ppg': 126.95242349540875}
+{'label': 'Robust-RB', 'league': 'A', 'injuries': True, 'p_playoffs': 0.928, 'p_title': 0.158, 'avg_wins': 8.064, 'avg_ppg': 128.93248831292863}
+{'label': 'Early QB (Allen at 19)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.928, 'p_title': 0.175, 'avg_wins': 8.088, 'avg_ppg': 129.1196427903799}
+{'label': 'Plan (McBride at 19) [no injuries]', 'league': 'A', 'injuries': False, 'p_playoffs': 0.9255, 'p_title': 0.173, 'avg_wins': 7.942, 'avg_ppg': 136.82293359529245}
+{'label': 'ESPN-sheet drafter at this slot', 'league': 'A', 'injuries': True, 'p_playoffs': 0.828, 'p_title': 0.0815, 'avg_wins': 7.057, 'avg_ppg': 122.92597775584463} roster: ['Jahmyr Gibbs', 'George Pickens', 'Jeremiyah Love', 'Quinshon Judkins', 'Ladd McConkey', 'Kyle Pitts Sr.', 'Rome Odunze', 'Matthew Stafford', 'Parker Washington', 'Jonathon Brooks', 'Alec Pierce', 'Tyler Allgeier', 'Jaxson Dart', 'Jacksonville Jaguars', 'Chris Godwin Jr.']
+{'label': 'Plan (Allen at 24)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.699, 'p_title': 0.1165, 'avg_wins': 7.429, 'avg_ppg': 128.21851824968778}
+{'label': 'Plan (Collins at 24, Maye at 37)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.6485, 'p_title': 0.095, 'avg_wins': 7.1455, 'avg_ppg': 127.00062154781105}
+{'label': 'Zero-RB', 'league': 'B', 'injuries': True, 'p_playoffs': 0.689, 'p_title': 0.1395, 'avg_wins': 7.411, 'avg_ppg': 128.48852062993728}
+{'label': 'Robust-RB', 'league': 'B', 'injuries': True, 'p_playoffs': 0.677, 'p_title': 0.095, 'avg_wins': 7.3205, 'avg_ppg': 127.38366670469509}
+{'label': 'Late QB (Mahomes at 77)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.6795, 'p_title': 0.106, 'avg_wins': 7.356, 'avg_ppg': 127.70923666502716}
+{'label': 'Plan (Allen at 24) [no injuries]', 'league': 'B', 'injuries': False, 'p_playoffs': 0.664, 'p_title': 0.113, 'avg_wins': 7.2455, 'avg_ppg': 136.26354660438332}
+{'label': 'ESPN-sheet drafter at this slot', 'league': 'B', 'injuries': True, 'p_playoffs': 0.691, 'p_title': 0.128, 'avg_wins': 7.424, 'avg_ppg': 128.34082499978493} roster: ['Jonathan Taylor', 'Kenneth Walker III', 'Nico Collins', 'DeVonta Smith', 'Emeka Egbuka', 'Tyler Warren', 'Joe Burrow', 'Rico Dowdle', 'MarShawn Lloyd', 'Stefon Diggs', 'Khalil Shakir', 'Romeo Doubs', 'Bo Nix', 'New England Patriots', 'Juwan Johnson']
+                             label league  injuries  p_playoffs  p_title  avg_wins  avg_ppg
+              Plan (McBride at 19)      A      True       0.945    0.177     8.150  129.438
+     Plan (London at 19, Kraft TE)      A      True       0.901    0.142     7.846  127.757
+              Zero-RB (Chase at 2)      A      True       0.910    0.146     7.802  126.952
+                         Robust-RB      A      True       0.928    0.158     8.064  128.932
+            Early QB (Allen at 19)      A      True       0.928    0.175     8.088  129.120
+Plan (McBride at 19) [no injuries]      A     False       0.926    0.173     7.942  136.823
+   ESPN-sheet drafter at this slot      A      True       0.828    0.082     7.057  122.926
+                Plan (Allen at 24)      B      True       0.699    0.116     7.429  128.219
+  Plan (Collins at 24, Maye at 37)      B      True       0.648    0.095     7.146  127.001
+                           Zero-RB      B      True       0.689    0.140     7.411  128.489
+                         Robust-RB      B      True       0.677    0.095     7.320  127.384
+           Late QB (Mahomes at 77)      B      True       0.680    0.106     7.356  127.709
+  Plan (Allen at 24) [no injuries]      B     False       0.664    0.113     7.246  136.264
+   ESPN-sheet drafter at this slot      B      True       0.691    0.128     7.424  128.341

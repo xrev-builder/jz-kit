@@ -1,0 +1,15 @@
+label,league,injuries,p_playoffs,p_title,avg_wins,avg_ppg
+Plan (McBride at 19),A,True,0.945,0.177,8.15,129.43848934202026
+"Plan (London at 19, Kraft TE)",A,True,0.901,0.142,7.8455,127.75687772679215
+Zero-RB (Chase at 2),A,True,0.9105,0.1455,7.8025,126.95242349540875
+Robust-RB,A,True,0.928,0.158,8.064,128.93248831292863
+Early QB (Allen at 19),A,True,0.928,0.175,8.088,129.1196427903799
+Plan (McBride at 19) [no injuries],A,False,0.9255,0.173,7.942,136.82293359529245
+ESPN-sheet drafter at this slot,A,True,0.828,0.0815,7.057,122.92597775584463
+Plan (Allen at 24),B,True,0.699,0.1165,7.429,128.21851824968778
+"Plan (Collins at 24, Maye at 37)",B,True,0.6485,0.095,7.1455,127.00062154781105
+Zero-RB,B,True,0.689,0.1395,7.411,128.48852062993728
+Robust-RB,B,True,0.677,0.095,7.3205,127.38366670469509
+Late QB (Mahomes at 77),B,True,0.6795,0.106,7.356,127.70923666502716
+Plan (Allen at 24) [no injuries],B,False,0.664,0.113,7.2455,136.26354660438332
+ESPN-sheet drafter at this slot,B,True,0.691,0.128,7.424,128.34082499978493
