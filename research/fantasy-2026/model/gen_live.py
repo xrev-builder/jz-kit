@@ -99,10 +99,10 @@ function expectedLineup(names,availP,cur,picks){
   if(best)have.push(best.n); else break}
  return lineup(have)}
 function render(){
- const cur=st.taken.length+1; const picks=myPicks(st.slot); const nxt=picks.find(p=>p>=cur)||151; const nxt2=picks.find(p=>p>nxt)||151;
+ const cur=st.taken.length+1; const picks=myPicks(st.slot); const onMe=picks.includes(cur); const nxt=(onMe?picks.find(p=>p>cur):picks.find(p=>p>=cur))||151; const nxt2=picks.find(p=>p>nxt)||151;
  const onClock=((cur-1)%10); const rd=Math.floor((cur-1)/10); const slotOn=(rd%2===0?onClock+1:10-onClock);
  $('#cur').textContent=cur>150?'done':cur; $('#curwho').textContent=cur>150?'':(slotOn===st.slot?'YOU':'slot '+slotOn);
- $('#nextp').textContent=nxt>150?'--':nxt; $('#nextp2').textContent=nxt2>150?'':('then '+nxt2);
+ $('#nextp').textContent=nxt>150?'--':(onMe?'now, then '+nxt:nxt); $('#nextp2').textContent=nxt2>150?'':('then '+nxt2);
  const takenSet=new Set(st.taken); const mineSet=new Set(st.mine);
  const availP=DATA.filter(d=>!takenSet.has(d.n));
  const base=expectedLineup(st.mine,availP,cur,picks); $('#tppg').textContent=base.toFixed(1);

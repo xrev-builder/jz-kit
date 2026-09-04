@@ -118,6 +118,8 @@ def project(lg):
         if not (pd.notna(sd) and g>=8): sd=CV[r.pos]*mean
         sd=max(sd,3.0)
         rows[r.player]=dict(pos=r.pos,team=TEAM.get(r.key,'FA'),mean=mean,sd=sd,bye=int(r.bye) if pd.notna(r.bye) else 0,age=r.age if pd.notna(r.age) else 25,g25=g,exp_missed=(r.exp_missed if pd.notna(r.exp_missed) else 4)+inj_add(r.key,r.pos)+NEWS_MISSED.get(r.player,0)+LING.get(r.player,(1.0,0.0))[1],adp=r.espn_adp if pd.notna(r.espn_adp) else (r.ecr_ovr if pd.notna(r.ecr_ovr) else 300),ecr=r.ecr_ovr)
+    for k,v in rows.items():   # IR/PUP/exempt players: known games missed override the model
+        if k in OVERRIDE: v['exp_missed']=max(v['exp_missed'],float(OVERRIDE[k]))
     for r in m[m.pos=='DST'].itertuples():
         rows[r.player]=dict(pos='DST',team='DST',mean=7.0,sd=6.0,bye=int(r.bye) if pd.notna(r.bye) else 0,age=0,g25=17,exp_missed=0,adp=r.espn_adp if pd.notna(r.espn_adp) else r.ecr_ovr,ecr=r.ecr_ovr)
     return rows
