@@ -92,7 +92,7 @@ def av(n,team,pos):
     bg,fg=TC.get(t,('#8A8F98','#fff'))
     if pos=='DST': bg,fg=TC.get(t,(bg,fg))
     if n in HS: return f'<img class="av" src="{HS[n]}" alt="" loading="lazy">'
-    return f'<span class="av" style="--tc:{bg};--ti:{fg}">{initials(n) if pos!="DST" else esc(t)}</span>'
+    return f'<span class="av" data-tm="{esc(t)}">{initials(n) if pos!="DST" else esc(t)}</span>'
 def pb(pos): return f'<em class="pb {pos}">{pos}</em>'
 
 USER_SLOT={'A':2,'B':4}
@@ -153,6 +153,7 @@ def league(lg):
 {board(lg)}
 </div>'''
 
+TEAM_CSS=''.join(f'.av[data-tm="{t}"]{{--tc:{bg};--ti:{fg}}}' for t,(bg,fg) in TC.items())
 EXTRA_CSS='''
 <style>
 :root{--r:8px;--sh:0 1px 2px rgba(20,25,29,.06),0 4px 14px rgba(20,25,29,.05)}
@@ -167,9 +168,9 @@ h1{font-size:30px;letter-spacing:-.01em} .about summary{cursor:pointer;color:var
 .thesis,.card,.tw,.stat,.onclock,.recbox,.nextup .nu,.pickbox{border-radius:var(--r)} .thesis{box-shadow:var(--sh);border:1px solid var(--line);border-left:4px solid var(--acc)} .card,.stat,.nextup .nu{box-shadow:var(--sh)} .tw{box-shadow:var(--sh)}
 th{background:var(--head);font-size:11px;letter-spacing:.09em;color:var(--mute)} table.ov tbody tr.p:nth-child(even) td,table.ltbl tbody tr:nth-child(even) td,table.etbl tbody tr:nth-child(even) td{background:rgba(120,120,110,.05)} tr.p:hover td{background:rgba(30,122,75,.07)!important}
 td{padding:6px 8px}
-.nm{display:flex;align-items:center;gap:9px;min-width:190px} .nm .t{display:flex;flex-direction:column;line-height:1.2} .nm .t b{font-weight:600;font-size:13.5px} .nm .t small{color:var(--mute);font-size:11.5px;margin-top:1px;white-space:nowrap}
+.nm{min-width:190px;white-space:nowrap;vertical-align:middle} .nm .av{display:inline-flex;vertical-align:middle;margin-right:9px} .nm .t{display:inline-flex;flex-direction:column;vertical-align:middle;line-height:1.2;white-space:normal} .nm .t b{font-weight:600;font-size:13.5px} .nm .t small{color:var(--mute);font-size:11.5px;margin-top:1px;white-space:nowrap}
 .av{width:32px;height:32px;border-radius:50%;flex:0 0 32px;object-fit:cover;background:var(--tc,#8A8F98);color:var(--ti,#fff);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px "Barlow Condensed",sans-serif;letter-spacing:.02em;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),0 1px 2px rgba(0,0,0,.18)}
-img.av{background:var(--head)}
+img.av{background:var(--head)} __TEAM_CSS__
 .pb{display:inline-block;font:700 9.5px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:1px 5px;border-radius:4px;vertical-align:1px;font-style:normal} .pb.QB{background:var(--pQB);color:var(--pQBi)} .pb.RB{background:var(--pRB);color:var(--pRBi)} .pb.WR{background:var(--pWR);color:var(--pWRi)} .pb.TE{background:var(--pTE);color:var(--pTEi)} .pb.DST{background:var(--pDST);color:var(--pDSTi)}
 tr.tier td{background:var(--head)!important;font-size:12px;letter-spacing:.08em;color:var(--ink);border-top:1px solid var(--line)} tr.t1 td{background:var(--t1)!important} tr.t2 td{background:var(--t2)!important}
 tr.p.done .av{filter:grayscale(1);opacity:.55} tr.p.done .pb{opacity:.5}
@@ -179,7 +180,7 @@ table.db td.c{border-radius:6px;box-shadow:var(--sh)} table.db th{border-radius:
 .recbox{box-shadow:var(--sh);border:1px solid var(--line);border-left:4px solid var(--acc)}
 .cards{gap:12px} .card h4{margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 table.plan td.tg{font-weight:500} table.plan tbody tr:nth-child(even) td{background:rgba(120,120,110,.05)}
-@media (max-width:640px){.pos table td.note,.pos table th:last-child,.pos table td.us,.pos table th:nth-child(9){display:none} .nm{min-width:160px} .av{width:28px;height:28px;flex-basis:28px;font-size:10.5px} .nm .t b{font-size:13px} h1{font-size:24px} .wrap{padding:10px 8px 70px}}
+@media (max-width:640px){.pos table td.note,.pos table th:last-child,.pos table td.us,.pos table th:nth-child(9),table.ltbl td.why,table.ltbl th:last-child{display:none} table.ltbl td{padding:5px 6px} .nm{min-width:160px} .av{width:28px;height:28px;flex-basis:28px;font-size:10.5px} .nm .t b{font-size:13px} h1{font-size:24px} .wrap{padding:10px 8px 70px}}
 @media print{.av{display:none} .nm{display:table-cell}}
 </style>
 
@@ -207,7 +208,7 @@ table.db td.QB i,table.db td.RB i,table.db td.WR i,table.db td.TE i,table.db td.
 table.db td.empty{color:var(--mute);cursor:default} table.db td.empty i{color:var(--line)} table.db td.mine{box-shadow:inset 0 0 0 1px var(--acc)} table.db td.next{outline:2px dashed var(--warn);outline-offset:-2px;background:var(--t4)} table.db td.next span{font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--warn)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:6px 0 0;font-size:11.5px;color:var(--mute)} .legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:4px}
 .dock{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:nowrap;padding:6px 10px;background:var(--card);border-top:2px solid var(--ink);z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.08)} .dock[hidden]{display:none} .dock div{min-width:0;flex:0 0 auto} .dock span{display:block;font:600 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .dock b{font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap}
-body{padding-bottom:64px} body.boardmode .top p{display:none} body.boardmode .top{padding-bottom:6px} @media (max-width:640px){body.boardmode h1{font-size:22px}}
+body{padding-bottom:64px} body.boardmode .evid,body.boardmode .foot{display:none} body.boardmode .top p{display:none} body.boardmode .top{padding-bottom:6px} @media (max-width:640px){body.boardmode h1{font-size:22px}}
 @media (max-width:640px){.dock{gap:6px;padding:5px 6px} .dock span{font-size:9px} .dock b{font-size:12px} .dock button{padding:6px 7px;font-size:11.5px;letter-spacing:.02em;flex:0 0 auto} .vtabs{margin-left:0} table.db th,table.db td.c{min-width:104px;max-width:104px} .dbwrap{max-height:72vh}}
 .live .lgname{font:500 14px Barlow,sans-serif;color:var(--mute);margin-left:8px}
 .status{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}.stat{background:var(--card);border:1px solid var(--line);padding:8px 10px}.stat span{display:block;font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.stat b{font:500 20px "IBM Plex Mono",monospace}.stat small{color:var(--mute)}
@@ -358,7 +359,7 @@ const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document
 const POS=['QB','RB','WR','TE','DST']; const STARTERS={QB:1,RB:2,WR:2,TE:1,DST:1};
 const ADP=__ADP_JSON__; const MP=__MP_JSON__; const TC=__TC_JSON__; const HS=__HS_JSON__;
 function initials(n){const p=String(n).replace(/'/g,'').split(/\s+/).filter(x=>x&&/^[A-Za-z]/.test(x)&&!/^(jr|sr|ii|iii|iv)\.?$/i.test(x)); return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():(p[0]||'?').slice(0,2).toUpperCase()}
-function avHTML(n,team,pos){if(HS[n]) return '<img class="av" src="'+HS[n]+'" alt="">'; const c=TC[team]||['#8A8F98','#fff']; return '<span class="av" style="--tc:'+c[0]+';--ti:'+c[1]+'">'+(pos==='DST'?esc(team):initials(n))+'</span>'}
+function avHTML(n,team,pos){if(HS[n]) return '<img class="av" src="'+HS[n]+'" alt="">'; return '<span class="av" data-tm="'+esc(team||'')+'">'+(pos==='DST'?esc(team):initials(n))+'</span>'}
 function pbHTML(pos){return '<em class="pb '+pos+'">'+pos+'</em>'} const TUNE={width:4,cap:1.5,power:0.6};  // calibrated so survival odds match the room-price model (rmse 0.07 across picks 1-44)
 let T={}; try{T=JSON.parse(localStorage.getItem('tracker')||'{}')}catch(e){T={}}
 function save(){try{localStorage.setItem('tracker',JSON.stringify(T)); const d=new Date(); $$('[data-t="saved"]').forEach(e=>e.textContent='saved '+d.toTimeString().slice(0,8))}catch(e){$$('[data-t="saved"]').forEach(e=>e.textContent='NOT SAVED: storage blocked')}}
@@ -506,5 +507,6 @@ $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{{const q
 </script>'''
 page=page.replace('__LIVE_HTML__',LIVE_HTML).replace('__LIVE_DATA__',LIVE_DATA)
 page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS.replace('__ADP_JSON__',ADP_JSON).replace('__MP_JSON__',MP_JSON).replace('__TC_JSON__',TC_JSON).replace('__HS_JSON__',HS_JSON)+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS+CARD_JS.replace('__LOGS_JSON__',LOGS_JSON).replace('__ADPX_JSON__',ADPX_JSON)
+page=page.replace('__TEAM_CSS__',TEAM_CSS)
 open(OUT,'w').write(page)
 print('wrote',OUT,len(page))
