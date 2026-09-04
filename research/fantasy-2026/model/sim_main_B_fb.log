@@ -1,0 +1,7 @@
+{'label': 'Plan (Nacua 4, RB 17, Allen 24)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.747, 'p_title': 0.138, 'avg_wins': 7.617, 'avg_ppg': 126.17538745566952}
+{'label': 'Plan (Nacua 4, Kyren 17, McBride 24, Maye 37)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.786, 'p_title': 0.184, 'avg_wins': 7.84, 'avg_ppg': 127.6756131650204}
+{'label': 'Bijan 4, Pickens 17, McBride 24, Maye 37', 'league': 'B', 'injuries': True, 'p_playoffs': 0.811, 'p_title': 0.19, 'avg_wins': 8.014, 'avg_ppg': 128.3630809454884}
+{'label': 'Bijan 4, Kyren 17, Pickens 24, Maye 37 (RB-RB)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.827, 'p_title': 0.215, 'avg_wins': 8.22, 'avg_ppg': 129.93079952275332}
+{'label': 'JSN 4 (else plan)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.762, 'p_title': 0.168, 'avg_wins': 7.85, 'avg_ppg': 126.8976895160382}
+{'label': 'Zero-RB (Nacua, Pickens, McBride, Maye, RBs from 44)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.813, 'p_title': 0.193, 'avg_wins': 8.044, 'avg_ppg': 128.33391186385674}
+{'label': 'Measured-room sheet drafter at pick 4', 'league': 'B', 'injuries': True, 'p_playoffs': 0.588, 'p_title': 0.077, 'avg_wins': 6.89, 'avg_ppg': 122.09726885372152} roster: ["Ja'Marr Chase", 'Brock Bowers', 'Javonte Williams', 'Drake Maye', 'DeVonta Smith', 'Chuba Hubbard', 'DJ Moore', 'Rhamondre Stevenson', 'Jacory Croskey-Merritt', 'Stefon Diggs', 'Tyler Allgeier', 'Dalton Kincaid', 'Jaxson Dart', 'Jacksonville Jaguars', 'Romeo Doubs']
