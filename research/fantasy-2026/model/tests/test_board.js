@@ -1,0 +1,24 @@
+const {JSDOM}=require('jsdom'); const fs=require('fs');
+const html='<!doctype html><html><head><meta charset="utf-8"></head><body>'+fs.readFileSync(process.argv[2]||'draft-board.html','utf8')+'</body></html>';
+const dom=new JSDOM(html,{url:'https://example.org/',runScripts:'dangerously',pretendToBeVisual:true}); const errs=[]; dom.window.addEventListener('error',e=>errs.push(e.message));
+dom.window.confirm=()=>true; dom.window.prompt=()=>'Billy'; dom.window.HTMLElement.prototype.scrollIntoView=function(){};
+setTimeout(()=>{const d=dom.window.document; const $=s=>d.querySelector(s); const ev=(el,t)=>el.dispatchEvent(new dom.window.Event(t,{bubbles:true}));
+ const tick=(lg,name)=>{const tr=[...d.querySelectorAll('#lg-'+lg+' tr.p')].find(t=>t.dataset.name===name); const c=tr.querySelector('input'); c.checked=!c.checked; ev(c,'change')};
+ console.log('errors',errs,'| views:',[...d.querySelectorAll('.vtabs button')].map(b=>b.textContent+(b.classList.contains('on')?'*':'')).join(','),'| sheet hidden',$('#lg-A .sheet').hidden,'board hidden',$('#db-A').hidden);
+ d.querySelector('.vtabs button[data-view="board"]').click(); console.log('board tab: sheet hidden',$('#lg-A .sheet').hidden,'board hidden',$('#db-A').hidden,'| dock btn',$('.dock[data-dock="A"] button').textContent,'| stored view',dom.window.localStorage.getItem('view'));
+ // add via search on the board
+ const q=$('#db-A [data-t="q"]'); q.value='chase'; ev(q,'input'); const hits=[...d.querySelectorAll('#db-A [data-t="hits"] button')]; console.log('hits for "chase":',hits.map(b=>b.textContent).join(' | '));
+ hits[0].click(); q.value='gibbs'; ev(q,'input'); q.dispatchEvent(new dom.window.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+ ["bijan robinson","puka nacua","jaxon smith-njigba","amon-ra st. brown","christian mccaffrey","jonathan taylor","james cook iii","chase brown","trey mcbride","de'von achane"].forEach(n=>tick('A',n));
+ console.log('clock:',$('#db-A [data-t="clock"]').textContent,'| you:',$('#db-A [data-t="mynext"]').textContent,'| dock:',$('.dock[data-dock="A"] [data-t="dockpick"]').textContent,$('.dock[data-dock="A"] [data-t="dockteam"]').textContent,$('.dock[data-dock="A"] [data-t="docknext"]').textContent);
+ const g=$('#db-A [data-t="grid"]'); console.log('headers:',[...g.querySelectorAll('th')].map(t=>t.textContent).join(' | '));
+ const cell=(r,t)=>{const tr=g.querySelectorAll('tbody tr')[r-1]; return tr.children[t].textContent};
+ console.log('R1 cells:',[1,2,3,4,5,6,7,8,9,10].map(t=>cell(1,t)).join(' | ')); console.log('R2 cells:',[1,2,3,4,5,6,7,8,9,10].map(t=>cell(2,t)).join(' | '));
+ console.log('cell classes 1.02:',g.querySelector('td[data-pick="2"]').className,'| next cell:',g.querySelector('td.next').dataset.pick,g.querySelector('td.next').textContent);
+ console.log('sheet strike for chase:',[...d.querySelectorAll('#lg-A tr.p')].find(t=>t.dataset.name==="ja'marr chase").classList.contains('done'));
+ g.querySelector('td[data-pick="1"]').click(); console.log('after removing 1.01: R1 first cell',cell(1,1),'| clock',$('#db-A [data-t="clock"]').textContent,'| chase struck?',[...d.querySelectorAll('#lg-A tr.p')].find(t=>t.dataset.name==="ja'marr chase").classList.contains('done'));
+ g.querySelector('th[data-team="3"]').click(); console.log('renamed:',g.querySelector('th[data-team="3"]').textContent);
+ $('#db-A [data-t="undo"]').click(); console.log('after undo clock',$('#db-A [data-t="clock"]').textContent);
+ d.querySelectorAll('.tabs button[data-lg]')[1].click(); setTimeout(()=>{console.log('B: sheet hidden',$('#lg-B .sheet').hidden,'board hidden',$('#db-B').hidden,'dockA hidden',$('.dock[data-dock="A"]').hidden,'dockB hidden',$('.dock[data-dock="B"]').hidden,'| B clock',$('#db-B [data-t="clock"]').textContent,'| B you',$('#db-B [data-t="mynext"]').textContent);
+  $('.dock[data-dock="B"] button').click(); console.log('dock toggle -> sheet hidden',$('#lg-B .sheet').hidden,'board hidden',$('#db-B').hidden,'| errors',errs)},20);
+},80);

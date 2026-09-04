@@ -81,23 +81,22 @@ def evidence():
     return ''.join(out)
 
 USER_SLOT={'A':2,'B':4}
-def tracker(lg):
+def board(lg):
     slot=USER_SLOT[lg]
     opts=''.join(f'<option value="{i}"{" selected" if i==slot else ""}>{i}</option>' for i in range(1,11))
-    return f"""<section class="trk" id="trk-{lg}" data-lg="{lg}">
-<h3 class="sec">Draft tracker <span class="hint">every box you tick above is logged as the next pick and assigned to the team on the clock (snake order). Tap a team name to rename it; tap a pick to remove it.</span></h3>
-<div class="trkbar"><div class="onclock"><span>On the clock</span><b data-t="clock">Pick 1 · Team 1</b></div><div class="onclock"><span>Your next pick</span><b data-t="mynext">-</b></div><label class="slotsel">Your slot <select data-t="slot">{opts}</select></label><button type="button" data-t="undo">Undo last pick</button><button type="button" data-t="clear">Clear draft</button></div>
-<h4>Around you</h4><div class="around" data-t="around"></div>
-<h4>By team, in pick order</h4><div class="teams" data-t="teams"></div>
-<h4>Snake grid</h4><div class="tw"><table class="grid" data-t="grid"></table></div>
-<h4>Pick log</h4><ol class="plog" data-t="log"></ol>
+    return f"""<section class="dboard" id="db-{lg}" data-lg="{lg}" hidden>
+<div class="dbtop"><div class="onclock"><span>On the clock</span><b data-t="clock">1.01 · Team 1</b></div><div class="onclock"><span>You</span><b data-t="mynext">-</b></div>
+<div class="addp"><input type="search" placeholder="Type a name to log a pick" data-t="q" aria-label="log a pick"><div class="hits" data-t="hits" hidden></div></div>
+<label class="slotsel">Slot <select data-t="slot">{opts}</select></label><button type="button" data-t="undo">Undo</button><button type="button" data-t="clear">Clear</button></div>
+<p class="cap">Tick a player on the cheat sheet or type a name here: he is logged to the team on the clock (snake). Tap a team name to rename it. Tap a filled cell to remove that pick. Scroll sideways for all ten teams.</p>
+<div class="dbwrap"><table class="db" data-t="grid"></table></div>
 </section>
-<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You next</span><b data-t="docknext">-</b></div><button type="button" data-go="rank-{lg}">Rankings</button><button type="button" data-go="trk-{lg}">Tracker</button></div>"""
+<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="toggle">Draft board</button></div>"""
 
 def league(lg):
     L=plan['leagues'][lg]
     return f'''<div class="league" id="lg-{lg}" {'hidden' if lg=='B' else ''}>
-<div class="lhead"><div><h2>{esc(L['name'])}</h2><p class="meta">{esc(L['meta'])}</p></div><div class="pickbox"><span>Your picks</span><b>{esc(L['picks'])}</b></div></div>
+<div class="sheet"><div class="lhead"><div><h2>{esc(L['name'])}</h2><p class="meta">{esc(L['meta'])}</p></div><div class="pickbox"><span>Your picks</span><b>{esc(L['picks'])}</b></div></div>
 <div class="thesis"><h3>Game plan</h3><ol>{''.join(f'<li>{esc(t)}</li>' for t in L['thesis'])}</ol></div>
 <h3 class="sec">Round by round</h3>{plan_table(lg)}
 {lists(lg)}
@@ -105,77 +104,95 @@ def league(lg):
 <div class="tools"><input type="search" placeholder="Find a player" data-search="{lg}" aria-label="find a player"><div class="chips" data-chips="{lg}"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div></div>
 {pos_tables(lg)}
 <h3 class="sec">Overall top 150</h3>{overall(lg)}
-{tracker(lg)}
+</div>
+{board(lg)}
 </div>'''
 
 EXTRA_CSS='''
 <style>
-.trk{margin-top:26px;border-top:2px solid var(--ink);padding-top:6px} .trk h4{margin:16px 0 6px}
-.trkbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0} .onclock{border:1.5px solid var(--ink);padding:5px 10px;min-width:150px} .onclock span{display:block;font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .onclock b{font-family:"IBM Plex Mono",monospace;font-size:13px}
-.trkbar button,.dock button{font:600 13px "Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:7px 12px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer} .trkbar button:focus-visible,.dock button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+:root{--pQB:#F9C9D3;--pRB:#BDEBDD;--pWR:#C6DBFA;--pTE:#FAD9B4;--pDST:#DAD6CE;--pQBi:#7A1F35;--pRBi:#0F5A45;--pWRi:#1C3F7A;--pTEi:#7A4410;--pDSTi:#4A4640}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pQB:#5A2131;--pRB:#173F35;--pWR:#1E3355;--pTE:#553414;--pDST:#34363A;--pQBi:#FFC5D2;--pRBi:#9FE8CF;--pWRi:#B7D0FF;--pTEi:#FFD1A3;--pDSTi:#D8D8D8}}
+:root[data-theme="dark"]{--pQB:#5A2131;--pRB:#173F35;--pWR:#1E3355;--pTE:#553414;--pDST:#34363A;--pQBi:#FFC5D2;--pRBi:#9FE8CF;--pWRi:#B7D0FF;--pTEi:#FFD1A3;--pDSTi:#D8D8D8}
+.vtabs{display:flex;gap:6px;margin-left:auto} .vtabs button{font:600 15px "Barlow Condensed",sans-serif;letter-spacing:.04em;text-transform:uppercase;padding:8px 14px;border:1.5px solid var(--acc);background:transparent;color:var(--ink);cursor:pointer} .vtabs button.on{background:var(--acc);color:var(--acc-ink)} .vtabs button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.dboard{margin-top:12px} .dbtop{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.onclock{border:1.5px solid var(--ink);padding:4px 10px;min-width:120px} .onclock span{display:block;font:600 10.5px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .onclock b{font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap}
+.dbtop button,.dock button{font:600 13px "Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:7px 12px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer} .dbtop button:focus-visible,.dock button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .slotsel{font-size:13px;color:var(--mute)} .slotsel select{font:14px Barlow,sans-serif;padding:4px 6px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);margin-left:4px}
-.around{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px} .around .tm,.teams .tm{background:var(--card);border:1px solid var(--line);padding:8px 10px} .tm.me{border-color:var(--acc);box-shadow:inset 3px 0 0 var(--acc)} .tm.clock{border-color:var(--warn);box-shadow:inset 3px 0 0 var(--warn)}
-.tm h5{font:700 15px "Barlow Condensed",sans-serif;margin:0;cursor:pointer;display:flex;justify-content:space-between;gap:6px} .tm h5 small{font:500 11px Barlow,sans-serif;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
-.tm .cnt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--mute);margin:3px 0} .tm .need{font-size:12px;color:var(--warn)} .tm ol{margin:4px 0 0;padding-left:18px;font-size:12.5px} .tm ol li{margin:1px 0;cursor:pointer} .tm ol li span{color:var(--mute);font-family:"IBM Plex Mono",monospace;font-size:11px;margin-left:4px}
-.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
-table.grid{font-size:11.5px;min-width:900px} table.grid th{white-space:nowrap} table.grid th.me{background:var(--t1)} table.grid th.clock{background:var(--t5)} table.grid td{padding:3px 5px;white-space:nowrap;max-width:11ch;overflow:hidden;text-overflow:ellipsis;cursor:pointer} table.grid td.rd{font-family:"IBM Plex Mono",monospace;color:var(--mute);cursor:default} table.grid td.next{background:var(--t4)} table.grid td.mine{background:var(--t1)} table.grid td small{color:var(--mute)}
-.plog{columns:2;column-gap:24px;font-size:12.5px;padding-left:22px} .plog li{break-inside:avoid;cursor:pointer} .plog li span{color:var(--mute);font-family:"IBM Plex Mono",monospace;font-size:11px}
-.dock{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:6px 10px;background:var(--card);border-top:2px solid var(--ink);z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.08)} .dock[hidden]{display:none} .dock div{min-width:70px} .dock span{display:block;font:600 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .dock b{font-family:"IBM Plex Mono",monospace;font-size:13px}
-body{padding-bottom:64px}
-@media (max-width:640px){.plog{columns:1} .dock{gap:6px;padding:5px 6px;flex-wrap:nowrap} .dock div{min-width:0;flex:0 0 auto} .dock span{font-size:9px} .dock b{font-size:12px} .dock button{padding:6px 7px;font-size:11.5px;letter-spacing:.02em;flex:0 0 auto}}
-@media print{.trk,.dock{display:none!important} body{padding-bottom:0}}
+.addp{position:relative;flex:1 1 220px;min-width:200px} .addp input{width:100%;font:14px Barlow,sans-serif;padding:7px 10px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink)} .addp input:focus-visible{outline:3px solid var(--acc)}
+.hits{position:absolute;left:0;right:0;top:100%;z-index:30;background:var(--card);border:1.5px solid var(--ink);max-height:280px;overflow:auto} .hits button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;font:14px Barlow,sans-serif;padding:7px 10px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer} .hits button small{color:var(--mute);white-space:nowrap} .hits button:hover,.hits button:focus{background:var(--head)}
+.dbwrap{overflow-x:auto;overflow-y:auto;max-height:78vh;border:1px solid var(--line);background:var(--bg);-webkit-overflow-scrolling:touch}
+table.db{border-collapse:separate;border-spacing:4px;width:max-content;min-width:100%;font-size:12px}
+table.db th{position:sticky;top:0;z-index:3;background:var(--head);border:1px solid var(--line);padding:6px 6px;min-width:118px;max-width:118px;text-align:left;vertical-align:top;font:600 13px "Barlow Condensed",sans-serif;letter-spacing:.02em;cursor:pointer}
+table.db th small{display:block;font:500 10.5px "IBM Plex Mono",monospace;color:var(--mute);letter-spacing:0;text-transform:none;margin-top:2px;white-space:nowrap}
+table.db th.me{background:var(--t1);box-shadow:inset 0 3px 0 var(--acc)} table.db th.clock{box-shadow:inset 0 3px 0 var(--warn)}
+table.db td.rd,table.db th.rd{position:sticky;left:0;z-index:4;min-width:34px;max-width:34px;width:34px;background:var(--head);text-align:center;font:600 12px "IBM Plex Mono",monospace;color:var(--mute);cursor:default;padding:0} table.db th.rd{z-index:5}
+table.db td.c{height:46px;min-width:118px;max-width:118px;padding:4px 6px;vertical-align:top;background:var(--card);border:1px solid var(--line);border-radius:3px;position:relative;cursor:pointer;overflow:hidden}
+table.db td.c b{display:block;font-weight:600;font-size:12.5px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} table.db td.c small{display:block;font:500 10.5px "IBM Plex Mono",monospace;margin-top:2px;white-space:nowrap} table.db td.c i{position:absolute;right:5px;bottom:3px;font:500 10px "IBM Plex Mono",monospace;color:var(--mute);font-style:normal}
+table.db td.QB{background:var(--pQB);color:var(--pQBi);border-color:transparent} table.db td.RB{background:var(--pRB);color:var(--pRBi);border-color:transparent} table.db td.WR{background:var(--pWR);color:var(--pWRi);border-color:transparent} table.db td.TE{background:var(--pTE);color:var(--pTEi);border-color:transparent} table.db td.DST{background:var(--pDST);color:var(--pDSTi);border-color:transparent}
+table.db td.QB i,table.db td.RB i,table.db td.WR i,table.db td.TE i,table.db td.DST i{color:inherit;opacity:.8}
+table.db td.empty{color:var(--mute);cursor:default} table.db td.empty i{color:var(--line)} table.db td.mine{box-shadow:inset 0 0 0 1px var(--acc)} table.db td.next{outline:2px dashed var(--warn);outline-offset:-2px;background:var(--t4)} table.db td.next span{font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--warn)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:6px 0 0;font-size:11.5px;color:var(--mute)} .legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:4px}
+.dock{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:nowrap;padding:6px 10px;background:var(--card);border-top:2px solid var(--ink);z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.08)} .dock[hidden]{display:none} .dock div{min-width:0;flex:0 0 auto} .dock span{display:block;font:600 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .dock b{font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap}
+body{padding-bottom:64px} body.boardmode .top p{display:none} body.boardmode .top{padding-bottom:6px} @media (max-width:640px){body.boardmode h1{font-size:22px}}
+@media (max-width:640px){.dock{gap:6px;padding:5px 6px} .dock span{font-size:9px} .dock b{font-size:12px} .dock button{padding:6px 7px;font-size:11.5px;letter-spacing:.02em;flex:0 0 auto} .vtabs{margin-left:0} table.db th,table.db td.c{min-width:104px;max-width:104px} .dbwrap{max-height:72vh}}
+@media print{.dboard,.dock,.vtabs{display:none!important} body{padding-bottom:0}}
 </style>'''
 EXTRA_JS=r'''
 <script>
 (function(){
 const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
-const POS=['QB','RB','WR','TE','DST']; const STARTERS={QB:1,RB:2,WR:2,TE:1,DST:1}; // plus 2 FLEX
+const POS=['QB','RB','WR','TE','DST']; const STARTERS={QB:1,RB:2,WR:2,TE:1,DST:1};
 let T={}; try{T=JSON.parse(localStorage.getItem('tracker')||'{}')}catch(e){T={}}
 function save(){try{localStorage.setItem('tracker',JSON.stringify(T))}catch(e){}}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function teamOf(p){const r=Math.ceil(p/10), i=(p-1)%10; return r%2===1?i+1:10-i}
-function info(lg,key){const tr=$('#lg-'+lg+' tr.p[data-key="'+key+'"]'); if(!tr) return null; return {key,name:$('.nm b',tr).textContent,pos:tr.dataset.pos}}
-function state(lg){ if(!T[lg]) T[lg]={picks:[],names:{},slot:parseInt($('#trk-'+lg+' select[data-t="slot"]').value,10)}; return T[lg] }
+function pickLabel(p){const r=Math.ceil(p/10), i=(p-1)%10+1; return r+'.'+(i<10?'0':'')+i}
+const PL={A:{},B:{}}; ['A','B'].forEach(lg=>{$$('#lg-'+lg+' tr.p').forEach(tr=>{const k=tr.dataset.key; if(PL[lg][k]) return; const sm=$('.nm small',tr); PL[lg][k]={key:k,name:$('.nm b',tr).textContent,pos:tr.dataset.pos,team:sm?sm.textContent.split('·')[0].trim():'',q:tr.dataset.name}})});
+function state(lg){ if(!T[lg]) T[lg]={picks:[],names:{},slot:parseInt($('#db-'+lg+' select[data-t="slot"]').value,10)}; if(!T[lg].names) T[lg].names={}; return T[lg] }
 function tname(lg,t){const s=state(lg); return s.names[t]||( t===s.slot?'YOU':'Team '+t )}
 function counts(picks){const c={QB:0,RB:0,WR:0,TE:0,DST:0}; picks.forEach(p=>{if(c[p.pos]!==undefined)c[p.pos]++}); return c}
-function needs(c){const n=[]; POS.forEach(p=>{if(c[p]<STARTERS[p]) n.push(p+(STARTERS[p]-c[p]>1?' x'+(STARTERS[p]-c[p]):''))}); const flexHave=Math.max(0,c.RB-2)+Math.max(0,c.WR-2)+Math.max(0,c.TE-1); if(flexHave<2) n.push('FLEX'+(2-flexHave>1?' x2':'')); return n}
+function needs(c){const n=[]; POS.forEach(p=>{const m=STARTERS[p]-c[p]; if(m>0) n.push(p+(m>1?'x'+m:''))}); const fl=Math.max(0,c.RB-2)+Math.max(0,c.WR-2)+Math.max(0,c.TE-1); if(fl<2) n.push('FLX'+(2-fl>1?'x2':'')); return n}
 function myNext(lg,cur){const s=state(lg); for(let p=cur;p<=150;p++){ if(teamOf(p)===s.slot) return p } return null}
 function render(lg){
-  const s=state(lg), sec=$('#trk-'+lg), picks=s.picks, cur=picks.length+1, onTeam=cur<=150?teamOf(cur):null, mn=myNext(lg,cur);
-  const byTeam={}; for(let t=1;t<=10;t++) byTeam[t]=[]; picks.forEach((p,i)=>{byTeam[teamOf(i+1)].push(Object.assign({pick:i+1,round:Math.ceil((i+1)/10)},p))});
-  const clockTxt=cur>150?'Draft complete':('Pick '+cur+' · R'+Math.ceil(cur/10)+' · '+tname(lg,onTeam));
-  $('[data-t="clock"]',sec).textContent=clockTxt; $('[data-t="mynext"]',sec).textContent=mn?('Pick '+mn+(mn===cur?' (now)':' · '+(mn-cur)+' away')):'-';
-  const dock=$('.dock[data-dock="'+lg+'"]'); $('[data-t="dockpick"]',dock).textContent=cur>150?'done':cur; $('[data-t="dockteam"]',dock).textContent=cur>150?'-':tname(lg,onTeam); $('[data-t="docknext"]',dock).textContent=mn?(mn===cur?'NOW':'#'+mn):'-';
-  const card=(t,label)=>{const c=counts(byTeam[t]), nd=needs(c); return '<div class="tm'+(t===s.slot?' me':'')+(t===onTeam?' clock':'')+'" data-team="'+t+'"><h5><span>'+esc(tname(lg,t))+'</span><small>'+(label||('slot '+t))+'</small></h5><div class="cnt">QB '+c.QB+' · RB '+c.RB+' · WR '+c.WR+' · TE '+c.TE+' · DST '+c.DST+'</div>'+(nd.length?'<div class="need">Needs: '+nd.join(', ')+'</div>':'<div class="need">Starters filled</div>')+'<ol>'+byTeam[t].map(p=>'<li data-pick="'+p.pick+'">'+esc(p.name)+' <span>'+p.pos+' · R'+p.round+' #'+p.pick+'</span></li>').join('')+'</ol></div>'};
-  const before=s.slot===1?10:s.slot-1, after=s.slot===10?1:s.slot+1;
-  $('[data-t="around"]',sec).innerHTML=card(before,'picks before you')+card(s.slot,'you')+card(after,'picks after you')+(onTeam&&![before,s.slot,after].includes(onTeam)?card(onTeam,'on the clock'):'');
-  $('[data-t="teams"]',sec).innerHTML=[1,2,3,4,5,6,7,8,9,10].map(t=>card(t)).join('');
-  let h='<thead><tr><th>Rd</th>'+[1,2,3,4,5,6,7,8,9,10].map(t=>'<th class="'+(t===s.slot?'me':'')+(t===onTeam?' clock':'')+'" data-team="'+t+'">'+esc(tname(lg,t))+'</th>').join('')+'</tr></thead><tbody>';
-  for(let r=1;r<=15;r++){h+='<tr><td class="rd">'+r+'</td>'; for(let t=1;t<=10;t++){const idx=(r%2===1)?t:11-t; const pick=(r-1)*10+idx; const p=picks[pick-1]; h+='<td class="'+(pick===cur?'next':'')+(t===s.slot?' mine':'')+'" data-pick="'+pick+'" title="pick '+pick+'">'+(p?esc(p.name)+' <small>'+p.pos+'</small>':'<small>'+pick+'</small>')+'</td>'} h+='</tr>'}
+  const s=state(lg), sec=$('#db-'+lg), picks=s.picks, cur=picks.length+1, onTeam=cur<=150?teamOf(cur):null, mn=myNext(lg,cur);
+  const byTeam={}; for(let t=1;t<=10;t++) byTeam[t]=[]; picks.forEach((p,i)=>byTeam[teamOf(i+1)].push(p));
+  $('[data-t="clock"]',sec).textContent=cur>150?'Draft complete':(pickLabel(cur)+' · '+tname(lg,onTeam));
+  $('[data-t="mynext"]',sec).textContent=mn?(mn===cur?'ON THE CLOCK':(pickLabel(mn)+' · '+(mn-cur)+' away')):'-';
+  const dock=$('.dock[data-dock="'+lg+'"]'); $('[data-t="dockpick"]',dock).textContent=cur>150?'done':pickLabel(cur); $('[data-t="dockteam"]',dock).textContent=cur>150?'-':tname(lg,onTeam); $('[data-t="docknext"]',dock).textContent=mn?(mn===cur?'NOW':pickLabel(mn)):'-';
+  let h='<thead><tr><th class="rd">Rd</th>'+[1,2,3,4,5,6,7,8,9,10].map(t=>{const c=counts(byTeam[t]), nd=needs(c); return '<th class="'+(t===s.slot?'me':'')+(t===onTeam?' clock':'')+'" data-team="'+t+'" title="tap to rename">'+esc(tname(lg,t))+'<small>'+t+' · '+(nd.length?'need '+nd.join(' '):'set')+'</small></th>'}).join('')+'</tr></thead><tbody>';
+  for(let r=1;r<=15;r++){h+='<tr><td class="rd">'+r+'</td>'; for(let t=1;t<=10;t++){const idx=(r%2===1)?t:11-t; const pick=(r-1)*10+idx; const p=picks[pick-1]; const cls=['c',p?p.pos:'empty',t===s.slot?'mine':'',pick===cur?'next':''].join(' ');
+    h+='<td class="'+cls+'" data-pick="'+pick+'">'+(p?'<b>'+esc(p.name)+'</b><small>'+p.pos+(p.team?' · '+esc(p.team):'')+'</small>':(pick===cur?'<span>On the clock</span>':''))+'<i>'+pickLabel(pick)+'</i></td>'} h+='</tr>'}
   $('[data-t="grid"]',sec).innerHTML=h+'</tbody>';
-  $('[data-t="log"]',sec).innerHTML=picks.map((p,i)=>'<li data-pick="'+(i+1)+'">'+esc(tname(lg,teamOf(i+1)))+': '+esc(p.name)+' <span>'+p.pos+'</span></li>').join('');
+  // keep the current pick in view
+  const nx=$('td.next',sec); if(nx&&sec.offsetParent!==null){try{nx.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function setDone(lg,key,on){$$('#lg-'+lg+' tr.p[data-key="'+key+'"]').forEach(tr=>{tr.classList.toggle('done',on);const c=$('input',tr);if(c)c.checked=on}); try{const st=JSON.parse(localStorage.getItem('drafted')||'{}'); st[key]=on; localStorage.setItem('drafted',JSON.stringify(st))}catch(e){}}
-function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) return; const inf=info(lg,key); if(!inf||s.picks.length>=150) return; s.picks.push(inf); save(); render(lg)}
+function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) return; const inf=PL[lg][key]; if(!inf||s.picks.length>=150) return; s.picks.push({key:inf.key,name:inf.name,pos:inf.pos,team:inf.team}); save(); setDone(lg,key,true); render(lg)}
 function removePick(lg,key){const s=state(lg); const i=s.picks.findIndex(p=>p.key===key); if(i<0) return; s.picks.splice(i,1); save(); setDone(lg,key,false); render(lg)}
+function setView(v){document.body.classList.toggle('boardmode',v==='board'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); try{localStorage.setItem('view',v)}catch(e){} $$('.dock button[data-view]').forEach(b=>b.textContent=(v==='board'?'Cheat sheet':'Draft board')); if(v==='board'){['A','B'].forEach(render)}}
 ['A','B'].forEach(lg=>{
-  const sec=$('#trk-'+lg); if(!sec) return; const s=state(lg);
-  // checkbox hook: tick = next pick, untick = remove
+  const sec=$('#db-'+lg); if(!sec) return; const s=state(lg);
   $$('#lg-'+lg+' tr.p input').forEach(c=>c.addEventListener('change',()=>{const k=c.closest('tr').dataset.key; if(c.checked) addPick(lg,k); else removePick(lg,k)}));
-  // clicks inside the tracker: remove a pick, rename a team
   sec.addEventListener('click',e=>{
-    const li=e.target.closest('[data-pick]'); if(li){const p=parseInt(li.dataset.pick,10); const pk=s.picks[p-1]; if(pk&&confirm('Remove pick '+p+' ('+pk.name+')? Later picks move up one slot.')) removePick(lg,pk.key); return}
-    const th=e.target.closest('[data-team]'); if(th&&(th.tagName==='TH'||e.target.closest('h5'))){const t=parseInt(th.dataset.team,10); const n=prompt('Name for slot '+t+' (blank = default)',s.names[t]||''); if(n!==null){ if(n.trim()) s.names[t]=n.trim(); else delete s.names[t]; save(); render(lg)} }
+    const td=e.target.closest('td[data-pick]'); if(td){const p=parseInt(td.dataset.pick,10); const pk=s.picks[p-1]; if(pk&&confirm('Remove '+pickLabel(p)+' '+pk.name+'? Later picks move up one slot.')) removePick(lg,pk.key); return}
+    const th=e.target.closest('th[data-team]'); if(th){const t=parseInt(th.dataset.team,10); const n=prompt('Name for slot '+t+' (blank = default)',s.names[t]||''); if(n!==null){ if(n.trim()) s.names[t]=n.trim(); else delete s.names[t]; save(); render(lg)} }
   });
   $('[data-t="undo"]',sec).addEventListener('click',()=>{const pk=s.picks[s.picks.length-1]; if(pk) removePick(lg,pk.key)});
   $('[data-t="clear"]',sec).addEventListener('click',()=>{if(confirm('Clear every pick in this league?')){const ks=s.picks.map(p=>p.key); s.picks=[]; save(); ks.forEach(k=>setDone(lg,k,false)); render(lg)}});
   const sel=$('select[data-t="slot"]',sec); sel.value=s.slot; sel.addEventListener('change',()=>{s.slot=parseInt(sel.value,10); save(); render(lg)});
-  // players already ticked before the tracker existed stay struck but are not assigned a pick
+  // quick add by name
+  const q=$('[data-t="q"]',sec), hits=$('[data-t="hits"]',sec);
+  function showHits(){const v=q.value.trim().toLowerCase(); if(!v){hits.hidden=true;hits.innerHTML='';return} const taken=new Set(s.picks.map(p=>p.key)); const m=Object.values(PL[lg]).filter(p=>!taken.has(p.key)&&p.q.includes(v)).slice(0,8); hits.innerHTML=m.map(p=>'<button type="button" data-key="'+esc(p.key)+'"><span>'+esc(p.name)+'</span><small>'+p.pos+(p.team?' · '+esc(p.team):'')+' → '+pickLabel(s.picks.length+1)+' '+esc(tname(lg,teamOf(s.picks.length+1)))+'</small></button>').join('')||'<button type="button" disabled>No match</button>'; hits.hidden=false}
+  q.addEventListener('input',showHits); q.addEventListener('focus',showHits); q.addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('button[data-key]',hits); if(b) b.click()} if(e.key==='Escape'){hits.hidden=true}});
+  hits.addEventListener('click',e=>{const b=e.target.closest('button[data-key]'); if(!b) return; addPick(lg,b.dataset.key); q.value=''; hits.hidden=true; q.focus()});
+  document.addEventListener('click',e=>{if(!sec.contains(e.target)) hits.hidden=true});
   render(lg);
 });
-$$('.dock button[data-go]').forEach(b=>b.addEventListener('click',()=>{const el=document.getElementById(b.dataset.go); if(el) el.scrollIntoView({behavior:'smooth',block:'start'})}));
+$$('.vtabs button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+$$('.dock button[data-view]').forEach(b=>b.addEventListener('click',()=>{const v=$('.vtabs button.on').dataset.view; setView(v==='board'?'sheet':'board'); window.scrollTo({top:0})}));
 function syncDock(){$$('.dock').forEach(d=>{const lg=d.dataset.dock; const l=document.getElementById('lg-'+lg); d.hidden=!l||l.hidden})}
-$$('.tabs button').forEach(b=>b.addEventListener('click',()=>setTimeout(syncDock,0))); syncDock();
+$$('.tabs button[data-lg]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{syncDock();['A','B'].forEach(render)},0))); syncDock();
+try{const v=localStorage.getItem('view'); if(v==='board') setView('board')}catch(e){}
 })();
 </script>'''
 page=f'''<title>{esc(plan['title'])}</title>
@@ -217,7 +234,7 @@ table.plan td.tg{{font-weight:500;min-width:28ch}} table.plan td.fb{{color:var(-
 </style>
 <div class="wrap">
 <header class="top"><div><h1>{esc(plan['title'])}</h1><p>{esc(plan['subtitle'])}</p></div>
-<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav></header>
+<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button></nav></header>
 {league('A')}{league('B')}
 <section class="evid"><h2>Evidence appendix</h2>{evidence()}</section>
 <p class="foot">{esc(plan['footer'])}</p>
