@@ -7,7 +7,8 @@ BY={d['n']:d for d in DATA}
 def lineup(names,lg):
     W=WAIV[lg]
     ps=[BY[n] for n in names if n in BY]
-    av=lambda d:(d['pA'] if lg=='A' else d['pB'])*(1-d['inj']/17)
+    POSMEAN={'QB':3.9,'RB':4.9,'WR':3.8,'TE':4.0,'DST':0}
+    av=lambda d:(d['pA'] if lg=='A' else d['pB'])*(1-(0.5*min(d['inj'],12)+0.5*POSMEAN.get(d['pos'],4))/17)
     ps.sort(key=av,reverse=True); used=set(); t=0.0
     def take(ok,n):
         nonlocal t; g=0

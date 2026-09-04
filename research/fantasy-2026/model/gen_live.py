@@ -75,7 +75,7 @@ tr.rec1 td{background:var(--mine)}tr.gone td{color:var(--gone)}tr.gone td.nm b{t
 const DATA=__DATA__;
 (function(){
 const $=s=>document.querySelector(s);
-const SL={A:{title:0.42,po:0.52,base:{ppg:106.7,title:19.8,po:93.6}},B:{title:0.42,po:1.04,base:{ppg:102.9,title:15.2,po:74.2}}};
+const SL={A:{title:0.42,po:0.52,base:{ppg:105.0,title:19.8,po:93.6}},B:{title:0.42,po:1.04,base:{ppg:103.3,title:15.2,po:74.2}}};
 const WAIV={A:{QB:15,RB:9.5,WR:9.5,TE:8,DST:6},B:{QB:18.5,RB:9.5,WR:9.5,TE:8,DST:6}};
 const LINE=[['QB',1],['RB',2],['WR',2],['TE',1],['FLEX',2],['DST',1]];
 let st={lg:'A',slot:2,taken:[],mine:[]};
@@ -86,7 +86,8 @@ function myPicks(slot){const out=[];for(let r=0;r<15;r++){out.push(r*10+(r%2===0
 function proj(d){return st.lg==='A'?d.pA:d.pB}
 function adp(d){return st.lg==='A'?d.adpA:d.adpB}
 function rank(d){return st.lg==='A'?d.rA:d.rB}
-function avail(d){return proj(d)*(1-d.inj/17)}
+const POSMEAN={QB:3.9,RB:4.9,WR:3.8,TE:4.0,DST:0};
+function avail(d){return proj(d)*(1-(0.5*Math.min(d.inj,12)+0.5*(POSMEAN[d.pos]||4))/17)} // same half-weighted injury model as the board order
 function pGone(d,pick,cur){if(pick<=cur)return 0;const a=adp(d);const x=(pick-a)/6;return 1/(1+Math.exp(-x))}
 function lineup(names){const ps=names.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();let t=0;const W=WAIV[st.lg];
  function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
