@@ -101,7 +101,7 @@ def espn_tab():
     est=pd.read_csv(O+'espn_adp_est.csv'); has_est=set(est.player.map(_norm))
     rooms={}
     for yr in (2024,2025):
-        pk=pd.read_csv(O+f'rooms/footborn_{yr}_picks.csv'); rooms[yr]={_norm(r.player):(int(r.pick),r.team) for r in pk.itertuples()}
+        pk=pd.read_csv(O+f'rooms/footborn_{yr}_picks.csv'); rooms[yr]={_norm(r.player):(int(r.pick),(r.manager if 'manager' in pk.columns else r.team)) for r in pk.itertuples()}
     rows=[]
     for d in sorted(live,key=lambda x:(x['adpA'],x['rA'])):
         k=_norm(d['n']); a=d['adpA']; rd=int((a-1)//10)+1; pk=int((a-1)%10)+1
@@ -283,7 +283,8 @@ function teamOf(p){const r=Math.ceil(p/10), i=(p-1)%10; return r%2===1?i+1:10-i}
 function pickLabel(p){const r=Math.ceil(p/10), i=(p-1)%10+1; return r+'.'+(i<10?'0':'')+i}
 const PL={A:{},B:{}}; ['A','B'].forEach(lg=>{$$('#lg-'+lg+' tr.p').forEach(tr=>{const k=tr.dataset.key; if(PL[lg][k]) return; const sm=$('.nm small',tr); PL[lg][k]={key:k,name:$('.nm b',tr).textContent,pos:tr.dataset.pos,team:sm?sm.textContent.split('·')[0].trim():'',q:tr.dataset.name}})});
 function state(lg){ if(!T[lg]) T[lg]={picks:[],names:{},slot:parseInt($('#db-'+lg+' select[data-t="slot"]').value,10)}; if(!T[lg].names) T[lg].names={}; return T[lg] }
-function tname(lg,t){const s=state(lg); return s.names[t]||( t===s.slot?'YOU':'Team '+t )}
+const DEFN={A:{},B:{1:'Ish',2:'Aoc',3:'Billy',4:'YOU',5:'Moe',6:'Betto',7:'Kass',8:'Hazime',9:'Daoud',10:'Kdouh'}};
+function tname(lg,t){const s=state(lg); return s.names[t]||( t===s.slot?'YOU':(DEFN[lg]&&DEFN[lg][t])||'Team '+t )}
 function counts(picks){const c={QB:0,RB:0,WR:0,TE:0,DST:0}; picks.forEach(p=>{if(c[p.pos]!==undefined)c[p.pos]++}); return c}
 function needs(c){const n=[]; POS.forEach(p=>{const m=STARTERS[p]-c[p]; if(m>0) n.push(p+(m>1?'x'+m:''))}); const fl=Math.max(0,c.RB-2)+Math.max(0,c.WR-2)+Math.max(0,c.TE-1); if(fl<2) n.push('FLX'+(2-fl>1?'x2':'')); return n}
 function myNext(lg,cur){const s=state(lg); for(let p=cur;p<=150;p++){ if(teamOf(p)===s.slot) return p } return null}

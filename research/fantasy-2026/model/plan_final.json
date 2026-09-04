@@ -17,10 +17,10 @@
   },
   "B": {
    "name": "Fantasy Footborn League",
-   "meta": "Pick 4 \u00b7 draft Sunday Sept 6 \u00b7 6-pt passing TD, +2 per 300-yd passing game, +2 per 50-yd TD \u00b7 equal 100-yd bonuses \u00b7 6 of 10 teams make the playoffs",
+   "meta": "Pick 4 \u00b7 draft Sunday Sept 6 \u00b7 order: Ish, Aoc, Billy, YOU, Moe, Betto, Kass, Hazime, Daoud, Kdouh \u00b7 6-pt passing TD, +2 per 300-yd passing game, +2 per 50-yd TD \u00b7 equal 100-yd bonuses \u00b7 6 of 10 teams make the playoffs",
    "picks": "4 \u00b7 17 \u00b7 24 \u00b7 37 \u00b7 44 \u00b7 57 \u00b7 64 \u00b7 77 \u00b7 84 \u00b7 97 \u00b7 104 \u00b7 117 \u00b7 124 \u00b7 137 \u00b7 144",
    "thesis": [
-    "This room, not the ESPN average, is the model: two years of the same ten drafters (2024 and 2025 boards transcribed, matched to that August's expert consensus). Measured habits: running backs ranked 12-60 by consensus go about 10 picks early (Henry 23 to 11, Jacobs 30 to 18, Irving 30 to 19, Taylor 32 to 20, Walker 44 to 23, Cook 48 to 27, Hampton 50 to 34), receivers go at consensus, tight ends about 8 picks late (McBride 21 to 31), and the QB run comes in rounds 3-5. ESPN's own sheet is also WR-heavy early, so the receivers are not going to slide either.",
+    "This room, not the ESPN average, is the model: two years of the same ten drafters, matched to that August's expert consensus. Measured habits: running backs ranked 12-60 go about 10 picks early (Henry 23 to 11, Jacobs 30 to 18, Irving 30 to 19, Taylor 32 to 20, Walker 44 to 23, Cook 48 to 27, Hampton 50 to 34), receivers go at consensus, tight ends about 8 picks late (McBride 21 to 31), and the QB run comes in rounds 3-5. 2026 order: Ish, Aoc, Billy, you, Moe, Betto, Kass, Hazime, Daoud, Kdouh. The six picks between your 17 and 24 belong to Billy, Aoc and Ish, the three most RB-early drafters in the room; the twelve between 4 and 17 belong to everyone else.",
     "Against that measured room (600 seasons, +/-1.6 points): best-available-by-this-board 30.5% title, RB-RB 29.3%, Hero-RB 24.0%, Robust-RB 23.8%, WR-WR 22.8%, Zero-RB 22.5%, three straight WRs 20.7%. Reading: take the best player on this board at every pick, and an elite RB is still worth it even though the room overpays the position, because the RBs this board likes are the ones the room lets through (Kyren, Javonte, Hall at 17-24; Judkins, Irving, Swift, Montgomery at 37-44).",
     "Pick 4: last year picks 1-3 were Chase, Barkley, Bijan and pick 4 was Gibbs. Expect Chase, Bijan, Gibbs gone (take Gibbs if he is there: 14.6% title, 78% playoffs). The version-3 simulation prefers Nacua (15.2% title, 15.9% with Collins at 24 and Maye at 37) to JSN (14.2%) with a 35% chance of a 3-game suspension priced in: take Nacua unless a suspension of 4+ games is announced before Sunday, then JSN. Taylor at 4 is a step down (13.9%).",
     "Six-point passing TDs lift every QB, including replacement: the QB1-vs-QB11 gap is the same as in 4-pt scoring. Allen went 30th here last year (Billy, at the turn). Allen at 24 is the one QB worth a round-3 pick; Maye at 37 is the second and last chance before the run; if both are gone, wait. Kass, Sleiman, and Doug let Dak, Lawrence, and Goff reach picks 135-145 last year.",
@@ -141,30 +141,30 @@
    {
     "round": 1,
     "pick": 4,
-    "targets": "Bijan, Gibbs, Chase if any fell; else Nacua (default), JSN if a 4+ game suspension is announced, Taylor if you want the RB",
-    "fallback": "McCaffrey only on clean practice reports",
-    "rule": "Decide Nacua vs JSN before you sit down; the room takes ~30 seconds"
+    "targets": "Gibbs or Bijan if one is there (Ish takes an RB at 1 both years, Aoc has taken Chase at his first pick both years, Billy has taken a WR in round 1 both years: about half the time one of the two RBs reaches you); else Nacua (JSN only if a 4+ game suspension is announced)",
+    "fallback": "McCaffrey only on clean practice reports; Taylor if you want the RB",
+    "rule": "Decide the RB-or-Nacua order before you sit down; watch what Billy does at 3"
    },
    {
     "round": 2,
     "pick": 17,
-    "targets": "Chase Brown or Jeanty if either is there (38% / 24%); else Kyren Williams (76%), Javonte Williams, Breece Hall; or McBride (82%), Collins, Pickens, London if the RB left is not one you want",
-    "fallback": "Olave, A.J. Brown; Allen if the room already took two QBs",
-    "rule": "Measured room: RBs ranked 12-60 go ~10 picks early, WRs at consensus, McBride late. Take the scarcer piece that is actually there; the RB2 window is 37-44"
+    "targets": "The RB: Chase Brown or Jeanty if there (38% / 24%); else Kyren (76%), Javonte, Hall. Billy (RB in round 2 both years, Henry 12 picks early), Ish (Jacobs and Walker 11-21 picks early) and Aoc (Taylor 12 early) pick the six slots between your 17 and 24, so expect 3-4 RBs gone before you pick again",
+    "fallback": "McBride (82%), Collins, Pickens, London if the RB left is not one you want; Allen only if you are sure you will not get a QB at 37",
+    "rule": "Take the RB at 17 if you took Nacua at 4; take the WR at 17 if you got Gibbs or Bijan at 4"
    },
    {
     "round": 3,
     "pick": 24,
-    "targets": "Josh Allen if there (66%); McBride (58%) if you did not take him; else Pickens (79%), Olave (70%), Collins, A.J. Brown, Kyren (50%)",
-    "fallback": "Nabers with good Wk-1 news, Garrett Wilson",
-    "rule": "Allen at 24 is the only QB worth a round-3 pick; Billy takes him at the turn if you do not"
+    "targets": "McBride (Billy took him at 31 and Moe took Bowers at 28 last year; about 55% there); Pickens (79%), Olave (70%), Collins, A.J. Brown, Kyren (50%)",
+    "fallback": "Allen only if he is still there (Billy took him at 30 last year and now picks 18 and 23, so assume gone); Rice, DeVonta Smith",
+    "rule": "Leave round 3 with RB1 + two of (elite WR / McBride) or two RBs + one WR"
    },
    {
     "round": 4,
     "pick": 37,
-    "targets": "Maye (54%) if you did not take Allen; else Judkins (50%), Irving (66%), Swift (70%, clean report only), Montgomery (73%), Skattebo (84%) as the RB2; or McMillan (73%), Warren (94%), DeVonta Smith, Flowers",
+    "targets": "Maye (54%): Betto (Daniels at 32) and Hazime (Lamar at 39) take their QB right before your 37, so it is Maye or wait; else the RB2: Judkins (50%), Irving (66%), Swift (70%, clean report), Montgomery (73%), Skattebo (84%); or McMillan (73%), Warren (94%), DeVonta Smith, Flowers",
     "fallback": "Egbuka, McConkey; Judkins/Montgomery if the RB2 tier is thinning",
-    "rule": "The QB run was picks 30-47 last year: Maye is a 37 decision, never a 44 decision. The room's RB run is over by here, so RB2 value starts at 37"
+    "rule": "The QB run was picks 30-47 last year (Allen, Daniels, Lamar, Burrow, Hurts, Mahomes). Kass, Daoud and Kdouh never take a QB before round 9, so a second QB wave does not come until 73+"
    },
    {
     "round": 5,
@@ -316,33 +316,37 @@
    [
     "Who does what",
     [
-     "Ish: RB-first (Bijan, Jacobs, Walker in rounds 1-3), QB in round 5. Expect him on Love/Jeanty/Chase Brown early.",
-     "Billy: QB and TE early (Allen round 3, McBride round 4). If he picks between your 17 and 24, Allen is gone.",
-     "Betto: young upside (Jeanty round 1, JSN round 3, Daniels round 4); the other Jeanty/Love threat.",
-     "Moe: WR, WR, then Bowers in round 3; late QB (Mayfield round 8).",
-     "Abu Ali and Ach: a QB in round 4 (Lamar, Burrow) and a name-brand WR in round 3.",
-     "Kass, Sleiman, Doug: never take a QB before round 9; Kass drafts veterans (Adams, Kamara-types), Sleiman is RB-early and grabbed Chase Brown at 23.",
-     "You (2025): Lamb, BTJ, Cook, Hampton, Mahomes at 47. Your leaguemates expect you to take a QB in round 5; use that."
+     "Ish (picks 1, 20, 21): RB in round 1 both years (Barkley 7 picks early, Bijan), RBs 11-21 picks early in rounds 2-3 (Jacobs at 18, Walker at 30 and 23), QB round 5-11, TE round 8-12. He is the Gibbs/Bijan pick at 1 and the reason Kyren/Walker/Hall do not reach 24.",
+     "Aoc (picks 2, 19, 22): Chase with his first pick both years; A.J. Brown / Tyreek in rounds 2-3; Taylor 12 picks early at 20; Kelce round 3 in 2024; QB round 4-6 (Burrow at 40). Takes WRs at consensus and one RB reach.",
+     "Billy (picks 3, 18, 23): WR at consensus in round 1 both years (Jefferson, Collins), RB in round 2 both years (Taylor; Henry 12 picks early), then Allen at 30 and McBride at 31 last year. He picks right before you in every even round: assume the QB and the RB you want at 24 are gone.",
+     "Moe (pick 5, one year): Nabers, Nacua, Bowers in rounds 1-3 at consensus, Kyren and Kamara in rounds 4-5, QB round 8. Reaches least of anyone (+3 vs consensus).",
+     "Betto (pick 6): young RB in round 1 both years 4-8 picks early (Gibbs, Jeanty), WR-WR after, QB in round 4-5 (Mahomes 2024, Daniels at 32 in 2025). The Jeanty/Love threat before your 17, and a QB taker right before your 37.",
+     "Kass (pick 7): RB reaches 17 picks early (Henry at 15, Swift at 35, Aaron Jones at 46), veteran WRs (Adams both years), QB round 12-14. Never a QB threat.",
+     "Hazime (pick 8): went RB-RB early last year 7-11 picks early (Barkley at 2, Irving at 19), Lamar at 39; WR-WR in 2024 and no QB until 13. Coin flip between the two.",
+     "Daoud (pick 9): the biggest reacher (-9 picks overall, -13 on RBs): Jacobs at 24, Chase Brown at 24, Henderson 32 picks early at 37. RB-first both years, QB round 7-15. He and Kdouh are why round-4 RBs vanish.",
+     "Kdouh (pick 10): RB reaches in rounds 2-3 (Kupp 2024 aside: Kamara 20 early, Pollard 29 early), QB round 9 both years, DST round 14.",
+     "You: Lamb, BTJ, Cook, Hampton, Mahomes at 47 last year; the room expects a WR-WR start and a round-5 QB from you."
     ]
    ],
    [
     "ESPN-room buys, adjusted to this room",
     [
-     "Josh Allen at 24 (about a coin flip; Billy at the turn is the risk)",
-     "Drake Maye at 37 (must happen at 37)",
-     "Chase Brown at 17",
-     "Judkins / Montgomery / Irving / Skattebo at 44",
+     "Gibbs or Bijan at 4 if Billy takes a WR at 3 (he has both years)",
+     "Chase Brown or Jeanty at 17 only if there (38% / 24%); Kyren, Javonte, Hall are the realistic 17s",
+     "McBride at 24 (about 55%; Moe and Billy are the TE takers)",
+     "Drake Maye at 37 (coin flip; Betto and Hazime pick QBs at 32-36)",
+     "Judkins / Montgomery / Irving / Skattebo at 37-44, after the room's RB run",
      "MarShawn Lloyd at 57-64",
-     "Mahomes, Lawrence, Dak, Stafford at 77 if you missed Allen/Maye",
+     "Mahomes, Lawrence, Dak, Stafford, Caleb at 77 if you missed Maye",
      "Purdy, Goff at 97+ (they reached 135+ here last year)",
-     "Kraft at 64-84 (undrafted here last year)"
+     "Kraft, Fannin at 64-84 (Kraft undrafted here last year)"
     ]
    ],
    [
     "Do not pay this room's price",
     [
-     "Jeanty above 17 (went 9 last year)",
-     "Any QB other than Allen/Maye between 30 and 47",
+     "Jeanty above 4 (went 9 last year; Betto and Ish are the threats)",
+     "Any QB other than Maye between 30 and 47; Allen is Billy's at 18 or 23",
      "Bowers/McBride before 17",
      "Kittle/LaPorta/Kelce at 56-62 when Kraft is free later",
      "Josh Jacobs (misses 6+ in a 6-team playoff league)",
@@ -1341,6 +1345,123 @@
      "2/6/1/3/8",
      "4/2/1/3/10",
      "Goff 135, Dak 144, Lawrence 145; 7 DSTs in round 14"
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "title": "Footborn managers, 2024 and 2025 (2026 order: Ish, Aoc, Billy, you, Moe, Betto, Kass, Hazime, Daoud, Kdouh)",
+   "caption": "Rounds shown as 2024, 2025. 'early' = picks before that August's expert consensus. RB/WR = number taken in rounds 1-4 across both years. Reach columns = average of (pick minus consensus) over rounds 1-6, RBs only and all picks; negative = reaches.",
+   "header": [
+    "Manager",
+    "Round 1",
+    "Round 2",
+    "Round 3",
+    "RB / WR in R1-4",
+    "First QB round",
+    "RB reach",
+    "Overall reach"
+   ],
+   "rows": [
+    [
+     "Ish",
+     "RB, RB",
+     "RB (Jacobs 12 early), WR",
+     "RB (Walker 25 and 21 early)",
+     "5 / 3",
+     "5, 11",
+     "-14.8",
+     "-6.7"
+    ],
+    [
+     "Aoc",
+     "WR (Chase), WR (Chase)",
+     "WR, RB (Taylor 12 early)",
+     "TE (Kelce), WR",
+     "2 / 4",
+     "6, 4",
+     "-15.0",
+     "0.0"
+    ],
+    [
+     "Billy",
+     "WR, WR",
+     "RB (Taylor), RB (Henry 12 early)",
+     "RB (Cook 19 early), QB (Allen 30)",
+     "3 / 3",
+     "9, 3",
+     "-8.6",
+     "-1.6"
+    ],
+    [
+     "Moe (2025 only)",
+     "WR (Nabers)",
+     "WR (Nacua)",
+     "TE (Bowers)",
+     "1 / 2",
+     "8",
+     "+0.6",
+     "+3.0"
+    ],
+    [
+     "Betto",
+     "RB (Gibbs 4 early), RB (Jeanty 8 early)",
+     "WR, WR",
+     "WR, WR (JSN 9 early)",
+     "2 / 5",
+     "5, 4",
+     "-5.1",
+     "+0.1"
+    ],
+    [
+     "Kass",
+     "WR, RB (CMC 7 early)",
+     "RB (Henry 22 early), WR",
+     "WR (Adams), WR (Adams)",
+     "3 / 5",
+     "12, 14",
+     "-17.1",
+     "-9.0"
+    ],
+    [
+     "Hazime",
+     "WR (Lamb), RB (Barkley 7 early)",
+     "WR, RB (Irving 11 early)",
+     "RB, WR",
+     "3 / 4",
+     "13, 4",
+     "-11.6",
+     "-2.9"
+    ],
+    [
+     "Daoud",
+     "RB, RB",
+     "WR, WR",
+     "RB (Jacobs 24 early), RB (Chase Brown)",
+     "5 / 3",
+     "7, 15",
+     "-13.1",
+     "-9.4"
+    ],
+    [
+     "Kdouh",
+     "RB, WR",
+     "WR (Kupp 12 early), RB",
+     "RB (Kamara 20 early), WR",
+     "3 / 5",
+     "9, 9",
+     "-12.9",
+     "-3.1"
+    ],
+    [
+     "You",
+     "WR, WR",
+     "RB, WR",
+     "TE, RB",
+     "4 / 3",
+     "10, 5",
+     "-11.8",
+     "-4.6"
     ]
    ]
   },

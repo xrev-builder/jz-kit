@@ -1,151 +1,151 @@
-year,team,slot,round,pick,player,pos
-2024,Matty,1,1,1,Christian McCaffrey,RB
-2024,Matty,1,2,20,Isiah Pacheco,RB
-2024,Matty,1,3,21,Drake London,WR
-2024,Matty,1,4,40,Stefon Diggs,WR
-2024,Matty,1,5,41,Brandon Aiyuk,WR
-2024,Matty,1,6,60,Josh Allen,QB
-2024,Matty,1,7,61,Tank Dell,WR
-2024,Matty,1,8,80,George Kittle,TE
-2024,Matty,1,9,81,Khalil Shakir,WR
-2024,Matty,1,10,100,Chuba Hubbard,RB
-2024,Matty,1,11,101,J.K. Dobbins,RB
-2024,Matty,1,12,120,Dallas Goedert,TE
-2024,Matty,1,13,121,T.J. Hockenson,TE
-2024,Matty,1,14,140,Ja'Lynn Polk,WR
-2024,Matty,1,15,141,Cincinnati Bengals,DST
-2024,Herrane,2,1,2,CeeDee Lamb,WR
-2024,Herrane,2,2,19,Chris Olave,WR
-2024,Herrane,2,3,22,Travis Etienne,RB
-2024,Herrane,2,4,39,Michael Pittman,WR
-2024,Herrane,2,5,42,George Pickens,WR
-2024,Herrane,2,6,59,Raheem Mostert,RB
-2024,Herrane,2,7,62,Keenan Allen,WR
-2024,Herrane,2,8,79,Jameson Williams,WR
-2024,Herrane,2,9,82,Chase Brown,RB
-2024,Herrane,2,10,99,Jake Ferguson,TE
-2024,Herrane,2,11,102,Tyler Lockett,WR
-2024,Herrane,2,12,119,Michael Wilson,WR
-2024,Herrane,2,13,122,Justin Herbert,QB
-2024,Herrane,2,14,139,San Francisco 49ers,DST
-2024,Herrane,2,15,142,Antonio Gibson,RB
-2024,Jamal (you),3,1,3,Tyreek Hill,WR
-2024,Jamal (you),3,2,18,Kyren Williams,RB
-2024,Jamal (you),3,3,23,Sam LaPorta,TE
-2024,Jamal (you),3,4,38,De'Von Achane,RB
-2024,Jamal (you),3,5,43,Deebo Samuel,WR
-2024,Jamal (you),3,6,58,Rashee Rice,WR
-2024,Jamal (you),3,7,63,James Conner,RB
-2024,Jamal (you),3,8,78,Keon Coleman,WR
-2024,Jamal (you),3,9,83,Rome Odunze,WR
-2024,Jamal (you),3,10,98,C.J. Stroud,QB
-2024,Jamal (you),3,11,103,Mike Williams,WR
-2024,Jamal (you),3,12,118,Xavier Legette,WR
-2024,Jamal (you),3,13,123,Cleveland Browns,DST
-2024,Jamal (you),3,14,138,Dak Prescott,QB
-2024,Jamal (you),3,15,143,Chicago Bears,DST
-2024,David,4,1,4,Breece Hall,RB
-2024,David,4,2,17,Puka Nacua,WR
-2024,David,4,3,24,Josh Jacobs,RB
-2024,David,4,4,37,Jaylen Waddle,WR
-2024,David,4,5,44,Trey McBride,TE
-2024,David,4,6,57,Terry McLaurin,WR
-2024,David,4,7,64,Lamar Jackson,QB
-2024,David,4,8,77,Jayden Reed,WR
-2024,David,4,9,84,Ladd McConkey,WR
-2024,David,4,10,97,Zach Charbonnet,RB
-2024,David,4,11,104,Blake Corum,RB
-2024,David,4,12,117,Jakobi Meyers,WR
-2024,David,4,13,124,Josh Palmer,WR
-2024,David,4,14,137,Ray Davis,RB
-2024,David,4,15,144,Atlanta Falcons,DST
-2024,Kdouh,5,1,5,Bijan Robinson,RB
-2024,Kdouh,5,2,16,Cooper Kupp,WR
-2024,Kdouh,5,3,25,Alvin Kamara,RB
-2024,Kdouh,5,4,36,Mike Evans,WR
-2024,Kdouh,5,5,45,Diontae Johnson,WR
-2024,Kdouh,5,6,56,Amari Cooper,WR
-2024,Kdouh,5,7,65,Jaxon Smith-Njigba,WR
-2024,Kdouh,5,8,76,Evan Engram,TE
-2024,Kdouh,5,9,85,Kyler Murray,QB
-2024,Kdouh,5,10,96,Jerome Ford,RB
-2024,Kdouh,5,11,105,Jonathon Brooks,RB
-2024,Kdouh,5,12,116,Adonai Mitchell,WR
-2024,Kdouh,5,13,125,Curtis Samuel,WR
-2024,Kdouh,5,14,136,New Orleans Saints,DST
-2024,Kdouh,5,15,145,Pittsburgh Steelers,DST
-2024,Kass,6,1,6,Amon-Ra St. Brown,WR
-2024,Kass,6,2,15,Derrick Henry,RB
-2024,Kass,6,3,26,Davante Adams,WR
-2024,Kass,6,4,35,D'Andre Swift,RB
-2024,Kass,6,5,46,Aaron Jones,RB
-2024,Kass,6,6,55,Chris Godwin,WR
-2024,Kass,6,7,66,Christian Watson,WR
-2024,Kass,6,8,75,Christian Kirk,WR
-2024,Kass,6,9,86,Austin Ekeler,RB
-2024,Kass,6,10,95,Jordan Addison,WR
-2024,Kass,6,11,106,David Njoku,TE
-2024,Kass,6,12,115,Joe Burrow,QB
-2024,Kass,6,13,126,Tyler Allgeier,RB
-2024,Kass,6,14,135,Khalil Herbert,RB
-2024,Kass,6,15,146,Seattle Seahawks,DST
-2024,Ach,7,1,7,Ja'Marr Chase,WR
-2024,Ach,7,2,14,A.J. Brown,WR
-2024,Ach,7,3,27,Travis Kelce,TE
-2024,Ach,7,4,34,Joe Mixon,RB
-2024,Ach,7,5,47,Malik Nabers,WR
-2024,Ach,7,6,54,Jalen Hurts,QB
-2024,Ach,7,7,67,Zamir White,RB
-2024,Ach,7,8,74,Jaylen Warren,RB
-2024,Ach,7,9,87,Najee Harris,RB
-2024,Ach,7,10,94,DeAndre Hopkins,WR
-2024,Ach,7,11,107,Jerry Jeudy,WR
-2024,Ach,7,12,114,Tony Pollard,RB
-2024,Ach,7,13,127,Romeo Doubs,WR
-2024,Ach,7,14,134,Dallas Cowboys,DST
-2024,Ach,7,15,147,Jayden Daniels,QB
-2024,Petty,8,1,8,Justin Jefferson,WR
-2024,Petty,8,2,13,Jonathan Taylor,RB
-2024,Petty,8,3,28,James Cook,RB
-2024,Petty,8,4,33,DK Metcalf,WR
-2024,Petty,8,5,48,Rachaad White,RB
-2024,Petty,8,6,53,Mark Andrews,TE
-2024,Petty,8,7,68,Calvin Ridley,WR
-2024,Petty,8,8,73,Rhamondre Stevenson,RB
-2024,Petty,8,9,88,Anthony Richardson,QB
-2024,Petty,8,10,93,Zack Moss,RB
-2024,Petty,8,11,108,Brock Bowers,TE
-2024,Petty,8,12,113,Devin Singletary,RB
-2024,Petty,8,13,128,Baltimore Ravens,DST
-2024,Petty,8,14,133,Rashid Shaheed,WR
-2024,Petty,8,15,148,Dallas Goedert,TE
-2024,Betto,9,1,9,Jahmyr Gibbs,RB
-2024,Betto,9,2,12,Garrett Wilson,WR
-2024,Betto,9,3,29,Nico Collins,WR
-2024,Betto,9,4,32,DeVonta Smith,WR
-2024,Betto,9,5,49,Patrick Mahomes,QB
-2024,Betto,9,6,52,Zay Flowers,WR
-2024,Betto,9,7,69,Dalton Kincaid,TE
-2024,Betto,9,8,72,Brian Robinson,RB
-2024,Betto,9,9,89,Xavier Worthy,WR
-2024,Betto,9,10,92,Gus Edwards,RB
-2024,Betto,9,11,109,Darnell Mooney,WR
-2024,Betto,9,12,112,New York Jets,DST
-2024,Betto,9,13,129,Ezekiel Elliott,RB
-2024,Betto,9,14,132,Jordan Love,QB
-2024,Betto,9,15,149,Ravens,DST
-2024,Ish,10,1,10,Saquon Barkley,RB
-2024,Ish,10,2,11,Marvin Harrison,WR
-2024,Ish,10,3,30,Kenneth Walker,RB
-2024,Ish,10,4,31,DJ Moore,WR
-2024,Ish,10,5,50,David Montgomery,RB
-2024,Ish,10,6,51,Tee Higgins,WR
-2024,Ish,10,7,70,Courtland Sutton,WR
-2024,Ish,10,8,71,Kyle Pitts,TE
-2024,Ish,10,9,90,Brian Thomas,WR
-2024,Ish,10,10,91,Nick Chubb,RB
-2024,Ish,10,11,110,Caleb Williams,QB
-2024,Ish,10,12,111,Tyjae Spears,RB
-2024,Ish,10,13,130,Trey Benson,RB
-2024,Ish,10,14,131,Braelon Allen,RB
-2024,Ish,10,15,150,Philadelphia Eagles,DST
+year,team,slot,round,pick,player,pos,manager,key,ecr,dev
+2024,Matty,1,1,1,Christian McCaffrey,RB,Ronny,christian mccaffrey,1.88,-0.8799999999999999
+2024,Matty,1,2,20,Isiah Pacheco,RB,Ronny,isiah pacheco,33.21,-13.21
+2024,Matty,1,3,21,Drake London,WR,Ronny,drake london,19.69,1.3099999999999987
+2024,Matty,1,4,40,Stefon Diggs,WR,Ronny,stefon diggs,45.1,-5.100000000000001
+2024,Matty,1,5,41,Brandon Aiyuk,WR,Ronny,brandon aiyuk,29.01,11.989999999999998
+2024,Matty,1,6,60,Josh Allen,QB,Ronny,josh allen,22.08,37.92
+2024,Matty,1,7,61,Tank Dell,WR,Ronny,tank dell,57.09,3.9099999999999966
+2024,Matty,1,8,80,George Kittle,TE,Ronny,george kittle,86.47,-6.469999999999999
+2024,Matty,1,9,81,Khalil Shakir,WR,Ronny,khalil shakir,138.33,-57.33000000000001
+2024,Matty,1,10,100,Chuba Hubbard,RB,Ronny,chuba hubbard,138.91,-38.91
+2024,Matty,1,11,101,J.K. Dobbins,RB,Ronny,jk dobbins,156.18,-55.18000000000001
+2024,Matty,1,12,120,Dallas Goedert,TE,Ronny,dallas goedert,104.41,15.590000000000003
+2024,Matty,1,13,121,T.J. Hockenson,TE,Ronny,tj hockenson,129.43,-8.430000000000007
+2024,Matty,1,14,140,Ja'Lynn Polk,WR,Ronny,jalynn polk,172.62,-32.620000000000005
+2024,Matty,1,15,141,Cincinnati Bengals,DST,Ronny,cincinnati bengals,253.53,-112.53
+2024,Herrane,2,1,2,CeeDee Lamb,WR,Hazime,ceedee lamb,2.78,-0.7799999999999998
+2024,Herrane,2,2,19,Chris Olave,WR,Hazime,chris olave,20.95,-1.9499999999999993
+2024,Herrane,2,3,22,Travis Etienne,RB,Hazime,travis etienne,25.54,-3.539999999999999
+2024,Herrane,2,4,39,Michael Pittman,WR,Hazime,michael pittman,26.89,12.11
+2024,Herrane,2,5,42,George Pickens,WR,Hazime,george pickens,54.8,-12.799999999999997
+2024,Herrane,2,6,59,Raheem Mostert,RB,Hazime,raheem mostert,83.11,-24.11
+2024,Herrane,2,7,62,Keenan Allen,WR,Hazime,keenan allen,64.47,-2.469999999999999
+2024,Herrane,2,8,79,Jameson Williams,WR,Hazime,jameson williams,122.86,-43.86
+2024,Herrane,2,9,82,Chase Brown,RB,Hazime,chase brown,109.75,-27.75
+2024,Herrane,2,10,99,Jake Ferguson,TE,Hazime,jake ferguson,94.96,4.040000000000006
+2024,Herrane,2,11,102,Tyler Lockett,WR,Hazime,tyler lockett,112.54,-10.540000000000006
+2024,Herrane,2,12,119,Michael Wilson,WR,Hazime,michael wilson,176.79,-57.78999999999999
+2024,Herrane,2,13,122,Justin Herbert,QB,Hazime,justin herbert,108.36,13.64
+2024,Herrane,2,14,139,San Francisco 49ers,DST,Hazime,san francisco 49ers,164.2,-25.19999999999999
+2024,Herrane,2,15,142,Antonio Gibson,RB,Hazime,antonio gibson,144.68,-2.680000000000007
+2024,Jamal (you),3,1,3,Tyreek Hill,WR,Jamal (you),tyreek hill,2.92,0.08000000000000007
+2024,Jamal (you),3,2,18,Kyren Williams,RB,Jamal (you),kyren williams,30.69,-12.690000000000001
+2024,Jamal (you),3,3,23,Sam LaPorta,TE,Jamal (you),sam laporta,29.19,-6.190000000000001
+2024,Jamal (you),3,4,38,De'Von Achane,RB,Jamal (you),devon achane,34.79,3.210000000000001
+2024,Jamal (you),3,5,43,Deebo Samuel,WR,Jamal (you),deebo samuel,33.41,9.590000000000003
+2024,Jamal (you),3,6,58,Rashee Rice,WR,Jamal (you),rashee rice,57.7,0.29999999999999716
+2024,Jamal (you),3,7,63,James Conner,RB,Jamal (you),james conner,65.21,-2.2099999999999937
+2024,Jamal (you),3,8,78,Keon Coleman,WR,Jamal (you),keon coleman,123.8,-45.8
+2024,Jamal (you),3,9,83,Rome Odunze,WR,Jamal (you),rome odunze,99.21,-16.209999999999994
+2024,Jamal (you),3,10,98,C.J. Stroud,QB,Jamal (you),cj stroud,52.99,45.01
+2024,Jamal (you),3,11,103,Mike Williams,WR,Jamal (you),mike williams,141.2,-38.19999999999999
+2024,Jamal (you),3,12,118,Xavier Legette,WR,Jamal (you),xavier legette,190.65,-72.65
+2024,Jamal (you),3,13,123,Cleveland Browns,DST,Jamal (you),cleveland browns,172.35,-49.349999999999994
+2024,Jamal (you),3,14,138,Dak Prescott,QB,Jamal (you),dak prescott,63.5,74.5
+2024,Jamal (you),3,15,143,Chicago Bears,DST,Jamal (you),chicago bears,210.7,-67.69999999999999
+2024,David,4,1,4,Breece Hall,RB,Daoud,breece hall,6.28,-2.2800000000000002
+2024,David,4,2,17,Puka Nacua,WR,Daoud,puka nacua,14.9,2.0999999999999996
+2024,David,4,3,24,Josh Jacobs,RB,Daoud,josh jacobs,48.84,-24.840000000000003
+2024,David,4,4,37,Jaylen Waddle,WR,Daoud,jaylen waddle,26.94,10.059999999999999
+2024,David,4,5,44,Trey McBride,TE,Daoud,trey mcbride,50.14,-6.140000000000001
+2024,David,4,6,57,Terry McLaurin,WR,Daoud,terry mclaurin,55.16,1.8400000000000034
+2024,David,4,7,64,Lamar Jackson,QB,Daoud,lamar jackson,32.22,31.78
+2024,David,4,8,77,Jayden Reed,WR,Daoud,jayden reed,82.0,-5.0
+2024,David,4,9,84,Ladd McConkey,WR,Daoud,ladd mcconkey,100.36,-16.36
+2024,David,4,10,97,Zach Charbonnet,RB,Daoud,zach charbonnet,132.59,-35.59
+2024,David,4,11,104,Blake Corum,RB,Daoud,blake corum,142.74,-38.74000000000001
+2024,David,4,12,117,Jakobi Meyers,WR,Daoud,jakobi meyers,115.99,1.0100000000000051
+2024,David,4,13,124,Josh Palmer,WR,Daoud,josh palmer,,
+2024,David,4,14,137,Ray Davis,RB,Daoud,ray davis,173.83,-36.83000000000001
+2024,David,4,15,144,Atlanta Falcons,DST,Daoud,atlanta falcons,260.38,-116.38
+2024,Kdouh,5,1,5,Bijan Robinson,RB,Kdouh,bijan robinson,6.75,-1.75
+2024,Kdouh,5,2,16,Cooper Kupp,WR,Kdouh,cooper kupp,28.07,-12.07
+2024,Kdouh,5,3,25,Alvin Kamara,RB,Kdouh,alvin kamara,45.03,-20.03
+2024,Kdouh,5,4,36,Mike Evans,WR,Kdouh,mike evans,27.85,8.149999999999999
+2024,Kdouh,5,5,45,Diontae Johnson,WR,Kdouh,diontae johnson,66.87,-21.870000000000005
+2024,Kdouh,5,6,56,Amari Cooper,WR,Kdouh,amari cooper,43.3,12.700000000000003
+2024,Kdouh,5,7,65,Jaxon Smith-Njigba,WR,Kdouh,jaxon smithnjigba,85.79,-20.790000000000006
+2024,Kdouh,5,8,76,Evan Engram,TE,Kdouh,evan engram,79.79,-3.7900000000000063
+2024,Kdouh,5,9,85,Kyler Murray,QB,Kdouh,kyler murray,56.92,28.08
+2024,Kdouh,5,10,96,Jerome Ford,RB,Kdouh,jerome ford,122.34,-26.340000000000003
+2024,Kdouh,5,11,105,Jonathon Brooks,RB,Kdouh,jonathon brooks,112.71,-7.709999999999994
+2024,Kdouh,5,12,116,Adonai Mitchell,WR,Kdouh,adonai mitchell,173.09,-57.09
+2024,Kdouh,5,13,125,Curtis Samuel,WR,Kdouh,curtis samuel,128.36,-3.3600000000000136
+2024,Kdouh,5,14,136,New Orleans Saints,DST,Kdouh,new orleans saints,200.74,-64.74000000000001
+2024,Kdouh,5,15,145,Pittsburgh Steelers,DST,Kdouh,pittsburgh steelers,184.25,-39.25
+2024,Kass,6,1,6,Amon-Ra St. Brown,WR,Kass,amonra st brown,4.99,1.0099999999999998
+2024,Kass,6,2,15,Derrick Henry,RB,Kass,derrick henry,37.87,-22.869999999999997
+2024,Kass,6,3,26,Davante Adams,WR,Kass,davante adams,17.3,8.7
+2024,Kass,6,4,35,D'Andre Swift,RB,Kass,dandre swift,76.64,-41.64
+2024,Kass,6,5,46,Aaron Jones,RB,Kass,aaron jones,66.29,-20.290000000000006
+2024,Kass,6,6,55,Chris Godwin,WR,Kass,chris godwin,62.2,-7.200000000000003
+2024,Kass,6,7,66,Christian Watson,WR,Kass,christian watson,103.75,-37.75
+2024,Kass,6,8,75,Christian Kirk,WR,Kass,christian kirk,55.46,19.54
+2024,Kass,6,9,86,Austin Ekeler,RB,Kass,austin ekeler,107.65,-21.650000000000006
+2024,Kass,6,10,95,Jordan Addison,WR,Kass,jordan addison,101.25,-6.25
+2024,Kass,6,11,106,David Njoku,TE,Kass,david njoku,96.64,9.36
+2024,Kass,6,12,115,Joe Burrow,QB,Kass,joe burrow,59.92,55.08
+2024,Kass,6,13,126,Tyler Allgeier,RB,Kass,tyler allgeier,155.5,-29.5
+2024,Kass,6,14,135,Khalil Herbert,RB,Kass,khalil herbert,175.08,-40.08000000000001
+2024,Kass,6,15,146,Seattle Seahawks,DST,Kass,seattle seahawks,263.45,-117.44999999999999
+2024,Ach,7,1,7,Ja'Marr Chase,WR,Aoc,jamarr chase,4.53,2.4699999999999998
+2024,Ach,7,2,14,A.J. Brown,WR,Aoc,aj brown,9.05,4.949999999999999
+2024,Ach,7,3,27,Travis Kelce,TE,Aoc,travis kelce,31.89,-4.890000000000001
+2024,Ach,7,4,34,Joe Mixon,RB,Aoc,joe mixon,51.92,-17.92
+2024,Ach,7,5,47,Malik Nabers,WR,Aoc,malik nabers,37.84,9.159999999999997
+2024,Ach,7,6,54,Jalen Hurts,QB,Aoc,jalen hurts,27.38,26.62
+2024,Ach,7,7,67,Zamir White,RB,Aoc,zamir white,80.19,-13.189999999999998
+2024,Ach,7,8,74,Jaylen Warren,RB,Aoc,jaylen warren,88.95,-14.950000000000003
+2024,Ach,7,9,87,Najee Harris,RB,Aoc,najee harris,76.6,10.400000000000006
+2024,Ach,7,10,94,DeAndre Hopkins,WR,Aoc,deandre hopkins,92.19,1.8100000000000023
+2024,Ach,7,11,107,Jerry Jeudy,WR,Aoc,jerry jeudy,146.49,-39.49000000000001
+2024,Ach,7,12,114,Tony Pollard,RB,Aoc,tony pollard,87.54,26.459999999999994
+2024,Ach,7,13,127,Romeo Doubs,WR,Aoc,romeo doubs,130.55,-3.5500000000000114
+2024,Ach,7,14,134,Dallas Cowboys,DST,Aoc,dallas cowboys,169.87,-35.870000000000005
+2024,Ach,7,15,147,Jayden Daniels,QB,Aoc,jayden daniels,78.61,68.39
+2024,Petty,8,1,8,Justin Jefferson,WR,Billy,justin jefferson,6.72,1.2800000000000002
+2024,Petty,8,2,13,Jonathan Taylor,RB,Billy,jonathan taylor,14.72,-1.7200000000000006
+2024,Petty,8,3,28,James Cook,RB,Billy,james cook,47.25,-19.25
+2024,Petty,8,4,33,DK Metcalf,WR,Billy,dk metcalf,35.81,-2.8100000000000023
+2024,Petty,8,5,48,Rachaad White,RB,Billy,rachaad white,42.87,5.130000000000003
+2024,Petty,8,6,53,Mark Andrews,TE,Billy,mark andrews,58.93,-5.93
+2024,Petty,8,7,68,Calvin Ridley,WR,Billy,calvin ridley,70.13,-2.1299999999999955
+2024,Petty,8,8,73,Rhamondre Stevenson,RB,Billy,rhamondre stevenson,66.57,6.430000000000007
+2024,Petty,8,9,88,Anthony Richardson,QB,Billy,anthony richardson,49.56,38.44
+2024,Petty,8,10,93,Zack Moss,RB,Billy,zack moss,110.07,-17.069999999999993
+2024,Petty,8,11,108,Brock Bowers,TE,Billy,brock bowers,104.15,3.8499999999999943
+2024,Petty,8,12,113,Devin Singletary,RB,Billy,devin singletary,96.5,16.5
+2024,Petty,8,13,128,Baltimore Ravens,DST,Billy,baltimore ravens,156.08,-28.080000000000013
+2024,Petty,8,14,133,Rashid Shaheed,WR,Billy,rashid shaheed,135.36,-2.3600000000000136
+2024,Petty,8,15,148,Dallas Goedert,TE,Billy,dallas goedert,104.41,43.59
+2024,Betto,9,1,9,Jahmyr Gibbs,RB,Betto,jahmyr gibbs,13.65,-4.65
+2024,Betto,9,2,12,Garrett Wilson,WR,Betto,garrett wilson,10.23,1.7699999999999996
+2024,Betto,9,3,29,Nico Collins,WR,Betto,nico collins,28.86,0.14000000000000057
+2024,Betto,9,4,32,DeVonta Smith,WR,Betto,devonta smith,35.4,-3.3999999999999986
+2024,Betto,9,5,49,Patrick Mahomes,QB,Betto,patrick mahomes,32.03,16.97
+2024,Betto,9,6,52,Zay Flowers,WR,Betto,zay flowers,51.44,0.5600000000000023
+2024,Betto,9,7,69,Dalton Kincaid,TE,Betto,dalton kincaid,67.19,1.8100000000000023
+2024,Betto,9,8,72,Brian Robinson,RB,Betto,brian robinson,93.66,-21.659999999999997
+2024,Betto,9,9,89,Xavier Worthy,WR,Betto,xavier worthy,95.4,-6.400000000000006
+2024,Betto,9,10,92,Gus Edwards,RB,Betto,gus edwards,124.36,-32.36
+2024,Betto,9,11,109,Darnell Mooney,WR,Betto,darnell mooney,179.85,-70.85
+2024,Betto,9,12,112,New York Jets,DST,Betto,new york jets,165.42,-53.41999999999999
+2024,Betto,9,13,129,Ezekiel Elliott,RB,Betto,ezekiel elliott,126.08,2.9200000000000017
+2024,Betto,9,14,132,Jordan Love,QB,Betto,jordan love,68.11,63.89
+2024,Betto,9,15,149,Ravens,DST,Betto,ravens,,
+2024,Ish,10,1,10,Saquon Barkley,RB,Ish,saquon barkley,17.01,-7.010000000000002
+2024,Ish,10,2,11,Marvin Harrison,WR,Ish,marvin harrison,16.66,-5.66
+2024,Ish,10,3,30,Kenneth Walker,RB,Ish,kenneth walker,55.45,-25.450000000000003
+2024,Ish,10,4,31,DJ Moore,WR,Ish,dj moore,34.79,-3.789999999999999
+2024,Ish,10,5,50,David Montgomery,RB,Ish,david montgomery,71.93,-21.930000000000007
+2024,Ish,10,6,51,Tee Higgins,WR,Ish,tee higgins,51.59,-0.5900000000000034
+2024,Ish,10,7,70,Courtland Sutton,WR,Ish,courtland sutton,98.17,-28.17
+2024,Ish,10,8,71,Kyle Pitts,TE,Ish,kyle pitts,83.07,-12.069999999999993
+2024,Ish,10,9,90,Brian Thomas,WR,Ish,brian thomas,109.64,-19.64
+2024,Ish,10,10,91,Nick Chubb,RB,Ish,nick chubb,127.53,-36.53
+2024,Ish,10,11,110,Caleb Williams,QB,Ish,caleb williams,88.31,21.689999999999998
+2024,Ish,10,12,111,Tyjae Spears,RB,Ish,tyjae spears,96.74,14.260000000000005
+2024,Ish,10,13,130,Trey Benson,RB,Ish,trey benson,141.73,-11.72999999999999
+2024,Ish,10,14,131,Braelon Allen,RB,Ish,braelon allen,207.92,-76.91999999999999
+2024,Ish,10,15,150,Philadelphia Eagles,DST,Ish,philadelphia eagles,193.37,-43.370000000000005
