@@ -75,7 +75,7 @@ tr.rec1 td{background:var(--mine)}tr.gone td{color:var(--gone)}tr.gone td.nm b{t
 const DATA=__DATA__;
 (function(){
 const $=s=>document.querySelector(s);
-const SL={A:{title:1.01,po:1.24,base:{ppg:112.2,title:17.7,po:94.5}},B:{title:0.70,po:1.73,base:{ppg:107.8,title:11.6,po:70}}};
+const SL={A:{title:0.42,po:0.52,base:{ppg:106.7,title:19.8,po:93.6}},B:{title:0.42,po:1.04,base:{ppg:102.9,title:15.2,po:74.2}}};
 const WAIV={A:{QB:15,RB:9.5,WR:9.5,TE:8,DST:6},B:{QB:18.5,RB:9.5,WR:9.5,TE:8,DST:6}};
 const LINE=[['QB',1],['RB',2],['WR',2],['TE',1],['FLEX',2],['DST',1]];
 let st={lg:'A',slot:2,taken:[],mine:[]};

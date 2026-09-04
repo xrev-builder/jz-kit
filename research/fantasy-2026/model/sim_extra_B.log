@@ -1,0 +1,5 @@
+{'label': 'Plan (Nacua at 4, Allen at 24)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7425, 'p_title': 0.15166666666666667, 'avg_wins': 7.621666666666667, 'avg_ppg': 126.08933354347577}
+{'label': 'Plan (Nacua at 4, Collins at 24, Maye at 37)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.755, 'p_title': 0.15916666666666668, 'avg_wins': 7.773333333333333, 'avg_ppg': 126.75946494318676}
+{'label': 'Plan (Nacua) + Perine handcuff for Concepcion', 'league': 'B', 'injuries': True, 'p_playoffs': 0.735, 'p_title': 0.16, 'avg_wins': 7.66, 'avg_ppg': 126.19298442058586}
+{'label': 'Taylor at 4, London at 17', 'league': 'B', 'injuries': True, 'p_playoffs': 0.695, 'p_title': 0.13916666666666666, 'avg_wins': 7.4, 'avg_ppg': 124.61792309591324}
+{'label': 'Gibbs at 4 (if there), Pickens at 17', 'league': 'B', 'injuries': True, 'p_playoffs': 0.775, 'p_title': 0.14583333333333334, 'avg_wins': 7.7625, 'avg_ppg': 127.29106558749773}

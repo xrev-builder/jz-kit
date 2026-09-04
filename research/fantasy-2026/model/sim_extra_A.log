@@ -1,0 +1,4 @@
+{'label': 'Plan (McBride at 19) [Vaki = Gibbs handcuff]', 'league': 'A', 'injuries': True, 'p_playoffs': 0.9308333333333333, 'p_title': 0.16666666666666666, 'avg_wins': 8.1225, 'avg_ppg': 126.30393848920025}
+{'label': 'Plan, no handcuff (Croskey-Merritt for Vaki)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.9258333333333333, 'p_title': 0.15333333333333332, 'avg_wins': 8.051666666666666, 'avg_ppg': 125.73933607026343}
+{'label': 'Chase at 2, Kyren at 19', 'league': 'A', 'injuries': True, 'p_playoffs': 0.9066666666666666, 'p_title': 0.13166666666666665, 'avg_wins': 7.660833333333334, 'avg_ppg': 123.15896696262953}
+{'label': 'Bijan at 2 (else plan)', 'league': 'A', 'injuries': True, 'p_playoffs': 0.9391666666666667, 'p_title': 0.14166666666666666, 'avg_wins': 8.163333333333334, 'avg_ppg': 125.46936666732964}

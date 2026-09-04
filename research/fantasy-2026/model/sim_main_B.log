@@ -1,0 +1,7 @@
+{'label': 'Plan (Allen at 24)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7166666666666667, 'p_title': 0.14166666666666666, 'avg_wins': 7.5616666666666665, 'avg_ppg': 125.84802904874974}
+{'label': 'Plan (Collins at 24, Maye at 37)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7391666666666666, 'p_title': 0.14, 'avg_wins': 7.636666666666667, 'avg_ppg': 126.13638594274384}
+{'label': 'Zero-RB', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7091666666666666, 'p_title': 0.14583333333333334, 'avg_wins': 7.494166666666667, 'avg_ppg': 125.53653602415744}
+{'label': 'Robust-RB', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7325, 'p_title': 0.1275, 'avg_wins': 7.645833333333333, 'avg_ppg': 125.39029473556953}
+{'label': 'Late QB (Mahomes at 77)', 'league': 'B', 'injuries': True, 'p_playoffs': 0.7, 'p_title': 0.12666666666666668, 'avg_wins': 7.439166666666667, 'avg_ppg': 124.94317481024491}
+{'label': 'Plan (Allen at 24) [no injuries]', 'league': 'B', 'injuries': False, 'p_playoffs': 0.705, 'p_title': 0.11666666666666667, 'avg_wins': 7.4425, 'avg_ppg': 132.92756181516287}
+{'label': 'ESPN-sheet drafter at this slot', 'league': 'B', 'injuries': True, 'p_playoffs': 0.5525, 'p_title': 0.0975, 'avg_wins': 6.779166666666667, 'avg_ppg': 121.84666593270417} roster: ['Amon-Ra St. Brown', 'Drake London', 'Ashton Jeanty', 'Drake Maye', 'Bucky Irving', 'Josh Jacobs', 'Chuba Hubbard', 'Courtland Sutton', 'Travis Kelce', 'Jayden Reed', 'Jacory Croskey-Merritt', 'Isaiah Likely', 'Brock Purdy', 'Pittsburgh Steelers', 'Tyjae Spears']
