@@ -122,7 +122,7 @@ table.grid{font-size:11.5px;min-width:900px} table.grid th{white-space:nowrap} t
 .plog{columns:2;column-gap:24px;font-size:12.5px;padding-left:22px} .plog li{break-inside:avoid;cursor:pointer} .plog li span{color:var(--mute);font-family:"IBM Plex Mono",monospace;font-size:11px}
 .dock{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:6px 10px;background:var(--card);border-top:2px solid var(--ink);z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.08)} .dock[hidden]{display:none} .dock div{min-width:70px} .dock span{display:block;font:600 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .dock b{font-family:"IBM Plex Mono",monospace;font-size:13px}
 body{padding-bottom:64px}
-@media (max-width:640px){.plog{columns:1} .dock{gap:8px;padding:5px 6px} .dock button{padding:6px 8px;font-size:12px}}
+@media (max-width:640px){.plog{columns:1} .dock{gap:6px;padding:5px 6px;flex-wrap:nowrap} .dock div{min-width:0;flex:0 0 auto} .dock span{font-size:9px} .dock b{font-size:12px} .dock button{padding:6px 7px;font-size:11.5px;letter-spacing:.02em;flex:0 0 auto}}
 @media print{.trk,.dock{display:none!important} body{padding-bottom:0}}
 </style>'''
 EXTRA_JS=r'''
