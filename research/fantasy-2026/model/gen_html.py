@@ -87,11 +87,12 @@ def board(lg):
     return f"""<section class="dboard" id="db-{lg}" data-lg="{lg}" hidden>
 <div class="dbtop"><div class="onclock"><span>On the clock</span><b data-t="clock">1.01 · Team 1</b></div><div class="onclock"><span>You</span><b data-t="mynext">-</b></div>
 <div class="addp"><input type="search" placeholder="Type a name to log a pick" data-t="q" aria-label="log a pick"><div class="hits" data-t="hits" hidden></div></div>
-<label class="slotsel">Slot <select data-t="slot">{opts}</select></label><button type="button" data-t="undo">Undo</button><button type="button" data-t="clear">Clear</button></div>
+<label class="slotsel">Slot <select data-t="slot">{opts}</select></label><button type="button" data-t="undo">Undo</button><button type="button" data-t="export">Export</button><button type="button" data-t="import">Import</button><button type="button" data-t="clear">Clear</button></div>
+<div class="nextup" data-t="nextup"></div>
 <p class="cap">Tick a player on the cheat sheet or type a name here: he is logged to the team on the clock (snake). Tap a team name to rename it. Tap a filled cell to remove that pick. Scroll sideways for all ten teams.</p>
 <div class="dbwrap"><table class="db" data-t="grid"></table></div>
 </section>
-<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="sheet">Sheet</button><button type="button" data-view="board">Board</button><button type="button" data-view="live">Assistant</button><button type="button" data-view="espn">ESPN</button></div>"""
+<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="sheet">Sheet</button><button type="button" data-view="board">Board</button><button type="button" data-view="live">Assistant</button><button type="button" data-view="espn">ESPN</button><small class="saved" data-t="saved"></small></div>"""
 
 def espn_tab():
     import json as _j, re as _r, unicodedata as _u
@@ -172,7 +173,12 @@ table.ltbl tr.rec1 td{background:var(--t1)} table.ltbl td.why{color:var(--mute);
 .plog2{font-size:12.5px;color:var(--mute);display:flex;flex-wrap:wrap;gap:4px}.plog2 button{font:12px Barlow,sans-serif;padding:2px 7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.plog2 button.me{border-color:var(--acc)}
 .dock button.on{background:var(--ink);color:var(--bg)}
 .espn td.pos{color:var(--acc);font-weight:600} .espn td.neg{color:var(--warn);font-weight:600} .espn sup{color:var(--mute);font-size:9px} .espn tr.p.done td{color:var(--strike)} .espn tr.p.done .nm b{text-decoration:line-through} .chips .hint{align-self:center}
-@media print{.dboard,.dock,.vtabs,.live,.espn{display:none!important} body{padding-bottom:0}}
+.nextup{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin:6px 0 10px} .nextup .nu{background:var(--card);border:1px solid var(--line);padding:7px 10px} .nextup .nu h5{font:700 14px "Barlow Condensed",sans-serif;margin:0 0 3px;display:flex;justify-content:space-between} .nextup .nu h5 small{font:500 11px "IBM Plex Mono",monospace;color:var(--mute)} .nextup .nu ol{margin:0;padding-left:18px;font-size:12.5px} .nextup .nu li span{color:var(--mute);font-family:"IBM Plex Mono",monospace;font-size:11px;margin-left:4px} .nextup .nu.me{border-color:var(--acc);box-shadow:inset 3px 0 0 var(--acc)}
+.recbox{background:var(--card);border-left:4px solid var(--acc);padding:10px 14px;margin-top:10px} .recbox b.take{font:700 22px "Barlow Condensed",sans-serif;display:block} .recbox p{margin:4px 0 0;font-size:13px;max-width:90ch} .recbox .alt{color:var(--mute)}
+.saved{color:var(--mute);font:500 10px "IBM Plex Mono",monospace;white-space:nowrap}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:20px 8px;overflow:auto} .modal[hidden]{display:none} .mbox{background:var(--bg);color:var(--ink);max-width:760px;width:100%;border:2px solid var(--ink);padding:14px 16px;position:relative;max-height:92vh;overflow:auto} .mclose{position:absolute;right:8px;top:6px;font:700 22px Barlow,sans-serif;border:0;background:transparent;color:var(--ink);cursor:pointer} .mbox h3{margin:0 0 2px} .mbox .sub{color:var(--mute);font-size:12.5px;margin:0 0 8px} .mbox table{font-size:12px} .mbox td,.mbox th{padding:3px 6px} .mbox textarea{width:100%;min-height:160px;font:12px "IBM Plex Mono",monospace;background:var(--card);color:var(--ink);border:1.5px solid var(--line)} .mbox .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin:6px 0 10px} .mbox .sum div{background:var(--card);border:1px solid var(--line);padding:5px 8px;font-size:12px} .mbox .sum div b{display:block;font-family:"IBM Plex Mono",monospace;font-size:14px}
+.nm b{cursor:pointer} .nm b:hover{text-decoration:underline}
+@media print{.dboard,.dock,.vtabs,.live,.espn,.modal{display:none!important} body{padding-bottom:0}}
 </style>'''
 LIVE_HTML=r'''<section class="live" id="live" hidden>
 <div class="lhead"><div><h2>Draft Day Assistant <span class="lgname" data-t="lgname"></span></h2><p class="meta">Ranks every undrafted player by what he adds to your title odds right now, against what will still be there at your next pick. Picks logged here, on the board, or on the cheat sheet all go to the same draft.</p></div></div>
@@ -182,6 +188,7 @@ LIVE_HTML=r'''<section class="live" id="live" hidden>
 <div class="stat"><span>Projected starting ppg</span><b data-t="tppg">0</b><small>your picks + expected value of your remaining picks</small></div>
 <div class="stat"><span>Est. playoffs / title</span><b data-t="odds">--</b><small>calibrated on the version-3 simulator</small></div>
 </div>
+<div class="recbox" data-t="rec"></div>
 <h3 class="sec">Recommended now</h3>
 <div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div></div>
 <div class="tw"><table class="ltbl" data-t="ltbl"><thead><tr><th></th><th>Player</th><th>Proj</th><th>Value vs next pick</th><th>Gone by next</th><th>Title Δ</th><th>Board</th><th>Room</th><th>Inj</th><th>Why</th></tr></thead><tbody></tbody></table></div>
@@ -224,16 +231,22 @@ function render(){
  $('[data-t="cur"]',sec).textContent=cur>150?'done':D.pickLabel(cur); $('[data-t="curwho"]',sec).textContent=cur>150?'':(slotOn===slot?'YOU':D.tname(lg,slotOn));
  $('[data-t="nextp"]',sec).textContent=nxt>150?'--':(onMe?'now, then '+D.pickLabel(nxt):D.pickLabel(nxt)); $('[data-t="nextp2"]',sec).textContent=nxt2>150?'':('then '+D.pickLabel(nxt2));
  const takenSet=new Set(taken); const availP=DATA.filter(d=>!takenSet.has(d.n));
+ const GONE=D.survival(lg,cur,nxt); const gone=d=>(GONE[d.n]!==undefined?GONE[d.n]:pGone(d,nxt,cur));
  const base=expectedLineup(mine,availP,cur,picks); $('[data-t="tppg"]',sec).textContent=base.toFixed(1);
  const S=SL[lg]; const dt=Math.max(1,Math.min(45,S.base.title+S.title*(base-S.base.ppg))); const dp=Math.max(5,Math.min(99,S.base.po+S.po*(base-S.base.ppg)));
  $('[data-t="odds"]',sec).textContent=mine.length?(dp.toFixed(0)+'% / '+dt.toFixed(1)+'%'):'--';
- const alt={};['QB','RB','WR','TE','DST'].forEach(pos=>{const c=availP.filter(d=>d.pos===pos&&pGone(d,nxt,cur)<0.5).sort((a,b)=>avail(b)-avail(a));alt[pos]=c.length?avail(c[0]):WAIV[lg][pos]});
+ const alt={};['QB','RB','WR','TE','DST'].forEach(pos=>{const c=availP.filter(d=>d.pos===pos&&gone(d)<0.5).sort((a,b)=>avail(b)-avail(a));alt[pos]=c.length?avail(c[0]):WAIV[lg][pos]});
  const cnt={};mine.forEach(n=>{const p=byName[n];if(p)cnt[p.pos]=(cnt[p.pos]||0)+1});
  const need=pos=>{const c=cnt[pos]||0;if(pos==='QB')return c===0?1:0.25;if(pos==='TE')return c===0?1:0.35;if(pos==='DST')return c===0?1:0.05;const flexOpen=2-Math.max(0,(cnt.RB||0)-2)-Math.max(0,(cnt.WR||0)-2)-Math.max(0,(cnt.TE||0)-1);if(c<2)return 1;return flexOpen>0?0.85:0.55};
- const rows=availP.map(d=>{const v=(avail(d)-alt[d.pos])*17*need(d.pos);const dtitle=S.title*(expectedLineup(mine.concat([d.n]),availP.filter(x=>x.n!==d.n),cur+1,picks)-base);return {d,v,dtitle,pg:pGone(d,nxt,cur)}});
+ const rows=availP.map(d=>{const v=(avail(d)-alt[d.pos])*17*need(d.pos);const dtitle=S.title*(expectedLineup(mine.concat([d.n]),availP.filter(x=>x.n!==d.n),cur+1,picks)-base);return {d,v,dtitle,pg:gone(d)}});
  const pos=$('[data-t="lchips"] button.on',sec).dataset.pos; const q=$('[data-t="lq"]',sec).value.trim().toLowerCase();
  let list=rows.filter(r=>(pos==='ALL'||r.d.pos===pos)&&(!q||r.d.n.toLowerCase().includes(q)));
  list.sort((a,b)=>(b.dtitle*30+b.v*0.5)-(a.dtitle*30+a.v*0.5)); list=list.slice(0,q?15:40);
+ // recommendation banner
+ const RECB=$('[data-t="rec"]',sec);
+ if(cur>150){RECB.innerHTML=''} else if(!q&&list.length){const a=list[0], b2=list[1]; const between=[]; for(let p=cur;p<nxt;p++){if(D.teamOf(p)!==slot) between.push(D.tname(lg,D.teamOf(p)))}
+  const uniq=[...new Set(between)]; const wait=availP.filter(d=>d.pos===a.d.pos&&d.n!==a.d.n&&gone(d)<0.5).sort((x,y)=>avail(y)-avail(x))[0];
+  RECB.innerHTML='<b class="take">'+(onMe?'TAKE: ':'Best if it gets to you: ')+esc(a.d.n)+' <small>'+a.d.pos+' · '+esc(a.d.tm)+'</small></b><p>Title odds +'+a.dtitle.toFixed(1)+' now'+(b2?' vs +'+b2.dtitle.toFixed(1)+' for '+esc(b2.d.n):'')+'. '+esc(a.d.n)+' is '+(a.pg*100).toFixed(0)+'% to be gone before your next pick ('+D.pickLabel(nxt)+(uniq.length?': '+uniq.slice(0,6).join(', ')+' pick in between':'')+')'+(b2?'; '+esc(b2.d.n)+' is '+(b2.pg*100).toFixed(0)+'%':'')+'.'+(wait?' If you wait on '+a.d.pos+', the best one likely there at '+D.pickLabel(nxt)+' is '+esc(wait.n)+' ('+proj(wait).toFixed(1)+' ppg vs '+proj(a.d).toFixed(1)+').':'')+'</p>'+(b2&&Math.abs(a.dtitle-b2.dtitle)<0.3?'<p class="alt">Inside the noise between these two; take the one the room is likelier to steal.</p>':'')}
  const tb=$('[data-t="ltbl"] tbody',sec); tb.innerHTML='';
  const who=cur>150?'':(onMe?'Mine':'Taken by '+D.tname(lg,slotOn));
  list.forEach((r,i)=>{const d=r.d;const tr=document.createElement('tr');if(i===0&&!q)tr.className='rec1';
@@ -251,7 +264,27 @@ D.on(render); render();
 })();
 </script>'''
 import re as _re
+ADP_JSON=(__import__('json').dumps({d['n']:[d['adpA'],d['adpB'],d['pos']] for d in __import__('json').loads(_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1))},separators=(',',':')))
+MP_JSON=open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/build/manager_profiles.json').read()
+LOGS_JSON=open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/build/player_logs.json').read()
 LIVE_DATA=_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1)
+CARD_JS=r'''
+<script>
+(function(){
+const LOGS=__LOGS_JSON__; const D=window.__draft; if(!D) return;
+const $=(s,r)=>(r||document).querySelector(s);
+function card(name){const L=LOGS[name]; const esc=D.esc; let h='<h3>'+esc(name)+'</h3>';
+ const tr=document.querySelector('#lg-A tr.p[data-name="'+name.toLowerCase().replace(/"/g,'')+'"]'); const note=tr?tr.querySelector('.note'):null; const sm=tr?tr.querySelector('.nm small'):null;
+ h+='<p class="sub">'+(sm?esc(sm.textContent):'')+'</p>';
+ if(!L){h+='<p>No 2024-25 NFL game log (rookie, DST, or did not play).</p>'+(note?'<p>'+esc(note.textContent)+'</p>':''); D.openModal(h); return}
+ const s=(k,lab)=>{const x=L[k]; if(!x) return ''; return '<div><span>'+lab+'</span><b>'+x.ppgA+' / '+x.ppgB+' ppg</b>'+x.g+' g · '+(x.tgt?x.tgt+' tgt, '+x.rec+'-'+x.reyd+'-'+x.retd+' rec':'')+(x.car?(x.tgt?' · ':'')+x.car+' car, '+x.ruyd+'-'+x.rutd+' rush':'')+(x.payd?' · '+x.payd+' pass yds, '+x.patd+' TD, '+x.ints+' INT':'')+(x.share?' · '+(x.share*100).toFixed(0)+'% tgt share':'')+'</div>'};
+ h+='<div class="sum">'+s('s25','2025 (Ratz / Footborn scoring)')+s('s24','2024')+'</div>';
+ if(L.w25){h+='<div class="tw"><table><thead><tr><th>Wk</th><th>Opp</th><th>Ratz</th><th>Footborn</th><th>Tgt</th><th>Rec-Yds-TD</th><th>Car</th><th>Rush-TD</th><th>Pass</th></tr></thead><tbody>'+L.w25.map(w=>'<tr><td class="num">'+w[0]+'</td><td>'+esc(w[1])+'</td><td class="num"><b>'+w[2].toFixed(1)+'</b></td><td class="num"><b>'+w[3].toFixed(1)+'</b></td><td class="num">'+w[4]+'</td><td class="num">'+w[5]+'-'+w[6]+'-'+w[7]+'</td><td class="num">'+w[8]+'</td><td class="num">'+w[9]+'-'+w[10]+'</td><td class="num">'+(w[11]?w[11]+' yds, '+w[12]+' TD, '+w[13]+' INT':'')+'</td></tr>').join('')+'</tbody></table></div>'}
+ if(note) h+='<p class="sub" style="margin-top:8px">'+esc(note.textContent)+'</p>';
+ D.openModal(h)}
+document.addEventListener('click',e=>{const b=e.target.closest('.nm b'); if(!b||e.target.closest('#modal')) return; if(e.target.closest('label')) return; card(b.textContent.trim())});
+})();
+</script>'''
 ESPN_JS=r'''
 <script>
 (function(){
@@ -276,8 +309,9 @@ EXTRA_JS=r'''
 (function(){
 const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
 const POS=['QB','RB','WR','TE','DST']; const STARTERS={QB:1,RB:2,WR:2,TE:1,DST:1};
+const ADP=__ADP_JSON__; const MP=__MP_JSON__; const TUNE={width:4,cap:1.5,power:0.6};  // calibrated so survival odds match the room-price model (rmse 0.07 across picks 1-44)
 let T={}; try{T=JSON.parse(localStorage.getItem('tracker')||'{}')}catch(e){T={}}
-function save(){try{localStorage.setItem('tracker',JSON.stringify(T))}catch(e){}}
+function save(){try{localStorage.setItem('tracker',JSON.stringify(T)); const d=new Date(); $$('[data-t="saved"]').forEach(e=>e.textContent='saved '+d.toTimeString().slice(0,8))}catch(e){$$('[data-t="saved"]').forEach(e=>e.textContent='NOT SAVED: storage blocked')}}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function teamOf(p){const r=Math.ceil(p/10), i=(p-1)%10; return r%2===1?i+1:10-i}
 function pickLabel(p){const r=Math.ceil(p/10), i=(p-1)%10+1; return r+'.'+(i<10?'0':'')+i}
@@ -287,6 +321,22 @@ const DEFN={A:{},B:{1:'Ish',2:'Aoc',3:'Billy',4:'YOU',5:'Moe',6:'Betto',7:'Kass'
 function tname(lg,t){const s=state(lg); return s.names[t]||( t===s.slot?'YOU':(DEFN[lg]&&DEFN[lg][t])||'Team '+t )}
 function counts(picks){const c={QB:0,RB:0,WR:0,TE:0,DST:0}; picks.forEach(p=>{if(c[p.pos]!==undefined)c[p.pos]++}); return c}
 function needs(c){const n=[]; POS.forEach(p=>{const m=STARTERS[p]-c[p]; if(m>0) n.push(p+(m>1?'x'+m:''))}); const fl=Math.max(0,c.RB-2)+Math.max(0,c.WR-2)+Math.max(0,c.TE-1); if(fl<2) n.push('FLX'+(2-fl>1?'x2':'')); return n}
+function bucket(rd){return rd===1?'1':rd===2?'2':rd===3?'3':rd<=5?'4-5':rd<=8?'6-8':rd<=12?'9-12':'13-15'}
+function mgrProfile(lg,t){const s=state(lg); const nm=(t===s.slot)?'YOU':((DEFN[lg]&&DEFN[lg][t])||null); return nm&&MP.managers[nm]?MP.managers[nm]:null}
+// probability distribution over available players for the team picking at `pick`
+function predict(lg,pick,takenNames){const s=state(lg); const t=teamOf(pick), rd=Math.ceil(pick/10), b=bucket(rd); const room=MP.room[b]||MP.room['9-12'];
+ const roster=s.picks.filter((p,i)=>teamOf(i+1)===t); const cnt=counts(roster); const prof=mgrProfile(lg,t); const cands=[];
+ for(const n in ADP){ if(takenNames.has(n)) continue; const a=(lg==='A'?ADP[n][0]:ADP[n][1]), pos=ADP[n][2]; if(a>pick+45) continue;
+  let w=Math.min(TUNE.cap,Math.exp(-(a-pick)/TUNE.width));
+  let rs=Math.max(0.02,room[pos]||0.02); let share=rs; if(prof&&prof[b]){const c=prof[b]; const tot=Object.values(c).reduce((x,y)=>x+y,0); share=((c[pos]||0)+4*rs)/(tot+4)}
+  const pf=Math.min(3,Math.max(0.2,share/rs));
+  const need=pos==='QB'?(cnt.QB>=1?(rd<10?0.05:0.4):1):pos==='TE'?(cnt.TE>=1?(rd<9?0.15:0.5):1):pos==='DST'?(cnt.DST>=1?0.03:(rd<12?0.04:1)):pos==='RB'?(cnt.RB>=4?0.35:1):(cnt.WR>=4?0.35:1);
+  w=Math.pow(w*pf*need,TUNE.power); cands.push({n,pos,w})}
+ const Z=cands.reduce((x,c)=>x+c.w,0)||1; cands.forEach(c=>c.p=c.w/Z); cands.sort((x,y)=>y.p-x.p); return cands}
+// P(each player is gone before my next pick), walking the specific picks in between
+function survival(lg,cur,nxt){const s=state(lg); const taken=new Set(s.picks.map(p=>p.name)); const gone={};
+ for(let p=cur;p<nxt&&p<=150;p++){ if(teamOf(p)===s.slot) continue; const dist=predict(lg,p,taken); for(const c of dist){ gone[c.n]=1-(1-(gone[c.n]||0))*(1-c.p) } }
+ return gone}
 function myNext(lg,cur){const s=state(lg); for(let p=cur;p<=150;p++){ if(teamOf(p)===s.slot) return p } return null}
 function render(lg){
   const s=state(lg), sec=$('#db-'+lg), picks=s.picks, cur=picks.length+1, onTeam=cur<=150?teamOf(cur):null, mn=myNext(lg,cur);
@@ -298,6 +348,10 @@ function render(lg){
   for(let r=1;r<=15;r++){h+='<tr><td class="rd">'+r+'</td>'; for(let t=1;t<=10;t++){const idx=(r%2===1)?t:11-t; const pick=(r-1)*10+idx; const p=picks[pick-1]; const cls=['c',p?p.pos:'empty',t===s.slot?'mine':'',pick===cur?'next':''].join(' ');
     h+='<td class="'+cls+'" data-pick="'+pick+'">'+(p?'<b>'+esc(p.name)+'</b><small>'+p.pos+(p.team?' · '+esc(p.team):'')+'</small>':(pick===cur?'<span>On the clock</span>':''))+'<i>'+pickLabel(pick)+'</i></td>'} h+='</tr>'}
   $('[data-t="grid"]',sec).innerHTML=h+'</tbody>';
+  const taken=new Set(picks.map(p=>p.name)); let nu='';
+  for(let p=cur;p<Math.min(cur+3,151);p++){const t=teamOf(p); const me=t===s.slot; const dist=me?[]:predict(lg,p,taken).slice(0,4);
+   nu+='<div class="nu'+(me?' me':'')+'"><h5><span>'+pickLabel(p)+' · '+esc(tname(lg,t))+'</span><small>'+(me?'you':(mgrProfile(lg,t)?'habits + need':'need + price'))+'</small></h5>'+(me?'<ol><li>Your pick: see the Assistant</li></ol>':'<ol>'+dist.map(c=>'<li>'+esc(c.n)+' <span>'+c.pos+' · '+(c.p*100).toFixed(0)+'%</span></li>').join('')+'</ol>')+'</div>'}
+  $('[data-t="nextup"]',sec).innerHTML=nu;
   // keep the current pick in view
   const nx=$('td.next',sec); if(nx&&sec.offsetParent!==null){try{nx.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
   if(typeof emit==='function') emit();
@@ -307,7 +361,9 @@ function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) ret
 function removePick(lg,key){const s=state(lg); const i=s.picks.findIndex(p=>p.key===key); if(i<0) return; s.picks.splice(i,1); save(); setDone(lg,key,false); render(lg)}
 const LIS=[]; function emit(){LIS.forEach(f=>{try{f()}catch(e){}})}
 const NK={A:{},B:{}}; ['A','B'].forEach(lg=>Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key));
-window.__draft={state,teamOf,pickLabel,tname,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
+function openModal(html){const m=$('#modal'); $('[data-t="mbody"]',m).innerHTML=html; m.hidden=false} function closeModal(){$('#modal').hidden=true}
+document.addEventListener('click',e=>{if(e.target.closest('[data-t="mclose"]')||e.target.id==='modal') closeModal()}); document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal()});
+window.__draft={TUNE,state,teamOf,pickLabel,tname,predict,survival,mgrProfile,openModal,closeModal,esc,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
 function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.dock button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); const lv=$('#live'); if(lv) lv.hidden=(v!=='live'); const es=$('#espn'); if(es) es.hidden=(v!=='espn'); try{localStorage.setItem('view',v)}catch(e){} if(v==='board'){['A','B'].forEach(render)} emit()}
 ['A','B'].forEach(lg=>{
   const sec=$('#db-'+lg); if(!sec) return; const s=state(lg);
@@ -317,6 +373,8 @@ function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$(
     const th=e.target.closest('th[data-team]'); if(th){const t=parseInt(th.dataset.team,10); const n=prompt('Name for slot '+t+' (blank = default)',s.names[t]||''); if(n!==null){ if(n.trim()) s.names[t]=n.trim(); else delete s.names[t]; save(); render(lg)} }
   });
   $('[data-t="undo"]',sec).addEventListener('click',()=>{const pk=s.picks[s.picks.length-1]; if(pk) removePick(lg,pk.key)});
+  $('[data-t="export"]',sec).addEventListener('click',()=>{openModal('<h3>Export draft ('+lg+')</h3><p class="sub">Copy this text to move the draft to another device, then paste it there with Import.</p><textarea readonly>'+esc(JSON.stringify(T[lg]))+'</textarea>'); const ta=$('#modal textarea'); if(ta){ta.focus();ta.select()}});
+  $('[data-t="import"]',sec).addEventListener('click',()=>{openModal('<h3>Import draft ('+lg+')</h3><p class="sub">Paste an export here. It replaces this league\'s picks on this device.</p><textarea data-t="imp"></textarea><p><button type="button" data-t="impgo">Load</button></p>'); $('#modal [data-t="impgo"]').addEventListener('click',()=>{try{const v=JSON.parse($('#modal [data-t="imp"]').value); if(!v||!Array.isArray(v.picks)) throw 0; const ks=(T[lg]&&T[lg].picks||[]).map(p=>p.key); ks.forEach(k=>setDone(lg,k,false)); T[lg]=Object.assign({names:{},slot:s.slot},v); Object.assign(s,T[lg]); T[lg]=s; save(); s.picks.forEach(p=>setDone(lg,p.key,true)); render(lg); closeModal()}catch(e){alert('That is not a draft export.')}})});
   $('[data-t="clear"]',sec).addEventListener('click',()=>{if(confirm('Clear every pick in this league?')){const ks=s.picks.map(p=>p.key); s.picks=[]; save(); ks.forEach(k=>setDone(lg,k,false)); render(lg)}});
   const sel=$('select[data-t="slot"]',sec); sel.value=s.slot; sel.addEventListener('change',()=>{s.slot=parseInt(sel.value,10); save(); render(lg)});
   // quick add by name
@@ -378,6 +436,7 @@ table.plan td.tg{{font-weight:500;min-width:28ch}} table.plan td.fb{{color:var(-
 {league('A')}{league('B')}
 __LIVE_HTML__
 {espn_tab()}
+<div class="modal" id="modal" hidden><div class="mbox"><button type="button" class="mclose" data-t="mclose" aria-label="close">×</button><div data-t="mbody"></div></div></div>
 <section class="evid"><h2>Evidence appendix</h2>{evidence()}</section>
 <p class="foot">{esc(plan['footer'])}</p>
 </div>
@@ -396,6 +455,6 @@ $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{{const q
 }})();
 </script>'''
 page=page.replace('__LIVE_HTML__',LIVE_HTML).replace('__LIVE_DATA__',LIVE_DATA)
-page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS
+page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS.replace('__ADP_JSON__',ADP_JSON).replace('__MP_JSON__',MP_JSON)+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS+CARD_JS.replace('__LOGS_JSON__',LOGS_JSON)
 open(OUT,'w').write(page)
 print('wrote',OUT,len(page))
