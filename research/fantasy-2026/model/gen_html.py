@@ -91,7 +91,7 @@ def board(lg):
 <p class="cap">Tick a player on the cheat sheet or type a name here: he is logged to the team on the clock (snake). Tap a team name to rename it. Tap a filled cell to remove that pick. Scroll sideways for all ten teams.</p>
 <div class="dbwrap"><table class="db" data-t="grid"></table></div>
 </section>
-<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="toggle">Draft board</button></div>"""
+<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="sheet">Sheet</button><button type="button" data-view="board">Board</button><button type="button" data-view="live">Assistant</button></div>"""
 
 def league(lg):
     L=plan['leagues'][lg]
@@ -135,8 +135,92 @@ table.db td.empty{color:var(--mute);cursor:default} table.db td.empty i{color:va
 .dock{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:nowrap;padding:6px 10px;background:var(--card);border-top:2px solid var(--ink);z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.08)} .dock[hidden]{display:none} .dock div{min-width:0;flex:0 0 auto} .dock span{display:block;font:600 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)} .dock b{font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap}
 body{padding-bottom:64px} body.boardmode .top p{display:none} body.boardmode .top{padding-bottom:6px} @media (max-width:640px){body.boardmode h1{font-size:22px}}
 @media (max-width:640px){.dock{gap:6px;padding:5px 6px} .dock span{font-size:9px} .dock b{font-size:12px} .dock button{padding:6px 7px;font-size:11.5px;letter-spacing:.02em;flex:0 0 auto} .vtabs{margin-left:0} table.db th,table.db td.c{min-width:104px;max-width:104px} .dbwrap{max-height:72vh}}
-@media print{.dboard,.dock,.vtabs{display:none!important} body{padding-bottom:0}}
+.live .lgname{font:500 14px Barlow,sans-serif;color:var(--mute);margin-left:8px}
+.status{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}.stat{background:var(--card);border:1px solid var(--line);padding:8px 10px}.stat span{display:block;font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.stat b{font:500 20px "IBM Plex Mono",monospace}.stat small{color:var(--mute)}
+table.ltbl td{vertical-align:middle} table.ltbl td.act{white-space:nowrap} table.ltbl td.act button{font:600 12px "Barlow Condensed",sans-serif;letter-spacing:.05em;padding:4px 9px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer} table.ltbl td.act button.mine{border-color:var(--acc);color:var(--acc);font-weight:700} table.ltbl td.act button:focus-visible{outline:3px solid var(--acc)}
+table.ltbl tr.rec1 td{background:var(--t1)} table.ltbl td.why{color:var(--mute);font-size:12px;max-width:44ch;min-width:28ch}
+.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.slot{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border:1px solid var(--line);background:var(--card)}.slot span{font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);min-width:44px}.slot i{color:var(--mute);font-style:normal}
+.plog2{font-size:12.5px;color:var(--mute);display:flex;flex-wrap:wrap;gap:4px}.plog2 button{font:12px Barlow,sans-serif;padding:2px 7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.plog2 button.me{border-color:var(--acc)}
+.dock button.on{background:var(--ink);color:var(--bg)}
+@media print{.dboard,.dock,.vtabs,.live{display:none!important} body{padding-bottom:0}}
 </style>'''
+LIVE_HTML=r'''<section class="live" id="live" hidden>
+<div class="lhead"><div><h2>Draft Day Assistant <span class="lgname" data-t="lgname"></span></h2><p class="meta">Ranks every undrafted player by what he adds to your title odds right now, against what will still be there at your next pick. Picks logged here, on the board, or on the cheat sheet all go to the same draft.</p></div></div>
+<div class="status">
+<div class="stat"><span>On the clock</span><b data-t="cur">1.01</b><small data-t="curwho"></small></div>
+<div class="stat"><span>Your next picks</span><b data-t="nextp">-</b><small data-t="nextp2"></small></div>
+<div class="stat"><span>Projected starting ppg</span><b data-t="tppg">0</b><small>your picks + expected value of your remaining picks</small></div>
+<div class="stat"><span>Est. playoffs / title</span><b data-t="odds">--</b><small>calibrated on the version-3 simulator</small></div>
+</div>
+<h3 class="sec">Recommended now</h3>
+<div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div></div>
+<div class="tw"><table class="ltbl" data-t="ltbl"><thead><tr><th></th><th>Player</th><th>Proj</th><th>Value vs next pick</th><th>Gone by next</th><th>Title Δ</th><th>Board</th><th>Room</th><th>Inj</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+<h3 class="sec">Your roster</h3><div class="roster" data-t="roster"></div>
+<h3 class="sec">Draft log <span class="hint">tap a pick to remove it</span></h3><div class="plog2" data-t="llog"></div>
+<p class="cap">Proj = projected points per game under this league's scoring (half usage-history model, half consensus curve, injury-adjusted). Value vs next pick = projected season points over the best player at the same position expected to still be there at your next pick, weighted by what your lineup still needs. Gone by next = chance the room takes him before your next turn (room-price model). Title Δ = change in championship probability from adding him now, using the slope fitted on 21 simulated rosters (about ±1 point of noise).</p>
+</section>'''
+LIVE_JS=r'''
+<script>
+(function(){
+const DATA=__LIVE_DATA__;
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const SL={A:{title:0.42,po:0.52,base:{ppg:106.7,title:19.8,po:93.6}},B:{title:0.42,po:1.04,base:{ppg:102.9,title:15.2,po:74.2}}};
+const WAIV={A:{QB:15,RB:9.5,WR:9.5,TE:8,DST:6},B:{QB:18.5,RB:9.5,WR:9.5,TE:8,DST:6}};
+const LINE=[['QB',1],['RB',2],['WR',2],['TE',1],['FLEX',2],['DST',1]];
+const LGN={A:'Ratz',B:'Footborn'};
+const byName={};DATA.forEach(d=>byName[d.n]=d);
+const D=window.__draft; const sec=$('#live'); if(!D||!sec) return;
+let lg='A';
+function myPicks(slot){const out=[];for(let r=0;r<15;r++){out.push(r*10+(r%2===0?slot:11-slot))}return out}
+function proj(d){return lg==='A'?d.pA:d.pB} function adp(d){return lg==='A'?d.adpA:d.adpB} function rank(d){return lg==='A'?d.rA:d.rB}
+function avail(d){return proj(d)*(1-d.inj/17)}
+function pGone(d,pick,cur){if(pick<=cur)return 0;const a=adp(d);const x=(pick-a)/6;return 1/(1+Math.exp(-x))}
+function lineup(names){const ps=names.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();let t=0;const W=WAIV[lg];
+ function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
+ take(['QB'],1);take(['RB'],2);take(['WR'],2);take(['TE'],1);take(['RB','WR','TE'],2);take(['DST'],1);return t}
+function expectedLineup(names,availP,cur,picks){const have=names.slice(); const future=picks.filter(p=>p>cur).slice(0,9);
+ for(const p of future){let best=null,bestGain=0;const baseL=lineup(have);
+  for(const pos of ['QB','RB','WR','TE','DST']){const c=availP.filter(d=>d.pos===pos&&!have.includes(d.n)&&pGone(d,p,cur)<0.5).sort((a,b)=>avail(b)-avail(a))[0];if(!c)continue;const g=lineup(have.concat([c.n]))-baseL;if(g>bestGain){bestGain=g;best=c}}
+  if(best)have.push(best.n); else break}
+ return lineup(have)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function render(){
+ if(sec.hidden) return;
+ lg=D.curLg(); const s=D.state(lg); const slot=s.slot; const taken=s.picks.map(p=>p.name); const mine=s.picks.filter((p,i)=>D.teamOf(i+1)===slot).map(p=>p.name);
+ $('[data-t="lgname"]',sec).textContent=LGN[lg]+' · slot '+slot;
+ const cur=taken.length+1; const picks=myPicks(slot); const onMe=picks.includes(cur); const nxt=(onMe?picks.find(p=>p>cur):picks.find(p=>p>=cur))||151; const nxt2=picks.find(p=>p>nxt)||151;
+ const slotOn=cur<=150?D.teamOf(cur):0;
+ $('[data-t="cur"]',sec).textContent=cur>150?'done':D.pickLabel(cur); $('[data-t="curwho"]',sec).textContent=cur>150?'':(slotOn===slot?'YOU':D.tname(lg,slotOn));
+ $('[data-t="nextp"]',sec).textContent=nxt>150?'--':(onMe?'now, then '+D.pickLabel(nxt):D.pickLabel(nxt)); $('[data-t="nextp2"]',sec).textContent=nxt2>150?'':('then '+D.pickLabel(nxt2));
+ const takenSet=new Set(taken); const availP=DATA.filter(d=>!takenSet.has(d.n));
+ const base=expectedLineup(mine,availP,cur,picks); $('[data-t="tppg"]',sec).textContent=base.toFixed(1);
+ const S=SL[lg]; const dt=Math.max(1,Math.min(45,S.base.title+S.title*(base-S.base.ppg))); const dp=Math.max(5,Math.min(99,S.base.po+S.po*(base-S.base.ppg)));
+ $('[data-t="odds"]',sec).textContent=mine.length?(dp.toFixed(0)+'% / '+dt.toFixed(1)+'%'):'--';
+ const alt={};['QB','RB','WR','TE','DST'].forEach(pos=>{const c=availP.filter(d=>d.pos===pos&&pGone(d,nxt,cur)<0.5).sort((a,b)=>avail(b)-avail(a));alt[pos]=c.length?avail(c[0]):WAIV[lg][pos]});
+ const cnt={};mine.forEach(n=>{const p=byName[n];if(p)cnt[p.pos]=(cnt[p.pos]||0)+1});
+ const need=pos=>{const c=cnt[pos]||0;if(pos==='QB')return c===0?1:0.25;if(pos==='TE')return c===0?1:0.35;if(pos==='DST')return c===0?1:0.05;const flexOpen=2-Math.max(0,(cnt.RB||0)-2)-Math.max(0,(cnt.WR||0)-2)-Math.max(0,(cnt.TE||0)-1);if(c<2)return 1;return flexOpen>0?0.85:0.55};
+ const rows=availP.map(d=>{const v=(avail(d)-alt[d.pos])*17*need(d.pos);const dtitle=S.title*(expectedLineup(mine.concat([d.n]),availP.filter(x=>x.n!==d.n),cur+1,picks)-base);return {d,v,dtitle,pg:pGone(d,nxt,cur)}});
+ const pos=$('[data-t="lchips"] button.on',sec).dataset.pos; const q=$('[data-t="lq"]',sec).value.trim().toLowerCase();
+ let list=rows.filter(r=>(pos==='ALL'||r.d.pos===pos)&&(!q||r.d.n.toLowerCase().includes(q)));
+ list.sort((a,b)=>(b.dtitle*30+b.v*0.5)-(a.dtitle*30+a.v*0.5)); list=list.slice(0,q?15:40);
+ const tb=$('[data-t="ltbl"] tbody',sec); tb.innerHTML='';
+ const who=cur>150?'':(onMe?'Mine':'Taken by '+D.tname(lg,slotOn));
+ list.forEach((r,i)=>{const d=r.d;const tr=document.createElement('tr');if(i===0&&!q)tr.className='rec1';
+  tr.innerHTML='<td class="act"><button type="button" class="'+(onMe?'mine':'')+'">'+esc(who)+'</button></td><td class="nm"><b>'+esc(d.n)+'</b> <small>'+d.pos+' · '+esc(d.tm)+' · bye '+d.bye+'</small></td><td class="num">'+proj(d).toFixed(1)+'</td><td class="num">'+(r.v>=0?'+':'')+r.v.toFixed(0)+'</td><td class="num">'+(r.pg*100).toFixed(0)+'%</td><td class="num">'+(r.dtitle>=0?'+':'')+r.dtitle.toFixed(1)+'</td><td class="num">'+rank(d)+'</td><td class="num">'+adp(d)+'</td><td class="num">'+d.inj.toFixed(1)+'</td><td class="why">'+esc(d.note)+'</td>';
+  $('button',tr).addEventListener('click',()=>{D.addByName(lg,d.n);$('[data-t="lq"]',sec).value=''});
+  tb.appendChild(tr)});
+ const R=$('[data-t="roster"]',sec);R.innerHTML='';const ps=mine.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();
+ LINE.forEach(([sl,n])=>{for(let i=0;i<n;i++){const ok=sl==='FLEX'?['RB','WR','TE']:[sl];const p=ps.find(x=>!used.has(x.n)&&ok.includes(x.pos));if(p)used.add(p.n);const div=document.createElement('div');div.className='slot';div.innerHTML='<span>'+sl+'</span><b>'+(p?esc(p.n):'<i>open</i>')+'</b><i>'+(p?proj(p).toFixed(1):'')+'</i>';R.appendChild(div)}});
+ ps.filter(p=>!used.has(p.n)).forEach(p=>{const div=document.createElement('div');div.className='slot';div.innerHTML='<span>BN</span><b>'+esc(p.n)+'</b><i>'+proj(p).toFixed(1)+'</i>';R.appendChild(div)});
+ const L=$('[data-t="llog"]',sec);L.innerHTML='';s.picks.forEach((p,i)=>{const b=document.createElement('button');b.type='button';const t=D.teamOf(i+1);b.className=(t===slot?'me':'');b.textContent=D.pickLabel(i+1)+' '+D.tname(lg,t)+': '+p.name;b.title='remove';b.addEventListener('click',()=>{if(confirm('Remove '+D.pickLabel(i+1)+' '+p.name+'? Later picks move up one slot.')) D.removeByName(lg,p.name)});L.appendChild(b)});
+}
+$$('[data-t="lchips"] button',sec).forEach(b=>b.addEventListener('click',()=>{$$('[data-t="lchips"] button',sec).forEach(x=>x.classList.toggle('on',x===b));render()}));
+$('[data-t="lq"]',sec).addEventListener('input',render);
+D.on(render); render();
+})();
+</script>'''
+import re as _re
+LIVE_DATA=_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1)
 EXTRA_JS=r'''
 <script>
 (function(){
@@ -165,11 +249,15 @@ function render(lg){
   $('[data-t="grid"]',sec).innerHTML=h+'</tbody>';
   // keep the current pick in view
   const nx=$('td.next',sec); if(nx&&sec.offsetParent!==null){try{nx.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
+  if(typeof emit==='function') emit();
 }
 function setDone(lg,key,on){$$('#lg-'+lg+' tr.p[data-key="'+key+'"]').forEach(tr=>{tr.classList.toggle('done',on);const c=$('input',tr);if(c)c.checked=on}); try{const st=JSON.parse(localStorage.getItem('drafted')||'{}'); st[key]=on; localStorage.setItem('drafted',JSON.stringify(st))}catch(e){}}
 function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) return; const inf=PL[lg][key]; if(!inf||s.picks.length>=150) return; s.picks.push({key:inf.key,name:inf.name,pos:inf.pos,team:inf.team}); save(); setDone(lg,key,true); render(lg)}
 function removePick(lg,key){const s=state(lg); const i=s.picks.findIndex(p=>p.key===key); if(i<0) return; s.picks.splice(i,1); save(); setDone(lg,key,false); render(lg)}
-function setView(v){document.body.classList.toggle('boardmode',v==='board'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); try{localStorage.setItem('view',v)}catch(e){} $$('.dock button[data-view]').forEach(b=>b.textContent=(v==='board'?'Cheat sheet':'Draft board')); if(v==='board'){['A','B'].forEach(render)}}
+const LIS=[]; function emit(){LIS.forEach(f=>{try{f()}catch(e){}})}
+const NK={A:{},B:{}}; ['A','B'].forEach(lg=>Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key));
+window.__draft={state,teamOf,pickLabel,tname,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
+function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.dock button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); const lv=$('#live'); if(lv) lv.hidden=(v!=='live'); try{localStorage.setItem('view',v)}catch(e){} if(v==='board'){['A','B'].forEach(render)} emit()}
 ['A','B'].forEach(lg=>{
   const sec=$('#db-'+lg); if(!sec) return; const s=state(lg);
   $$('#lg-'+lg+' tr.p input').forEach(c=>c.addEventListener('change',()=>{const k=c.closest('tr').dataset.key; if(c.checked) addPick(lg,k); else removePick(lg,k)}));
@@ -186,13 +274,14 @@ function setView(v){document.body.classList.toggle('boardmode',v==='board'); $$(
   q.addEventListener('input',showHits); q.addEventListener('focus',showHits); q.addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('button[data-key]',hits); if(b) b.click()} if(e.key==='Escape'){hits.hidden=true}});
   hits.addEventListener('click',e=>{const b=e.target.closest('button[data-key]'); if(!b) return; addPick(lg,b.dataset.key); q.value=''; hits.hidden=true; q.focus()});
   document.addEventListener('click',e=>{if(!sec.contains(e.target)) hits.hidden=true});
+  s.picks.forEach(p=>setDone(lg,p.key,true));
   render(lg);
 });
 $$('.vtabs button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
-$$('.dock button[data-view]').forEach(b=>b.addEventListener('click',()=>{const v=$('.vtabs button.on').dataset.view; setView(v==='board'?'sheet':'board'); window.scrollTo({top:0})}));
+$$('.dock button[data-view]').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.view); try{window.scrollTo({top:0})}catch(e){}}));
 function syncDock(){$$('.dock').forEach(d=>{const lg=d.dataset.dock; const l=document.getElementById('lg-'+lg); d.hidden=!l||l.hidden})}
-$$('.tabs button[data-lg]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{syncDock();['A','B'].forEach(render)},0))); syncDock();
-try{const v=localStorage.getItem('view'); if(v==='board') setView('board')}catch(e){}
+$$('.tabs button[data-lg]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{syncDock();['A','B'].forEach(render);emit()},0))); syncDock();
+try{const v=localStorage.getItem('view'); if(v==='board'||v==='live') setView(v)}catch(e){}
 })();
 </script>'''
 page=f'''<title>{esc(plan['title'])}</title>
@@ -234,8 +323,9 @@ table.plan td.tg{{font-weight:500;min-width:28ch}} table.plan td.fb{{color:var(-
 </style>
 <div class="wrap">
 <header class="top"><div><h1>{esc(plan['title'])}</h1><p>{esc(plan['subtitle'])}</p></div>
-<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button></nav></header>
+<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button><button data-view="live">Assistant</button></nav></header>
 {league('A')}{league('B')}
+__LIVE_HTML__
 <section class="evid"><h2>Evidence appendix</h2>{evidence()}</section>
 <p class="foot">{esc(plan['footer'])}</p>
 </div>
@@ -253,6 +343,7 @@ $$('.chips').forEach(ch=>{{const lg=ch.dataset.chips;$$('button',ch).forEach(b=>
 $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{{const q=inp.value.trim().toLowerCase();$$('#lg-'+inp.dataset.search+' tr.p').forEach(tr=>{{tr.style.display=(!q||tr.dataset.name.includes(q))?'':'none'}})}}));
 }})();
 </script>'''
-page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS
+page=page.replace('__LIVE_HTML__',LIVE_HTML).replace('__LIVE_DATA__',LIVE_DATA)
+page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)
 open(OUT,'w').write(page)
 print('wrote',OUT,len(page))
