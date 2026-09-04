@@ -29,9 +29,9 @@ def pos_tables(lg):
                 key=f"{lg}-{esc(n).replace(' ','_')}"
                 usage = f"{i0(r.tgt_25)} tgt" if pos in('WR','TE') else (f"{i0(r.car_25)} car / {i0(r.tgt_25)} tgt" if pos=='RB' else (f"{i0(r.pass_td_25)} TD / {i0(r.ru_yds_25)} ru yd" if pos=='QB' else ''))
                 rows.append(
-                  f'<tr class="p" data-key="{key}" data-pos="{pos}" data-name="{esc(n).lower()}">'
+                  f'<tr class="p" data-key="{key}" data-pos="{pos}" data-name="{esc(n).lower()}" data-team="{esc(r.team_26)}">'
                   f'<td class="ck"><input type="checkbox" aria-label="drafted {esc(n)}"></td>'
-                  f'<td class="num">{int(r["rank"])}</td><td class="nm"><b>{esc(n)}</b> <small>{esc(r.team_26)} · bye {i0(r.bye)}{(" · age "+f1(r.age)) if pos!="DST" else ""}</small></td>'
+                  f'<td class="num">{int(r["rank"])}</td><td class="nm">{av(n,r.team_26,pos)}<span class="t"><b>{esc(n)}</b><small>{pb(pos)} {esc(r.team_26)} · bye {i0(r.bye)}{(" · age "+f1(r.age)) if pos!="DST" else ""}</small></span></td>'
                   f'<td class="num">{i0(r.ecr_ovr)}</td><td class="num">{i0(r.espn_adp)}</td><td class="num">{f1(r[ppg])}</td><td class="num">{i0(r.g_25)}</td><td class="num">{f1(r.exp_missed)}</td><td class="us">{usage}</td>'
                   f'<td class="note">{esc(r.note)}</td></tr>')
         out.append(f'''<section class="pos" id="{lg}-{pos}"><h3>{pos}</h3><div class="tw"><table>
@@ -43,7 +43,7 @@ def overall(lg):
     rows=[]
     for _,r in b.iterrows():
         key=f"{lg}-{esc(r.player).replace(' ','_')}"
-        rows.append(f'<tr class="p" data-key="{key}" data-pos="{esc(r.pos)}" data-name="{esc(r.player).lower()}"><td class="ck"><input type="checkbox" aria-label="drafted {esc(r.player)}"></td><td class="num">{int(r["rank"])}</td><td class="nm"><b>{esc(r.player)}</b> <small>{esc(r.pos)}{int(r.pos_rank)} · {esc(r.team_26)} · bye {i0(r.bye)}</small></td><td class="num">{i0(r.ecr_ovr)}</td><td class="num">{i0(r.espn_adp)}</td><td class="num">{f1(r[ppg])}</td></tr>')
+        rows.append(f'<tr class="p" data-key="{key}" data-pos="{esc(r.pos)}" data-name="{esc(r.player).lower()}" data-team="{esc(r.team_26)}"><td class="ck"><input type="checkbox" aria-label="drafted {esc(r.player)}"></td><td class="num">{int(r["rank"])}</td><td class="nm">{av(r.player,r.team_26,r.pos)}<span class="t"><b>{esc(r.player)}</b><small>{pb(r.pos)} {esc(r.pos)}{int(r.pos_rank)} · {esc(r.team_26)} · bye {i0(r.bye)}</small></span></td><td class="num">{i0(r.ecr_ovr)}</td><td class="num">{i0(r.espn_adp)}</td><td class="num">{f1(r[ppg])}</td></tr>')
     return f'''<div class="tw"><table class="ov"><thead><tr><th></th><th>#</th><th>Player</th><th>ECR</th><th>Room</th><th>25 ppg</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>'''
 
 def plan_table(lg):
@@ -80,6 +80,21 @@ def evidence():
             out.append(f'<h4>{esc(sec["title"])}</h4><ul class="ev">'+''.join(f'<li>{esc(i)}</li>' for i in sec['items'])+'</ul>')
     return ''.join(out)
 
+
+TC={'ARI':('#97233F','#fff'),'ATL':('#A71930','#fff'),'BAL':('#241773','#fff'),'BUF':('#00338D','#fff'),'CAR':('#0085CA','#fff'),'CHI':('#0B162A','#fff'),'CIN':('#FB4F14','#fff'),'CLE':('#311D00','#fff'),'DAL':('#041E42','#fff'),'DEN':('#FB4F14','#fff'),'DET':('#0076B6','#fff'),'GB':('#203731','#fff'),'HOU':('#03202F','#fff'),'IND':('#002C5F','#fff'),'JAX':('#006778','#fff'),'KC':('#E31837','#fff'),'LA':('#003594','#fff'),'LAR':('#003594','#fff'),'LAC':('#0080C6','#fff'),'LV':('#1C1C1C','#fff'),'MIA':('#008E97','#fff'),'MIN':('#4F2683','#fff'),'NE':('#002244','#fff'),'NO':('#D3BC8D','#1a1a1a'),'NYG':('#0B2265','#fff'),'NYJ':('#125740','#fff'),'PHI':('#004C54','#fff'),'PIT':('#FFB612','#1a1a1a'),'SEA':('#002244','#69BE28'),'SF':('#AA0000','#fff'),'TB':('#D50A0A','#fff'),'TEN':('#0C2340','#4B92DB'),'WAS':('#5A1414','#FFB612')}
+import os as _os, json as _json
+HS=_json.load(open(O+'headshots.json')) if _os.path.exists(O+'headshots.json') else {}
+def initials(n):
+    parts=[p for p in str(n).replace("'", "").split() if p and p[0].isalpha() and p.lower() not in ('jr','sr','ii','iii','iv')]
+    return (parts[0][0]+parts[-1][0]).upper() if len(parts)>=2 else (parts[0][:2].upper() if parts else '?')
+def av(n,team,pos):
+    t=str(team) if isinstance(team,str) else ''
+    bg,fg=TC.get(t,('#8A8F98','#fff'))
+    if pos=='DST': bg,fg=TC.get(t,(bg,fg))
+    if n in HS: return f'<img class="av" src="{HS[n]}" alt="" loading="lazy">'
+    return f'<span class="av" style="--tc:{bg};--ti:{fg}">{initials(n) if pos!="DST" else esc(t)}</span>'
+def pb(pos): return f'<em class="pb {pos}">{pos}</em>'
+
 USER_SLOT={'A':2,'B':4}
 def board(lg):
     slot=USER_SLOT[lg]
@@ -111,7 +126,7 @@ def espn_tab():
         keyA='A-'+esc(d['n']).replace(' ','_'); keyB='B-'+esc(d['n']).replace(' ','_')
         rows.append(f'<tr class="p" data-ka="{keyA}" data-kb="{keyB}" data-pos="{d["pos"]}" data-name="{esc(d["n"]).lower()}" data-adp="{a}" data-ra="{d["rA"]}" data-rb="{d["rB"]}" data-delta="{delta}" data-est="{1 if k in has_est else 0}" data-ecr="{d["ecr"] if d["ecr"] is not None else 999}">'
                     f'<td class="num">{a:.0f}{"" if k in has_est else "<sup>e</sup>"}</td><td class="num">{rd}.{pk:02d}</td>'
-                    f'<td class="nm"><b>{esc(d["n"])}</b> <small>{d["pos"]} · {esc(d["tm"])}</small></td>'
+                    f'<td class="nm">{av(d["n"],d["tm"],d["pos"])}<span class="t"><b>{esc(d["n"])}</b><small>{pb(d["pos"])} {esc(d["tm"])}</small></span></td>'
                     f'<td class="num">{d["rA"]}</td><td class="num">{d["rB"]}</td><td class="num">{d["ecr"]:.0f}</td><td class="num">{d["adpB"]:.0f}</td>'
                     f'<td class="num {"pos" if delta>=8 else ("neg" if delta<=-8 else "")}">{delta:+.0f}</td>'
                     f'<td class="num">{(str(p25[0])+" · "+esc(p25[1])) if p25 else ""}</td><td class="num">{(str(p24[0])+" · "+esc(p24[1])) if p24 else ""}</td></tr>')
@@ -130,7 +145,7 @@ def league(lg):
 <div class="thesis"><h3>Game plan</h3><ol>{''.join(f'<li>{esc(t)}</li>' for t in L['thesis'])}</ol></div>
 <h3 class="sec">Round by round</h3>{plan_table(lg)}
 {lists(lg)}
-<h3 class="sec" id="rank-{lg}">Rankings by position <span class="hint">ECR = expert consensus rank · Room = where an ESPN cheat-sheet room takes him · Inj = expected games missed (empirical, by position/age/prior injuries) · tap the box to strike a drafted player</span></h3>
+<h3 class="sec" id="rank-{lg}">Rankings by position <span class="hint">ECR = expert consensus rank · Room = where an ESPN cheat-sheet room takes him · Inj = expected games missed (empirical, by position/age/prior injuries) · tap the box to strike a drafted player · tap a name for his game log and note</span></h3>
 <div class="tools"><input type="search" placeholder="Find a player" data-search="{lg}" aria-label="find a player"><div class="chips" data-chips="{lg}"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div></div>
 {pos_tables(lg)}
 <h3 class="sec">Overall top 150</h3>{overall(lg)}
@@ -139,6 +154,35 @@ def league(lg):
 </div>'''
 
 EXTRA_CSS='''
+<style>
+:root{--r:8px;--sh:0 1px 2px rgba(20,25,29,.06),0 4px 14px rgba(20,25,29,.05)}
+body{-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;padding:14px 14px 70px}
+.top{border-bottom:1px solid var(--line);padding-bottom:12px;gap:10px 16px}
+h1{font-size:30px;letter-spacing:-.01em} .about summary{cursor:pointer;color:var(--mute);font-size:12.5px;list-style:none;margin-top:4px} .about summary::-webkit-details-marker{display:none} .about summary::before{content:'▸ ';font-size:11px} .about[open] summary::before{content:'▾ '} .about p{margin:4px 0 0;color:var(--mute);max-width:70ch;font-size:13px}
+.tabs button,.vtabs button,.dbtop button,.dock button,.trkbar button,.dbtop .slotsel select,.chips button{border-radius:var(--r)}
+.tabs button{border-width:1.5px} .vtabs button{border-width:1.5px}
+.chips button{border-radius:999px;padding:5px 11px}
+.tools input,.addp input{border-radius:var(--r)}
+.thesis,.card,.tw,.stat,.onclock,.recbox,.nextup .nu,.pickbox{border-radius:var(--r)} .thesis{box-shadow:var(--sh);border:1px solid var(--line);border-left:4px solid var(--acc)} .card,.stat,.nextup .nu{box-shadow:var(--sh)} .tw{box-shadow:var(--sh)}
+th{background:var(--head);font-size:11px;letter-spacing:.09em;color:var(--mute)} table.ov tbody tr.p:nth-child(even) td,table.ltbl tbody tr:nth-child(even) td,table.etbl tbody tr:nth-child(even) td{background:rgba(120,120,110,.05)} tr.p:hover td{background:rgba(30,122,75,.07)!important}
+td{padding:6px 8px}
+.nm{display:flex;align-items:center;gap:9px;min-width:190px} .nm .t{display:flex;flex-direction:column;line-height:1.2} .nm .t b{font-weight:600;font-size:13.5px} .nm .t small{color:var(--mute);font-size:11.5px;margin-top:1px;white-space:nowrap}
+.av{width:32px;height:32px;border-radius:50%;flex:0 0 32px;object-fit:cover;background:var(--tc,#8A8F98);color:var(--ti,#fff);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px "Barlow Condensed",sans-serif;letter-spacing:.02em;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),0 1px 2px rgba(0,0,0,.18)}
+img.av{background:var(--head)}
+.pb{display:inline-block;font:700 9.5px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:1px 5px;border-radius:4px;vertical-align:1px;font-style:normal} .pb.QB{background:var(--pQB);color:var(--pQBi)} .pb.RB{background:var(--pRB);color:var(--pRBi)} .pb.WR{background:var(--pWR);color:var(--pWRi)} .pb.TE{background:var(--pTE);color:var(--pTEi)} .pb.DST{background:var(--pDST);color:var(--pDSTi)}
+tr.tier td{background:var(--head)!important;font-size:12px;letter-spacing:.08em;color:var(--ink);border-top:1px solid var(--line)} tr.t1 td{background:var(--t1)!important} tr.t2 td{background:var(--t2)!important}
+tr.p.done .av{filter:grayscale(1);opacity:.55} tr.p.done .pb{opacity:.5}
+.dock{border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.10);backdrop-filter:saturate(1.2) blur(8px);padding:7px 10px}
+.mbox{border-radius:12px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)} .chead{display:flex;gap:12px;align-items:center;margin-bottom:8px} .chead .av{width:56px;height:56px;flex-basis:56px;font-size:18px}
+table.db td.c{border-radius:6px;box-shadow:var(--sh)} table.db th{border-radius:6px}
+.recbox{box-shadow:var(--sh);border:1px solid var(--line);border-left:4px solid var(--acc)}
+.cards{gap:12px} .card h4{margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+table.plan td.tg{font-weight:500} table.plan tbody tr:nth-child(even) td{background:rgba(120,120,110,.05)}
+@media (max-width:640px){.pos table td.note,.pos table th:last-child,.pos table td.us,.pos table th:nth-child(9){display:none} .nm{min-width:160px} .av{width:28px;height:28px;flex-basis:28px;font-size:10.5px} .nm .t b{font-size:13px} h1{font-size:24px} .wrap{padding:10px 8px 70px}}
+@media print{.av{display:none} .nm{display:table-cell}}
+</style>
+
 <style>
 :root{--pQB:#F9C9D3;--pRB:#BDEBDD;--pWR:#C6DBFA;--pTE:#FAD9B4;--pDST:#DAD6CE;--pQBi:#7A1F35;--pRBi:#0F5A45;--pWRi:#1C3F7A;--pTEi:#7A4410;--pDSTi:#4A4640}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pQB:#5A2131;--pRB:#173F35;--pWR:#1E3355;--pTE:#553414;--pDST:#34363A;--pQBi:#FFC5D2;--pRBi:#9FE8CF;--pWRi:#B7D0FF;--pTEi:#FFD1A3;--pDSTi:#D8D8D8}}
@@ -250,7 +294,7 @@ function render(){
  const tb=$('[data-t="ltbl"] tbody',sec); tb.innerHTML='';
  const who=cur>150?'':(onMe?'Mine':'Taken by '+D.tname(lg,slotOn));
  list.forEach((r,i)=>{const d=r.d;const tr=document.createElement('tr');if(i===0&&!q)tr.className='rec1';
-  tr.innerHTML='<td class="act"><button type="button" class="'+(onMe?'mine':'')+'">'+esc(who)+'</button></td><td class="nm"><b>'+esc(d.n)+'</b> <small>'+d.pos+' · '+esc(d.tm)+' · bye '+d.bye+'</small></td><td class="num">'+proj(d).toFixed(1)+'</td><td class="num">'+(r.v>=0?'+':'')+r.v.toFixed(0)+'</td><td class="num">'+(r.pg*100).toFixed(0)+'%</td><td class="num">'+(r.dtitle>=0?'+':'')+r.dtitle.toFixed(1)+'</td><td class="num">'+rank(d)+'</td><td class="num">'+adp(d)+'</td><td class="num">'+d.inj.toFixed(1)+'</td><td class="why">'+esc(d.note)+'</td>';
+  tr.innerHTML='<td class="act"><button type="button" class="'+(onMe?'mine':'')+'">'+esc(who)+'</button></td><td class="nm">'+D.avHTML(d.n,d.tm,d.pos)+'<span class="t"><b>'+esc(d.n)+'</b><small>'+D.pbHTML(d.pos)+' '+esc(d.tm)+' · bye '+d.bye+'</small></span></td><td class="num">'+proj(d).toFixed(1)+'</td><td class="num">'+(r.v>=0?'+':'')+r.v.toFixed(0)+'</td><td class="num">'+(r.pg*100).toFixed(0)+'%</td><td class="num">'+(r.dtitle>=0?'+':'')+r.dtitle.toFixed(1)+'</td><td class="num">'+rank(d)+'</td><td class="num">'+adp(d)+'</td><td class="num">'+d.inj.toFixed(1)+'</td><td class="why">'+esc(d.note)+'</td>';
   $('button',tr).addEventListener('click',()=>{D.addByName(lg,d.n);$('[data-t="lq"]',sec).value=''});
   tb.appendChild(tr)});
  const R=$('[data-t="roster"]',sec);R.innerHTML='';const ps=mine.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();
@@ -267,15 +311,18 @@ import re as _re
 ADP_JSON=(__import__('json').dumps({d['n']:[d['adpA'],d['adpB'],d['pos']] for d in __import__('json').loads(_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1))},separators=(',',':')))
 MP_JSON=open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/build/manager_profiles.json').read()
 LOGS_JSON=open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/build/player_logs.json').read()
+TC_JSON=__import__('json').dumps({k:list(v) for k,v in TC.items()},separators=(',',':'))
+HS_JSON=__import__('json').dumps(HS,separators=(',',':'))
+ADPX_JSON=__import__('json').dumps({d['n']:[d['tm'],d['pos']] for d in __import__('json').loads(_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1))},separators=(',',':'))
 LIVE_DATA=_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1)
 CARD_JS=r'''
 <script>
 (function(){
-const LOGS=__LOGS_JSON__; const D=window.__draft; if(!D) return;
+const LOGS=__LOGS_JSON__; const ADPX=__ADPX_JSON__; const D=window.__draft; if(!D) return;
 const $=(s,r)=>(r||document).querySelector(s);
-function card(name){const L=LOGS[name]; const esc=D.esc; let h='<h3>'+esc(name)+'</h3>';
+function card(name){const L=LOGS[name]; const esc=D.esc; const meta=(ADPX[name]||['','','']); let h='<div class="chead">'+D.avHTML(name,meta[0],meta[1])+'<div><h3>'+esc(name)+'</h3>';
  const tr=document.querySelector('#lg-A tr.p[data-name="'+name.toLowerCase().replace(/"/g,'')+'"]'); const note=tr?tr.querySelector('.note'):null; const sm=tr?tr.querySelector('.nm small'):null;
- h+='<p class="sub">'+(sm?esc(sm.textContent):'')+'</p>';
+ h+='<p class="sub">'+(sm?esc(sm.textContent):'')+'</p></div></div>';
  if(!L){h+='<p>No 2024-25 NFL game log (rookie, DST, or did not play).</p>'+(note?'<p>'+esc(note.textContent)+'</p>':''); D.openModal(h); return}
  const s=(k,lab)=>{const x=L[k]; if(!x) return ''; return '<div><span>'+lab+'</span><b>'+x.ppgA+' / '+x.ppgB+' ppg</b>'+x.g+' g · '+(x.tgt?x.tgt+' tgt, '+x.rec+'-'+x.reyd+'-'+x.retd+' rec':'')+(x.car?(x.tgt?' · ':'')+x.car+' car, '+x.ruyd+'-'+x.rutd+' rush':'')+(x.payd?' · '+x.payd+' pass yds, '+x.patd+' TD, '+x.ints+' INT':'')+(x.share?' · '+(x.share*100).toFixed(0)+'% tgt share':'')+'</div>'};
  h+='<div class="sum">'+s('s25','2025 (Ratz / Footborn scoring)')+s('s24','2024')+'</div>';
@@ -309,13 +356,16 @@ EXTRA_JS=r'''
 (function(){
 const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
 const POS=['QB','RB','WR','TE','DST']; const STARTERS={QB:1,RB:2,WR:2,TE:1,DST:1};
-const ADP=__ADP_JSON__; const MP=__MP_JSON__; const TUNE={width:4,cap:1.5,power:0.6};  // calibrated so survival odds match the room-price model (rmse 0.07 across picks 1-44)
+const ADP=__ADP_JSON__; const MP=__MP_JSON__; const TC=__TC_JSON__; const HS=__HS_JSON__;
+function initials(n){const p=String(n).replace(/'/g,'').split(/\s+/).filter(x=>x&&/^[A-Za-z]/.test(x)&&!/^(jr|sr|ii|iii|iv)\.?$/i.test(x)); return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():(p[0]||'?').slice(0,2).toUpperCase()}
+function avHTML(n,team,pos){if(HS[n]) return '<img class="av" src="'+HS[n]+'" alt="">'; const c=TC[team]||['#8A8F98','#fff']; return '<span class="av" style="--tc:'+c[0]+';--ti:'+c[1]+'">'+(pos==='DST'?esc(team):initials(n))+'</span>'}
+function pbHTML(pos){return '<em class="pb '+pos+'">'+pos+'</em>'} const TUNE={width:4,cap:1.5,power:0.6};  // calibrated so survival odds match the room-price model (rmse 0.07 across picks 1-44)
 let T={}; try{T=JSON.parse(localStorage.getItem('tracker')||'{}')}catch(e){T={}}
 function save(){try{localStorage.setItem('tracker',JSON.stringify(T)); const d=new Date(); $$('[data-t="saved"]').forEach(e=>e.textContent='saved '+d.toTimeString().slice(0,8))}catch(e){$$('[data-t="saved"]').forEach(e=>e.textContent='NOT SAVED: storage blocked')}}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function teamOf(p){const r=Math.ceil(p/10), i=(p-1)%10; return r%2===1?i+1:10-i}
 function pickLabel(p){const r=Math.ceil(p/10), i=(p-1)%10+1; return r+'.'+(i<10?'0':'')+i}
-const PL={A:{},B:{}}; ['A','B'].forEach(lg=>{$$('#lg-'+lg+' tr.p').forEach(tr=>{const k=tr.dataset.key; if(PL[lg][k]) return; const sm=$('.nm small',tr); PL[lg][k]={key:k,name:$('.nm b',tr).textContent,pos:tr.dataset.pos,team:sm?sm.textContent.split('·')[0].trim():'',q:tr.dataset.name}})});
+const PL={A:{},B:{}}; ['A','B'].forEach(lg=>{$$('#lg-'+lg+' tr.p').forEach(tr=>{const k=tr.dataset.key; if(PL[lg][k]) return; const sm=$('.nm small',tr); PL[lg][k]={key:k,name:$('.nm b',tr).textContent,pos:tr.dataset.pos,team:tr.dataset.team||(sm?sm.textContent.replace(/^\s*(QB|RB|WR|TE|DST)\s*/,'').split('·')[0].trim():''),q:tr.dataset.name}})});
 function state(lg){ if(!T[lg]) T[lg]={picks:[],names:{},slot:parseInt($('#db-'+lg+' select[data-t="slot"]').value,10)}; if(!T[lg].names) T[lg].names={}; return T[lg] }
 const DEFN={A:{},B:{1:'Ish',2:'Aoc',3:'Billy',4:'YOU',5:'Moe',6:'Betto',7:'Kass',8:'Hazime',9:'Daoud',10:'Kdouh'}};
 function tname(lg,t){const s=state(lg); return s.names[t]||( t===s.slot?'YOU':(DEFN[lg]&&DEFN[lg][t])||'Team '+t )}
@@ -363,7 +413,7 @@ const LIS=[]; function emit(){LIS.forEach(f=>{try{f()}catch(e){}})}
 const NK={A:{},B:{}}; ['A','B'].forEach(lg=>Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key));
 function openModal(html){const m=$('#modal'); $('[data-t="mbody"]',m).innerHTML=html; m.hidden=false} function closeModal(){$('#modal').hidden=true}
 document.addEventListener('click',e=>{if(e.target.closest('[data-t="mclose"]')||e.target.id==='modal') closeModal()}); document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal()});
-window.__draft={TUNE,state,teamOf,pickLabel,tname,predict,survival,mgrProfile,openModal,closeModal,esc,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
+window.__draft={TUNE,avHTML,pbHTML,state,teamOf,pickLabel,tname,predict,survival,mgrProfile,openModal,closeModal,esc,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
 function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.dock button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); const lv=$('#live'); if(lv) lv.hidden=(v!=='live'); const es=$('#espn'); if(es) es.hidden=(v!=='espn'); try{localStorage.setItem('view',v)}catch(e){} if(v==='board'){['A','B'].forEach(render)} emit()}
 ['A','B'].forEach(lg=>{
   const sec=$('#db-'+lg); if(!sec) return; const s=state(lg);
@@ -431,7 +481,7 @@ table.plan td.tg{{font-weight:500;min-width:28ch}} table.plan td.fb{{color:var(-
 @media (prefers-reduced-motion:no-preference){{tr.p td{{transition:color .15s}}}}
 </style>
 <div class="wrap">
-<header class="top"><div><h1>{esc(plan['title'])}</h1><p>{esc(plan['subtitle'])}</p></div>
+<header class="top"><div><h1>{esc(plan['title'])}</h1><details class="about"><summary>About this board</summary><p>{esc(plan['subtitle'])}</p></details></div>
 <nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button><button data-view="live">Assistant</button><button data-view="espn">ESPN board</button></nav></header>
 {league('A')}{league('B')}
 __LIVE_HTML__
@@ -455,6 +505,6 @@ $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{{const q
 }})();
 </script>'''
 page=page.replace('__LIVE_HTML__',LIVE_HTML).replace('__LIVE_DATA__',LIVE_DATA)
-page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS.replace('__ADP_JSON__',ADP_JSON).replace('__MP_JSON__',MP_JSON)+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS+CARD_JS.replace('__LOGS_JSON__',LOGS_JSON)
+page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS.replace('__ADP_JSON__',ADP_JSON).replace('__MP_JSON__',MP_JSON).replace('__TC_JSON__',TC_JSON).replace('__HS_JSON__',HS_JSON)+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS+CARD_JS.replace('__LOGS_JSON__',LOGS_JSON).replace('__ADPX_JSON__',ADPX_JSON)
 open(OUT,'w').write(page)
 print('wrote',OUT,len(page))
