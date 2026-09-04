@@ -1,0 +1,7 @@
+B Hero-RB (RB, then WR/TE x2) 0.887 0.24 130.2 e.g. ['Jahmyr Gibbs', 'Trey McBride', 'George Pickens', 'Chris Olave', 'Zay Flowers', 'Jameson Williams']
+B RB-RB 0.867 0.293 130.9 e.g. ['Bijan Robinson', 'Christian McCaffrey', 'Chase Brown', 'Zay Flowers', 'Tetairoa McMillan', 'Jameson Williams']
+B WR-WR 0.8 0.228 128.0 e.g. ['Puka Nacua', 'George Pickens', 'Trey McBride', 'DeVonta Smith', 'Tetairoa McMillan', 'Jameson Williams']
+B WR-WR-WR 0.798 0.207 127.4 e.g. ["Ja'Marr Chase", 'George Pickens', 'Justin Jefferson', 'Kyren Williams', 'DeVonta Smith', 'Drake Maye']
+B Robust-RB (RB in 3 of first 4) 0.875 0.238 130.1 e.g. ['Jahmyr Gibbs', 'Bijan Robinson', 'Ashton Jeanty', 'Nico Collins', 'Tyler Warren', 'Jameson Williams']
+B Zero-RB (no RB before R5) 0.812 0.225 128.0 e.g. ["Ja'Marr Chase", 'Trey McBride', 'George Pickens', 'Zay Flowers', 'Drake Maye', 'Jameson Williams']
+B Best available by board 0.887 0.305 131.2 e.g. ['Jahmyr Gibbs', 'Puka Nacua', 'Christian McCaffrey', 'Zay Flowers', 'DeVonta Smith', 'Jameson Williams']

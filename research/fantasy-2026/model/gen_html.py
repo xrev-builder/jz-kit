@@ -91,7 +91,36 @@ def board(lg):
 <p class="cap">Tick a player on the cheat sheet or type a name here: he is logged to the team on the clock (snake). Tap a team name to rename it. Tap a filled cell to remove that pick. Scroll sideways for all ten teams.</p>
 <div class="dbwrap"><table class="db" data-t="grid"></table></div>
 </section>
-<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="sheet">Sheet</button><button type="button" data-view="board">Board</button><button type="button" data-view="live">Assistant</button></div>"""
+<div class="dock" data-dock="{lg}"><div><span>Pick</span><b data-t="dockpick">1.01</b></div><div><span>On clock</span><b data-t="dockteam">Team 1</b></div><div><span>You</span><b data-t="docknext">-</b></div><button type="button" data-view="sheet">Sheet</button><button type="button" data-view="board">Board</button><button type="button" data-view="live">Assistant</button><button type="button" data-view="espn">ESPN</button></div>"""
+
+def espn_tab():
+    import json as _j, re as _r, unicodedata as _u
+    def _norm(s):
+        s=_u.normalize('NFKD',str(s)).encode('ascii','ignore').decode().lower(); s=_r.sub(r"[.'’-]","",s); return _r.sub(r"\s+(jr|sr|ii|iii|iv)$","",s.strip())
+    live=_j.loads(_r.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_r.S).group(1))
+    est=pd.read_csv(O+'espn_adp_est.csv'); has_est=set(est.player.map(_norm))
+    rooms={}
+    for yr in (2024,2025):
+        pk=pd.read_csv(O+f'rooms/footborn_{yr}_picks.csv'); rooms[yr]={_norm(r.player):(int(r.pick),r.team) for r in pk.itertuples()}
+    rows=[]
+    for d in sorted(live,key=lambda x:(x['adpA'],x['rA'])):
+        k=_norm(d['n']); a=d['adpA']; rd=int((a-1)//10)+1; pk=int((a-1)%10)+1
+        delta=a-d['rA']
+        p25=rooms[2025].get(k); p24=rooms[2024].get(k)
+        keyA='A-'+esc(d['n']).replace(' ','_'); keyB='B-'+esc(d['n']).replace(' ','_')
+        rows.append(f'<tr class="p" data-ka="{keyA}" data-kb="{keyB}" data-pos="{d["pos"]}" data-name="{esc(d["n"]).lower()}" data-adp="{a}" data-ra="{d["rA"]}" data-rb="{d["rB"]}" data-delta="{delta}" data-est="{1 if k in has_est else 0}" data-ecr="{d["ecr"] if d["ecr"] is not None else 999}">'
+                    f'<td class="num">{a:.0f}{"" if k in has_est else "<sup>e</sup>"}</td><td class="num">{rd}.{pk:02d}</td>'
+                    f'<td class="nm"><b>{esc(d["n"])}</b> <small>{d["pos"]} · {esc(d["tm"])}</small></td>'
+                    f'<td class="num">{d["rA"]}</td><td class="num">{d["rB"]}</td><td class="num">{d["ecr"]:.0f}</td><td class="num">{d["adpB"]:.0f}</td>'
+                    f'<td class="num {"pos" if delta>=8 else ("neg" if delta<=-8 else "")}">{delta:+.0f}</td>'
+                    f'<td class="num">{(str(p25[0])+" · "+esc(p25[1])) if p25 else ""}</td><td class="num">{(str(p24[0])+" · "+esc(p24[1])) if p24 else ""}</td></tr>')
+    return f"""<section class="espn" id="espn" hidden>
+<div class="lhead"><div><h2>ESPN board view</h2><p class="meta">The room's printed sheet, not mine. Sorted by where ESPN drafters take each player (ESPN staff composite plus ESPN-specific ADP anchors, Aug 31; the live ESPN ADP feed was unreachable, so rows marked <sup>e</sup> fall back to expert consensus). Δ = ESPN pick minus this board's Ratz rank: a big positive number means the room lets him fall past where this board values him; a big negative number means the room takes him well before this board would. Footborn columns show the measured room price and where this room actually took him in 2025 and 2024.</p></div></div>
+<div class="tools"><input type="search" data-t="eq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="echips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div>
+<div class="chips" data-t="esort"><span class="hint">Sort</span><button class="on" data-sort="adp">ESPN ADP</button><button data-sort="ra">This board (Ratz)</button><button data-sort="rb">This board (Footborn)</button><button data-sort="delta">Value gap</button><button data-sort="ecr">Expert consensus</button></div></div>
+<div class="tw"><table class="etbl" data-t="etbl"><thead><tr><th>ESPN ADP</th><th>Rd.pk</th><th>Player</th><th>Board Ratz</th><th>Board Footborn</th><th>ECR</th><th>Footborn room</th><th>Δ ESPN − board</th><th>Footborn '25</th><th>Footborn '24</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<p class="cap">Drafted players strike through here too, for whichever league tab is selected. Footborn room price = expert consensus shifted by this room's measured 2024-25 habits: running backs ranked 12-60 go about 10 picks early, tight ends about 8 picks late, receivers at consensus, quarterbacks in a round 3-5 run.</p>
+</section>"""
 
 def league(lg):
     L=plan['leagues'][lg]
@@ -142,7 +171,8 @@ table.ltbl tr.rec1 td{background:var(--t1)} table.ltbl td.why{color:var(--mute);
 .roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}.slot{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border:1px solid var(--line);background:var(--card)}.slot span{font:600 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);min-width:44px}.slot i{color:var(--mute);font-style:normal}
 .plog2{font-size:12.5px;color:var(--mute);display:flex;flex-wrap:wrap;gap:4px}.plog2 button{font:12px Barlow,sans-serif;padding:2px 7px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.plog2 button.me{border-color:var(--acc)}
 .dock button.on{background:var(--ink);color:var(--bg)}
-@media print{.dboard,.dock,.vtabs,.live{display:none!important} body{padding-bottom:0}}
+.espn td.pos{color:var(--acc);font-weight:600} .espn td.neg{color:var(--warn);font-weight:600} .espn sup{color:var(--mute);font-size:9px} .espn tr.p.done td{color:var(--strike)} .espn tr.p.done .nm b{text-decoration:line-through} .chips .hint{align-self:center}
+@media print{.dboard,.dock,.vtabs,.live,.espn{display:none!important} body{padding-bottom:0}}
 </style>'''
 LIVE_HTML=r'''<section class="live" id="live" hidden>
 <div class="lhead"><div><h2>Draft Day Assistant <span class="lgname" data-t="lgname"></span></h2><p class="meta">Ranks every undrafted player by what he adds to your title odds right now, against what will still be there at your next pick. Picks logged here, on the board, or on the cheat sheet all go to the same draft.</p></div></div>
@@ -222,6 +252,25 @@ D.on(render); render();
 </script>'''
 import re as _re
 LIVE_DATA=_re.search(r'const DATA=(\[.*?\]);\n',open('/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/draft-live.html').read(),_re.S).group(1)
+ESPN_JS=r'''
+<script>
+(function(){
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const D=window.__draft; const sec=$('#espn'); if(!D||!sec) return;
+const tb=$('tbody',sec); let rows=$$('tr.p',sec); let sortKey='adp';
+function apply(){
+ const lg=D.curLg(); const s=D.state(lg); const taken=new Set(s.picks.map(p=>p.key));
+ const pos=$('[data-t="echips"] button.on',sec).dataset.pos; const q=$('[data-t="eq"]',sec).value.trim().toLowerCase();
+ rows.forEach(tr=>{tr.classList.toggle('done',taken.has(lg==='A'?tr.dataset.ka:tr.dataset.kb)); tr.style.display=((pos==='ALL'||tr.dataset.pos===pos)&&(!q||tr.dataset.name.includes(q)))?'':'none'});
+ const key={adp:'adp',ra:'ra',rb:'rb',delta:'delta',ecr:'ecr'}[sortKey]; const dir=(sortKey==='delta')?-1:1;
+ rows.sort((a,b)=>(sortKey==='delta'?(parseInt(b.dataset.est)-parseInt(a.dataset.est)):0)||dir*(parseFloat(a.dataset[key])-parseFloat(b.dataset[key]))||(parseFloat(a.dataset.adp)-parseFloat(b.dataset.adp))); rows.forEach(r=>tb.appendChild(r));
+}
+$$('[data-t="echips"] button',sec).forEach(b=>b.addEventListener('click',()=>{$$('[data-t="echips"] button',sec).forEach(x=>x.classList.toggle('on',x===b));apply()}));
+$$('[data-t="esort"] button',sec).forEach(b=>b.addEventListener('click',()=>{$$('[data-t="esort"] button',sec).forEach(x=>x.classList.toggle('on',x===b));sortKey=b.dataset.sort;apply()}));
+$('[data-t="eq"]',sec).addEventListener('input',apply);
+D.on(apply); apply();
+})();
+</script>'''
 EXTRA_JS=r'''
 <script>
 (function(){
@@ -258,7 +307,7 @@ function removePick(lg,key){const s=state(lg); const i=s.picks.findIndex(p=>p.ke
 const LIS=[]; function emit(){LIS.forEach(f=>{try{f()}catch(e){}})}
 const NK={A:{},B:{}}; ['A','B'].forEach(lg=>Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key));
 window.__draft={state,teamOf,pickLabel,tname,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
-function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.dock button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); const lv=$('#live'); if(lv) lv.hidden=(v!=='live'); try{localStorage.setItem('view',v)}catch(e){} if(v==='board'){['A','B'].forEach(render)} emit()}
+function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$('.vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.dock button[data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===v)); $$('.league').forEach(l=>{const sh=$('.sheet',l), db=$('.dboard',l); if(sh) sh.hidden=(v!=='sheet'); if(db) db.hidden=(v!=='board')}); const lv=$('#live'); if(lv) lv.hidden=(v!=='live'); const es=$('#espn'); if(es) es.hidden=(v!=='espn'); try{localStorage.setItem('view',v)}catch(e){} if(v==='board'){['A','B'].forEach(render)} emit()}
 ['A','B'].forEach(lg=>{
   const sec=$('#db-'+lg); if(!sec) return; const s=state(lg);
   $$('#lg-'+lg+' tr.p input').forEach(c=>c.addEventListener('change',()=>{const k=c.closest('tr').dataset.key; if(c.checked) addPick(lg,k); else removePick(lg,k)}));
@@ -282,7 +331,7 @@ $$('.vtabs button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.
 $$('.dock button[data-view]').forEach(b=>b.addEventListener('click',()=>{setView(b.dataset.view); try{window.scrollTo({top:0})}catch(e){}}));
 function syncDock(){$$('.dock').forEach(d=>{const lg=d.dataset.dock; const l=document.getElementById('lg-'+lg); d.hidden=!l||l.hidden})}
 $$('.tabs button[data-lg]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{syncDock();['A','B'].forEach(render);emit()},0))); syncDock();
-try{const v=localStorage.getItem('view'); if(v==='board'||v==='live') setView(v)}catch(e){}
+try{const v=localStorage.getItem('view'); if(v==='board'||v==='live'||v==='espn') setView(v)}catch(e){}
 })();
 </script>'''
 page=f'''<title>{esc(plan['title'])}</title>
@@ -324,9 +373,10 @@ table.plan td.tg{{font-weight:500;min-width:28ch}} table.plan td.fb{{color:var(-
 </style>
 <div class="wrap">
 <header class="top"><div><h1>{esc(plan['title'])}</h1><p>{esc(plan['subtitle'])}</p></div>
-<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button><button data-view="live">Assistant</button></nav></header>
+<nav class="tabs" aria-label="league"><button class="on" data-lg="A">Ratz · pick 2</button><button data-lg="B">Footborn · pick 4</button></nav><nav class="vtabs" aria-label="view"><button class="on" data-view="sheet">Cheat sheet</button><button data-view="board">Draft board</button><button data-view="live">Assistant</button><button data-view="espn">ESPN board</button></nav></header>
 {league('A')}{league('B')}
 __LIVE_HTML__
+{espn_tab()}
 <section class="evid"><h2>Evidence appendix</h2>{evidence()}</section>
 <p class="foot">{esc(plan['footer'])}</p>
 </div>
@@ -345,6 +395,6 @@ $$('input[data-search]').forEach(inp=>inp.addEventListener('input',()=>{{const q
 }})();
 </script>'''
 page=page.replace('__LIVE_HTML__',LIVE_HTML).replace('__LIVE_DATA__',LIVE_DATA)
-page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)
+page=page.replace('</style>\n<div class="wrap">', '</style>'+EXTRA_CSS+'\n<div class="wrap">',1)+EXTRA_JS+LIVE_JS.replace('__LIVE_DATA__',LIVE_DATA)+ESPN_JS
 open(OUT,'w').write(page)
 print('wrote',OUT,len(page))

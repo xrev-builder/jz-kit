@@ -1,5 +1,5 @@
 """Policy-based draft simulation: the user's roster emerges from a drafting rule against randomized opponents (price noise sd 8, random room type), then the season is simulated."""
-import sys; LGARG=sys.argv[1] if len(sys.argv)>1 else 'AB'; sys.argv=['x','1']
+import sys; LGARG=sys.argv[1] if len(sys.argv)>1 else 'AB'; FORCE=('fb' if LGARG.endswith('_fb') else None); LGARG=LGARG.replace('_fb',''); sys.argv=['x','1']
 exec(open('sim_season.py').read().split("if __name__=='__main__':")[0])
 import pandas as pd, numpy as np
 N=600
@@ -40,7 +40,7 @@ def run(lg,policy,slot,n):
     made=titles=0; pf=[]
     for s in range(n):
         # random room type and larger price noise
-        room=rng.choice(['rb','bal','wr']); noise=8
+        room=FORCE or rng.choice(['rb','bal','wr']); noise=8
         adpm={}
         for k,v in P.items():
             a=v['adp']; pos=v['pos']
@@ -48,6 +48,10 @@ def run(lg,policy,slot,n):
             if room=='rb' and pos=='WR': a*=1.1
             if room=='wr' and pos=='WR': a*=0.85
             if room=='wr' and pos=='RB': a*=1.1
+            if room=='fb':   # measured Footborn room: RBs ~10 picks early (consensus 12-60), TEs late, WRs at consensus
+                if pos=='RB' and 8<a<=60: a=max(3,a-10)
+                elif pos=='RB' and 60<a<=110: a-=6
+                if pos=='TE' and 15<a<45: a+=8
             adpm[k]=a+rng.normal(0,noise)
         order=sorted(P,key=lambda k:adpm[k]); teams={i:[] for i in range(nteams)}; taken=set()
         for rd in range(15):
@@ -96,4 +100,4 @@ out=[]
 for lg,slot in [x for x in (('A',1),('B',3)) if x[0] in LGARG]:
     for pol in pols:
         r=run(lg,pol,slot,N); out.append(r); print(lg,pol,round(r['p_playoffs'],3),round(r['p_title'],3),round(r['avg_ppg'],1),'e.g.',r['example'][:6],flush=True)
-pd.DataFrame(out).to_csv(O+('sim_policies.csv' if LGARG=='AB' else f'sim_policies_{LGARG}.csv'),index=False)
+pd.DataFrame(out).to_csv(O+('sim_policies.csv' if LGARG=='AB' else f'sim_policies_{LGARG}{"_fb" if FORCE else ""}.csv'),index=False)

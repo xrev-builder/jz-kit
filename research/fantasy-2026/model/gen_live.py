@@ -13,8 +13,12 @@ def roomB(name,pos,adp):
     if pos=='QB':
         fixed={'Josh Allen':28,'Drake Maye':38,'Lamar Jackson':40,'Joe Burrow':44,'Jalen Hurts':46,'Jayden Daniels':47,'Patrick Mahomes II':60,'Matthew Stafford':72,'Justin Herbert':84,'Trevor Lawrence':90,'Dak Prescott':95,'Caleb Williams':88,'Bo Nix':92,'Brock Purdy':110,'Jared Goff':120,'Jaxson Dart':100,'Kyler Murray':118,'Baker Mayfield':105,'Daniel Jones':130}
         return fixed.get(name,adp)
-    if pos=='TE': return adp-4 if adp<40 else adp
-    if pos=='RB': return max(1,adp-4)
+    if pos=='TE': return adp+8 if 15<adp<45 else adp          # McBride 21->31, Bowers 19->~26 last year
+    if pos=='RB':                                                # Henry 23->11, Jacobs 30->18, Irving 30->19, Taylor 32->20, Walker 44->23, Cook 48->27, Hampton 50->34
+        if adp<=8: return adp
+        if adp<=60: return max(3,adp-10)
+        if adp<=110: return adp-6
+        return adp-3
     if pos=='DST': return max(adp,120)
     return adp
 rows=[]

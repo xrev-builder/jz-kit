@@ -27,7 +27,7 @@ N={
 'Trey McBride':"18.9 ppg = TE1 by 4 ppg over TE2; 169 tgt, 27% share, WR-like usage. Brissett replaces Kyler (Brissett threw to him at 8+ tgt/g in 2025 too).",
 'Nico Collins':"15.4 ppg (18.1 in 2024), 25% share. Jayden Higgins (ACL) and Dell (IR) out: Collins is the only proven target in HOU. ESPN drafters take him ~12 picks later than experts.",
 "De'Von Achane":"20.9 ppg, 85 tgt, 238 car, floor 16.6 (second only to McCaffrey). MIA's offense is Malik Willis throwing to Malik Washington / Tolbert / rookie Caleb Douglas: Achane is the whole offense, for better and worse. ESPN rooms take him ~pick 8.",
-'Chase Brown':"17.2 ppg full season; 22.8 ppg over the last 6 with Burrow healthy (two 32-pt games); 88 tgt. ESPN ADP ~26: the one RB1-ceiling back that actually reaches pick 19-24.",
+'Chase Brown':"17.2 ppg full season; 22.8 ppg over the last 6 with Burrow healthy (two 32-pt games); 88 tgt. ESPN ADP ~26 (Ratz: reaches 19-22 about 60-70% of the time). Footborn takes RBs ~10 picks early: 38% to be there at 17.",
 'James Cook III':"19.7 ppg, 309 car, nine 100-yd rushing games (+32 bonus pts in League A, most of any RB). Only 40 tgt: low PPR floor (10.7), high bonus ceiling. ESPN rooms take him ~pick 10.",
 'Chris Olave':"17.0 ppg, 156 tgt, 29% share, led NFL in air yards. Rookie Tyson on IR ~2 months: target monopoly with Shough.",
 'Brock Bowers':"14.9 ppg in 12 g (2025, injured); 15.6 ppg TE1 in 2024. Cousins + Kubiak scheme. TE2-4 tier is worth ~4 ppg over replacement.",
