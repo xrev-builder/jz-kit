@@ -408,10 +408,10 @@ function render(lg){
   if(typeof emit==='function') emit();
 }
 function setDone(lg,key,on){$$('#lg-'+lg+' tr.p[data-key="'+key+'"]').forEach(tr=>{tr.classList.toggle('done',on);const c=$('input',tr);if(c)c.checked=on}); try{const st=JSON.parse(localStorage.getItem('drafted')||'{}'); st[key]=on; localStorage.setItem('drafted',JSON.stringify(st))}catch(e){}}
-function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) return; const inf=PL[lg][key]; if(!inf||s.picks.length>=150) return; s.picks.push({key:inf.key,name:inf.name,pos:inf.pos,team:inf.team}); save(); setDone(lg,key,true); render(lg)}
+function addPick(lg,key){const s=state(lg); if(s.picks.some(p=>p.key===key)) return; let inf=PL[lg][key]; if(!inf){const nm=key.replace(/^[AB]-/,'').replace(/_/g,' '); if(ADP[nm]) inf={key,name:nm,pos:ADP[nm][2],team:'',q:nm.toLowerCase()}} if(!inf||s.picks.length>=150) return; s.picks.push({key:inf.key,name:inf.name,pos:inf.pos,team:inf.team}); save(); setDone(lg,key,true); render(lg)}
 function removePick(lg,key){const s=state(lg); const i=s.picks.findIndex(p=>p.key===key); if(i<0) return; s.picks.splice(i,1); save(); setDone(lg,key,false); render(lg)}
 const LIS=[]; function emit(){LIS.forEach(f=>{try{f()}catch(e){}})}
-const NK={A:{},B:{}}; ['A','B'].forEach(lg=>Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key));
+const NK={A:{},B:{}}; ['A','B'].forEach(lg=>{Object.keys(ADP).forEach(n=>NK[lg][n]=lg+'-'+n.replace(/ /g,'_')); Object.values(PL[lg]).forEach(p=>NK[lg][p.name]=p.key)});
 function openModal(html){const m=$('#modal'); $('[data-t="mbody"]',m).innerHTML=html; m.hidden=false} function closeModal(){$('#modal').hidden=true}
 document.addEventListener('click',e=>{if(e.target.closest('[data-t="mclose"]')||e.target.id==='modal') closeModal()}); document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal()});
 window.__draft={TUNE,avHTML,pbHTML,state,teamOf,pickLabel,tname,predict,survival,mgrProfile,openModal,closeModal,esc,addByName:(lg,n)=>{const k=NK[lg][n]; if(k) addPick(lg,k)},removeByName:(lg,n)=>{const k=NK[lg][n]; if(k) removePick(lg,k)},on:f=>LIS.push(f),emit,curLg:()=>{const b=$('.tabs button.on[data-lg]'); return b?b.dataset.lg:'A'}};
@@ -430,7 +430,7 @@ function setView(v){document.body.classList.toggle('boardmode',v!=='sheet'); $$(
   const sel=$('select[data-t="slot"]',sec); sel.value=s.slot; sel.addEventListener('change',()=>{s.slot=parseInt(sel.value,10); save(); render(lg)});
   // quick add by name
   const q=$('[data-t="q"]',sec), hits=$('[data-t="hits"]',sec);
-  function showHits(){const v=q.value.trim().toLowerCase(); if(!v){hits.hidden=true;hits.innerHTML='';return} const taken=new Set(s.picks.map(p=>p.key)); const m=Object.values(PL[lg]).filter(p=>!taken.has(p.key)&&p.q.includes(v)).slice(0,8); hits.innerHTML=m.map(p=>'<button type="button" data-key="'+esc(p.key)+'"><span>'+esc(p.name)+'</span><small>'+p.pos+(p.team?' · '+esc(p.team):'')+' → '+pickLabel(s.picks.length+1)+' '+esc(tname(lg,teamOf(s.picks.length+1)))+'</small></button>').join('')||'<button type="button" disabled>No match</button>'; hits.hidden=false}
+  function showHits(){const v=q.value.trim().toLowerCase(); if(!v){hits.hidden=true;hits.innerHTML='';return} const taken=new Set(s.picks.map(p=>p.key)); const extra=Object.keys(ADP).filter(n=>!PL[lg][lg+'-'+n.replace(/ /g,'_')]).map(n=>({key:lg+'-'+n.replace(/ /g,'_'),name:n,pos:ADP[n][2],team:'',q:n.toLowerCase()})); const m=Object.values(PL[lg]).concat(extra).filter(p=>!taken.has(p.key)&&p.q.includes(v)).slice(0,8); hits.innerHTML=m.map(p=>'<button type="button" data-key="'+esc(p.key)+'"><span>'+esc(p.name)+'</span><small>'+p.pos+(p.team?' · '+esc(p.team):'')+' → '+pickLabel(s.picks.length+1)+' '+esc(tname(lg,teamOf(s.picks.length+1)))+'</small></button>').join('')||'<button type="button" disabled>No match</button>'; hits.hidden=false}
   q.addEventListener('input',showHits); q.addEventListener('focus',showHits); q.addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('button[data-key]',hits); if(b) b.click()} if(e.key==='Escape'){hits.hidden=true}});
   hits.addEventListener('click',e=>{const b=e.target.closest('button[data-key]'); if(!b) return; addPick(lg,b.dataset.key); q.value=''; hits.hidden=true; q.focus()});
   document.addEventListener('click',e=>{if(!sec.contains(e.target)) hits.hidden=true});
