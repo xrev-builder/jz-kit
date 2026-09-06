@@ -13,7 +13,7 @@
     "What survives randomized rooms in the version-3 simulator: RB-first openings (RB-RB 23.0% title, Robust-RB 21.5%, best-available 20.0%, Hero-RB 19.5%) beat WR-WR (17.3%) and Zero-RB (13.7%) with eight playoff spots. Open with Gibbs and take the best of an RB1-tier back, McBride, or a top WR at 19 and 22. The plan roster wins the title in 19.8% of 1,200 simulated seasons (playoffs 94%) against 10.3% for an ESPN-sheet drafter at pick 2; Chase at 2 with a Zero-RB build 12.8%, Chase then Kyren 13.2%, Bijan at 2 14.2%, Allen at 19 17.6%, London/Kraft instead of McBride 15.2%. RB2 by 42, WR3-WR5 in rounds 6-11, QB at 82-99, DST last.",
     "Bell-cows get the +3 rushing bonus (Cook +32 points last year, Henry +29, Taylor +8): a tiebreak, not a tier.",
     "Bench: 3 RB, 2 WR, 1 swing. No second QB, TE, or DST. The IR slot is a 16th roster spot: draft an IR-tagged stash at 139 and your RB1's handcuff at 142, then move the stash to IR after the draft. The handcuff is measured, not assumed: with Vaki the plan won 16.7% vs 15.3% with a random late RB in his place (about one point of title odds, the same sign in both leagues). With no injuries in the league at all the plan's edge shrinks to 15.9%: part of its value is being built for the injuries that will happen.",
-    "Two rules carried over from the Footborn draft. (1) No quarterback before pick 79-82. In 4-pt scoring a QB1 is worth about +3 ppg over a round-9 quarterback, and the round-5 pick it costs is a starting receiver in the round where receivers are cheapest; Maye at 44 in Footborn was the one pick worth taking back. (2) Rookies are bench players, not starting flexes. Love, Price and Tate sit in the bench tier on this sheet (after pick 79) and the Assistant's 'Rookies bench-only' switch keeps them out of the projected lineup, so their title-odds number reflects depth only. First-round rookie WRs finish top-24 28% of the time; the veteran at the same price finishes there about half the time."
+    "Two rules carried over from the Footborn draft. (1) No quarterback before pick 79-82. In 4-pt scoring a QB1 is worth about +3 ppg over a round-9 quarterback, and the round-5 pick it costs is a starting receiver in the round where receivers are cheapest; Maye at 44 in Footborn was the one pick worth taking back. (2) Rookie receivers are bench players, not starting flexes: first-round rookie WRs finish top-24 28% of the time, the veteran at the same price about half the time. Tate sits in the bench tier here (after pick 79). Rookie backs are different: a first-round RB hits top-24 71% of the time, so Love and Price stay where the model has them. The Assistant's 'Rookie WR/TE bench-only' switch applies the same rule to the projected lineup."
    ]
   },
   "B": {
@@ -70,9 +70,9 @@
    {
     "round": 6,
     "pick": 59,
-    "targets": "WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore, Waddle",
+    "targets": "WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore, Waddle; or Price if RB2 is still open",
     "fallback": "Jameson Williams, Odunze (leg: check the Sept 9 report)",
-    "rule": "The WR discount lives from here to round 11. No rookie here: Price is depth after 79"
+    "rule": "The WR discount lives from here to round 11"
    },
    {
     "round": 7,
@@ -85,7 +85,7 @@
     "round": 8,
     "pick": 79,
     "targets": "WR4/RB3: Jameson Williams, Odunze, Stevenson, Henderson, Parker Washington, Brian Thomas Jr.; Kraft/Fannin/Pitts if TE-less",
-    "fallback": "Michael Wilson, Wan'Dale Robinson; Tate or Price only as the bench piece",
+    "fallback": "Michael Wilson, Wan'Dale Robinson; Tate only as the bench piece",
     "rule": "Not a QB yet: Herbert is there at 82 in ~100% of rooms and at 99 in ~85%"
    },
    {

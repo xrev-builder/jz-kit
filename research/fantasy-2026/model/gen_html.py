@@ -236,7 +236,7 @@ LIVE_HTML=r'''<section class="live" id="live" hidden>
 </div>
 <div class="recbox" data-t="rec"></div>
 <h3 class="sec">Recommended now</h3>
-<div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div><label class="rkt"><input type="checkbox" data-t="norook"> Rookies bench-only</label><label class="rkt"><input type="checkbox" data-t="lateqb"> No QB before round 8</label></div>
+<div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div><label class="rkt"><input type="checkbox" data-t="norook"> Rookie WR/TE bench-only</label><label class="rkt"><input type="checkbox" data-t="lateqb"> No QB before round 8</label></div>
 <div class="tw"><table class="ltbl" data-t="ltbl"><thead><tr><th></th><th>Player</th><th>Proj</th><th>Value vs next pick</th><th>Gone by next</th><th>Title Δ</th><th>Board</th><th>Room</th><th>Inj</th><th>Why</th></tr></thead><tbody></tbody></table></div>
 <h3 class="sec">Your roster</h3><div class="roster" data-t="roster"></div>
 <h3 class="sec">Draft log <span class="hint">tap a pick to remove it</span></h3><div class="plog2" data-t="llog"></div>
@@ -262,7 +262,7 @@ function pGone(d,pick,cur){if(pick<=cur)return 0;const a=adp(d);const x=(pick-a)
 let NOROOK=false; function rookKey(){return 'norook_'+lg} function loadRook(){try{const v=localStorage.getItem(rookKey()); NOROOK=v===null?(lg==='A'):v==='1'}catch(e){NOROOK=lg==='A'}}
 let LATEQB=false; const QBPICK=71; function qbKey(){return 'lateqb_'+lg} function loadQB(){try{const v=localStorage.getItem(qbKey()); LATEQB=v===null?(lg==='A'):v==='1'}catch(e){LATEQB=lg==='A'}}
 function lineup(names){const ps=names.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();let t=0;const W=WAIV[lg];
- function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos)||(NOROOK&&p.rk))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
+ function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos)||(NOROOK&&p.rk&&p.pos!=='RB'))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
  take(['QB'],1);take(['RB'],2);take(['WR'],2);take(['TE'],1);take(['RB','WR','TE'],2);take(['DST'],1);return t}
 function expectedLineup(names,availP,cur,picks){const have=names.slice(); const future=picks.filter(p=>p>cur).slice(0,9);
  for(const p of future){let best=null,bestGain=0;const baseL=lineup(have);
