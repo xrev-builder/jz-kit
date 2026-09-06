@@ -21,6 +21,7 @@ def roomB(name,pos,adp):
         return adp-3
     if pos=='DST': return max(adp,120)
     return adp
+ROOK=set(json.load(open(O+'rookies_2026.json')))
 rows=[]
 for r in bA.itertuples():
     p=PA.get(r.player); q=PB.get(r.player)
@@ -30,7 +31,7 @@ for r in bA.itertuples():
         rA=int(r.rank),rB=int(rankB.get(r.player,r.rank)),ecr=round(float(r.ecr_ovr),0) if pd.notna(r.ecr_ovr) else None,
         adpA=round(adp,0),adpB=round(roomB(r.player,r.pos,adp),0),
         pA=round(p['mean'],1),pB=round(q['mean'],1),inj=round(float(p['exp_missed']),1),
-        note=(r.note if isinstance(r.note,str) else '')[:160]))
+        note=(r.note if isinstance(r.note,str) else '')[:160],rk=(1 if r.player in ROOK else 0)))
 rows=[x for x in rows if x['rA']<=340]
 data=json.dumps(rows,separators=(',',':'))
 esc=html.escape

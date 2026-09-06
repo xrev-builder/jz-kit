@@ -5,20 +5,21 @@
  "leagues": {
   "A": {
    "name": "Ratz Fantasy",
-   "meta": "Pick 2 \u00b7 draft Thursday Sept 4 \u00b7 4-pt passing TD \u00b7 +3 per 100-yd rushing game, +1.5 per 100-yd receiving game \u00b7 8 of 10 teams make the playoffs (Weeks 15-17)",
-   "picks": "2 \u00b7 19 \u00b7 22 \u00b7 39 \u00b7 42 \u00b7 59 \u00b7 62 \u00b7 79 \u00b7 82 \u00b7 99 \u00b7 102 \u00b7 119 \u00b7 122 \u00b7 139 \u00b7 142",
+   "meta": "Pick 2 · draft this week · 4-pt passing TD · +3 per 100-yd rushing game, +1.5 per 100-yd receiving game · 8 of 10 teams make the playoffs (Weeks 15-17)",
+   "picks": "2 · 19 · 22 · 39 · 42 · 59 · 62 · 79 · 82 · 99 · 102 · 119 · 122 · 139 · 142",
    "thesis": [
     "Eight of ten make the playoffs. In a 20,000-run simulation, +3 ppg in Weeks 15-17 was worth 2.2x as much title equity as +3 ppg in the regular season. Draft ceiling, not September floor; an early suspension (Nacua) costs almost nothing here.",
     "Elite RB and WR are the scarce assets. Value over a 2-FLEX replacement (about the 71st RB/WR, 11.5 ppg) was +13 for the RB1/WR1 and +4 to +7 by RB10/WR10 across 2024-25, then flat. McBride's TE1 edge (+7.8) is a round-2 asset; a QB1's realized +4.9 shrinks to ~+3 because QB edges persist only half as well.",
     "What survives randomized rooms in the version-3 simulator: RB-first openings (RB-RB 23.0% title, Robust-RB 21.5%, best-available 20.0%, Hero-RB 19.5%) beat WR-WR (17.3%) and Zero-RB (13.7%) with eight playoff spots. Open with Gibbs and take the best of an RB1-tier back, McBride, or a top WR at 19 and 22. The plan roster wins the title in 19.8% of 1,200 simulated seasons (playoffs 94%) against 10.3% for an ESPN-sheet drafter at pick 2; Chase at 2 with a Zero-RB build 12.8%, Chase then Kyren 13.2%, Bijan at 2 14.2%, Allen at 19 17.6%, London/Kraft instead of McBride 15.2%. RB2 by 42, WR3-WR5 in rounds 6-11, QB at 82-99, DST last.",
     "Bell-cows get the +3 rushing bonus (Cook +32 points last year, Henry +29, Taylor +8): a tiebreak, not a tier.",
-    "Bench: 3 RB, 2 WR, 1 swing. No second QB, TE, or DST. The IR slot is a 16th roster spot: draft an IR-tagged stash at 139 and your RB1's handcuff at 142, then move the stash to IR after the draft. The handcuff is measured, not assumed: with Vaki the plan won 16.7% vs 15.3% with a random late RB in his place (about one point of title odds, the same sign in both leagues). With no injuries in the league at all the plan's edge shrinks to 15.9%: part of its value is being built for the injuries that will happen."
+    "Bench: 3 RB, 2 WR, 1 swing. No second QB, TE, or DST. The IR slot is a 16th roster spot: draft an IR-tagged stash at 139 and your RB1's handcuff at 142, then move the stash to IR after the draft. The handcuff is measured, not assumed: with Vaki the plan won 16.7% vs 15.3% with a random late RB in his place (about one point of title odds, the same sign in both leagues). With no injuries in the league at all the plan's edge shrinks to 15.9%: part of its value is being built for the injuries that will happen.",
+    "Two rules carried over from the Footborn draft. (1) No quarterback before pick 79-82. In 4-pt scoring a QB1 is worth about +3 ppg over a round-9 quarterback, and the round-5 pick it costs is a starting receiver in the round where receivers are cheapest; Maye at 44 in Footborn was the one pick worth taking back. (2) Rookies are bench players, not starting flexes. Love, Price and Tate sit in the bench tier on this sheet (after pick 79) and the Assistant's 'Rookies bench-only' switch keeps them out of the projected lineup, so their title-odds number reflects depth only. First-round rookie WRs finish top-24 28% of the time; the veteran at the same price finishes there about half the time."
    ]
   },
   "B": {
    "name": "Fantasy Footborn League",
-   "meta": "Pick 4 \u00b7 draft Sunday Sept 6 \u00b7 order: Ish, Aoc, Billy, YOU, Moe, Betto, Kass, Hazime, Daoud, Kdouh \u00b7 6-pt passing TD, +2 per 300-yd passing game, +2 per 50-yd TD \u00b7 equal 100-yd bonuses \u00b7 6 of 10 teams make the playoffs",
-   "picks": "4 \u00b7 17 \u00b7 24 \u00b7 37 \u00b7 44 \u00b7 57 \u00b7 64 \u00b7 77 \u00b7 84 \u00b7 97 \u00b7 104 \u00b7 117 \u00b7 124 \u00b7 137 \u00b7 144",
+   "meta": "Pick 4 · draft Sunday Sept 6 · order: Ish, Aoc, Billy, YOU, Moe, Betto, Kass, Hazime, Daoud, Kdouh · 6-pt passing TD, +2 per 300-yd passing game, +2 per 50-yd TD · equal 100-yd bonuses · 6 of 10 teams make the playoffs",
+   "picks": "4 · 17 · 24 · 37 · 44 · 57 · 64 · 77 · 84 · 97 · 104 · 117 · 124 · 137 · 144",
    "thesis": [
     "This room, not the ESPN average, is the model: two years of the same ten drafters, matched to that August's expert consensus. Measured habits: running backs ranked 12-60 go about 10 picks early (Henry 23 to 11, Jacobs 30 to 18, Irving 30 to 19, Taylor 32 to 20, Walker 44 to 23, Cook 48 to 27, Hampton 50 to 34), receivers go at consensus, tight ends about 8 picks late (McBride 21 to 31), and the QB run comes in rounds 3-5. 2026 order: Ish, Aoc, Billy, you, Moe, Betto, Kass, Hazime, Daoud, Kdouh. The six picks between your 17 and 24 belong to Billy, Aoc and Ish, the three most RB-early drafters in the room; the twelve between 4 and 17 belong to everyone else.",
     "Against that measured room (600 seasons, +/-1.6 points): best-available-by-this-board 30.5% title, RB-RB 29.3%, Hero-RB 24.0%, Robust-RB 23.8%, WR-WR 22.8%, Zero-RB 22.5%, three straight WRs 20.7%. Reading: take the best player on this board at every pick, and an elite RB is still worth it even though the room overpays the position, because the RBs this board likes are the ones the room lets through (Kyren, Javonte, Hall at 17-24; Judkins, Irving, Swift, Montgomery at 37-44).",
@@ -69,9 +70,9 @@
    {
     "round": 6,
     "pick": 59,
-    "targets": "WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore, Waddle; or Price if RB2 is still open",
+    "targets": "WR3: Tee Higgins, Egbuka, McConkey, Burden, DJ Moore, Waddle",
     "fallback": "Jameson Williams, Odunze (leg: check the Sept 9 report)",
-    "rule": "The WR discount lives from here to round 11"
+    "rule": "The WR discount lives from here to round 11. No rookie here: Price is depth after 79"
    },
    {
     "round": 7,
@@ -83,8 +84,8 @@
    {
     "round": 8,
     "pick": 79,
-    "targets": "WR4/RB3: Jameson Williams, Odunze, Stevenson, Henderson, Tate, Parker Washington, Brian Thomas Jr.; Kraft/Fannin/Pitts if TE-less",
-    "fallback": "Michael Wilson, Wan'Dale Robinson",
+    "targets": "WR4/RB3: Jameson Williams, Odunze, Stevenson, Henderson, Parker Washington, Brian Thomas Jr.; Kraft/Fannin/Pitts if TE-less",
+    "fallback": "Michael Wilson, Wan'Dale Robinson; Tate or Price only as the bench piece",
     "rule": "Not a QB yet: Herbert is there at 82 in ~100% of rooms and at 99 in ~85%"
    },
    {
@@ -92,7 +93,7 @@
     "pick": 82,
     "targets": "QB: Herbert (rushing floor, ESPN QB15 price); if gone, Lawrence, Mahomes, Stafford, Caleb Williams, Dak",
     "fallback": "WR4 from the R8 list and take the QB at 99",
-    "rule": "Starting lineup complete by R9"
+    "rule": "QB window opens here, not earlier: Herbert, Lawrence, Mahomes, Stafford, Dak, Caleb are all round-9 to round-11 prices in ESPN rooms"
    },
    {
     "round": 10,

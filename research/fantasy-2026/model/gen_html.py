@@ -31,7 +31,7 @@ def pos_tables(lg):
                 rows.append(
                   f'<tr class="p" data-key="{key}" data-pos="{pos}" data-name="{esc(n).lower()}" data-team="{esc(r.team_26)}">'
                   f'<td class="ck"><input type="checkbox" aria-label="drafted {esc(n)}"></td>'
-                  f'<td class="num">{int(r["rank"])}</td><td class="nm">{av(n,r.team_26,pos)}<span class="t"><b>{esc(n)}</b><small>{pb(pos)} {esc(r.team_26)} · bye {i0(r.bye)}{(" · age "+f1(r.age)) if pos!="DST" else ""}</small></span></td>'
+                  f'<td class="num">{int(r["rank"])}</td><td class="nm">{av(n,r.team_26,pos)}<span class="t"><b>{esc(n)}</b><small>{pb(pos,n)} {esc(r.team_26)} · bye {i0(r.bye)}{(" · age "+f1(r.age)) if pos!="DST" else ""}</small></span></td>'
                   f'<td class="num">{i0(r.ecr_ovr)}</td><td class="num">{i0(r.espn_adp)}</td><td class="num">{f1(r[ppg])}</td><td class="num">{i0(r.g_25)}</td><td class="num">{f1(r.exp_missed)}</td><td class="us">{usage}</td>'
                   f'<td class="note">{esc(r.note)}</td></tr>')
         out.append(f'''<section class="pos" id="{lg}-{pos}"><h3>{pos}</h3><div class="tw"><table>
@@ -93,7 +93,8 @@ def av(n,team,pos):
     if pos=='DST': bg,fg=TC.get(t,(bg,fg))
     if n in HS: return f'<img class="av" src="{HS[n]}" alt="" loading="lazy">'
     return f'<span class="av" data-tm="{esc(t)}">{initials(n) if pos!="DST" else esc(t)}</span>'
-def pb(pos): return f'<em class="pb {pos}">{pos}</em>'
+ROOK=set(json.load(open(O+'rookies_2026.json')))
+def pb(pos,name=None): return f'<em class="pb {pos}">{pos}</em>'+(' <em class="pb RK" title="2026 rookie">R</em>' if name in ROOK else '')
 
 USER_SLOT={'A':2,'B':4}
 def board(lg):
@@ -171,7 +172,7 @@ td{padding:6px 8px}
 .nm{min-width:190px;white-space:nowrap;vertical-align:middle} .nm .av{display:inline-flex;vertical-align:middle;margin-right:9px} .nm .t{display:inline-flex;flex-direction:column;vertical-align:middle;line-height:1.2;white-space:normal} .nm .t b{font-weight:600;font-size:13.5px} .nm .t small{color:var(--mute);font-size:11.5px;margin-top:1px;white-space:nowrap}
 .av{width:32px;height:32px;border-radius:50%;flex:0 0 32px;object-fit:cover;background:var(--tc,#8A8F98);color:var(--ti,#fff);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px "Barlow Condensed",sans-serif;letter-spacing:.02em;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),0 1px 2px rgba(0,0,0,.18)}
 img.av{background:var(--head)} __TEAM_CSS__
-.pb{display:inline-block;font:700 9.5px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:1px 5px;border-radius:4px;vertical-align:1px;font-style:normal} .pb.QB{background:var(--pQB);color:var(--pQBi)} .pb.RB{background:var(--pRB);color:var(--pRBi)} .pb.WR{background:var(--pWR);color:var(--pWRi)} .pb.TE{background:var(--pTE);color:var(--pTEi)} .pb.DST{background:var(--pDST);color:var(--pDSTi)}
+.pb{display:inline-block;font:700 9.5px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:1px 5px;border-radius:4px;vertical-align:1px;font-style:normal} .pb.QB{background:var(--pQB);color:var(--pQBi)} .pb.RB{background:var(--pRB);color:var(--pRBi)} .pb.WR{background:var(--pWR);color:var(--pWRi)} .pb.TE{background:var(--pTE);color:var(--pTEi)} .pb.DST{background:var(--pDST);color:var(--pDSTi)} .pb.RK{background:var(--warn);color:#fff} .rkt{font:500 12.5px Barlow,sans-serif;color:var(--mute);display:inline-flex;align-items:center;gap:5px;margin-left:8px;cursor:pointer} .rkt input{accent-color:var(--acc)}
 tr.tier td{background:var(--head)!important;font-size:12px;letter-spacing:.08em;color:var(--ink);border-top:1px solid var(--line)} tr.t1 td{background:var(--t1)!important} tr.t2 td{background:var(--t2)!important}
 tr.p.done .av{filter:grayscale(1);opacity:.55} tr.p.done .pb{opacity:.5}
 .dock{border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.10);backdrop-filter:saturate(1.2) blur(8px);padding:7px 10px}
@@ -235,7 +236,7 @@ LIVE_HTML=r'''<section class="live" id="live" hidden>
 </div>
 <div class="recbox" data-t="rec"></div>
 <h3 class="sec">Recommended now</h3>
-<div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div></div>
+<div class="tools"><input type="search" data-t="lq" placeholder="Find a player" aria-label="find a player"><div class="chips" data-t="lchips"><button class="on" data-pos="ALL">All</button><button data-pos="RB">RB</button><button data-pos="WR">WR</button><button data-pos="TE">TE</button><button data-pos="QB">QB</button><button data-pos="DST">DST</button></div><label class="rkt"><input type="checkbox" data-t="norook"> Rookies bench-only</label><label class="rkt"><input type="checkbox" data-t="lateqb"> No QB before round 8</label></div>
 <div class="tw"><table class="ltbl" data-t="ltbl"><thead><tr><th></th><th>Player</th><th>Proj</th><th>Value vs next pick</th><th>Gone by next</th><th>Title Δ</th><th>Board</th><th>Room</th><th>Inj</th><th>Why</th></tr></thead><tbody></tbody></table></div>
 <h3 class="sec">Your roster</h3><div class="roster" data-t="roster"></div>
 <h3 class="sec">Draft log <span class="hint">tap a pick to remove it</span></h3><div class="plog2" data-t="llog"></div>
@@ -258,8 +259,10 @@ function proj(d){return lg==='A'?d.pA:d.pB} function adp(d){return lg==='A'?d.ad
 const POSMEAN={QB:3.9,RB:4.9,WR:3.8,TE:4.0,DST:0};
 function avail(d){return proj(d)*(1-(0.5*Math.min(d.inj,12)+0.5*(POSMEAN[d.pos]||4))/17)} // same half-weighted injury model as the board order
 function pGone(d,pick,cur){if(pick<=cur)return 0;const a=adp(d);const x=(pick-a)/6;return 1/(1+Math.exp(-x))}
+let NOROOK=false; function rookKey(){return 'norook_'+lg} function loadRook(){try{const v=localStorage.getItem(rookKey()); NOROOK=v===null?(lg==='A'):v==='1'}catch(e){NOROOK=lg==='A'}}
+let LATEQB=false; const QBPICK=71; function qbKey(){return 'lateqb_'+lg} function loadQB(){try{const v=localStorage.getItem(qbKey()); LATEQB=v===null?(lg==='A'):v==='1'}catch(e){LATEQB=lg==='A'}}
 function lineup(names){const ps=names.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();let t=0;const W=WAIV[lg];
- function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
+ function take(ok,n){let g=0;for(const p of ps){if(used.has(p.n)||!ok.includes(p.pos)||(NOROOK&&p.rk))continue;used.add(p.n);t+=avail(p);g++;if(g===n)break}for(;g<n;g++)t+=W[ok[0]]}
  take(['QB'],1);take(['RB'],2);take(['WR'],2);take(['TE'],1);take(['RB','WR','TE'],2);take(['DST'],1);return t}
 function expectedLineup(names,availP,cur,picks){const have=names.slice(); const future=picks.filter(p=>p>cur).slice(0,9);
  for(const p of future){let best=null,bestGain=0;const baseL=lineup(have);
@@ -269,7 +272,7 @@ function expectedLineup(names,availP,cur,picks){const have=names.slice(); const 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function render(){
  if(sec.hidden) return;
- lg=D.curLg(); const s=D.state(lg); const slot=s.slot; const taken=s.picks.map(p=>p.name); const mine=s.picks.filter((p,i)=>D.teamOf(i+1)===slot).map(p=>p.name);
+ lg=D.curLg(); loadRook(); loadQB(); const rk=$('[data-t="norook"]',sec); if(rk) rk.checked=NOROOK; const lq=$('[data-t="lateqb"]',sec); if(lq) lq.checked=LATEQB; const s=D.state(lg); const slot=s.slot; const taken=s.picks.map(p=>p.name); const mine=s.picks.filter((p,i)=>D.teamOf(i+1)===slot).map(p=>p.name);
  $('[data-t="lgname"]',sec).textContent=LGN[lg]+' · slot '+slot;
  const cur=taken.length+1; const picks=myPicks(slot); const onMe=picks.includes(cur); const nxt=(onMe?picks.find(p=>p>cur):picks.find(p=>p>=cur))||151; const nxt2=picks.find(p=>p>nxt)||151;
  const slotOn=cur<=150?D.teamOf(cur):0;
@@ -286,16 +289,16 @@ function render(){
  const rows=availP.map(d=>{const v=(avail(d)-alt[d.pos])*17*need(d.pos);const dtitle=S.title*(expectedLineup(mine.concat([d.n]),availP.filter(x=>x.n!==d.n),cur+1,picks)-base);return {d,v,dtitle,pg:gone(d)}});
  const pos=$('[data-t="lchips"] button.on',sec).dataset.pos; const q=$('[data-t="lq"]',sec).value.trim().toLowerCase();
  let list=rows.filter(r=>(pos==='ALL'||r.d.pos===pos)&&(!q||r.d.n.toLowerCase().includes(q)));
- list.sort((a,b)=>(b.dtitle*30+b.v*0.5)-(a.dtitle*30+a.v*0.5)); list=list.slice(0,q?15:40);
+ const held=r=>(LATEQB&&r.d.pos==='QB'&&cur<QBPICK); const sc=r=>{const b=r.dtitle*30+r.v*0.5-rank(r.d)*0.01-(r.d.pos==='DST'?30:0); return held(r)?Math.min(b,0)*1+Math.max(b,0)*0.15-8:b}; list.sort((a,b)=>sc(b)-sc(a)); list=list.slice(0,q?15:40);
  // recommendation banner
  const RECB=$('[data-t="rec"]',sec);
  if(cur>150){RECB.innerHTML=''} else if(!q&&list.length){const a=list[0], b2=list[1]; const between=[]; for(let p=cur;p<nxt;p++){if(D.teamOf(p)!==slot) between.push(D.tname(lg,D.teamOf(p)))}
   const uniq=[...new Set(between)]; const wait=availP.filter(d=>d.pos===a.d.pos&&d.n!==a.d.n&&gone(d)<0.5).sort((x,y)=>avail(y)-avail(x))[0];
-  RECB.innerHTML='<b class="take">'+(onMe?'TAKE: ':'Best if it gets to you: ')+esc(a.d.n)+' <small>'+a.d.pos+' · '+esc(a.d.tm)+'</small></b><p>Title odds +'+a.dtitle.toFixed(1)+' now'+(b2?' vs +'+b2.dtitle.toFixed(1)+' for '+esc(b2.d.n):'')+'. '+esc(a.d.n)+' is '+(a.pg*100).toFixed(0)+'% to be gone before your next pick ('+D.pickLabel(nxt)+(uniq.length?': '+uniq.slice(0,6).join(', ')+' pick in between':'')+')'+(b2?'; '+esc(b2.d.n)+' is '+(b2.pg*100).toFixed(0)+'%':'')+'.'+(wait?' If you wait on '+a.d.pos+', the best one likely there at '+D.pickLabel(nxt)+' is '+esc(wait.n)+' ('+proj(wait).toFixed(1)+' ppg vs '+proj(a.d).toFixed(1)+').':'')+'</p>'+(b2&&Math.abs(a.dtitle-b2.dtitle)<0.3?'<p class="alt">Inside the noise between these two; take the one the room is likelier to steal.</p>':'')}
+  RECB.innerHTML='<b class="take">'+(onMe?'TAKE: ':'Best if it gets to you: ')+esc(a.d.n)+' <small>'+a.d.pos+' · '+esc(a.d.tm)+'</small></b><p>Title odds +'+a.dtitle.toFixed(1)+' now'+(b2?' vs +'+b2.dtitle.toFixed(1)+' for '+esc(b2.d.n):'')+'. '+esc(a.d.n)+' is '+(a.pg*100).toFixed(0)+'% to be gone before your next pick ('+D.pickLabel(nxt)+(uniq.length?': '+uniq.slice(0,6).join(', ')+' pick in between':'')+')'+(b2?'; '+esc(b2.d.n)+' is '+(b2.pg*100).toFixed(0)+'%':'')+'.'+(wait?' If you wait on '+a.d.pos+', the best one likely there at '+D.pickLabel(nxt)+' is '+esc(wait.n)+' ('+proj(wait).toFixed(1)+' ppg vs '+proj(a.d).toFixed(1)+').':'')+'</p>'+(b2&&Math.abs(a.dtitle-b2.dtitle)<0.3?'<p class="alt">Inside the noise between these two; take the one the room is likelier to steal.</p>':'')+((LATEQB&&cur<QBPICK&&rows.some(r=>r.d.pos==='QB'&&r.dtitle>=a.dtitle))?'<p class="alt">A quarterback scores as high here, held back by your no-QB-before-round-8 rule (switch above).</p>':'')}
  const tb=$('[data-t="ltbl"] tbody',sec); tb.innerHTML='';
  const who=cur>150?'':(onMe?'Mine':'Taken by '+D.tname(lg,slotOn));
  list.forEach((r,i)=>{const d=r.d;const tr=document.createElement('tr');if(i===0&&!q)tr.className='rec1';
-  tr.innerHTML='<td class="act"><button type="button" class="'+(onMe?'mine':'')+'">'+esc(who)+'</button></td><td class="nm">'+D.avHTML(d.n,d.tm,d.pos)+'<span class="t"><b>'+esc(d.n)+'</b><small>'+D.pbHTML(d.pos)+' '+esc(d.tm)+' · bye '+d.bye+'</small></span></td><td class="num">'+proj(d).toFixed(1)+'</td><td class="num">'+(r.v>=0?'+':'')+r.v.toFixed(0)+'</td><td class="num">'+(r.pg*100).toFixed(0)+'%</td><td class="num">'+(r.dtitle>=0?'+':'')+r.dtitle.toFixed(1)+'</td><td class="num">'+rank(d)+'</td><td class="num">'+adp(d)+'</td><td class="num">'+d.inj.toFixed(1)+'</td><td class="why">'+esc(d.note)+'</td>';
+  tr.innerHTML='<td class="act"><button type="button" class="'+(onMe?'mine':'')+'">'+esc(who)+'</button></td><td class="nm">'+D.avHTML(d.n,d.tm,d.pos)+'<span class="t"><b>'+esc(d.n)+'</b><small>'+D.pbHTML(d.pos)+(d.rk?' <em class="pb RK" title="2026 rookie">R</em>':'')+' '+esc(d.tm)+' · bye '+d.bye+'</small></span></td><td class="num">'+proj(d).toFixed(1)+'</td><td class="num">'+(r.v>=0?'+':'')+r.v.toFixed(0)+'</td><td class="num">'+(r.pg*100).toFixed(0)+'%</td><td class="num">'+(r.dtitle>=0?'+':'')+r.dtitle.toFixed(1)+'</td><td class="num">'+rank(d)+'</td><td class="num">'+adp(d)+'</td><td class="num">'+d.inj.toFixed(1)+'</td><td class="why">'+esc(d.note)+'</td>';
   $('button',tr).addEventListener('click',()=>{D.addByName(lg,d.n);$('[data-t="lq"]',sec).value=''});
   tb.appendChild(tr)});
  const R=$('[data-t="roster"]',sec);R.innerHTML='';const ps=mine.map(n=>byName[n]).filter(Boolean).sort((a,b)=>avail(b)-avail(a));const used=new Set();
@@ -305,6 +308,8 @@ function render(){
 }
 $$('[data-t="lchips"] button',sec).forEach(b=>b.addEventListener('click',()=>{$$('[data-t="lchips"] button',sec).forEach(x=>x.classList.toggle('on',x===b));render()}));
 $('[data-t="lq"]',sec).addEventListener('input',render);
+const rkEl=$('[data-t="norook"]',sec); if(rkEl) rkEl.addEventListener('change',()=>{try{localStorage.setItem(rookKey(),rkEl.checked?'1':'0')}catch(e){} render()});
+const lqEl=$('[data-t="lateqb"]',sec); if(lqEl) lqEl.addEventListener('change',()=>{try{localStorage.setItem(qbKey(),lqEl.checked?'1':'0')}catch(e){} render()});
 D.on(render); render();
 })();
 </script>'''
