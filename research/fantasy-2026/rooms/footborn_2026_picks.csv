@@ -1,0 +1,151 @@
+pick,round,pick_in_round,slot,manager,player,pos,team
+1,1,1,1,Ish,Bijan Robinson,RB,ATL
+2,1,2,2,Aoc,Jahmyr Gibbs,RB,DET
+3,1,3,3,Billy,Ja'Marr Chase,WR,CIN
+4,1,4,4,Jamal,Puka Nacua,WR,LA
+5,1,5,5,Moe,Jaxon Smith-Njigba,WR,SEA
+6,1,6,6,Betto,Amon-Ra St. Brown,WR,DET
+7,1,7,7,Kass,Christian McCaffrey,RB,SF
+8,1,8,8,Hazime,Jonathan Taylor,RB,IND
+9,1,9,9,Daoud,Saquon Barkley,RB,PHI
+10,1,10,10,Kdouh,CeeDee Lamb,WR,DAL
+11,2,1,10,Kdouh,Justin Jefferson,WR,MIN
+12,2,2,9,Daoud,James Cook III,RB,BUF
+13,2,3,8,Hazime,Derrick Henry,RB,BAL
+14,2,4,7,Kass,Drake London,WR,ATL
+15,2,5,6,Betto,Omarion Hampton,RB,LAC
+16,2,6,5,Moe,De'Von Achane,RB,MIA
+17,2,7,4,Jamal,Chase Brown,RB,CIN
+18,2,8,3,Billy,Ashton Jeanty,RB,LV
+19,2,9,2,Aoc,A.J. Brown,WR,NE
+20,2,10,1,Ish,Nico Collins,WR,HOU
+21,3,1,1,Ish,Josh Allen,QB,BUF
+22,3,2,2,Aoc,Brock Bowers,TE,LV
+23,3,3,3,Billy,Kenneth Walker III,RB,KC
+24,3,4,4,Jamal,George Pickens,WR,DAL
+25,3,5,5,Moe,Jeremiyah Love,RB,ARI
+26,3,6,6,Betto,Trey McBride,TE,ARI
+27,3,7,7,Kass,Breece Hall,RB,NYJ
+28,3,8,8,Hazime,Tee Higgins,WR,CIN
+29,3,9,9,Daoud,Javonte Williams,RB,DAL
+30,3,10,10,Kdouh,Malik Nabers,WR,NYG
+31,4,1,10,Kdouh,Travis Etienne Jr.,RB,NO
+32,4,2,9,Daoud,Chris Olave,WR,NO
+33,4,3,8,Hazime,Tetairoa McMillan,WR,CAR
+34,4,4,7,Kass,DeVonta Smith,WR,PHI
+35,4,5,6,Betto,Ladd McConkey,WR,LAC
+36,4,6,5,Moe,Emeka Egbuka,WR,TB
+37,4,7,4,Jamal,Kyren Williams,RB,LA
+38,4,8,3,Billy,Rashee Rice,WR,KC
+39,4,9,2,Aoc,Garrett Wilson,WR,NYJ
+40,4,10,1,Ish,David Montgomery,RB,HOU
+41,5,1,1,Ish,DJ Moore,WR,BUF
+42,5,2,2,Aoc,Zay Flowers,WR,BAL
+43,5,3,3,Billy,Colston Loveland,TE,CHI
+44,5,4,4,Jamal,Drake Maye,QB,NE
+45,5,5,5,Moe,Cam Skattebo,RB,NYG
+46,5,6,6,Betto,Luther Burden III,WR,CHI
+47,5,7,7,Kass,Jaylen Waddle,WR,DEN
+48,5,8,8,Hazime,Davante Adams,WR,LA
+49,5,9,9,Daoud,Lamar Jackson,QB,BAL
+50,5,10,10,Kdouh,Quinshon Judkins,RB,CLE
+51,6,1,10,Kdouh,Tyler Warren,TE,IND
+52,6,2,9,Daoud,Terry McLaurin,WR,WAS
+53,6,3,8,Hazime,Bucky Irving,RB,TB
+54,6,4,7,Kass,Jameson Williams,WR,DET
+55,6,5,6,Betto,D'Andre Swift,RB,CHI
+56,6,6,5,Moe,Rome Odunze,WR,CHI
+57,6,7,4,Jamal,Jadarian Price,RB,SEA
+58,6,8,3,Billy,Bhayshul Tuten,RB,JAX
+59,6,9,2,Aoc,Marvin Harrison Jr.,WR,ARI
+60,6,10,1,Ish,Brian Thomas Jr.,WR,JAX
+61,7,1,1,Ish,TreVeyon Henderson,RB,NE
+62,7,2,2,Aoc,Joe Burrow,QB,CIN
+63,7,3,3,Billy,Parker Washington,WR,JAX
+64,7,4,4,Jamal,Carnell Tate,WR,TEN
+65,7,5,5,Moe,George Kittle,TE,SF
+66,7,6,6,Betto,Rhamondre Stevenson,RB,NE
+67,7,7,7,Kass,Tony Pollard,RB,TEN
+68,7,8,8,Hazime,DK Metcalf,WR,PIT
+69,7,9,9,Daoud,Michael Wilson,WR,ARI
+70,7,10,10,Kdouh,Mike Evans,WR,SF
+71,8,1,10,Kdouh,Josh Jacobs,RB,GB
+72,8,2,9,Daoud,Chris Godwin Jr.,WR,TB
+73,8,3,8,Hazime,Sam LaPorta,TE,DET
+74,8,4,7,Kass,Michael Pittman Jr.,WR,PIT
+75,8,5,6,Betto,Justin Herbert,QB,LAC
+76,8,6,5,Moe,Christian Watson,WR,GB
+77,8,7,4,Jamal,Harold Fannin Jr.,TE,CLE
+78,8,8,3,Billy,Jaylen Warren,RB,PIT
+79,8,9,2,Aoc,J.K. Dobbins,RB,DEN
+80,8,10,1,Ish,Jordan Addison,WR,MIN
+81,9,1,1,Ish,Jonathon Brooks,RB,CAR
+82,9,2,2,Aoc,MarShawn Lloyd,RB,GB
+83,9,3,3,Billy,Alec Pierce,WR,IND
+84,9,4,4,Jamal,Rico Dowdle,RB,PIT
+85,9,5,5,Moe,Courtland Sutton,WR,DEN
+86,9,6,6,Betto,Tucker Kraft,TE,GB
+87,9,7,7,Kass,Travis Kelce,TE,KC
+88,9,8,8,Hazime,Quentin Johnston,WR,LAC
+89,9,9,9,Daoud,Isaiah Likely,TE,NYG
+90,9,10,10,Kdouh,Matthew Golden,WR,GB
+91,10,1,10,Kdouh,Aaron Jones Sr.,RB,MIN
+92,10,2,9,Daoud,Blake Corum,RB,LA
+93,10,3,8,Hazime,Los Angeles Rams,DST,LAR
+94,10,4,7,Kass,Chuba Hubbard,RB,CAR
+95,10,5,6,Betto,Stefon Diggs,WR,WAS
+96,10,6,5,Moe,Makai Lemon,WR,PHI
+97,10,7,4,Jamal,Wan'Dale Robinson,WR,TEN
+98,10,8,3,Billy,De'Zhaun Stribling,WR,SF
+99,10,9,2,Aoc,RJ Harvey,RB,DEN
+100,10,10,1,Ish,Josh Downs,WR,IND
+101,11,1,1,Ish,Rachaad White,RB,WAS
+102,11,2,2,Aoc,Kyle Monangai,RB,CHI
+103,11,3,3,Billy,Jordan Mason,RB,MIN
+104,11,4,4,Jamal,Kyle Pitts Sr.,TE,ATL
+105,11,5,5,Moe,Jalen Hurts,QB,PHI
+106,11,6,6,Betto,Kenny Gainwell,RB,TB
+107,11,7,7,Kass,Jayden Daniels,QB,WAS
+108,11,8,8,Hazime,Matthew Stafford,QB,LA
+109,11,9,9,Daoud,KC Concepcion,WR,CLE
+110,11,10,10,Kdouh,?,,
+111,12,1,10,Kdouh,Brian Robinson Jr.,RB,ATL
+112,12,2,9,Daoud,Tank Bigsby,RB,PHI
+113,12,3,8,Hazime,Tyjae Spears,RB,TEN
+114,12,4,7,Kass,Jake Ferguson,TE,DAL
+115,12,5,6,Betto,Khalil Shakir,WR,BUF
+116,12,6,5,Moe,Xavier Worthy,WR,KC
+117,12,7,4,Jamal,Jayden Reed,WR,GB
+118,12,8,3,Billy,Houston Texans,DST,HOU
+119,12,9,2,Aoc,Denver Broncos,DST,DEN
+120,12,10,1,Ish,Dallas Goedert,TE,PHI
+121,13,1,1,Ish,Seattle Seahawks,DST,SEA
+122,13,2,2,Aoc,Deebo Samuel Sr.,WR,SF
+123,13,3,3,Billy,Caleb Williams,QB,CHI
+124,13,4,4,Jamal,Romeo Doubs,WR,NE
+125,13,5,5,Moe,Pittsburgh Steelers,DST,PIT
+126,13,6,6,Betto,Baltimore Ravens,DST,BAL
+127,13,7,7,Kass,Tre Tucker,WR,LV
+128,13,8,8,Hazime,Jakobi Meyers,WR,JAX
+129,13,9,9,Daoud,Philadelphia Eagles,DST,PHI
+130,13,10,10,Kdouh,Dak Prescott,QB,DAL
+131,14,1,10,Kdouh,Green Bay Packers,DST,GB
+132,14,2,9,Daoud,Jordyn Tyson,WR,NO
+133,14,3,8,Hazime,Cooper Kupp,WR,SEA
+134,14,4,7,Kass,Detroit Lions,DST,DET
+135,14,5,6,Betto,Zach Charbonnet,RB,SEA
+136,14,6,5,Moe,Jacory Croskey-Merritt,RB,WAS
+137,14,7,4,Jamal,Los Angeles Chargers,DST,LAC
+138,14,8,3,Billy,Dalton Kincaid,TE,BUF
+139,14,9,2,Aoc,Keenan Allen,WR,IND
+140,14,10,1,Ish,Keaton Mitchell,RB,LAC
+141,15,1,1,Ish,Adonai Mitchell,WR,NYJ
+142,15,2,2,Aoc,Jerry Jeudy,WR,CLE
+143,15,3,3,Billy,Ja'Kobi Lane,WR,BAL
+144,15,4,4,Jamal,Tyler Allgeier,RB,ARI
+145,15,5,5,Moe,Jaxson Dart,QB,NYG
+146,15,6,6,Betto,Jalen McMillan,WR,TB
+147,15,7,7,Kass,Braelon Allen,RB,NYJ
+148,15,8,8,Hazime,Keon Coleman,WR,BUF
+149,15,9,9,Daoud,Cyrus Allen,WR,KC
+150,15,10,10,Kdouh,Jalen Coker,WR,CAR
