@@ -1,0 +1,4354 @@
+[
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "base",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 8.4,
+    "playoffs": 65.8,
+    "ppg": 120.6,
+    "healthy": 124.9
+   },
+   "Aoc": {
+    "title": 10.2,
+    "playoffs": 59.2,
+    "ppg": 124.9,
+    "healthy": 122.8
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 62.2,
+    "ppg": 124.3,
+    "healthy": 78.6
+   },
+   "Jamal": {
+    "title": 24.0,
+    "playoffs": 78.4,
+    "ppg": 129.3,
+    "healthy": 113.4
+   },
+   "Moe": {
+    "title": 7.6,
+    "playoffs": 55.0,
+    "ppg": 122.9,
+    "healthy": 90.6
+   },
+   "Betto": {
+    "title": 11.6,
+    "playoffs": 68.6,
+    "ppg": 122.7,
+    "healthy": 104.8
+   },
+   "Kass": {
+    "title": 8.4,
+    "playoffs": 53.0,
+    "ppg": 122.7,
+    "healthy": 162.9
+   },
+   "Hazime": {
+    "title": 7.2,
+    "playoffs": 58.2,
+    "ppg": 119.3,
+    "healthy": 170.2
+   },
+   "Daoud": {
+    "title": 4.6,
+    "playoffs": 50.4,
+    "ppg": 117.7,
+    "healthy": 130.7
+   },
+   "Kdouh": {
+    "title": 7.8,
+    "playoffs": 49.2,
+    "ppg": 117.5,
+    "healthy": 94.6
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T8_Kyren_for_BTJMonty",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 9.8,
+    "playoffs": 70.8,
+    "ppg": 122.7,
+    "healthy": 123.4
+   },
+   "Aoc": {
+    "title": 13.0,
+    "playoffs": 59.2,
+    "ppg": 124.9,
+    "healthy": 122.9
+   },
+   "Billy": {
+    "title": 12.2,
+    "playoffs": 63.8,
+    "ppg": 124.2,
+    "healthy": 85.6
+   },
+   "Jamal": {
+    "title": 16.4,
+    "playoffs": 70.0,
+    "ppg": 126.9,
+    "healthy": 94.1
+   },
+   "Moe": {
+    "title": 9.8,
+    "playoffs": 56.6,
+    "ppg": 123.0,
+    "healthy": 92.3
+   },
+   "Betto": {
+    "title": 11.4,
+    "playoffs": 72.6,
+    "ppg": 122.7,
+    "healthy": 98.1
+   },
+   "Kass": {
+    "title": 7.8,
+    "playoffs": 50.2,
+    "ppg": 122.9,
+    "healthy": 164.3
+   },
+   "Hazime": {
+    "title": 9.4,
+    "playoffs": 56.4,
+    "ppg": 119.2,
+    "healthy": 161.3
+   },
+   "Daoud": {
+    "title": 5.2,
+    "playoffs": 51.4,
+    "ppg": 117.6,
+    "healthy": 125.3
+   },
+   "Kdouh": {
+    "title": 5.0,
+    "playoffs": 49.0,
+    "ppg": 117.6,
+    "healthy": 103.1
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T4_BrownTate_for_NabersJudkins",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 10.2,
+    "playoffs": 61.8,
+    "ppg": 120.7,
+    "healthy": 106.6
+   },
+   "Aoc": {
+    "title": 13.0,
+    "playoffs": 57.8,
+    "ppg": 125.1,
+    "healthy": 125.1
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 63.0,
+    "ppg": 124.2,
+    "healthy": 82.2
+   },
+   "Jamal": {
+    "title": 11.2,
+    "playoffs": 67.4,
+    "ppg": 125.3,
+    "healthy": 101.2
+   },
+   "Moe": {
+    "title": 8.4,
+    "playoffs": 55.0,
+    "ppg": 122.9,
+    "healthy": 85.1
+   },
+   "Betto": {
+    "title": 11.0,
+    "playoffs": 67.4,
+    "ppg": 122.8,
+    "healthy": 91.8
+   },
+   "Kass": {
+    "title": 9.0,
+    "playoffs": 50.6,
+    "ppg": 122.6,
+    "healthy": 158.1
+   },
+   "Hazime": {
+    "title": 9.4,
+    "playoffs": 55.6,
+    "ppg": 119.3,
+    "healthy": 165.6
+   },
+   "Daoud": {
+    "title": 5.4,
+    "playoffs": 53.6,
+    "ppg": 117.7,
+    "healthy": 108.2
+   },
+   "Kdouh": {
+    "title": 12.2,
+    "playoffs": 67.8,
+    "ppg": 121.8,
+    "healthy": 106.3
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T13_Brown_for_JJEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 8.6,
+    "playoffs": 65.0,
+    "ppg": 120.6,
+    "healthy": 129.3
+   },
+   "Aoc": {
+    "title": 10.2,
+    "playoffs": 60.4,
+    "ppg": 124.8,
+    "healthy": 126.6
+   },
+   "Billy": {
+    "title": 9.2,
+    "playoffs": 60.8,
+    "ppg": 124.3,
+    "healthy": 80.5
+   },
+   "Jamal": {
+    "title": 24.0,
+    "playoffs": 80.2,
+    "ppg": 129.7,
+    "healthy": 109.0
+   },
+   "Moe": {
+    "title": 7.2,
+    "playoffs": 58.0,
+    "ppg": 122.9,
+    "healthy": 85.6
+   },
+   "Betto": {
+    "title": 11.2,
+    "playoffs": 71.2,
+    "ppg": 122.7,
+    "healthy": 98.5
+   },
+   "Kass": {
+    "title": 11.0,
+    "playoffs": 51.8,
+    "ppg": 122.7,
+    "healthy": 164.9
+   },
+   "Hazime": {
+    "title": 8.2,
+    "playoffs": 55.6,
+    "ppg": 119.2,
+    "healthy": 164.5
+   },
+   "Daoud": {
+    "title": 4.8,
+    "playoffs": 51.8,
+    "ppg": 117.6,
+    "healthy": 119.1
+   },
+   "Kdouh": {
+    "title": 5.6,
+    "playoffs": 45.2,
+    "ppg": 116.5,
+    "healthy": 101.3
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T2_Brown_for_Lamb",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 63.2,
+    "ppg": 120.5,
+    "healthy": 126.6
+   },
+   "Aoc": {
+    "title": 12.2,
+    "playoffs": 60.4,
+    "ppg": 124.9,
+    "healthy": 120.7
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 61.0,
+    "ppg": 124.3,
+    "healthy": 86.2
+   },
+   "Jamal": {
+    "title": 21.6,
+    "playoffs": 77.0,
+    "ppg": 128.2,
+    "healthy": 103.3
+   },
+   "Moe": {
+    "title": 7.6,
+    "playoffs": 53.4,
+    "ppg": 122.9,
+    "healthy": 85.8
+   },
+   "Betto": {
+    "title": 8.4,
+    "playoffs": 69.6,
+    "ppg": 122.6,
+    "healthy": 91.4
+   },
+   "Kass": {
+    "title": 11.0,
+    "playoffs": 53.4,
+    "ppg": 122.7,
+    "healthy": 165.9
+   },
+   "Hazime": {
+    "title": 10.4,
+    "playoffs": 55.6,
+    "ppg": 119.3,
+    "healthy": 161.6
+   },
+   "Daoud": {
+    "title": 5.0,
+    "playoffs": 52.6,
+    "ppg": 117.6,
+    "healthy": 122.3
+   },
+   "Kdouh": {
+    "title": 4.8,
+    "playoffs": 53.8,
+    "ppg": 118.3,
+    "healthy": 109.0
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T5_KyrenPickens_for_JJEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 7.8,
+    "playoffs": 64.2,
+    "ppg": 120.7,
+    "healthy": 124.1
+   },
+   "Aoc": {
+    "title": 12.8,
+    "playoffs": 60.4,
+    "ppg": 124.8,
+    "healthy": 128.2
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 60.2,
+    "ppg": 124.3,
+    "healthy": 75.2
+   },
+   "Jamal": {
+    "title": 19.2,
+    "playoffs": 72.0,
+    "ppg": 127.4,
+    "healthy": 96.0
+   },
+   "Moe": {
+    "title": 8.6,
+    "playoffs": 55.0,
+    "ppg": 122.9,
+    "healthy": 87.3
+   },
+   "Betto": {
+    "title": 12.0,
+    "playoffs": 68.8,
+    "ppg": 122.7,
+    "healthy": 85.5
+   },
+   "Kass": {
+    "title": 9.2,
+    "playoffs": 51.0,
+    "ppg": 122.8,
+    "healthy": 161.8
+   },
+   "Hazime": {
+    "title": 6.4,
+    "playoffs": 54.4,
+    "ppg": 119.3,
+    "healthy": 166.0
+   },
+   "Daoud": {
+    "title": 4.4,
+    "playoffs": 53.2,
+    "ppg": 117.7,
+    "healthy": 119.5
+   },
+   "Kdouh": {
+    "title": 9.4,
+    "playoffs": 60.8,
+    "ppg": 119.3,
+    "healthy": 94.4
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T9_Brown_for_HigginsBucky",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 7.8,
+    "playoffs": 62.2,
+    "ppg": 120.7,
+    "healthy": 119.4
+   },
+   "Aoc": {
+    "title": 11.8,
+    "playoffs": 62.2,
+    "ppg": 124.8,
+    "healthy": 127.8
+   },
+   "Billy": {
+    "title": 12.0,
+    "playoffs": 63.6,
+    "ppg": 124.3,
+    "healthy": 91.6
+   },
+   "Jamal": {
+    "title": 19.4,
+    "playoffs": 75.2,
+    "ppg": 127.6,
+    "healthy": 106.3
+   },
+   "Moe": {
+    "title": 9.0,
+    "playoffs": 53.0,
+    "ppg": 122.8,
+    "healthy": 84.7
+   },
+   "Betto": {
+    "title": 13.2,
+    "playoffs": 70.0,
+    "ppg": 122.6,
+    "healthy": 90.6
+   },
+   "Kass": {
+    "title": 8.4,
+    "playoffs": 53.0,
+    "ppg": 122.8,
+    "healthy": 166.3
+   },
+   "Hazime": {
+    "title": 10.0,
+    "playoffs": 60.2,
+    "ppg": 120.4,
+    "healthy": 163.4
+   },
+   "Daoud": {
+    "title": 3.6,
+    "playoffs": 51.8,
+    "ppg": 117.7,
+    "healthy": 124.2
+   },
+   "Kdouh": {
+    "title": 4.8,
+    "playoffs": 48.8,
+    "ppg": 117.6,
+    "healthy": 109.5
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T1_Brown_for_JJ",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 8.4,
+    "playoffs": 66.0,
+    "ppg": 120.5,
+    "healthy": 121.5
+   },
+   "Aoc": {
+    "title": 11.2,
+    "playoffs": 61.4,
+    "ppg": 124.9,
+    "healthy": 129.9
+   },
+   "Billy": {
+    "title": 12.0,
+    "playoffs": 60.2,
+    "ppg": 124.3,
+    "healthy": 80.2
+   },
+   "Jamal": {
+    "title": 17.8,
+    "playoffs": 75.4,
+    "ppg": 127.7,
+    "healthy": 108.1
+   },
+   "Moe": {
+    "title": 7.6,
+    "playoffs": 54.0,
+    "ppg": 122.9,
+    "healthy": 80.4
+   },
+   "Betto": {
+    "title": 11.4,
+    "playoffs": 69.0,
+    "ppg": 122.7,
+    "healthy": 96.5
+   },
+   "Kass": {
+    "title": 9.6,
+    "playoffs": 51.4,
+    "ppg": 122.8,
+    "healthy": 168.1
+   },
+   "Hazime": {
+    "title": 7.0,
+    "playoffs": 56.4,
+    "ppg": 119.2,
+    "healthy": 164.7
+   },
+   "Daoud": {
+    "title": 6.8,
+    "playoffs": 51.2,
+    "ppg": 117.5,
+    "healthy": 117.6
+   },
+   "Kdouh": {
+    "title": 8.2,
+    "playoffs": 55.0,
+    "ppg": 118.7,
+    "healthy": 97.8
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T3_Kyren_for_Nabers",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 7.2,
+    "playoffs": 61.4,
+    "ppg": 120.6,
+    "healthy": 125.6
+   },
+   "Aoc": {
+    "title": 10.4,
+    "playoffs": 61.4,
+    "ppg": 124.9,
+    "healthy": 125.3
+   },
+   "Billy": {
+    "title": 10.8,
+    "playoffs": 60.0,
+    "ppg": 124.2,
+    "healthy": 79.3
+   },
+   "Jamal": {
+    "title": 17.4,
+    "playoffs": 69.6,
+    "ppg": 126.4,
+    "healthy": 101.6
+   },
+   "Moe": {
+    "title": 8.4,
+    "playoffs": 55.0,
+    "ppg": 122.9,
+    "healthy": 92.7
+   },
+   "Betto": {
+    "title": 11.2,
+    "playoffs": 67.8,
+    "ppg": 122.8,
+    "healthy": 105.5
+   },
+   "Kass": {
+    "title": 9.6,
+    "playoffs": 52.6,
+    "ppg": 122.8,
+    "healthy": 154.1
+   },
+   "Hazime": {
+    "title": 9.0,
+    "playoffs": 57.8,
+    "ppg": 119.3,
+    "healthy": 163.9
+   },
+   "Daoud": {
+    "title": 6.6,
+    "playoffs": 52.0,
+    "ppg": 117.6,
+    "healthy": 117.0
+   },
+   "Kdouh": {
+    "title": 9.4,
+    "playoffs": 62.4,
+    "ppg": 120.2,
+    "healthy": 101.4
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T6_Brown_for_NabersJudkins",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 11.6,
+    "playoffs": 61.8,
+    "ppg": 120.6,
+    "healthy": 119.1
+   },
+   "Aoc": {
+    "title": 10.4,
+    "playoffs": 60.4,
+    "ppg": 124.8,
+    "healthy": 121.9
+   },
+   "Billy": {
+    "title": 7.4,
+    "playoffs": 61.6,
+    "ppg": 124.1,
+    "healthy": 76.3
+   },
+   "Jamal": {
+    "title": 13.8,
+    "playoffs": 67.2,
+    "ppg": 126.1,
+    "healthy": 95.6
+   },
+   "Moe": {
+    "title": 9.0,
+    "playoffs": 55.4,
+    "ppg": 122.8,
+    "healthy": 93.3
+   },
+   "Betto": {
+    "title": 11.8,
+    "playoffs": 68.0,
+    "ppg": 122.6,
+    "healthy": 96.5
+   },
+   "Kass": {
+    "title": 11.4,
+    "playoffs": 51.6,
+    "ppg": 122.8,
+    "healthy": 166.2
+   },
+   "Hazime": {
+    "title": 8.4,
+    "playoffs": 56.6,
+    "ppg": 119.3,
+    "healthy": 162.6
+   },
+   "Daoud": {
+    "title": 4.8,
+    "playoffs": 53.4,
+    "ppg": 117.7,
+    "healthy": 121.0
+   },
+   "Kdouh": {
+    "title": 11.4,
+    "playoffs": 64.0,
+    "ppg": 120.2,
+    "healthy": 108.1
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T7_PickensFannin_for_MontyBTJ",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 19.2,
+    "playoffs": 77.8,
+    "ppg": 125.4,
+    "healthy": 128.4
+   },
+   "Aoc": {
+    "title": 9.0,
+    "playoffs": 58.2,
+    "ppg": 124.9,
+    "healthy": 125.1
+   },
+   "Billy": {
+    "title": 10.0,
+    "playoffs": 61.2,
+    "ppg": 124.2,
+    "healthy": 85.1
+   },
+   "Jamal": {
+    "title": 12.0,
+    "playoffs": 65.4,
+    "ppg": 125.1,
+    "healthy": 105.5
+   },
+   "Moe": {
+    "title": 8.8,
+    "playoffs": 56.6,
+    "ppg": 122.9,
+    "healthy": 89.2
+   },
+   "Betto": {
+    "title": 11.0,
+    "playoffs": 68.2,
+    "ppg": 122.6,
+    "healthy": 93.4
+   },
+   "Kass": {
+    "title": 10.4,
+    "playoffs": 53.0,
+    "ppg": 122.8,
+    "healthy": 159.3
+   },
+   "Hazime": {
+    "title": 8.6,
+    "playoffs": 56.0,
+    "ppg": 119.1,
+    "healthy": 166.8
+   },
+   "Daoud": {
+    "title": 5.0,
+    "playoffs": 52.2,
+    "ppg": 117.6,
+    "healthy": 116.2
+   },
+   "Kdouh": {
+    "title": 6.0,
+    "playoffs": 51.4,
+    "ppg": 117.6,
+    "healthy": 98.7
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T11_KyrenWandale_for_LambJacobs",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 9.0,
+    "playoffs": 62.8,
+    "ppg": 120.6,
+    "healthy": 116.3
+   },
+   "Aoc": {
+    "title": 9.6,
+    "playoffs": 61.2,
+    "ppg": 125.0,
+    "healthy": 127.1
+   },
+   "Billy": {
+    "title": 11.0,
+    "playoffs": 61.6,
+    "ppg": 124.3,
+    "healthy": 68.2
+   },
+   "Jamal": {
+    "title": 26.2,
+    "playoffs": 84.2,
+    "ppg": 130.5,
+    "healthy": 98.9
+   },
+   "Moe": {
+    "title": 8.2,
+    "playoffs": 53.4,
+    "ppg": 123.0,
+    "healthy": 86.1
+   },
+   "Betto": {
+    "title": 10.2,
+    "playoffs": 68.8,
+    "ppg": 122.6,
+    "healthy": 93.6
+   },
+   "Kass": {
+    "title": 8.0,
+    "playoffs": 51.8,
+    "ppg": 122.8,
+    "healthy": 166.1
+   },
+   "Hazime": {
+    "title": 8.8,
+    "playoffs": 58.6,
+    "ppg": 119.2,
+    "healthy": 161.0
+   },
+   "Daoud": {
+    "title": 5.4,
+    "playoffs": 53.2,
+    "ppg": 117.8,
+    "healthy": 121.2
+   },
+   "Kdouh": {
+    "title": 3.6,
+    "playoffs": 44.4,
+    "ppg": 116.7,
+    "healthy": 107.8
+   }
+  }
+ },
+ {
+  "batch": "trades",
+  "pricing": "model",
+  "label": "T10_PickensPrice_for_Higgins",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 9.2,
+    "playoffs": 62.2,
+    "ppg": 120.7,
+    "healthy": 116.6
+   },
+   "Aoc": {
+    "title": 10.0,
+    "playoffs": 59.8,
+    "ppg": 124.8,
+    "healthy": 129.1
+   },
+   "Billy": {
+    "title": 10.8,
+    "playoffs": 61.4,
+    "ppg": 124.3,
+    "healthy": 76.2
+   },
+   "Jamal": {
+    "title": 14.4,
+    "playoffs": 67.6,
+    "ppg": 125.9,
+    "healthy": 91.6
+   },
+   "Moe": {
+    "title": 10.4,
+    "playoffs": 56.4,
+    "ppg": 123.0,
+    "healthy": 85.9
+   },
+   "Betto": {
+    "title": 10.6,
+    "playoffs": 71.4,
+    "ppg": 122.8,
+    "healthy": 98.5
+   },
+   "Kass": {
+    "title": 10.0,
+    "playoffs": 53.4,
+    "ppg": 122.7,
+    "healthy": 163.6
+   },
+   "Hazime": {
+    "title": 10.4,
+    "playoffs": 67.0,
+    "ppg": 122.4,
+    "healthy": 164.8
+   },
+   "Daoud": {
+    "title": 6.8,
+    "playoffs": 51.2,
+    "ppg": 117.7,
+    "healthy": 122.1
+   },
+   "Kdouh": {
+    "title": 7.4,
+    "playoffs": 49.6,
+    "ppg": 117.7,
+    "healthy": 106.2
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V2_KyrenTate_for_LambEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 9.2,
+    "playoffs": 64.6,
+    "ppg": 120.6,
+    "healthy": 127.4
+   },
+   "Aoc": {
+    "title": 8.4,
+    "playoffs": 58.4,
+    "ppg": 124.8,
+    "healthy": 117.6
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 60.8,
+    "ppg": 124.2,
+    "healthy": 75.2
+   },
+   "Jamal": {
+    "title": 26.8,
+    "playoffs": 83.8,
+    "ppg": 130.7,
+    "healthy": 103.7
+   },
+   "Moe": {
+    "title": 7.4,
+    "playoffs": 54.0,
+    "ppg": 122.9,
+    "healthy": 88.2
+   },
+   "Betto": {
+    "title": 11.0,
+    "playoffs": 70.0,
+    "ppg": 122.7,
+    "healthy": 102.6
+   },
+   "Kass": {
+    "title": 10.4,
+    "playoffs": 52.0,
+    "ppg": 122.8,
+    "healthy": 163.3
+   },
+   "Hazime": {
+    "title": 6.8,
+    "playoffs": 56.8,
+    "ppg": 119.2,
+    "healthy": 167.5
+   },
+   "Daoud": {
+    "title": 4.4,
+    "playoffs": 50.8,
+    "ppg": 117.7,
+    "healthy": 118.1
+   },
+   "Kdouh": {
+    "title": 5.4,
+    "playoffs": 48.8,
+    "ppg": 116.3,
+    "healthy": 100.2
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V1_KyrenWandale_for_JJJacobs",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 6.4,
+    "playoffs": 64.2,
+    "ppg": 120.5,
+    "healthy": 128.9
+   },
+   "Aoc": {
+    "title": 10.0,
+    "playoffs": 59.8,
+    "ppg": 124.8,
+    "healthy": 130.6
+   },
+   "Billy": {
+    "title": 10.2,
+    "playoffs": 59.6,
+    "ppg": 124.2,
+    "healthy": 84.7
+   },
+   "Jamal": {
+    "title": 29.2,
+    "playoffs": 83.8,
+    "ppg": 130.4,
+    "healthy": 103.4
+   },
+   "Moe": {
+    "title": 4.8,
+    "playoffs": 54.4,
+    "ppg": 123.0,
+    "healthy": 91.2
+   },
+   "Betto": {
+    "title": 13.2,
+    "playoffs": 71.0,
+    "ppg": 122.8,
+    "healthy": 100.1
+   },
+   "Kass": {
+    "title": 9.2,
+    "playoffs": 53.6,
+    "ppg": 122.8,
+    "healthy": 155.6
+   },
+   "Hazime": {
+    "title": 7.0,
+    "playoffs": 56.8,
+    "ppg": 119.4,
+    "healthy": 160.1
+   },
+   "Daoud": {
+    "title": 4.4,
+    "playoffs": 47.0,
+    "ppg": 117.7,
+    "healthy": 121.1
+   },
+   "Kdouh": {
+    "title": 5.6,
+    "playoffs": 49.8,
+    "ppg": 117.1,
+    "healthy": 99.1
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V9_KyrenWandale_for_JJEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 7.6,
+    "playoffs": 64.6,
+    "ppg": 120.6,
+    "healthy": 131.4
+   },
+   "Aoc": {
+    "title": 10.8,
+    "playoffs": 62.6,
+    "ppg": 125.0,
+    "healthy": 123.7
+   },
+   "Billy": {
+    "title": 9.2,
+    "playoffs": 59.8,
+    "ppg": 124.4,
+    "healthy": 79.2
+   },
+   "Jamal": {
+    "title": 21.6,
+    "playoffs": 80.6,
+    "ppg": 130.2,
+    "healthy": 105.5
+   },
+   "Moe": {
+    "title": 9.8,
+    "playoffs": 57.2,
+    "ppg": 123.0,
+    "healthy": 83.5
+   },
+   "Betto": {
+    "title": 10.4,
+    "playoffs": 71.6,
+    "ppg": 122.8,
+    "healthy": 103.5
+   },
+   "Kass": {
+    "title": 10.6,
+    "playoffs": 50.0,
+    "ppg": 122.8,
+    "healthy": 165.6
+   },
+   "Hazime": {
+    "title": 8.4,
+    "playoffs": 55.6,
+    "ppg": 119.1,
+    "healthy": 174.3
+   },
+   "Daoud": {
+    "title": 5.6,
+    "playoffs": 51.6,
+    "ppg": 117.7,
+    "healthy": 123.8
+   },
+   "Kdouh": {
+    "title": 6.0,
+    "playoffs": 46.4,
+    "ppg": 116.9,
+    "healthy": 108.7
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V5_Kyren_for_LambJacobs",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 6.8,
+    "playoffs": 61.2,
+    "ppg": 120.6,
+    "healthy": 108.9
+   },
+   "Aoc": {
+    "title": 9.2,
+    "playoffs": 59.6,
+    "ppg": 124.9,
+    "healthy": 129.4
+   },
+   "Billy": {
+    "title": 11.6,
+    "playoffs": 61.6,
+    "ppg": 124.2,
+    "healthy": 76.7
+   },
+   "Jamal": {
+    "title": 30.6,
+    "playoffs": 85.8,
+    "ppg": 131.4,
+    "healthy": 102.5
+   },
+   "Moe": {
+    "title": 5.2,
+    "playoffs": 56.0,
+    "ppg": 122.9,
+    "healthy": 90.8
+   },
+   "Betto": {
+    "title": 9.8,
+    "playoffs": 71.2,
+    "ppg": 122.5,
+    "healthy": 89.2
+   },
+   "Kass": {
+    "title": 10.8,
+    "playoffs": 53.4,
+    "ppg": 122.9,
+    "healthy": 160.5
+   },
+   "Hazime": {
+    "title": 8.0,
+    "playoffs": 57.6,
+    "ppg": 119.0,
+    "healthy": 166.8
+   },
+   "Daoud": {
+    "title": 5.2,
+    "playoffs": 53.6,
+    "ppg": 117.7,
+    "healthy": 121.4
+   },
+   "Kdouh": {
+    "title": 2.8,
+    "playoffs": 40.0,
+    "ppg": 115.1,
+    "healthy": 93.1
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V6_BrownWandale_for_JJEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 8.6,
+    "playoffs": 62.6,
+    "ppg": 120.6,
+    "healthy": 125.3
+   },
+   "Aoc": {
+    "title": 12.6,
+    "playoffs": 60.4,
+    "ppg": 125.0,
+    "healthy": 122.6
+   },
+   "Billy": {
+    "title": 9.2,
+    "playoffs": 62.6,
+    "ppg": 124.3,
+    "healthy": 85.2
+   },
+   "Jamal": {
+    "title": 22.4,
+    "playoffs": 78.6,
+    "ppg": 128.8,
+    "healthy": 104.6
+   },
+   "Moe": {
+    "title": 9.2,
+    "playoffs": 56.4,
+    "ppg": 122.9,
+    "healthy": 88.3
+   },
+   "Betto": {
+    "title": 9.6,
+    "playoffs": 69.4,
+    "ppg": 122.7,
+    "healthy": 96.9
+   },
+   "Kass": {
+    "title": 9.6,
+    "playoffs": 52.6,
+    "ppg": 122.8,
+    "healthy": 154.6
+   },
+   "Hazime": {
+    "title": 6.6,
+    "playoffs": 52.8,
+    "ppg": 119.1,
+    "healthy": 160.4
+   },
+   "Daoud": {
+    "title": 4.2,
+    "playoffs": 50.8,
+    "ppg": 117.7,
+    "healthy": 123.5
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 53.8,
+    "ppg": 118.3,
+    "healthy": 100.6
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V7_KyrenWandale_for_NabersJacobs",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 9.8,
+    "playoffs": 62.4,
+    "ppg": 120.6,
+    "healthy": 123.4
+   },
+   "Aoc": {
+    "title": 10.0,
+    "playoffs": 60.0,
+    "ppg": 124.9,
+    "healthy": 119.6
+   },
+   "Billy": {
+    "title": 13.2,
+    "playoffs": 61.4,
+    "ppg": 124.2,
+    "healthy": 80.3
+   },
+   "Jamal": {
+    "title": 20.2,
+    "playoffs": 72.6,
+    "ppg": 127.2,
+    "healthy": 104.6
+   },
+   "Moe": {
+    "title": 8.4,
+    "playoffs": 54.8,
+    "ppg": 122.9,
+    "healthy": 89.9
+   },
+   "Betto": {
+    "title": 9.4,
+    "playoffs": 68.2,
+    "ppg": 122.7,
+    "healthy": 86.4
+   },
+   "Kass": {
+    "title": 10.0,
+    "playoffs": 50.6,
+    "ppg": 122.8,
+    "healthy": 159.9
+   },
+   "Hazime": {
+    "title": 6.4,
+    "playoffs": 56.0,
+    "ppg": 119.1,
+    "healthy": 164.6
+   },
+   "Daoud": {
+    "title": 4.4,
+    "playoffs": 52.6,
+    "ppg": 117.6,
+    "healthy": 124.0
+   },
+   "Kdouh": {
+    "title": 8.2,
+    "playoffs": 61.4,
+    "ppg": 120.1,
+    "healthy": 98.5
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V8_KyrenTate_for_NabersEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 10.4,
+    "playoffs": 62.8,
+    "ppg": 120.6,
+    "healthy": 130.2
+   },
+   "Aoc": {
+    "title": 11.2,
+    "playoffs": 60.2,
+    "ppg": 124.9,
+    "healthy": 132.3
+   },
+   "Billy": {
+    "title": 10.6,
+    "playoffs": 60.2,
+    "ppg": 124.2,
+    "healthy": 85.9
+   },
+   "Jamal": {
+    "title": 16.8,
+    "playoffs": 71.8,
+    "ppg": 127.4,
+    "healthy": 99.6
+   },
+   "Moe": {
+    "title": 7.4,
+    "playoffs": 55.4,
+    "ppg": 122.9,
+    "healthy": 83.8
+   },
+   "Betto": {
+    "title": 11.0,
+    "playoffs": 69.0,
+    "ppg": 122.7,
+    "healthy": 93.6
+   },
+   "Kass": {
+    "title": 10.2,
+    "playoffs": 54.0,
+    "ppg": 122.8,
+    "healthy": 164.5
+   },
+   "Hazime": {
+    "title": 9.2,
+    "playoffs": 54.2,
+    "ppg": 119.3,
+    "healthy": 173.4
+   },
+   "Daoud": {
+    "title": 5.4,
+    "playoffs": 51.2,
+    "ppg": 117.7,
+    "healthy": 120.6
+   },
+   "Kdouh": {
+    "title": 7.8,
+    "playoffs": 61.2,
+    "ppg": 119.7,
+    "healthy": 104.6
+   }
+  }
+ },
+ {
+  "batch": "trades2",
+  "pricing": "model",
+  "label": "V3_KyrenWandale_for_LambEtienne",
+  "N": 500,
+  "teams": {
+   "Ish": {
+    "title": 7.8,
+    "playoffs": 64.4,
+    "ppg": 120.6,
+    "healthy": 118.1
+   },
+   "Aoc": {
+    "title": 10.2,
+    "playoffs": 60.2,
+    "ppg": 124.9,
+    "healthy": 120.5
+   },
+   "Billy": {
+    "title": 10.4,
+    "playoffs": 61.8,
+    "ppg": 124.3,
+    "healthy": 89.7
+   },
+   "Jamal": {
+    "title": 25.6,
+    "playoffs": 81.2,
+    "ppg": 130.5,
+    "healthy": 106.4
+   },
+   "Moe": {
+    "title": 8.8,
+    "playoffs": 57.2,
+    "ppg": 122.9,
+    "healthy": 85.1
+   },
+   "Betto": {
+    "title": 11.4,
+    "playoffs": 69.2,
+    "ppg": 122.6,
+    "healthy": 93.8
+   },
+   "Kass": {
+    "title": 10.0,
+    "playoffs": 51.4,
+    "ppg": 122.7,
+    "healthy": 163.0
+   },
+   "Hazime": {
+    "title": 7.2,
+    "playoffs": 56.6,
+    "ppg": 119.2,
+    "healthy": 157.6
+   },
+   "Daoud": {
+    "title": 4.8,
+    "playoffs": 50.2,
+    "ppg": 117.6,
+    "healthy": 116.8
+   },
+   "Kdouh": {
+    "title": 3.8,
+    "playoffs": 47.8,
+    "ppg": 116.4,
+    "healthy": 106.3
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "base",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 6.8,
+    "playoffs": 62.0,
+    "ppg": 125.6,
+    "healthy": 125.3
+   },
+   "Aoc": {
+    "title": 9.5,
+    "playoffs": 62.3,
+    "ppg": 130.6,
+    "healthy": 127.7
+   },
+   "Billy": {
+    "title": 8.2,
+    "playoffs": 53.2,
+    "ppg": 128.8,
+    "healthy": 80.4
+   },
+   "Jamal": {
+    "title": 13.2,
+    "playoffs": 63.2,
+    "ppg": 130.9,
+    "healthy": 102.3
+   },
+   "Moe": {
+    "title": 6.5,
+    "playoffs": 47.8,
+    "ppg": 126.8,
+    "healthy": 91.7
+   },
+   "Betto": {
+    "title": 6.5,
+    "playoffs": 55.2,
+    "ppg": 123.9,
+    "healthy": 98.2
+   },
+   "Kass": {
+    "title": 11.2,
+    "playoffs": 57.0,
+    "ppg": 129.3,
+    "healthy": 175.4
+   },
+   "Hazime": {
+    "title": 5.5,
+    "playoffs": 52.8,
+    "ppg": 123.3,
+    "healthy": 178.9
+   },
+   "Daoud": {
+    "title": 11.0,
+    "playoffs": 68.5,
+    "ppg": 128.3,
+    "healthy": 130.8
+   },
+   "Kdouh": {
+    "title": 21.5,
+    "playoffs": 78.0,
+    "ppg": 131.7,
+    "healthy": 118.5
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K4_Brown_for_NabersEtienne",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 6.8,
+    "playoffs": 58.2,
+    "ppg": 125.7,
+    "healthy": 122.4
+   },
+   "Aoc": {
+    "title": 11.0,
+    "playoffs": 63.0,
+    "ppg": 130.4,
+    "healthy": 128.8
+   },
+   "Billy": {
+    "title": 8.0,
+    "playoffs": 55.8,
+    "ppg": 128.7,
+    "healthy": 84.4
+   },
+   "Jamal": {
+    "title": 18.2,
+    "playoffs": 74.8,
+    "ppg": 133.6,
+    "healthy": 98.1
+   },
+   "Moe": {
+    "title": 7.5,
+    "playoffs": 47.2,
+    "ppg": 126.8,
+    "healthy": 91.9
+   },
+   "Betto": {
+    "title": 8.5,
+    "playoffs": 56.8,
+    "ppg": 123.7,
+    "healthy": 91.8
+   },
+   "Kass": {
+    "title": 10.8,
+    "playoffs": 53.5,
+    "ppg": 129.5,
+    "healthy": 170.1
+   },
+   "Hazime": {
+    "title": 4.5,
+    "playoffs": 51.5,
+    "ppg": 123.2,
+    "healthy": 178.3
+   },
+   "Daoud": {
+    "title": 10.8,
+    "playoffs": 67.2,
+    "ppg": 128.4,
+    "healthy": 129.5
+   },
+   "Kdouh": {
+    "title": 14.0,
+    "playoffs": 72.0,
+    "ppg": 128.5,
+    "healthy": 125.9
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K2_KyrenWandale_for_NabersJacobs",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.2,
+    "playoffs": 63.2,
+    "ppg": 125.7,
+    "healthy": 132.0
+   },
+   "Aoc": {
+    "title": 12.8,
+    "playoffs": 60.2,
+    "ppg": 130.3,
+    "healthy": 129.7
+   },
+   "Billy": {
+    "title": 8.8,
+    "playoffs": 57.0,
+    "ppg": 128.7,
+    "healthy": 89.1
+   },
+   "Jamal": {
+    "title": 14.5,
+    "playoffs": 67.5,
+    "ppg": 132.2,
+    "healthy": 107.7
+   },
+   "Moe": {
+    "title": 7.2,
+    "playoffs": 45.0,
+    "ppg": 126.8,
+    "healthy": 91.4
+   },
+   "Betto": {
+    "title": 5.5,
+    "playoffs": 54.8,
+    "ppg": 123.9,
+    "healthy": 93.3
+   },
+   "Kass": {
+    "title": 7.0,
+    "playoffs": 55.0,
+    "ppg": 129.3,
+    "healthy": 169.4
+   },
+   "Hazime": {
+    "title": 5.0,
+    "playoffs": 49.5,
+    "ppg": 123.2,
+    "healthy": 174.4
+   },
+   "Daoud": {
+    "title": 13.8,
+    "playoffs": 70.2,
+    "ppg": 128.4,
+    "healthy": 132.3
+   },
+   "Kdouh": {
+    "title": 17.2,
+    "playoffs": 77.5,
+    "ppg": 130.7,
+    "healthy": 112.7
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "D2_Pickens_for_JavonteGodwin",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.5,
+    "playoffs": 60.8,
+    "ppg": 125.5,
+    "healthy": 126.8
+   },
+   "Aoc": {
+    "title": 11.5,
+    "playoffs": 63.2,
+    "ppg": 130.5,
+    "healthy": 126.9
+   },
+   "Billy": {
+    "title": 8.0,
+    "playoffs": 57.2,
+    "ppg": 128.8,
+    "healthy": 88.6
+   },
+   "Jamal": {
+    "title": 9.8,
+    "playoffs": 64.8,
+    "ppg": 130.4,
+    "healthy": 94.5
+   },
+   "Moe": {
+    "title": 6.5,
+    "playoffs": 45.2,
+    "ppg": 126.9,
+    "healthy": 96.3
+   },
+   "Betto": {
+    "title": 5.8,
+    "playoffs": 54.8,
+    "ppg": 124.0,
+    "healthy": 89.7
+   },
+   "Kass": {
+    "title": 9.8,
+    "playoffs": 53.0,
+    "ppg": 129.3,
+    "healthy": 180.5
+   },
+   "Hazime": {
+    "title": 6.8,
+    "playoffs": 51.0,
+    "ppg": 123.2,
+    "healthy": 178.3
+   },
+   "Daoud": {
+    "title": 11.8,
+    "playoffs": 69.8,
+    "ppg": 128.3,
+    "healthy": 130.7
+   },
+   "Kdouh": {
+    "title": 22.8,
+    "playoffs": 80.2,
+    "ppg": 131.5,
+    "healthy": 113.8
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K7_PickensPrice_for_Nabers",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.8,
+    "playoffs": 62.0,
+    "ppg": 125.8,
+    "healthy": 128.8
+   },
+   "Aoc": {
+    "title": 11.5,
+    "playoffs": 61.8,
+    "ppg": 130.4,
+    "healthy": 130.9
+   },
+   "Billy": {
+    "title": 8.2,
+    "playoffs": 57.2,
+    "ppg": 128.8,
+    "healthy": 81.1
+   },
+   "Jamal": {
+    "title": 9.0,
+    "playoffs": 59.0,
+    "ppg": 129.9,
+    "healthy": 102.3
+   },
+   "Moe": {
+    "title": 7.0,
+    "playoffs": 46.0,
+    "ppg": 126.9,
+    "healthy": 85.8
+   },
+   "Betto": {
+    "title": 6.0,
+    "playoffs": 55.8,
+    "ppg": 124.0,
+    "healthy": 101.3
+   },
+   "Kass": {
+    "title": 10.0,
+    "playoffs": 56.5,
+    "ppg": 129.3,
+    "healthy": 171.4
+   },
+   "Hazime": {
+    "title": 5.5,
+    "playoffs": 48.8,
+    "ppg": 123.2,
+    "healthy": 170.2
+   },
+   "Daoud": {
+    "title": 12.8,
+    "playoffs": 71.2,
+    "ppg": 128.3,
+    "healthy": 136.8
+   },
+   "Kdouh": {
+    "title": 19.2,
+    "playoffs": 81.8,
+    "ppg": 132.5,
+    "healthy": 115.3
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "I1_TateWandale_for_Monty",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.2,
+    "playoffs": 62.5,
+    "ppg": 125.9,
+    "healthy": 124.5
+   },
+   "Aoc": {
+    "title": 13.8,
+    "playoffs": 63.2,
+    "ppg": 130.4,
+    "healthy": 132.7
+   },
+   "Billy": {
+    "title": 7.2,
+    "playoffs": 55.5,
+    "ppg": 128.8,
+    "healthy": 86.7
+   },
+   "Jamal": {
+    "title": 12.0,
+    "playoffs": 61.3,
+    "ppg": 129.9,
+    "healthy": 108.0
+   },
+   "Moe": {
+    "title": 7.8,
+    "playoffs": 49.0,
+    "ppg": 126.7,
+    "healthy": 86.4
+   },
+   "Betto": {
+    "title": 7.0,
+    "playoffs": 55.8,
+    "ppg": 124.0,
+    "healthy": 93.1
+   },
+   "Kass": {
+    "title": 7.2,
+    "playoffs": 54.2,
+    "ppg": 129.3,
+    "healthy": 174.6
+   },
+   "Hazime": {
+    "title": 6.2,
+    "playoffs": 48.5,
+    "ppg": 123.0,
+    "healthy": 166.9
+   },
+   "Daoud": {
+    "title": 12.0,
+    "playoffs": 71.0,
+    "ppg": 128.2,
+    "healthy": 126.2
+   },
+   "Kdouh": {
+    "title": 19.5,
+    "playoffs": 79.0,
+    "ppg": 131.5,
+    "healthy": 118.9
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K1_Kyren_for_Nabers",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 60.2,
+    "ppg": 125.7,
+    "healthy": 125.2
+   },
+   "Aoc": {
+    "title": 12.0,
+    "playoffs": 63.5,
+    "ppg": 130.3,
+    "healthy": 129.4
+   },
+   "Billy": {
+    "title": 8.2,
+    "playoffs": 55.0,
+    "ppg": 128.8,
+    "healthy": 89.5
+   },
+   "Jamal": {
+    "title": 14.2,
+    "playoffs": 66.2,
+    "ppg": 132.0,
+    "healthy": 100.8
+   },
+   "Moe": {
+    "title": 6.0,
+    "playoffs": 45.8,
+    "ppg": 126.8,
+    "healthy": 90.4
+   },
+   "Betto": {
+    "title": 10.5,
+    "playoffs": 57.0,
+    "ppg": 123.9,
+    "healthy": 94.2
+   },
+   "Kass": {
+    "title": 8.2,
+    "playoffs": 54.5,
+    "ppg": 129.3,
+    "healthy": 172.2
+   },
+   "Hazime": {
+    "title": 4.5,
+    "playoffs": 50.0,
+    "ppg": 123.2,
+    "healthy": 174.8
+   },
+   "Daoud": {
+    "title": 13.0,
+    "playoffs": 70.5,
+    "ppg": 128.4,
+    "healthy": 135.6
+   },
+   "Kdouh": {
+    "title": 14.5,
+    "playoffs": 77.2,
+    "ppg": 130.5,
+    "healthy": 115.0
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K5_Brown_for_NabersJudkins",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 6.8,
+    "playoffs": 62.7,
+    "ppg": 125.6,
+    "healthy": 121.0
+   },
+   "Aoc": {
+    "title": 11.0,
+    "playoffs": 62.3,
+    "ppg": 130.1,
+    "healthy": 139.6
+   },
+   "Billy": {
+    "title": 9.5,
+    "playoffs": 53.8,
+    "ppg": 128.8,
+    "healthy": 94.6
+   },
+   "Jamal": {
+    "title": 15.8,
+    "playoffs": 72.0,
+    "ppg": 133.4,
+    "healthy": 96.9
+   },
+   "Moe": {
+    "title": 6.0,
+    "playoffs": 44.8,
+    "ppg": 126.8,
+    "healthy": 86.7
+   },
+   "Betto": {
+    "title": 7.2,
+    "playoffs": 56.2,
+    "ppg": 123.8,
+    "healthy": 103.7
+   },
+   "Kass": {
+    "title": 9.0,
+    "playoffs": 53.0,
+    "ppg": 129.4,
+    "healthy": 177.0
+   },
+   "Hazime": {
+    "title": 6.0,
+    "playoffs": 51.2,
+    "ppg": 123.1,
+    "healthy": 177.0
+   },
+   "Daoud": {
+    "title": 13.0,
+    "playoffs": 70.0,
+    "ppg": 128.3,
+    "healthy": 121.5
+   },
+   "Kdouh": {
+    "title": 15.8,
+    "playoffs": 74.0,
+    "ppg": 129.0,
+    "healthy": 132.9
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K8_Brown_for_JJ",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 6.5,
+    "playoffs": 58.8,
+    "ppg": 125.8,
+    "healthy": 121.4
+   },
+   "Aoc": {
+    "title": 12.5,
+    "playoffs": 61.8,
+    "ppg": 130.4,
+    "healthy": 139.2
+   },
+   "Billy": {
+    "title": 7.5,
+    "playoffs": 55.2,
+    "ppg": 128.6,
+    "healthy": 85.9
+   },
+   "Jamal": {
+    "title": 17.8,
+    "playoffs": 75.8,
+    "ppg": 133.2,
+    "healthy": 107.8
+   },
+   "Moe": {
+    "title": 6.0,
+    "playoffs": 47.2,
+    "ppg": 126.9,
+    "healthy": 94.7
+   },
+   "Betto": {
+    "title": 6.5,
+    "playoffs": 54.5,
+    "ppg": 123.7,
+    "healthy": 108.7
+   },
+   "Kass": {
+    "title": 11.2,
+    "playoffs": 53.2,
+    "ppg": 129.4,
+    "healthy": 185.2
+   },
+   "Hazime": {
+    "title": 7.2,
+    "playoffs": 51.2,
+    "ppg": 123.2,
+    "healthy": 174.1
+   },
+   "Daoud": {
+    "title": 10.0,
+    "playoffs": 69.5,
+    "ppg": 128.5,
+    "healthy": 131.3
+   },
+   "Kdouh": {
+    "title": 14.8,
+    "playoffs": 72.8,
+    "ppg": 129.1,
+    "healthy": 125.0
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K3_KyrenTate_for_NabersEtienne",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.5,
+    "playoffs": 60.2,
+    "ppg": 125.8,
+    "healthy": 129.2
+   },
+   "Aoc": {
+    "title": 12.5,
+    "playoffs": 63.0,
+    "ppg": 130.3,
+    "healthy": 138.2
+   },
+   "Billy": {
+    "title": 7.0,
+    "playoffs": 56.0,
+    "ppg": 128.8,
+    "healthy": 76.4
+   },
+   "Jamal": {
+    "title": 19.2,
+    "playoffs": 71.8,
+    "ppg": 133.8,
+    "healthy": 107.7
+   },
+   "Moe": {
+    "title": 6.2,
+    "playoffs": 46.2,
+    "ppg": 126.8,
+    "healthy": 85.6
+   },
+   "Betto": {
+    "title": 6.5,
+    "playoffs": 57.0,
+    "ppg": 124.0,
+    "healthy": 100.4
+   },
+   "Kass": {
+    "title": 12.5,
+    "playoffs": 56.8,
+    "ppg": 129.2,
+    "healthy": 168.7
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 47.2,
+    "ppg": 123.1,
+    "healthy": 173.9
+   },
+   "Daoud": {
+    "title": 11.2,
+    "playoffs": 70.5,
+    "ppg": 128.3,
+    "healthy": 128.6
+   },
+   "Kdouh": {
+    "title": 13.8,
+    "playoffs": 71.2,
+    "ppg": 129.1,
+    "healthy": 125.5
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "H2_Kyren_for_TMacBucky",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.5,
+    "playoffs": 61.5,
+    "ppg": 125.8,
+    "healthy": 112.6
+   },
+   "Aoc": {
+    "title": 12.5,
+    "playoffs": 62.0,
+    "ppg": 130.3,
+    "healthy": 131.3
+   },
+   "Billy": {
+    "title": 11.8,
+    "playoffs": 56.5,
+    "ppg": 128.8,
+    "healthy": 84.3
+   },
+   "Jamal": {
+    "title": 13.2,
+    "playoffs": 71.5,
+    "ppg": 132.9,
+    "healthy": 95.3
+   },
+   "Moe": {
+    "title": 5.8,
+    "playoffs": 47.0,
+    "ppg": 126.8,
+    "healthy": 84.9
+   },
+   "Betto": {
+    "title": 6.0,
+    "playoffs": 56.8,
+    "ppg": 123.8,
+    "healthy": 92.7
+   },
+   "Kass": {
+    "title": 12.5,
+    "playoffs": 53.2,
+    "ppg": 129.3,
+    "healthy": 168.6
+   },
+   "Hazime": {
+    "title": 3.0,
+    "playoffs": 40.5,
+    "ppg": 120.8,
+    "healthy": 174.6
+   },
+   "Daoud": {
+    "title": 10.5,
+    "playoffs": 71.0,
+    "ppg": 128.4,
+    "healthy": 127.5
+   },
+   "Kdouh": {
+    "title": 16.2,
+    "playoffs": 80.0,
+    "ppg": 131.7,
+    "healthy": 114.0
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "I2_Pickens_for_MontyAddison",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 12.5,
+    "playoffs": 69.2,
+    "ppg": 128.1,
+    "healthy": 128.2
+   },
+   "Aoc": {
+    "title": 10.0,
+    "playoffs": 61.3,
+    "ppg": 130.2,
+    "healthy": 134.6
+   },
+   "Billy": {
+    "title": 9.5,
+    "playoffs": 56.2,
+    "ppg": 128.8,
+    "healthy": 80.3
+   },
+   "Jamal": {
+    "title": 8.2,
+    "playoffs": 51.0,
+    "ppg": 128.3,
+    "healthy": 98.4
+   },
+   "Moe": {
+    "title": 5.2,
+    "playoffs": 50.2,
+    "ppg": 127.0,
+    "healthy": 85.6
+   },
+   "Betto": {
+    "title": 7.0,
+    "playoffs": 56.2,
+    "ppg": 123.9,
+    "healthy": 98.3
+   },
+   "Kass": {
+    "title": 10.0,
+    "playoffs": 54.5,
+    "ppg": 129.5,
+    "healthy": 170.1
+   },
+   "Hazime": {
+    "title": 4.2,
+    "playoffs": 50.0,
+    "ppg": 123.2,
+    "healthy": 174.3
+   },
+   "Daoud": {
+    "title": 13.0,
+    "playoffs": 70.0,
+    "ppg": 128.5,
+    "healthy": 139.2
+   },
+   "Kdouh": {
+    "title": 20.2,
+    "playoffs": 81.2,
+    "ppg": 131.6,
+    "healthy": 117.6
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "K6_Kyren_for_NabersJudkins",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 60.2,
+    "ppg": 125.5,
+    "healthy": 131.0
+   },
+   "Aoc": {
+    "title": 11.2,
+    "playoffs": 59.8,
+    "ppg": 130.3,
+    "healthy": 138.6
+   },
+   "Billy": {
+    "title": 8.0,
+    "playoffs": 56.2,
+    "ppg": 128.8,
+    "healthy": 70.8
+   },
+   "Jamal": {
+    "title": 19.5,
+    "playoffs": 77.8,
+    "ppg": 134.4,
+    "healthy": 104.8
+   },
+   "Moe": {
+    "title": 7.2,
+    "playoffs": 47.8,
+    "ppg": 126.9,
+    "healthy": 86.7
+   },
+   "Betto": {
+    "title": 5.2,
+    "playoffs": 52.2,
+    "ppg": 123.9,
+    "healthy": 106.0
+   },
+   "Kass": {
+    "title": 11.2,
+    "playoffs": 55.2,
+    "ppg": 129.4,
+    "healthy": 174.3
+   },
+   "Hazime": {
+    "title": 5.5,
+    "playoffs": 51.7,
+    "ppg": 123.1,
+    "healthy": 174.0
+   },
+   "Daoud": {
+    "title": 10.5,
+    "playoffs": 70.2,
+    "ppg": 128.3,
+    "healthy": 137.2
+   },
+   "Kdouh": {
+    "title": 11.5,
+    "playoffs": 68.8,
+    "ppg": 127.9,
+    "healthy": 121.7
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "H1_Brown_for_HigginsBucky",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.5,
+    "playoffs": 63.7,
+    "ppg": 125.6,
+    "healthy": 120.2
+   },
+   "Aoc": {
+    "title": 12.0,
+    "playoffs": 64.5,
+    "ppg": 130.5,
+    "healthy": 134.2
+   },
+   "Billy": {
+    "title": 9.0,
+    "playoffs": 55.2,
+    "ppg": 129.0,
+    "healthy": 80.3
+   },
+   "Jamal": {
+    "title": 9.8,
+    "playoffs": 61.3,
+    "ppg": 130.5,
+    "healthy": 95.4
+   },
+   "Moe": {
+    "title": 8.8,
+    "playoffs": 47.2,
+    "ppg": 126.8,
+    "healthy": 90.9
+   },
+   "Betto": {
+    "title": 5.5,
+    "playoffs": 55.8,
+    "ppg": 123.8,
+    "healthy": 87.9
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 54.5,
+    "ppg": 129.2,
+    "healthy": 171.8
+   },
+   "Hazime": {
+    "title": 6.8,
+    "playoffs": 48.8,
+    "ppg": 123.2,
+    "healthy": 177.4
+   },
+   "Daoud": {
+    "title": 12.8,
+    "playoffs": 71.8,
+    "ppg": 128.4,
+    "healthy": 132.2
+   },
+   "Kdouh": {
+    "title": 21.5,
+    "playoffs": 77.2,
+    "ppg": 131.7,
+    "healthy": 112.6
+   }
+  }
+ },
+ {
+  "batch": "trades3",
+  "pricing": "market-partial",
+  "label": "D1_TatePrice_for_Javonte",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.5,
+    "playoffs": 61.8,
+    "ppg": 125.7,
+    "healthy": 127.5
+   },
+   "Aoc": {
+    "title": 11.0,
+    "playoffs": 62.5,
+    "ppg": 130.2,
+    "healthy": 133.2
+   },
+   "Billy": {
+    "title": 8.2,
+    "playoffs": 57.2,
+    "ppg": 128.9,
+    "healthy": 85.8
+   },
+   "Jamal": {
+    "title": 13.2,
+    "playoffs": 66.0,
+    "ppg": 131.4,
+    "healthy": 103.1
+   },
+   "Moe": {
+    "title": 5.0,
+    "playoffs": 43.0,
+    "ppg": 126.9,
+    "healthy": 88.2
+   },
+   "Betto": {
+    "title": 5.8,
+    "playoffs": 55.8,
+    "ppg": 124.0,
+    "healthy": 99.5
+   },
+   "Kass": {
+    "title": 11.0,
+    "playoffs": 54.8,
+    "ppg": 129.4,
+    "healthy": 166.7
+   },
+   "Hazime": {
+    "title": 4.8,
+    "playoffs": 50.5,
+    "ppg": 123.2,
+    "healthy": 179.7
+   },
+   "Daoud": {
+    "title": 11.0,
+    "playoffs": 71.0,
+    "ppg": 127.9,
+    "healthy": 130.0
+   },
+   "Kdouh": {
+    "title": 21.5,
+    "playoffs": 77.5,
+    "ppg": 131.8,
+    "healthy": 118.9
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K10_KyrenTate_for_NabersJudkins",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.2,
+    "playoffs": 67.2,
+    "ppg": 126.8,
+    "healthy": 128.6
+   },
+   "Aoc": {
+    "title": 6.8,
+    "playoffs": 56.5,
+    "ppg": 128.4,
+    "healthy": 131.9
+   },
+   "Billy": {
+    "title": 20.5,
+    "playoffs": 78.0,
+    "ppg": 135.4,
+    "healthy": 86.7
+   },
+   "Jamal": {
+    "title": 15.5,
+    "playoffs": 69.2,
+    "ppg": 131.6,
+    "healthy": 115.9
+   },
+   "Moe": {
+    "title": 6.2,
+    "playoffs": 46.2,
+    "ppg": 127.5,
+    "healthy": 89.6
+   },
+   "Betto": {
+    "title": 10.5,
+    "playoffs": 65.8,
+    "ppg": 127.4,
+    "healthy": 102.1
+   },
+   "Kass": {
+    "title": 7.0,
+    "playoffs": 44.8,
+    "ppg": 126.4,
+    "healthy": 171.4
+   },
+   "Hazime": {
+    "title": 5.8,
+    "playoffs": 41.2,
+    "ppg": 121.4,
+    "healthy": 177.3
+   },
+   "Daoud": {
+    "title": 11.0,
+    "playoffs": 70.5,
+    "ppg": 128.4,
+    "healthy": 131.8
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 60.5,
+    "ppg": 125.3,
+    "healthy": 101.7
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "D3_Kyren_for_JavonteOlave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 66.2,
+    "ppg": 126.8,
+    "healthy": 118.2
+   },
+   "Aoc": {
+    "title": 6.0,
+    "playoffs": 55.2,
+    "ppg": 128.5,
+    "healthy": 136.8
+   },
+   "Billy": {
+    "title": 23.8,
+    "playoffs": 76.0,
+    "ppg": 135.3,
+    "healthy": 94.6
+   },
+   "Jamal": {
+    "title": 24.0,
+    "playoffs": 79.8,
+    "ppg": 136.0,
+    "healthy": 109.2
+   },
+   "Moe": {
+    "title": 5.8,
+    "playoffs": 49.8,
+    "ppg": 127.5,
+    "healthy": 94.4
+   },
+   "Betto": {
+    "title": 9.0,
+    "playoffs": 67.5,
+    "ppg": 127.4,
+    "healthy": 113.5
+   },
+   "Kass": {
+    "title": 4.8,
+    "playoffs": 43.8,
+    "ppg": 126.3,
+    "healthy": 173.2
+   },
+   "Hazime": {
+    "title": 4.8,
+    "playoffs": 44.0,
+    "ppg": 121.5,
+    "healthy": 177.1
+   },
+   "Daoud": {
+    "title": 4.0,
+    "playoffs": 57.8,
+    "ppg": 123.3,
+    "healthy": 128.6
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 60.0,
+    "ppg": 125.7,
+    "healthy": 112.6
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "base",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 64.8,
+    "ppg": 126.7,
+    "healthy": 112.0
+   },
+   "Aoc": {
+    "title": 11.5,
+    "playoffs": 52.8,
+    "ppg": 128.6,
+    "healthy": 128.6
+   },
+   "Billy": {
+    "title": 20.8,
+    "playoffs": 77.5,
+    "ppg": 135.3,
+    "healthy": 88.4
+   },
+   "Jamal": {
+    "title": 12.8,
+    "playoffs": 66.5,
+    "ppg": 131.3,
+    "healthy": 110.6
+   },
+   "Moe": {
+    "title": 6.8,
+    "playoffs": 48.8,
+    "ppg": 127.5,
+    "healthy": 94.6
+   },
+   "Betto": {
+    "title": 9.5,
+    "playoffs": 69.0,
+    "ppg": 127.4,
+    "healthy": 100.4
+   },
+   "Kass": {
+    "title": 7.0,
+    "playoffs": 44.5,
+    "ppg": 126.4,
+    "healthy": 175.7
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 44.5,
+    "ppg": 121.4,
+    "healthy": 172.6
+   },
+   "Daoud": {
+    "title": 11.5,
+    "playoffs": 70.5,
+    "ppg": 128.4,
+    "healthy": 129.8
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 61.3,
+    "ppg": 125.7,
+    "healthy": 120.5
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K4_Brown_for_NabersEtienne",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.2,
+    "playoffs": 65.0,
+    "ppg": 126.9,
+    "healthy": 123.8
+   },
+   "Aoc": {
+    "title": 8.8,
+    "playoffs": 55.2,
+    "ppg": 128.6,
+    "healthy": 123.9
+   },
+   "Billy": {
+    "title": 19.8,
+    "playoffs": 78.2,
+    "ppg": 135.4,
+    "healthy": 87.4
+   },
+   "Jamal": {
+    "title": 12.2,
+    "playoffs": 67.2,
+    "ppg": 130.8,
+    "healthy": 103.9
+   },
+   "Moe": {
+    "title": 6.5,
+    "playoffs": 48.5,
+    "ppg": 127.5,
+    "healthy": 87.6
+   },
+   "Betto": {
+    "title": 12.8,
+    "playoffs": 67.8,
+    "ppg": 127.4,
+    "healthy": 105.1
+   },
+   "Kass": {
+    "title": 7.0,
+    "playoffs": 45.5,
+    "ppg": 126.3,
+    "healthy": 164.1
+   },
+   "Hazime": {
+    "title": 3.8,
+    "playoffs": 43.2,
+    "ppg": 121.5,
+    "healthy": 173.5
+   },
+   "Daoud": {
+    "title": 10.5,
+    "playoffs": 69.5,
+    "ppg": 128.3,
+    "healthy": 137.9
+   },
+   "Kdouh": {
+    "title": 8.5,
+    "playoffs": 59.8,
+    "ppg": 125.7,
+    "healthy": 111.1
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K2_KyrenWandale_for_NabersJacobs",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.0,
+    "playoffs": 65.2,
+    "ppg": 126.8,
+    "healthy": 126.5
+   },
+   "Aoc": {
+    "title": 6.2,
+    "playoffs": 54.8,
+    "ppg": 128.6,
+    "healthy": 132.2
+   },
+   "Billy": {
+    "title": 20.8,
+    "playoffs": 78.5,
+    "ppg": 135.5,
+    "healthy": 92.1
+   },
+   "Jamal": {
+    "title": 13.5,
+    "playoffs": 65.0,
+    "ppg": 131.0,
+    "healthy": 112.8
+   },
+   "Moe": {
+    "title": 7.8,
+    "playoffs": 52.2,
+    "ppg": 127.6,
+    "healthy": 91.4
+   },
+   "Betto": {
+    "title": 12.2,
+    "playoffs": 68.8,
+    "ppg": 127.4,
+    "healthy": 99.2
+   },
+   "Kass": {
+    "title": 8.0,
+    "playoffs": 42.0,
+    "ppg": 126.2,
+    "healthy": 160.0
+   },
+   "Hazime": {
+    "title": 4.5,
+    "playoffs": 41.8,
+    "ppg": 121.4,
+    "healthy": 171.0
+   },
+   "Daoud": {
+    "title": 9.5,
+    "playoffs": 69.5,
+    "ppg": 128.4,
+    "healthy": 142.9
+   },
+   "Kdouh": {
+    "title": 8.5,
+    "playoffs": 62.3,
+    "ppg": 125.8,
+    "healthy": 116.5
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K1_Kyren_for_Nabers",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.5,
+    "playoffs": 64.5,
+    "ppg": 126.8,
+    "healthy": 118.0
+   },
+   "Aoc": {
+    "title": 8.0,
+    "playoffs": 54.8,
+    "ppg": 128.4,
+    "healthy": 134.9
+   },
+   "Billy": {
+    "title": 21.8,
+    "playoffs": 79.0,
+    "ppg": 135.3,
+    "healthy": 85.7
+   },
+   "Jamal": {
+    "title": 15.0,
+    "playoffs": 67.2,
+    "ppg": 131.4,
+    "healthy": 107.4
+   },
+   "Moe": {
+    "title": 8.5,
+    "playoffs": 50.7,
+    "ppg": 127.7,
+    "healthy": 86.0
+   },
+   "Betto": {
+    "title": 9.2,
+    "playoffs": 64.5,
+    "ppg": 127.4,
+    "healthy": 109.6
+   },
+   "Kass": {
+    "title": 7.2,
+    "playoffs": 45.2,
+    "ppg": 126.3,
+    "healthy": 168.5
+   },
+   "Hazime": {
+    "title": 3.2,
+    "playoffs": 44.2,
+    "ppg": 121.5,
+    "healthy": 174.8
+   },
+   "Daoud": {
+    "title": 11.0,
+    "playoffs": 69.8,
+    "ppg": 128.6,
+    "healthy": 128.8
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 60.0,
+    "ppg": 125.6,
+    "healthy": 113.5
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K8_Brown_for_JJ",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.2,
+    "playoffs": 66.0,
+    "ppg": 126.8,
+    "healthy": 127.3
+   },
+   "Aoc": {
+    "title": 9.0,
+    "playoffs": 54.0,
+    "ppg": 128.5,
+    "healthy": 133.6
+   },
+   "Billy": {
+    "title": 23.8,
+    "playoffs": 78.8,
+    "ppg": 135.3,
+    "healthy": 82.2
+   },
+   "Jamal": {
+    "title": 12.8,
+    "playoffs": 65.0,
+    "ppg": 131.0,
+    "healthy": 120.3
+   },
+   "Moe": {
+    "title": 6.8,
+    "playoffs": 51.0,
+    "ppg": 127.5,
+    "healthy": 92.0
+   },
+   "Betto": {
+    "title": 9.5,
+    "playoffs": 66.5,
+    "ppg": 127.3,
+    "healthy": 93.3
+   },
+   "Kass": {
+    "title": 7.5,
+    "playoffs": 42.0,
+    "ppg": 126.4,
+    "healthy": 169.4
+   },
+   "Hazime": {
+    "title": 2.5,
+    "playoffs": 43.2,
+    "ppg": 121.4,
+    "healthy": 169.7
+   },
+   "Daoud": {
+    "title": 12.5,
+    "playoffs": 71.2,
+    "ppg": 128.4,
+    "healthy": 132.0
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 62.3,
+    "ppg": 126.0,
+    "healthy": 110.1
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K3_KyrenTate_for_NabersEtienne",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.8,
+    "playoffs": 66.2,
+    "ppg": 126.8,
+    "healthy": 129.8
+   },
+   "Aoc": {
+    "title": 10.2,
+    "playoffs": 52.8,
+    "ppg": 128.5,
+    "healthy": 125.3
+   },
+   "Billy": {
+    "title": 21.0,
+    "playoffs": 76.5,
+    "ppg": 135.1,
+    "healthy": 90.4
+   },
+   "Jamal": {
+    "title": 14.5,
+    "playoffs": 69.5,
+    "ppg": 132.6,
+    "healthy": 107.2
+   },
+   "Moe": {
+    "title": 5.5,
+    "playoffs": 48.5,
+    "ppg": 127.6,
+    "healthy": 91.9
+   },
+   "Betto": {
+    "title": 13.2,
+    "playoffs": 68.8,
+    "ppg": 127.5,
+    "healthy": 110.3
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 43.0,
+    "ppg": 126.4,
+    "healthy": 180.1
+   },
+   "Hazime": {
+    "title": 2.8,
+    "playoffs": 44.0,
+    "ppg": 121.4,
+    "healthy": 180.9
+   },
+   "Daoud": {
+    "title": 9.0,
+    "playoffs": 73.2,
+    "ppg": 128.5,
+    "healthy": 132.8
+   },
+   "Kdouh": {
+    "title": 6.5,
+    "playoffs": 57.5,
+    "ppg": 124.4,
+    "healthy": 108.3
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "H2_Kyren_for_TMacBucky",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.8,
+    "playoffs": 62.3,
+    "ppg": 126.7,
+    "healthy": 120.3
+   },
+   "Aoc": {
+    "title": 7.5,
+    "playoffs": 56.5,
+    "ppg": 128.6,
+    "healthy": 125.6
+   },
+   "Billy": {
+    "title": 23.5,
+    "playoffs": 75.8,
+    "ppg": 135.4,
+    "healthy": 88.7
+   },
+   "Jamal": {
+    "title": 15.2,
+    "playoffs": 73.2,
+    "ppg": 132.7,
+    "healthy": 97.1
+   },
+   "Moe": {
+    "title": 7.0,
+    "playoffs": 46.8,
+    "ppg": 127.5,
+    "healthy": 91.5
+   },
+   "Betto": {
+    "title": 10.8,
+    "playoffs": 69.8,
+    "ppg": 127.4,
+    "healthy": 107.9
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 43.5,
+    "ppg": 126.3,
+    "healthy": 170.1
+   },
+   "Hazime": {
+    "title": 3.8,
+    "playoffs": 40.8,
+    "ppg": 119.9,
+    "healthy": 166.6
+   },
+   "Daoud": {
+    "title": 10.0,
+    "playoffs": 68.0,
+    "ppg": 128.3,
+    "healthy": 133.0
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 63.5,
+    "ppg": 125.7,
+    "healthy": 110.3
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "I3_Kyren_for_DJMooreMonty",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.2,
+    "playoffs": 60.8,
+    "ppg": 125.6,
+    "healthy": 126.7
+   },
+   "Aoc": {
+    "title": 9.5,
+    "playoffs": 54.5,
+    "ppg": 128.5,
+    "healthy": 132.1
+   },
+   "Billy": {
+    "title": 22.0,
+    "playoffs": 78.5,
+    "ppg": 135.1,
+    "healthy": 90.7
+   },
+   "Jamal": {
+    "title": 15.0,
+    "playoffs": 71.5,
+    "ppg": 132.0,
+    "healthy": 100.9
+   },
+   "Moe": {
+    "title": 7.5,
+    "playoffs": 47.0,
+    "ppg": 127.6,
+    "healthy": 89.2
+   },
+   "Betto": {
+    "title": 10.5,
+    "playoffs": 67.8,
+    "ppg": 127.3,
+    "healthy": 99.8
+   },
+   "Kass": {
+    "title": 4.5,
+    "playoffs": 46.2,
+    "ppg": 126.3,
+    "healthy": 165.5
+   },
+   "Hazime": {
+    "title": 2.8,
+    "playoffs": 41.0,
+    "ppg": 121.4,
+    "healthy": 171.9
+   },
+   "Daoud": {
+    "title": 10.5,
+    "playoffs": 70.5,
+    "ppg": 128.5,
+    "healthy": 122.8
+   },
+   "Kdouh": {
+    "title": 9.5,
+    "playoffs": 62.3,
+    "ppg": 125.8,
+    "healthy": 101.3
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "A1_Kyren_for_GWilsonDobbins",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 64.5,
+    "ppg": 126.8,
+    "healthy": 123.0
+   },
+   "Aoc": {
+    "title": 6.5,
+    "playoffs": 51.2,
+    "ppg": 128.0,
+    "healthy": 133.2
+   },
+   "Billy": {
+    "title": 20.8,
+    "playoffs": 75.5,
+    "ppg": 135.4,
+    "healthy": 85.1
+   },
+   "Jamal": {
+    "title": 11.2,
+    "playoffs": 68.8,
+    "ppg": 131.4,
+    "healthy": 112.1
+   },
+   "Moe": {
+    "title": 8.2,
+    "playoffs": 49.8,
+    "ppg": 127.4,
+    "healthy": 97.0
+   },
+   "Betto": {
+    "title": 11.5,
+    "playoffs": 69.8,
+    "ppg": 127.5,
+    "healthy": 93.3
+   },
+   "Kass": {
+    "title": 6.2,
+    "playoffs": 44.5,
+    "ppg": 126.3,
+    "healthy": 168.5
+   },
+   "Hazime": {
+    "title": 5.5,
+    "playoffs": 43.2,
+    "ppg": 121.4,
+    "healthy": 168.7
+   },
+   "Daoud": {
+    "title": 13.8,
+    "playoffs": 71.8,
+    "ppg": 128.5,
+    "healthy": 122.3
+   },
+   "Kdouh": {
+    "title": 6.2,
+    "playoffs": 61.0,
+    "ppg": 125.8,
+    "healthy": 103.2
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K6_Kyren_for_NabersJudkins",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.8,
+    "playoffs": 64.5,
+    "ppg": 126.9,
+    "healthy": 125.6
+   },
+   "Aoc": {
+    "title": 8.2,
+    "playoffs": 57.2,
+    "ppg": 128.6,
+    "healthy": 124.9
+   },
+   "Billy": {
+    "title": 25.0,
+    "playoffs": 79.2,
+    "ppg": 135.3,
+    "healthy": 82.2
+   },
+   "Jamal": {
+    "title": 13.2,
+    "playoffs": 71.8,
+    "ppg": 133.0,
+    "healthy": 101.6
+   },
+   "Moe": {
+    "title": 7.0,
+    "playoffs": 48.2,
+    "ppg": 127.6,
+    "healthy": 94.4
+   },
+   "Betto": {
+    "title": 8.2,
+    "playoffs": 66.2,
+    "ppg": 127.3,
+    "healthy": 101.4
+   },
+   "Kass": {
+    "title": 7.0,
+    "playoffs": 44.5,
+    "ppg": 126.3,
+    "healthy": 165.0
+   },
+   "Hazime": {
+    "title": 3.2,
+    "playoffs": 42.0,
+    "ppg": 121.4,
+    "healthy": 168.5
+   },
+   "Daoud": {
+    "title": 11.8,
+    "playoffs": 72.5,
+    "ppg": 128.5,
+    "healthy": 130.7
+   },
+   "Kdouh": {
+    "title": 6.5,
+    "playoffs": 53.8,
+    "ppg": 123.6,
+    "healthy": 117.5
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "H1_Brown_for_HigginsBucky",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 67.2,
+    "ppg": 126.8,
+    "healthy": 127.4
+   },
+   "Aoc": {
+    "title": 5.5,
+    "playoffs": 52.8,
+    "ppg": 128.6,
+    "healthy": 130.3
+   },
+   "Billy": {
+    "title": 20.8,
+    "playoffs": 77.2,
+    "ppg": 135.1,
+    "healthy": 77.7
+   },
+   "Jamal": {
+    "title": 10.0,
+    "playoffs": 59.0,
+    "ppg": 129.8,
+    "healthy": 99.1
+   },
+   "Moe": {
+    "title": 7.0,
+    "playoffs": 47.0,
+    "ppg": 127.4,
+    "healthy": 88.9
+   },
+   "Betto": {
+    "title": 11.2,
+    "playoffs": 67.0,
+    "ppg": 127.5,
+    "healthy": 98.3
+   },
+   "Kass": {
+    "title": 6.2,
+    "playoffs": 43.2,
+    "ppg": 126.3,
+    "healthy": 172.4
+   },
+   "Hazime": {
+    "title": 7.2,
+    "playoffs": 52.8,
+    "ppg": 122.8,
+    "healthy": 168.2
+   },
+   "Daoud": {
+    "title": 15.8,
+    "playoffs": 72.5,
+    "ppg": 128.5,
+    "healthy": 141.8
+   },
+   "Kdouh": {
+    "title": 6.2,
+    "playoffs": 61.3,
+    "ppg": 125.7,
+    "healthy": 108.8
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "K9_Kyren_for_NabersEvans",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.5,
+    "playoffs": 63.2,
+    "ppg": 126.7,
+    "healthy": 127.2
+   },
+   "Aoc": {
+    "title": 7.8,
+    "playoffs": 53.8,
+    "ppg": 128.6,
+    "healthy": 121.7
+   },
+   "Billy": {
+    "title": 19.8,
+    "playoffs": 74.5,
+    "ppg": 135.2,
+    "healthy": 82.1
+   },
+   "Jamal": {
+    "title": 15.5,
+    "playoffs": 72.5,
+    "ppg": 132.6,
+    "healthy": 104.7
+   },
+   "Moe": {
+    "title": 8.0,
+    "playoffs": 51.0,
+    "ppg": 127.6,
+    "healthy": 90.5
+   },
+   "Betto": {
+    "title": 13.8,
+    "playoffs": 70.5,
+    "ppg": 127.5,
+    "healthy": 98.7
+   },
+   "Kass": {
+    "title": 5.8,
+    "playoffs": 48.2,
+    "ppg": 126.3,
+    "healthy": 166.5
+   },
+   "Hazime": {
+    "title": 4.5,
+    "playoffs": 43.8,
+    "ppg": 121.5,
+    "healthy": 181.6
+   },
+   "Daoud": {
+    "title": 11.5,
+    "playoffs": 70.5,
+    "ppg": 128.4,
+    "healthy": 137.7
+   },
+   "Kdouh": {
+    "title": 6.0,
+    "playoffs": 52.0,
+    "ppg": 123.9,
+    "healthy": 106.0
+   }
+  }
+ },
+ {
+  "batch": "trades4",
+  "pricing": "fp-ros-0918",
+  "label": "D1_TatePrice_for_Javonte",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 64.0,
+    "ppg": 126.8,
+    "healthy": 128.6
+   },
+   "Aoc": {
+    "title": 9.5,
+    "playoffs": 56.0,
+    "ppg": 128.5,
+    "healthy": 132.0
+   },
+   "Billy": {
+    "title": 20.2,
+    "playoffs": 77.0,
+    "ppg": 135.4,
+    "healthy": 86.0
+   },
+   "Jamal": {
+    "title": 15.2,
+    "playoffs": 69.8,
+    "ppg": 132.0,
+    "healthy": 99.9
+   },
+   "Moe": {
+    "title": 6.8,
+    "playoffs": 50.0,
+    "ppg": 127.5,
+    "healthy": 85.1
+   },
+   "Betto": {
+    "title": 11.0,
+    "playoffs": 67.5,
+    "ppg": 127.7,
+    "healthy": 100.9
+   },
+   "Kass": {
+    "title": 7.2,
+    "playoffs": 42.5,
+    "ppg": 126.4,
+    "healthy": 165.6
+   },
+   "Hazime": {
+    "title": 4.2,
+    "playoffs": 45.2,
+    "ppg": 121.4,
+    "healthy": 172.6
+   },
+   "Daoud": {
+    "title": 8.0,
+    "playoffs": 67.2,
+    "ppg": 127.5,
+    "healthy": 124.9
+   },
+   "Kdouh": {
+    "title": 7.8,
+    "playoffs": 60.8,
+    "ppg": 125.7,
+    "healthy": 112.6
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D11_KyrenWandale_for_JavonteOlave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.5,
+    "playoffs": 65.5,
+    "ppg": 126.6,
+    "healthy": 137.8
+   },
+   "Aoc": {
+    "title": 10.2,
+    "playoffs": 55.2,
+    "ppg": 128.5,
+    "healthy": 135.9
+   },
+   "Billy": {
+    "title": 23.0,
+    "playoffs": 76.8,
+    "ppg": 135.4,
+    "healthy": 88.0
+   },
+   "Jamal": {
+    "title": 21.5,
+    "playoffs": 80.8,
+    "ppg": 135.6,
+    "healthy": 107.9
+   },
+   "Moe": {
+    "title": 6.2,
+    "playoffs": 49.2,
+    "ppg": 127.5,
+    "healthy": 96.4
+   },
+   "Betto": {
+    "title": 9.2,
+    "playoffs": 68.8,
+    "ppg": 127.5,
+    "healthy": 94.6
+   },
+   "Kass": {
+    "title": 5.8,
+    "playoffs": 45.5,
+    "ppg": 126.3,
+    "healthy": 171.5
+   },
+   "Hazime": {
+    "title": 4.8,
+    "playoffs": 42.0,
+    "ppg": 121.5,
+    "healthy": 177.0
+   },
+   "Daoud": {
+    "title": 4.2,
+    "playoffs": 56.0,
+    "ppg": 123.9,
+    "healthy": 123.5
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 60.2,
+    "ppg": 125.7,
+    "healthy": 112.4
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D8_Kyren_for_Olave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.0,
+    "playoffs": 66.5,
+    "ppg": 126.8,
+    "healthy": 130.1
+   },
+   "Aoc": {
+    "title": 8.8,
+    "playoffs": 55.8,
+    "ppg": 128.6,
+    "healthy": 126.7
+   },
+   "Billy": {
+    "title": 22.2,
+    "playoffs": 78.0,
+    "ppg": 135.4,
+    "healthy": 79.6
+   },
+   "Jamal": {
+    "title": 15.2,
+    "playoffs": 70.2,
+    "ppg": 132.7,
+    "healthy": 109.9
+   },
+   "Moe": {
+    "title": 8.2,
+    "playoffs": 49.0,
+    "ppg": 127.5,
+    "healthy": 82.7
+   },
+   "Betto": {
+    "title": 9.0,
+    "playoffs": 65.0,
+    "ppg": 127.6,
+    "healthy": 100.5
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 44.5,
+    "ppg": 126.5,
+    "healthy": 169.2
+   },
+   "Hazime": {
+    "title": 4.2,
+    "playoffs": 44.5,
+    "ppg": 121.4,
+    "healthy": 179.8
+   },
+   "Daoud": {
+    "title": 9.8,
+    "playoffs": 66.0,
+    "ppg": 126.4,
+    "healthy": 135.1
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 60.5,
+    "ppg": 125.4,
+    "healthy": 113.5
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "M1_Kyren_for_Egbuka",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 64.2,
+    "ppg": 126.8,
+    "healthy": 126.9
+   },
+   "Aoc": {
+    "title": 8.5,
+    "playoffs": 51.7,
+    "ppg": 128.7,
+    "healthy": 121.9
+   },
+   "Billy": {
+    "title": 22.2,
+    "playoffs": 79.5,
+    "ppg": 135.5,
+    "healthy": 88.3
+   },
+   "Jamal": {
+    "title": 11.5,
+    "playoffs": 66.5,
+    "ppg": 130.9,
+    "healthy": 111.0
+   },
+   "Moe": {
+    "title": 7.2,
+    "playoffs": 49.2,
+    "ppg": 127.8,
+    "healthy": 90.7
+   },
+   "Betto": {
+    "title": 11.8,
+    "playoffs": 69.0,
+    "ppg": 127.6,
+    "healthy": 100.4
+   },
+   "Kass": {
+    "title": 6.0,
+    "playoffs": 41.5,
+    "ppg": 126.3,
+    "healthy": 169.4
+   },
+   "Hazime": {
+    "title": 4.8,
+    "playoffs": 45.0,
+    "ppg": 121.5,
+    "healthy": 172.0
+   },
+   "Daoud": {
+    "title": 12.2,
+    "playoffs": 70.0,
+    "ppg": 128.4,
+    "healthy": 133.9
+   },
+   "Kdouh": {
+    "title": 7.0,
+    "playoffs": 63.2,
+    "ppg": 125.9,
+    "healthy": 117.5
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D10_TateWandalePrice_for_Olave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.5,
+    "playoffs": 63.5,
+    "ppg": 126.8,
+    "healthy": 128.4
+   },
+   "Aoc": {
+    "title": 9.0,
+    "playoffs": 56.2,
+    "ppg": 128.5,
+    "healthy": 132.2
+   },
+   "Billy": {
+    "title": 21.2,
+    "playoffs": 77.2,
+    "ppg": 135.3,
+    "healthy": 86.1
+   },
+   "Jamal": {
+    "title": 17.0,
+    "playoffs": 68.5,
+    "ppg": 132.5,
+    "healthy": 104.9
+   },
+   "Moe": {
+    "title": 8.2,
+    "playoffs": 51.0,
+    "ppg": 127.6,
+    "healthy": 85.6
+   },
+   "Betto": {
+    "title": 11.2,
+    "playoffs": 67.8,
+    "ppg": 127.5,
+    "healthy": 96.3
+   },
+   "Kass": {
+    "title": 5.0,
+    "playoffs": 43.5,
+    "ppg": 126.2,
+    "healthy": 165.6
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 43.0,
+    "ppg": 121.5,
+    "healthy": 182.3
+   },
+   "Daoud": {
+    "title": 7.8,
+    "playoffs": 67.2,
+    "ppg": 126.3,
+    "healthy": 128.6
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 62.0,
+    "ppg": 126.0,
+    "healthy": 120.4
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D12_Pickens_for_Olave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 10.0,
+    "playoffs": 62.7,
+    "ppg": 126.8,
+    "healthy": 119.2
+   },
+   "Aoc": {
+    "title": 8.5,
+    "playoffs": 56.5,
+    "ppg": 128.6,
+    "healthy": 124.0
+   },
+   "Billy": {
+    "title": 21.5,
+    "playoffs": 76.2,
+    "ppg": 135.2,
+    "healthy": 85.9
+   },
+   "Jamal": {
+    "title": 13.8,
+    "playoffs": 69.2,
+    "ppg": 131.2,
+    "healthy": 116.2
+   },
+   "Moe": {
+    "title": 5.8,
+    "playoffs": 47.5,
+    "ppg": 127.5,
+    "healthy": 89.2
+   },
+   "Betto": {
+    "title": 12.8,
+    "playoffs": 69.0,
+    "ppg": 127.6,
+    "healthy": 103.2
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 43.2,
+    "ppg": 126.4,
+    "healthy": 172.6
+   },
+   "Hazime": {
+    "title": 5.5,
+    "playoffs": 43.0,
+    "ppg": 121.4,
+    "healthy": 172.7
+   },
+   "Daoud": {
+    "title": 9.0,
+    "playoffs": 70.2,
+    "ppg": 128.4,
+    "healthy": 129.8
+   },
+   "Kdouh": {
+    "title": 6.8,
+    "playoffs": 62.3,
+    "ppg": 125.7,
+    "healthy": 114.3
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "M2_KyrenTate_for_EgbukaSkattebo",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.8,
+    "playoffs": 65.5,
+    "ppg": 126.7,
+    "healthy": 118.5
+   },
+   "Aoc": {
+    "title": 7.2,
+    "playoffs": 52.8,
+    "ppg": 128.8,
+    "healthy": 133.3
+   },
+   "Billy": {
+    "title": 21.0,
+    "playoffs": 76.5,
+    "ppg": 135.4,
+    "healthy": 83.5
+   },
+   "Jamal": {
+    "title": 13.2,
+    "playoffs": 70.8,
+    "ppg": 131.4,
+    "healthy": 105.5
+   },
+   "Moe": {
+    "title": 9.0,
+    "playoffs": 50.5,
+    "ppg": 127.8,
+    "healthy": 98.9
+   },
+   "Betto": {
+    "title": 11.2,
+    "playoffs": 66.2,
+    "ppg": 127.6,
+    "healthy": 94.2
+   },
+   "Kass": {
+    "title": 5.2,
+    "playoffs": 42.8,
+    "ppg": 126.3,
+    "healthy": 166.5
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 44.8,
+    "ppg": 121.4,
+    "healthy": 177.6
+   },
+   "Daoud": {
+    "title": 13.8,
+    "playoffs": 69.5,
+    "ppg": 128.4,
+    "healthy": 135.2
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 60.8,
+    "ppg": 125.9,
+    "healthy": 115.0
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D9_Brown_for_OlaveJavonte",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 64.8,
+    "ppg": 126.8,
+    "healthy": 128.0
+   },
+   "Aoc": {
+    "title": 7.5,
+    "playoffs": 54.5,
+    "ppg": 128.5,
+    "healthy": 134.6
+   },
+   "Billy": {
+    "title": 23.5,
+    "playoffs": 75.2,
+    "ppg": 135.2,
+    "healthy": 89.0
+   },
+   "Jamal": {
+    "title": 18.8,
+    "playoffs": 77.0,
+    "ppg": 133.0,
+    "healthy": 110.4
+   },
+   "Moe": {
+    "title": 7.5,
+    "playoffs": 48.8,
+    "ppg": 127.5,
+    "healthy": 88.1
+   },
+   "Betto": {
+    "title": 10.0,
+    "playoffs": 65.2,
+    "ppg": 127.5,
+    "healthy": 100.6
+   },
+   "Kass": {
+    "title": 6.2,
+    "playoffs": 45.0,
+    "ppg": 126.3,
+    "healthy": 168.5
+   },
+   "Hazime": {
+    "title": 3.2,
+    "playoffs": 44.2,
+    "ppg": 121.5,
+    "healthy": 172.7
+   },
+   "Daoud": {
+    "title": 7.0,
+    "playoffs": 64.0,
+    "ppg": 126.3,
+    "healthy": 127.1
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 61.3,
+    "ppg": 125.8,
+    "healthy": 118.2
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "K11_TatePrice_for_Nabers",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.8,
+    "playoffs": 64.0,
+    "ppg": 126.8,
+    "healthy": 134.5
+   },
+   "Aoc": {
+    "title": 8.0,
+    "playoffs": 53.8,
+    "ppg": 128.5,
+    "healthy": 131.8
+   },
+   "Billy": {
+    "title": 21.2,
+    "playoffs": 76.8,
+    "ppg": 135.1,
+    "healthy": 96.3
+   },
+   "Jamal": {
+    "title": 13.0,
+    "playoffs": 68.5,
+    "ppg": 131.7,
+    "healthy": 106.6
+   },
+   "Moe": {
+    "title": 6.5,
+    "playoffs": 49.2,
+    "ppg": 127.7,
+    "healthy": 93.3
+   },
+   "Betto": {
+    "title": 12.5,
+    "playoffs": 68.5,
+    "ppg": 127.5,
+    "healthy": 95.0
+   },
+   "Kass": {
+    "title": 7.5,
+    "playoffs": 44.0,
+    "ppg": 126.5,
+    "healthy": 167.4
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 40.8,
+    "ppg": 121.5,
+    "healthy": 170.3
+   },
+   "Daoud": {
+    "title": 11.5,
+    "playoffs": 71.8,
+    "ppg": 128.6,
+    "healthy": 127.8
+   },
+   "Kdouh": {
+    "title": 7.5,
+    "playoffs": 62.7,
+    "ppg": 125.1,
+    "healthy": 114.1
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D4_KyrenTate_for_JavonteOlave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.0,
+    "playoffs": 62.0,
+    "ppg": 126.7,
+    "healthy": 125.3
+   },
+   "Aoc": {
+    "title": 5.2,
+    "playoffs": 56.0,
+    "ppg": 128.4,
+    "healthy": 127.4
+   },
+   "Billy": {
+    "title": 19.0,
+    "playoffs": 78.5,
+    "ppg": 135.5,
+    "healthy": 80.2
+   },
+   "Jamal": {
+    "title": 19.8,
+    "playoffs": 75.8,
+    "ppg": 134.6,
+    "healthy": 109.1
+   },
+   "Moe": {
+    "title": 7.5,
+    "playoffs": 48.0,
+    "ppg": 127.5,
+    "healthy": 87.8
+   },
+   "Betto": {
+    "title": 12.0,
+    "playoffs": 69.0,
+    "ppg": 127.4,
+    "healthy": 102.3
+   },
+   "Kass": {
+    "title": 6.0,
+    "playoffs": 44.0,
+    "ppg": 126.3,
+    "healthy": 164.7
+   },
+   "Hazime": {
+    "title": 3.0,
+    "playoffs": 44.0,
+    "ppg": 121.4,
+    "healthy": 181.0
+   },
+   "Daoud": {
+    "title": 8.8,
+    "playoffs": 60.5,
+    "ppg": 124.9,
+    "healthy": 129.6
+   },
+   "Kdouh": {
+    "title": 9.8,
+    "playoffs": 62.3,
+    "ppg": 125.8,
+    "healthy": 119.3
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D6_PickensPrice_for_OlaveJavonte",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 7.2,
+    "playoffs": 64.0,
+    "ppg": 126.7,
+    "healthy": 122.5
+   },
+   "Aoc": {
+    "title": 6.0,
+    "playoffs": 55.8,
+    "ppg": 128.5,
+    "healthy": 139.2
+   },
+   "Billy": {
+    "title": 26.5,
+    "playoffs": 78.2,
+    "ppg": 135.4,
+    "healthy": 86.4
+   },
+   "Jamal": {
+    "title": 16.8,
+    "playoffs": 73.0,
+    "ppg": 133.4,
+    "healthy": 108.1
+   },
+   "Moe": {
+    "title": 7.0,
+    "playoffs": 52.0,
+    "ppg": 127.6,
+    "healthy": 90.9
+   },
+   "Betto": {
+    "title": 10.5,
+    "playoffs": 64.0,
+    "ppg": 127.4,
+    "healthy": 106.4
+   },
+   "Kass": {
+    "title": 7.2,
+    "playoffs": 43.5,
+    "ppg": 126.3,
+    "healthy": 167.9
+   },
+   "Hazime": {
+    "title": 4.5,
+    "playoffs": 42.0,
+    "ppg": 121.4,
+    "healthy": 178.6
+   },
+   "Daoud": {
+    "title": 7.5,
+    "playoffs": 63.7,
+    "ppg": 126.3,
+    "healthy": 125.1
+   },
+   "Kdouh": {
+    "title": 6.8,
+    "playoffs": 63.7,
+    "ppg": 125.7,
+    "healthy": 114.5
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "D5_TatePrice_for_Olave",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 9.5,
+    "playoffs": 62.5,
+    "ppg": 126.6,
+    "healthy": 130.3
+   },
+   "Aoc": {
+    "title": 8.2,
+    "playoffs": 54.5,
+    "ppg": 128.7,
+    "healthy": 133.5
+   },
+   "Billy": {
+    "title": 23.5,
+    "playoffs": 77.0,
+    "ppg": 135.4,
+    "healthy": 84.0
+   },
+   "Jamal": {
+    "title": 15.5,
+    "playoffs": 71.8,
+    "ppg": 133.2,
+    "healthy": 117.2
+   },
+   "Moe": {
+    "title": 6.8,
+    "playoffs": 54.5,
+    "ppg": 127.7,
+    "healthy": 94.7
+   },
+   "Betto": {
+    "title": 10.5,
+    "playoffs": 66.0,
+    "ppg": 127.5,
+    "healthy": 110.8
+   },
+   "Kass": {
+    "title": 6.5,
+    "playoffs": 42.5,
+    "ppg": 126.3,
+    "healthy": 163.0
+   },
+   "Hazime": {
+    "title": 3.5,
+    "playoffs": 46.0,
+    "ppg": 121.4,
+    "healthy": 161.6
+   },
+   "Daoud": {
+    "title": 7.8,
+    "playoffs": 62.0,
+    "ppg": 126.0,
+    "healthy": 138.0
+   },
+   "Kdouh": {
+    "title": 8.2,
+    "playoffs": 63.2,
+    "ppg": 125.7,
+    "healthy": 114.7
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "M3_TatePrice_for_Egbuka",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 8.5,
+    "playoffs": 65.8,
+    "ppg": 126.8,
+    "healthy": 116.2
+   },
+   "Aoc": {
+    "title": 7.8,
+    "playoffs": 54.8,
+    "ppg": 128.6,
+    "healthy": 132.4
+   },
+   "Billy": {
+    "title": 22.2,
+    "playoffs": 80.2,
+    "ppg": 135.4,
+    "healthy": 81.5
+   },
+   "Jamal": {
+    "title": 12.5,
+    "playoffs": 67.2,
+    "ppg": 131.3,
+    "healthy": 104.0
+   },
+   "Moe": {
+    "title": 7.8,
+    "playoffs": 44.5,
+    "ppg": 127.2,
+    "healthy": 90.6
+   },
+   "Betto": {
+    "title": 8.8,
+    "playoffs": 67.8,
+    "ppg": 127.4,
+    "healthy": 102.9
+   },
+   "Kass": {
+    "title": 8.5,
+    "playoffs": 43.8,
+    "ppg": 126.3,
+    "healthy": 167.4
+   },
+   "Hazime": {
+    "title": 6.0,
+    "playoffs": 41.8,
+    "ppg": 121.3,
+    "healthy": 177.6
+   },
+   "Daoud": {
+    "title": 10.0,
+    "playoffs": 75.0,
+    "ppg": 128.5,
+    "healthy": 133.7
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 59.2,
+    "ppg": 125.7,
+    "healthy": 106.8
+   }
+  }
+ },
+ {
+  "batch": "trades5",
+  "pricing": "fp-ros-0918",
+  "label": "B1_TatePrice_for_Rice",
+  "N": 400,
+  "teams": {
+   "Ish": {
+    "title": 11.2,
+    "playoffs": 63.0,
+    "ppg": 126.7,
+    "healthy": 128.4
+   },
+   "Aoc": {
+    "title": 8.2,
+    "playoffs": 54.5,
+    "ppg": 128.4,
+    "healthy": 133.0
+   },
+   "Billy": {
+    "title": 18.0,
+    "playoffs": 81.0,
+    "ppg": 135.3,
+    "healthy": 91.5
+   },
+   "Jamal": {
+    "title": 13.0,
+    "playoffs": 64.0,
+    "ppg": 130.8,
+    "healthy": 100.5
+   },
+   "Moe": {
+    "title": 8.0,
+    "playoffs": 48.5,
+    "ppg": 127.5,
+    "healthy": 94.0
+   },
+   "Betto": {
+    "title": 8.8,
+    "playoffs": 67.0,
+    "ppg": 127.4,
+    "healthy": 96.1
+   },
+   "Kass": {
+    "title": 7.2,
+    "playoffs": 44.0,
+    "ppg": 126.3,
+    "healthy": 163.6
+   },
+   "Hazime": {
+    "title": 3.2,
+    "playoffs": 44.2,
+    "ppg": 121.4,
+    "healthy": 173.3
+   },
+   "Daoud": {
+    "title": 14.2,
+    "playoffs": 72.0,
+    "ppg": 128.4,
+    "healthy": 131.4
+   },
+   "Kdouh": {
+    "title": 8.0,
+    "playoffs": 61.8,
+    "ppg": 125.8,
+    "healthy": 100.8
+   }
+  }
+ }
+]
