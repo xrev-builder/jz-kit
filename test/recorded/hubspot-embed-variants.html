@@ -1,0 +1,19 @@
+<!-- Recorded 2026-09-18. Real HubSpot embed containers as served in static HTML (before any script runs).
+     Variant A and B are verbatim from public pages. Variant C is the documented legacy embed, written by hand. -->
+<!doctype html><html><body>
+
+<!-- Variant A: HubSpot CMS-native form module, new form editor. Source: https://www.fluxx.io/demo -->
+<span id="hs_cos_wrapper_widget_1782230696277_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_form" data-hs-cos-general-type="widget" data-hs-cos-type="form">
+  <div id="hs_form_target_widget_1782230696277" class="hs-form-html" data-form-id="59c583fe-8f0b-4310-aead-5127f01d8aab" data-portal-id="485822" data-region="na1"></div>
+</span>
+
+<!-- Variant B: new embed code on a non-HubSpot site (WordPress + Elementor), renders a cross-origin iframe. Source: https://www.pkisolutions.com/contact/
+     Loader script is https://js-na2.hsforms.net/forms/embed/245481384.js (region-specific host). -->
+<div class="hs-form-frame" data-region="na2" data-form-id="58a09b5e-523c-461b-bf80-14f5aab21b98" data-portal-id="245481384"></div>
+
+<!-- Variant C (hand-written, legacy v2 embed): renders in the parent DOM or a same-origin iframe.hs-form-iframe.
+     Only this generation is served by https://forms.hsforms.com/embed/v3/form/{portalId}/{formId}/json -->
+<script charset="utf-8" src="//js.hsforms.net/forms/embed/v2.js"></script>
+<script>hbspt.forms.create({ portalId: "0000000", formId: "00000000-0000-0000-0000-000000000000", region: "na1" });</script>
+
+</body></html>
