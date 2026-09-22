@@ -1,0 +1,191 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Form Inspector",
+    "version": "1",
+    "description": "Reports hidden form fields, the form provider, attribution capture and the passive site stack for public web pages. Read-only page loads. Nothing is ever submitted to a live form."
+  },
+  "servers": [{ "url": "/api/v1" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer" },
+      "sessionCookie": { "type": "apiKey", "in": "cookie", "name": "__Host-fi_session" }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": ["bad_request", "unknown_field", "invalid_url", "too_many_urls",
+                  "unauthorized", "csrf_required", "not_found", "audit_active",
+                  "idempotency_conflict", "quota_exceeded", "queue_full", "rate_limited",
+                  "payload_too_large", "internal"]
+              },
+              "message": { "type": "string" },
+              "details": { "type": "object" }
+            }
+          }
+        }
+      },
+      "AuditOptions": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "probe": { "type": "boolean", "default": true },
+          "consent": { "type": "string", "enum": ["accept", "ignore"], "default": "accept" },
+          "waitMs": { "type": "integer", "minimum": 0, "maximum": 10000, "default": 2500 },
+          "clickSelectors": {
+            "type": "array", "maxItems": 5,
+            "items": { "type": "string", "maxLength": 200 }
+          }
+        }
+      },
+      "CreateAuditRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["urls"],
+        "properties": {
+          "urls": { "type": "array", "minItems": 1, "maxItems": 50, "items": { "type": "string", "maxLength": 2000 } },
+          "label": { "type": "string", "maxLength": 120 },
+          "options": { "$ref": "#/components/schemas/AuditOptions" }
+        }
+      },
+      "Audit": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["queued", "running", "complete", "failed"] },
+          "urls": { "type": "array", "items": { "type": "string" } },
+          "options": { "$ref": "#/components/schemas/AuditOptions" },
+          "totalPages": { "type": "integer" },
+          "pagesProcessed": { "type": "integer" },
+          "formsFound": { "type": "integer" },
+          "hiddenFieldsFound": { "type": "integer" },
+          "summary": { "type": ["object", "null"] },
+          "error": { "type": ["string", "null"] },
+          "createdBy": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "startedAt": { "type": ["string", "null"], "format": "date-time" },
+          "completedAt": { "type": ["string", "null"], "format": "date-time" },
+          "expiresAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "PageRecord": {
+        "type": "object",
+        "properties": {
+          "position": { "type": "integer" },
+          "url": { "type": "string" },
+          "view": { "type": "string", "enum": ["summary", "hidden", "full"] },
+          "result": { "type": "object" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Liveness, browser state and queue depth",
+        "security": [],
+        "responses": { "200": { "description": "service state", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "summary": "This document",
+        "security": [],
+        "responses": { "200": { "description": "the OpenAPI document", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/audits": {
+      "post": {
+        "summary": "Start an audit of 1 to 50 URLs",
+        "security": [{ "bearerAuth": [] }, { "sessionCookie": [] }],
+        "parameters": [
+          { "name": "Idempotency-Key", "in": "header", "required": false, "schema": { "type": "string", "maxLength": 128 } },
+          { "name": "X-FI-CSRF", "in": "header", "required": false, "schema": { "type": "string", "enum": ["1"] },
+            "description": "Required for cookie-authenticated requests." }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateAuditRequest" } } } },
+        "responses": {
+          "202": { "description": "accepted", "content": { "application/json": { "schema": { "type": "object", "properties": { "audit": { "$ref": "#/components/schemas/Audit" } } } } } },
+          "200": { "description": "idempotent replay", "content": { "application/json": { "schema": { "type": "object", "properties": { "audit": { "$ref": "#/components/schemas/Audit" } } } } } },
+          "400": { "description": "validation failed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "CSRF required", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "409": { "description": "idempotency conflict", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "413": { "description": "body too large", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "429": { "description": "queue full or quota exceeded", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "get": {
+        "summary": "List audits, newest first",
+        "security": [{ "bearerAuth": [] }, { "sessionCookie": [] }],
+        "parameters": [
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } },
+          { "name": "label", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "a page of audits", "content": { "application/json": { "schema": { "type": "object", "properties": { "audits": { "type": "array", "items": { "$ref": "#/components/schemas/Audit" } }, "nextCursor": { "type": ["string", "null"] } } } } } },
+          "400": { "description": "bad pagination", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/audits/{id}": {
+      "get": {
+        "summary": "Read one audit",
+        "security": [{ "bearerAuth": [] }, { "sessionCookie": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "the audit", "content": { "application/json": { "schema": { "type": "object", "properties": { "audit": { "$ref": "#/components/schemas/Audit" } } } } } },
+          "401": { "description": "unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "no such audit", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "delete": {
+        "summary": "Delete a finished audit",
+        "security": [{ "bearerAuth": [] }, { "sessionCookie": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "deleted" },
+          "401": { "description": "unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "403": { "description": "CSRF required", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "no such audit", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "409": { "description": "the audit is still running", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/audits/{id}/pages": {
+      "get": {
+        "summary": "Read the pages of an audit, ordered by position",
+        "security": [{ "bearerAuth": [] }, { "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "view", "in": "query", "schema": { "type": "string", "enum": ["summary", "hidden", "full"], "default": "hidden" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 },
+            "description": "At most 5 when view=full." },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "a page of results", "content": { "application/json": { "schema": { "type": "object", "properties": { "pages": { "type": "array", "items": { "$ref": "#/components/schemas/PageRecord" } }, "nextCursor": { "type": ["string", "null"] } } } } } },
+          "400": { "description": "bad pagination or view", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "unauthorized", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "404": { "description": "no such audit", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  },
+  "x-ui-paths": {
+    "/ui/login": { "post": { "summary": "Exchange the passcode for a session cookie" } },
+    "/ui/logout": { "post": { "summary": "Clear the session cookie" } },
+    "/ui/session": { "get": { "summary": "Whether this caller has a UI session" } }
+  }
+}
