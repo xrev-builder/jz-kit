@@ -1,0 +1,24 @@
+name: form-inspector
+services:
+  form-inspector:
+    build: .
+    container_name: form-inspector
+    restart: unless-stopped
+    init: true
+    shm_size: "1gb"
+    mem_limit: 3g
+    pids_limit: 600
+    # The app listens on 0.0.0.0 INSIDE the container. Only host loopback is published:
+    # the operator's reverse proxy or tunnel terminates TLS and forwards to it.
+    ports:
+      - "127.0.0.1:${FI_HOST_PORT:-3011}:3011"
+    env_file: [.env]            # THIS service's settings only. Never another system's.
+    environment: [NODE_ENV=production]
+    volumes: [fi-data:/data]
+    cap_drop: [ALL]
+    cap_add: [SYS_CHROOT]       # the Chromium namespace sandbox needs it in the bounding set
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:./seccomp_profile.json
+volumes:
+  fi-data:

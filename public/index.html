@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Inspector</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/">Form Inspector</a>
+    <nav class="topbar-actions">
+      <button id="signout" type="button" class="link-button" hidden>Sign out</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="login-view" hidden>
+      <h1>Sign in</h1>
+      <p class="muted">This instance is protected by a passcode.</p>
+      <form id="login-form" autocomplete="off">
+        <label for="passcode">Passcode</label>
+        <input id="passcode" name="passcode" type="password" autocomplete="current-password" required>
+        <button type="submit">Sign in</button>
+        <p id="login-error" class="error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section id="new-view" hidden>
+      <h1>Inspect pages</h1>
+      <form id="audit-form">
+        <label for="urls">URLs, one per line</label>
+        <textarea id="urls" name="urls" rows="6" spellcheck="false"
+          placeholder="https://example.com/contact"></textarea>
+        <p id="url-hint" class="muted"></p>
+
+        <label for="label">Label (optional)</label>
+        <input id="label" name="label" type="text" maxlength="120">
+
+        <fieldset>
+          <legend>Options</legend>
+          <label class="inline"><input id="probe" type="checkbox" checked>
+            Run the tagged second load (needed for capture detection)</label>
+          <label class="inline" for="consent">Cookie banner</label>
+          <select id="consent">
+            <option value="accept">Accept it, then read the page</option>
+            <option value="ignore">Leave it alone</option>
+          </select>
+        </fieldset>
+
+        <button type="submit" id="start">Start</button>
+        <p id="audit-error" class="error" role="alert" hidden></p>
+      </form>
+
+      <h2>Recent audits</h2>
+      <div id="recent" class="stack"></div>
+    </section>
+
+    <section id="audit-view" hidden>
+      <p><a href="#/">Back to all audits</a></p>
+      <h1 id="audit-title">Audit</h1>
+      <p id="audit-meta" class="muted"></p>
+      <div id="audit-progress" class="progress" role="status" aria-live="polite"></div>
+      <div id="pages" class="stack"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="muted">Read-only page loads. This tool never submits a form.</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
