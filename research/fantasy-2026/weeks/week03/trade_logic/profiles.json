@@ -1,0 +1,809 @@
+{
+ "Aoc": {
+  "starters": {
+   "QB1": [
+    "Joe Burrow",
+    26.5
+   ],
+   "RB1": [
+    "Jahmyr Gibbs",
+    97.8
+   ],
+   "RB2": [
+    "Rico Dowdle",
+    10.8
+   ],
+   "WR1": [
+    "Zay Flowers",
+    58.0
+   ],
+   "WR2": [
+    "Garrett Wilson",
+    47.3
+   ],
+   "TE1": [
+    "Brock Bowers",
+    45.3
+   ],
+   "FLEX1": [
+    "A.J. Brown",
+    41.9
+   ],
+   "FLEX2": [
+    "Marvin Harrison Jr.",
+    19.3
+   ]
+  },
+  "starter_value": 346.9,
+  "weak_slots": [
+   "RB2",
+   "WR1"
+  ],
+  "strong_slots": [
+   "RB1",
+   "TE1"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 1,
+   "WR": 4,
+   "TE": 1
+  },
+  "injuries": [
+   "Zay Flowers(out Wk2 hamstring)",
+   "A.J. Brown(IR)",
+   "Brock Bowers(doubtful Wk2 (status Wk3 unknown))",
+   "RJ Harvey(Q hamstring)"
+  ],
+  "bench_top": [
+   [
+    "Deebo Samuel Sr.",
+    "WR",
+    13.7
+   ],
+   [
+    "Juwan Johnson",
+    "TE",
+    6.5
+   ],
+   [
+    "J.K. Dobbins",
+    "RB",
+    5.6
+   ],
+   [
+    "RJ Harvey",
+    "RB",
+    5.1
+   ],
+   [
+    "MarShawn Lloyd",
+    "RB",
+    4.9
+   ]
+  ]
+ },
+ "Betto": {
+  "starters": {
+   "QB1": [
+    "Justin Herbert",
+    21.3
+   ],
+   "RB1": [
+    "Omarion Hampton",
+    61.8
+   ],
+   "RB2": [
+    "D'Andre Swift",
+    41.7
+   ],
+   "WR1": [
+    "Amon-Ra St. Brown",
+    85.0
+   ],
+   "WR2": [
+    "Ladd McConkey",
+    40.5
+   ],
+   "TE1": [
+    "Trey McBride",
+    55.7
+   ],
+   "FLEX1": [
+    "Luther Burden III",
+    32.6
+   ],
+   "FLEX2": [
+    "Stefon Diggs",
+    20.7
+   ]
+  },
+  "starter_value": 359.3,
+  "weak_slots": [
+   "QB1",
+   "RB1"
+  ],
+  "strong_slots": [
+   "WR1",
+   "TE1"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 3,
+   "WR": 4,
+   "TE": 1
+  },
+  "injuries": [],
+  "bench_top": [
+   [
+    "Rhamondre Stevenson",
+    "RB",
+    19.1
+   ],
+   [
+    "Tucker Kraft",
+    "TE",
+    13.9
+   ],
+   [
+    "Jared Goff",
+    "QB",
+    9.5
+   ],
+   [
+    "Khalil Shakir",
+    "WR",
+    9.5
+   ],
+   [
+    "Kenny Gainwell",
+    "RB",
+    4.7
+   ]
+  ]
+ },
+ "Billy": {
+  "starters": {
+   "QB1": [
+    "Caleb Williams",
+    36.9
+   ],
+   "RB1": [
+    "Kenneth Walker III",
+    76.3
+   ],
+   "RB2": [
+    "Ashton Jeanty",
+    68.0
+   ],
+   "WR1": [
+    "Ja'Marr Chase",
+    94.2
+   ],
+   "WR2": [
+    "Rashee Rice",
+    45.4
+   ],
+   "TE1": [
+    "Colston Loveland",
+    38.5
+   ],
+   "FLEX1": [
+    "Parker Washington",
+    37.1
+   ],
+   "FLEX2": [
+    "Bhayshul Tuten",
+    27.1
+   ]
+  },
+  "starter_value": 423.5,
+  "weak_slots": [],
+  "strong_slots": [
+   "RB2",
+   "WR1",
+   "TE1"
+  ],
+  "depth_startable": {
+   "QB": 2,
+   "RB": 3,
+   "WR": 4,
+   "TE": 1
+  },
+  "injuries": [
+   "Jordan Mason(IR thumb ~4 wks)"
+  ],
+  "bench_top": [
+   [
+    "Trevor Lawrence",
+    "QB",
+    25.7
+   ],
+   [
+    "Alec Pierce",
+    "WR",
+    17.2
+   ],
+   [
+    "Jaylen Warren",
+    "RB",
+    14.6
+   ],
+   [
+    "Dalton Kincaid",
+    "TE",
+    9.6
+   ],
+   [
+    "Jordan Mason",
+    "RB",
+    5.2
+   ]
+  ]
+ },
+ "Daoud": {
+  "starters": {
+   "QB1": [
+    "Lamar Jackson",
+    54.9
+   ],
+   "RB1": [
+    "James Cook III",
+    90.1
+   ],
+   "RB2": [
+    "Saquon Barkley",
+    69.6
+   ],
+   "WR1": [
+    "Chris Olave",
+    68.3
+   ],
+   "WR2": [
+    "Terry McLaurin",
+    29.8
+   ],
+   "TE1": [
+    "Isaiah Likely",
+    8.5
+   ],
+   "FLEX1": [
+    "Javonte Williams",
+    43.6
+   ],
+   "FLEX2": [
+    "Chris Godwin Jr.",
+    24.5
+   ]
+  },
+  "starter_value": 389.3,
+  "weak_slots": [
+   "WR2"
+  ],
+  "strong_slots": [
+   "QB1",
+   "RB1",
+   "RB2"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 3,
+   "WR": 4,
+   "TE": 0
+  },
+  "injuries": [
+   "Jordyn Tyson(IR, back ~Wk6+)"
+  ],
+  "bench_top": [
+   [
+    "KC Concepcion",
+    "WR",
+    16.1
+   ],
+   [
+    "Michael Wilson",
+    "WR",
+    13.4
+   ],
+   [
+    "Blake Corum",
+    "RB",
+    9.6
+   ],
+   [
+    "Jordyn Tyson",
+    "WR",
+    7.3
+   ],
+   [
+    "Caleb Douglas",
+    "WR",
+    2.6
+   ]
+  ]
+ },
+ "Hazime": {
+  "starters": {
+   "QB1": [
+    "Matthew Stafford",
+    8.5
+   ],
+   "RB1": [
+    "Jonathan Taylor",
+    88.8
+   ],
+   "RB2": [
+    "Derrick Henry",
+    64.4
+   ],
+   "WR1": [
+    "Tee Higgins",
+    43.5
+   ],
+   "WR2": [
+    "Tetairoa McMillan",
+    41.6
+   ],
+   "TE1": [
+    "Sam LaPorta",
+    14.1
+   ],
+   "FLEX1": [
+    "Bucky Irving",
+    32.4
+   ],
+   "FLEX2": [
+    "Davante Adams",
+    27.3
+   ]
+  },
+  "starter_value": 320.6,
+  "weak_slots": [
+   "QB1",
+   "WR1"
+  ],
+  "strong_slots": [
+   "RB1",
+   "RB2"
+  ],
+  "depth_startable": {
+   "QB": 0,
+   "RB": 3,
+   "WR": 5,
+   "TE": 0
+  },
+  "injuries": [],
+  "bench_top": [
+   [
+    "DK Metcalf",
+    "WR",
+    22.5
+   ],
+   [
+    "Quentin Johnston",
+    "WR",
+    18.5
+   ],
+   [
+    "Jakobi Meyers",
+    "WR",
+    13.1
+   ],
+   [
+    "Tyjae Spears",
+    "RB",
+    2.0
+   ],
+   [
+    "Cooper Kupp",
+    "WR",
+    0.8
+   ]
+  ]
+ },
+ "Ish": {
+  "starters": {
+   "QB1": [
+    "Josh Allen",
+    57.4
+   ],
+   "RB1": [
+    "Bijan Robinson",
+    93.6
+   ],
+   "RB2": [
+    "David Montgomery",
+    29.9
+   ],
+   "WR1": [
+    "Nico Collins",
+    71.7
+   ],
+   "WR2": [
+    "DJ Moore",
+    34.4
+   ],
+   "TE1": [
+    "Dallas Goedert",
+    8.3
+   ],
+   "FLEX1": [
+    "Brian Thomas Jr.",
+    16.7
+   ],
+   "FLEX2": [
+    "Josh Downs",
+    16.5
+   ]
+  },
+  "starter_value": 328.5,
+  "weak_slots": [
+   "RB2",
+   "WR2",
+   "FLEX1",
+   "FLEX2"
+  ],
+  "strong_slots": [
+   "QB1",
+   "RB1"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 2,
+   "WR": 4,
+   "TE": 0
+  },
+  "injuries": [
+   "Nico Collins(hamstring Gr1, out Wk2, 1-2 more wks)",
+   "DJ Moore(Q Wk2, 0 catches)",
+   "Dallas Goedert(doubtful Wk2)"
+  ],
+  "bench_top": [
+   [
+    "TreVeyon Henderson",
+    "RB",
+    13.9
+   ],
+   [
+    "Jordan Addison",
+    "WR",
+    12.5
+   ],
+   [
+    "Adonai Mitchell",
+    "WR",
+    5.5
+   ],
+   [
+    "Dalton Schultz",
+    "TE",
+    4.8
+   ],
+   [
+    "Rachaad White",
+    "RB",
+    4.2
+   ]
+  ]
+ },
+ "Jamal": {
+  "starters": {
+   "QB1": [
+    "Drake Maye",
+    36.2
+   ],
+   "RB1": [
+    "Chase Brown",
+    76.3
+   ],
+   "RB2": [
+    "Kyren Williams",
+    38.2
+   ],
+   "WR1": [
+    "Puka Nacua",
+    86.9
+   ],
+   "WR2": [
+    "George Pickens",
+    67.8
+   ],
+   "TE1": [
+    "Harold Fannin Jr.",
+    11.1
+   ],
+   "FLEX1": [
+    "Carnell Tate",
+    25.8
+   ],
+   "FLEX2": [
+    "Jadarian Price",
+    19.0
+   ]
+  },
+  "starter_value": 361.3,
+  "weak_slots": [
+   "FLEX1"
+  ],
+  "strong_slots": [
+   "WR1",
+   "WR2"
+  ],
+  "depth_startable": {
+   "QB": 2,
+   "RB": 3,
+   "WR": 4,
+   "TE": 0
+  },
+  "injuries": [
+   "Puka Nacua(Q hip, sat Wk2, McVay unsure Wk3)",
+   "Kyler Murray(concussion, missed Wk2)"
+  ],
+  "bench_top": [
+   [
+    "Wan'Dale Robinson",
+    "WR",
+    16.8
+   ],
+   [
+    "Brock Purdy",
+    "QB",
+    16.0
+   ],
+   [
+    "Romeo Doubs",
+    "WR",
+    10.8
+   ],
+   [
+    "Kyle Pitts Sr.",
+    "TE",
+    8.9
+   ],
+   [
+    "Kyler Murray",
+    "QB",
+    6.0
+   ]
+  ]
+ },
+ "Kass": {
+  "starters": {
+   "QB1": [
+    "Jayden Daniels",
+    22.2
+   ],
+   "RB1": [
+    "Christian McCaffrey",
+    77.4
+   ],
+   "RB2": [
+    "Breece Hall",
+    41.4
+   ],
+   "WR1": [
+    "Drake London",
+    64.1
+   ],
+   "WR2": [
+    "DeVonta Smith",
+    55.3
+   ],
+   "TE1": [
+    "Travis Kelce",
+    7.1
+   ],
+   "FLEX1": [
+    "Jaylen Waddle",
+    46.8
+   ],
+   "FLEX2": [
+    "Jameson Williams",
+    30.6
+   ]
+  },
+  "starter_value": 344.9,
+  "weak_slots": [
+   "QB1",
+   "WR1"
+  ],
+  "strong_slots": [
+   "WR2",
+   "FLEX1"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 2,
+   "WR": 5,
+   "TE": 0
+  },
+  "injuries": [],
+  "bench_top": [
+   [
+    "Michael Pittman Jr.",
+    "WR",
+    17.2
+   ],
+   [
+    "Tony Pollard",
+    "RB",
+    5.6
+   ],
+   [
+    "Jake Ferguson",
+    "TE",
+    5.2
+   ],
+   [
+    "Tre Tucker",
+    "WR",
+    4.8
+   ],
+   [
+    "Chuba Hubbard",
+    "RB",
+    4.5
+   ]
+  ]
+ },
+ "Kdouh": {
+  "starters": {
+   "QB1": [
+    "Dak Prescott",
+    13.3
+   ],
+   "RB1": [
+    "Travis Etienne Jr.",
+    31.6
+   ],
+   "RB2": [
+    "Quinshon Judkins",
+    21.9
+   ],
+   "WR1": [
+    "Justin Jefferson",
+    79.2
+   ],
+   "WR2": [
+    "CeeDee Lamb",
+    78.9
+   ],
+   "TE1": [
+    "Tyler Warren",
+    19.7
+   ],
+   "FLEX1": [
+    "Malik Nabers",
+    57.6
+   ],
+   "FLEX2": [
+    "Mike Evans",
+    32.2
+   ]
+  },
+  "starter_value": 334.4,
+  "weak_slots": [
+   "QB1",
+   "RB1",
+   "RB2"
+  ],
+  "strong_slots": [
+   "WR2",
+   "FLEX1"
+  ],
+  "depth_startable": {
+   "QB": 0,
+   "RB": 2,
+   "WR": 5,
+   "TE": 1
+  },
+  "injuries": [
+   "Josh Jacobs(EXEMPT-LIST (4-6 game ban possible))",
+   "Brian Robinson Jr.(listed)"
+  ],
+  "bench_top": [
+   [
+    "Jalen Coker",
+    "WR",
+    15.9
+   ],
+   [
+    "Matthew Golden",
+    "WR",
+    14.8
+   ],
+   [
+    "Patrick Mahomes",
+    "QB",
+    10.1
+   ],
+   [
+    "Aaron Jones Sr.",
+    "RB",
+    3.2
+   ],
+   [
+    "Josh Jacobs",
+    "RB",
+    2.6
+   ]
+  ]
+ },
+ "Moe": {
+  "starters": {
+   "QB1": [
+    "Jalen Hurts",
+    38.9
+   ],
+   "RB1": [
+    "De'Von Achane",
+    65.6
+   ],
+   "RB2": [
+    "Jeremiyah Love",
+    42.2
+   ],
+   "WR1": [
+    "Jaxon Smith-Njigba",
+    86.2
+   ],
+   "WR2": [
+    "Emeka Egbuka",
+    44.8
+   ],
+   "TE1": [
+    "George Kittle",
+    10.1
+   ],
+   "FLEX1": [
+    "Christian Watson",
+    39.2
+   ],
+   "FLEX2": [
+    "Cam Skattebo",
+    28.9
+   ]
+  },
+  "starter_value": 355.9,
+  "weak_slots": [
+   "RB1"
+  ],
+  "strong_slots": [
+   "WR1"
+  ],
+  "depth_startable": {
+   "QB": 1,
+   "RB": 3,
+   "WR": 6,
+   "TE": 0
+  },
+  "injuries": [],
+  "bench_top": [
+   [
+    "Rome Odunze",
+    "WR",
+    24.6
+   ],
+   [
+    "Courtland Sutton",
+    "WR",
+    18.0
+   ],
+   [
+    "Makai Lemon",
+    "WR",
+    17.1
+   ],
+   [
+    "Jaxson Dart",
+    "QB",
+    12.6
+   ],
+   [
+    "Xavier Worthy",
+    "WR",
+    8.4
+   ]
+  ]
+ }
+}

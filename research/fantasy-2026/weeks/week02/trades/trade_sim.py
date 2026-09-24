@@ -18,6 +18,9 @@ swap(6,['Detroit Lions'],['New England Patriots'])
 swap(1,[],['Kalif Raymond','Kansas City Chiefs'])
 swap(5,[],['Jared Goff'])
 swap(8,['Cyrus Allen'],['Caleb Douglas'])
+if os.environ.get('WK3'):
+    swap(0,['Jonathon Brooks','Keaton Mitchell'],['Oronde Gadsden II','Dalton Schultz'])
+    swap(3,['Tyler Allgeier'],['Kyler Murray'])
 # TR: list of [teamA, [playersA out], teamB, [playersB out]]
 for a,pa,b,pb in TR:
     for p in pa: R[a].remove(p); R[b].append(p)
@@ -52,7 +55,10 @@ for s in range(N):
     W=np.zeros(nteams); PF=np.zeros(nteams)
     # week 1 already played: seed actual results
     W[[0,5,8,9,7]]+=1
-    for wk in range(2,15):
+    START=2
+    if os.environ.get('WK3'):
+        START=3; W[[t for t in range(10) if t!=3]]+=0.5
+    for wk in range(START,15):
         for ew in em_weeks[em_weeks==wk]:
             pool=[k for k in fa if P[k]['pos'] in ('RB','WR')]
             if pool: over[rng.choice(pool)]=float(rng.normal(EMERGE_MEAN,2.0))
