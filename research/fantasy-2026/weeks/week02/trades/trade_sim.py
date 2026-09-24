@@ -20,7 +20,13 @@ swap(5,[],['Jared Goff'])
 swap(8,['Cyrus Allen'],['Caleb Douglas'])
 if os.environ.get('WK3'):
     swap(0,['Jonathon Brooks','Keaton Mitchell'],['Oronde Gadsden II','Dalton Schultz'])
-    swap(3,['Tyler Allgeier'],['Kyler Murray'])
+    swap(3,['Tyler Allgeier','Drake Maye',"Wan'Dale Robinson"],['Kyler Murray','Dontayvion Wicks','Emanuel Wilson'])
+    swap(1,['Juwan Johnson','MarShawn Lloyd'],['Alvin Kamara','Denzel Boston'])
+    swap(2,['Antonio Williams'],['Jonah Coleman'])
+    swap(6,['New England Patriots'],['Bryce Young'])
+    swap(4,['Jaxson Dart'],['Tyler Shough'])
+    swap(8,['Philadelphia Eagles'],['Cincinnati Bengals'])
+    swap(9,['Tampa Bay Buccaneers'],['Carolina Panthers'])
 # TR: list of [teamA, [playersA out], teamB, [playersB out]]
 for a,pa,b,pb in TR:
     for p in pa: R[a].remove(p); R[b].append(p)
@@ -57,7 +63,7 @@ for s in range(N):
     W[[0,5,8,9,7]]+=1
     START=2
     if os.environ.get('WK3'):
-        START=3; W[[t for t in range(10) if t!=3]]+=0.5
+        START=3; W[:]=0; W[[7,5,9]]+=2; W[[0,4,2,8]]+=1
     for wk in range(START,15):
         for ew in em_weeks[em_weeks==wk]:
             pool=[k for k in fa if P[k]['pos'] in ('RB','WR')]
