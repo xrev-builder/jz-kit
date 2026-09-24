@@ -1,0 +1,46 @@
+label partner source | Jamal gives -> gets | Jamal title/PO/ppg change | partner title/PO change (300 seasons, Sept-18 consensus pricing, from Week 3)
+I1 Ish accept | Chase Brown + Puka Nacua -> Bijan Robinson + Brian Thomas Jr. | -6.0/-10.0/-3.6 | +10.6/+11.4
+I2 Ish accept | George Pickens -> David Montgomery + Dalton Schultz | -5.6/-7.3/-2.4 | +3.6/+7.0
+I3 Ish accept | Harold Fannin Jr. + Kyren Williams -> TreVeyon Henderson + Oronde Gadsden II | -4.0/-11.6/-3.3 | +3.6/+11.4
+I4 Ish counter | Carnell Tate + Harold Fannin Jr. -> David Montgomery | -2.6/-4.3/-1.2 | -1.0/+2.4
+I5 Ish counter | George Pickens -> DJ Moore + Dalton Schultz | -1.6/-7.0/-1.8 | -0.4/+7.4
+I6 Ish counter | George Pickens + Harold Fannin Jr. -> Nico Collins + Rachaad White | -1.3/-5.0/-1.3 | +2.0/+3.4
+K1 Kdouh accept | Chase Brown -> Mike Evans + Matthew Golden | -7.0/-14.0/-3.8 | +8.0/+11.6
+K2 Kdouh accept | Chase Brown -> Malik Nabers | -3.6/-4.6/-2.2 | +6.0/+7.3
+K3 Kdouh accept | Chase Brown -> Dak Prescott + Mike Evans | -3.6/-12.6/-4.1 | +12.0/+10.3
+K4 Kdouh counter | Chase Brown + George Pickens -> Malik Nabers + Mike Evans | -6.0/-18.0/-5.1 | +12.7/+13.0
+K5 Kdouh counter | Kyren Williams -> Jalen Coker + Aaron Jones Sr. | -3.3/-9.0/-2.8 | +6.7/+9.6
+D1 Daoud accept | George Pickens -> Javonte Williams + Michael Wilson | -1.6/-1.6/-0.9 | +2.7/-0.3
+D2 Daoud accept | Puka Nacua -> Saquon Barkley + Chris Godwin Jr. | -1.6/-6.6/-2.5 | +7.4/+2.3
+D3 Daoud accept | George Pickens + Harold Fannin Jr. -> Isaiah Likely + Javonte Williams | -4.6/-9.0/-2.2 | +6.0/+3.0
+D4 Daoud counter | Chase Brown + George Pickens -> Saquon Barkley + Javonte Williams | -4.0/-15.6/-3.9 | +7.4/+7.7
+D5 Daoud counter | Harold Fannin Jr. + Devaughn Vele -> Isaiah Likely | -1.0/-4.6/-0.8 | +5.4/+3.7
+A1 Aoc accept | Chase Brown + Carnell Tate -> Garrett Wilson + Rico Dowdle | -5.3/-10.0/-3.4 | +6.0/+15.3
+A2 Aoc accept | Kyren Williams -> Deebo Samuel Sr. + Kyle Monangai | -5.3/-12.0/-2.3 | +2.3/+6.3
+A3 Aoc accept | Puka Nacua -> Garrett Wilson + J.K. Dobbins | -7.6/-11.6/-3.1 | +7.0/+8.0
+A4 Aoc counter | Devaughn Vele -> Kyle Monangai | -2.3/-2.0/+0.5 | -3.0/-4.3
+A5 Aoc counter | Kyren Williams -> Rico Dowdle + Kyle Monangai | -5.3/-10.0/-1.6 | +1.6/+7.7
+B1 Billy accept | Chase Brown -> Dalton Kincaid + Parker Washington | -3.0/-9.3/-3.0 | +3.6/+8.7
+B2 Billy accept | Puka Nacua -> Rashee Rice + Jaylen Warren | -3.6/-11.6/-2.9 | +8.6/+8.7
+B3 Billy accept | George Pickens -> Dalton Kincaid + Alec Pierce | -4.3/-10.6/-3.3 | +5.6/+11.3
+B4 Billy counter | Chase Brown -> Caleb Williams + Bhayshul Tuten | -4.0/-13.0/-3.8 | +5.0/+10.0
+B5 Billy counter | Kyren Williams -> Jaylen Warren + Alec Pierce | -3.3/-5.0/-1.2 | -2.0/+1.0
+T1 Betto accept | Chase Brown -> D'Andre Swift + Stefon Diggs + Tucker Kraft | -5.3/-3.0/-1.1 | +5.7/+1.6
+T2 Betto accept | George Pickens -> Stefon Diggs + Rhamondre Stevenson | -5.3/-7.0/-2.5 | +3.7/+2.3
+T3 Betto accept | Puka Nacua -> Ladd McConkey + D'Andre Swift | -2.3/-4.0/-1.3 | +4.7/+2.6
+T4 Betto counter | Kyren Williams -> D'Andre Swift + Khalil Shakir | -1.6/+0.0/-0.1 | +3.0/+1.3
+S1 Kass accept | Chase Brown -> Travis Kelce + Chuba Hubbard | -7.0/-18.3/-5.1 | +6.7/+11.0
+S2 Kass accept | Harold Fannin Jr. + Kyren Williams -> Jameson Williams + Jake Ferguson | -1.3/-7.6/-1.8 | +2.7/+3.0
+S3 Kass accept | Brock Purdy + Kyren Williams -> Jayden Daniels + Tre Tucker | -2.3/-6.6/-2.9 | +0.4/+3.0
+S4 Kass counter | Kyren Williams -> Tre Tucker + Tony Pollard | -1.6/-10.0/-2.7 | +0.7/+5.7
+S5 Kass counter | George Pickens + Harold Fannin Jr. -> DeVonta Smith | -1.3/-8.0/-2.1 | +2.4/+2.7
+H1 Hazime accept | Brock Purdy -> Davante Adams | +0.4/+6.0/+0.8 | +0.7/+6.6
+H2 Hazime accept | Drake Maye + George Pickens -> Derrick Henry + Davante Adams | -5.0/-8.3/-3.5 | +7.0/+21.3
+H3 Hazime accept | Puka Nacua -> Derrick Henry + DK Metcalf | -3.3/-8.3/-2.3 | +4.7/+15.3
+H4 Hazime counter | Chase Brown -> Derrick Henry + Cooper Kupp | -4.3/-9.0/-2.5 | +2.0/+15.3
+H5 Hazime counter | Drake Maye -> Sam LaPorta + Quentin Johnston | -2.6/-5.0/-1.3 | +2.0/+7.0
+M1 Moe accept | Chase Brown -> Christian Watson + Jacory Croskey-Merritt | -6.3/-14.0/-3.7 | +8.6/+19.0
+M2 Moe accept | Kyren Williams -> Christian Watson | -3.3/-4.3/-0.7 | +1.6/+8.7
+M3 Moe accept | Harold Fannin Jr. + Kyren Williams -> George Kittle + Christian Watson + Jaxson Dart | -3.6/-6.6/-1.5 | -1.0/+10.0
+M4 Moe counter | Harold Fannin Jr. -> George Kittle + Xavier Worthy | -2.0/-1.3/-0.3 | +1.0/+8.7
+M5 Moe counter | George Pickens -> Emeka Egbuka + Jacory Croskey-Merritt | -1.6/-5.3/-1.5 | -0.4/+7.4

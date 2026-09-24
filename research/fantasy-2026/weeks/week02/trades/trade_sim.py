@@ -15,7 +15,7 @@ swap(3,['Rico Dowdle','Los Angeles Chargers','Jayden Reed'],['Devaughn Vele','Sa
 swap(9,['Minnesota Vikings'],['Patrick Mahomes','Tampa Bay Buccaneers'])
 swap(2,["De'Zhaun Stribling"],['Trevor Lawrence','Antonio Williams'])
 swap(6,['Detroit Lions'],['New England Patriots'])
-swap(1,[],['Kalif Raymond','Kansas City Chiefs'])
+swap(1,['Keenan Allen','Jerry Jeudy'],['Juwan Johnson','Rico Dowdle','Kansas City Chiefs'])
 swap(5,[],['Jared Goff'])
 swap(8,['Cyrus Allen'],['Caleb Douglas'])
 if os.environ.get('WK3'):
