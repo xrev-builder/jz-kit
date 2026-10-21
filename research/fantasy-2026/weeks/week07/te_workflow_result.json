@@ -1,0 +1,2271 @@
+{
+  "summary": "Rank Week 7 TEs from consensus, Vegas props, usage, matchup and injury news, then adversarially verify",
+  "agentCount": 10,
+  "logs": [
+    "Gather results: ok, ok, ok, ok, ok, ok"
+  ],
+  "result": {
+    "ranked": {
+      "method": "Full PPR, Week 7 2026. The script is /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/te7/work/proj.py, and the consensus step is in .../te7/work/final3.py.\n\n(1) Usage baseline: U = 0.5*ep_pg + 0.3*ppg3 + 0.2*ppg, all from te_table.csv. When ppg3 is missing, the weights are rescaled.\n\n(2) Matchup: A = U * sqrt(opp_te_ppg_allowed/13.3) * sqrt(implied/22.5). Implied totals come from the table; they match the nflverse Week 7 lines, e.g. DET 28.25 from DET -3 with a total of 53.5.\n\n(3) Vegas:\n- No TE had both a receptions line and a yards line, so the 50% weight was never used. Loveland had only a yards line (44.5, BetMGM).\n- For players with anytime-TD odds (25% weight): convert each price to implied probability, average across books, and divide by 1.05 to strip about 5% vig. That gives p.\n- Because rec/yds lines are missing, the TD-only Vegas projection is V = A - 6*(season TD/gp)*M + 6*p. In words: the usage line with its season TD rate swapped for the market TD probability.\n- P = 0.75*A + 0.25*V, which is the same as A + 1.5*(p - TDrate*M).\n- Kittle's -105 (StatPick, no book named, flagged unreliable) was not used. Everyone without odds has 0% Vegas weight.\n\n(4) Injuries:\n- Players named as questionable, or carrying an injury into Week 7 per a 2026 source, get -15%: Hockenson (concussion, 'questionable' per Legion Report), Warren (groin; Q on the Week 6 report and missed Week 6), Freiermuth (calf; Q in Week 6). The last two are not confirmed official Week 7 statuses.\n- Kraft is flagged ('wait for injury report', RotoBaller) but no injury is named, so no haircut.\n\n(5) Consensus check:\n- Average rank across 8 Week 7 lists, with n shown. FP = FantasyPros ECR, Oct 20, 2 experts, ranks 1-12; Henry, Andrews, Mayer and J. Ferguson come from FP half-PPR ECR. DS = Draft Sharks PPR, Oct 20. FBG = Footballguys Week 7. RB = RotoBaller half-PPR. SI = SI on Yahoo, top 4. Huddle = USA Today/TheHuddle, top 3. Fantrax = FantraxHQ, top 4. BR = Bleacher Report PPR, top 4.\n- The gap is measured against consensus order: the rank of that average among startable TEs in this pool. A player in none of the top-20 lists counts as consensus >=21.\n- Where my rank differed by more than 4 and the data did not clearly support it, I blended the projection toward the projection sitting at the consensus slot, in 10% steps, until the gap was <=4. The weight w used is given in 'why'.\n- Only Warren's gap was kept as clearly supported: injury plus the stingiest TE defense plus a 17.5 team total.\n\n(6) Ranked by the final projection. Tiers: T1 is ranks 1-6 (13.7-16.3), T2 is 7-10 (9.4-12.2), T3 is 11-17 (8.7-9.2), T4 is 18-20 (absent from every consensus top 20).\n\n(7) Floor and ceiling are the 20th and 80th percentiles of a gamma distribution with mean = projection. The CV comes from 2026 weekly TE scoring (stats_wk.csv), corrected for small samples: 0.44 for >=7 tgt/g, 0.74 for 5-7, 0.84 for <5, plus 0.10 if a haircut applied.\n\nBottom line: the same six TEs top every list (Kittle, LaPorta, Kraft, McBride, Bowers, Likely). Start any of them. My order only reshuffles them by matchup, and they are within 2.6 points of each other.",
+      "ranking": [
+        {
+          "rank": 1,
+          "player": "George Kittle",
+          "team": "SF",
+          "opp": "at ATL",
+          "tier": "Tier 1 - elite",
+          "proj_points": 16.29,
+          "floor": 6.3,
+          "ceiling": 24.7,
+          "implied_total": "26.75 (SF -3, total 50.5)",
+          "td_prob": "not found (only an unverified -105 on StatPick with no book named; not used)",
+          "consensus_avg_rank": "2.25 (n=8: FP 2, DS 2, FBG 3, RB 3, SI 2, Huddle 3, Fantrax 1, BR 2); consensus order #2",
+          "status": "No Week 7 designation found (news searches failed; Wednesday report not yet available)",
+          "risk": "Medium: only 6.0 tgt/g (6.67 last 3), so the weekly range is wide (3.2 and 7.4 pt games this year). 5 TDs in 6 games drive the score.",
+          "why": "U=13.79 (ep 13.14, ppg3 14.1, ppg 14.95). ATL allows 15.62 TE ppg (11th most), x1.084; SF implied 26.75, x1.090. Projection 16.29. No verified TD price, so 0% Vegas weight. Snap share last 3 is 0.91 and target share 0.23. Consensus #2 vs my #1: gap 1."
+        },
+        {
+          "rank": 2,
+          "player": "Sam LaPorta",
+          "team": "DET",
+          "opp": "vs GB",
+          "tier": "Tier 1 - elite",
+          "proj_points": 16.11,
+          "floor": 10.1,
+          "ceiling": 21.5,
+          "implied_total": "28.25 (DET -3, total 53.5; highest team total on the slate)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "4.25 (n=4: FP 4, DS 4, FBG 5, RB 4); consensus order #4",
+          "status": "No Week 7 designation found; coming off his Week 6 bye",
+          "risk": "Low-Medium: 9.0 tgt/g over his last 3 games and an 0.84 snap share give a high floor. GB is a tough TE matchup.",
+          "why": "U=16.75 (ep 14.71, ppg3 21.1 = 22.4 and 19.8 in Weeks 4-5, ppg 15.32). GB allows only 9.8 TE ppg (27th), x0.858. DET's implied 28.25 is the slate's highest, x1.121. Projection 16.11. No TD odds found. Gap to consensus is 2."
+        },
+        {
+          "rank": 3,
+          "player": "Tucker Kraft",
+          "team": "GB",
+          "opp": "at DET",
+          "tier": "Tier 1 - elite",
+          "proj_points": 15.99,
+          "floor": 6.1,
+          "ceiling": 24.2,
+          "implied_total": "25.25 (GB +3, total 53.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "6.5 (n=4: FP 6, DS 6, FBG 7, RB 7); consensus order #6",
+          "status": "No designation found. RotoBaller (Week 7 early update) says 'don't lock him in until the injury report clears'; injury not specified, no haircut applied. Check Wed-Fri practice.",
+          "risk": "Medium: the projection leans on one 6-week defensive split, plus the unconfirmed injury note. 6.17 tgt/g.",
+          "why": "U=11.15 (ep 11.18, ppg3 12.27, ppg 9.4). DET allows 31.9 TE ppg (most in the NFL, 2.4x the 13.3 average), x1.549; GB implied 25.25, x1.059. That gives 18.29, which would be #1, 5 spots above consensus #6. The whole edge comes from one noisy defensive stat, so I pulled him 50% toward the consensus-#6 slot (13.69): 15.99. Last 3 games: 6.67 tgt/g, 0.20 target share, 0.82 snap share. Final gap is 3."
+        },
+        {
+          "rank": 4,
+          "player": "Trey McBride",
+          "team": "ARI",
+          "opp": "vs DEN",
+          "tier": "Tier 1 - elite",
+          "proj_points": 15.65,
+          "floor": 9.8,
+          "ceiling": 20.9,
+          "implied_total": "19.5 (ARI +4.5, total 43.5)",
+          "td_prob": "42% (bet365 +135 via Covers, DraftKings +120 via Legion Report; averaged, 5% vig removed)",
+          "consensus_avg_rank": "2.38 (n=8: FP 3, DS 3, FBG 2, RB 2, SI 1, Huddle 2, Fantrax 2, BR 4); consensus order #3",
+          "status": "No Week 7 designation found",
+          "risk": "Low: 10.83 tgt/g, 0.30 target share and 0.95 snap share over his last 3 make him the safest floor. The low team total caps his ceiling.",
+          "why": "U=16.98 (ep 18.29, 2nd best; ppg3 14.67; ppg 17.18). DEN allows 13.15 TE ppg (15th, neutral), x0.994; ARI implied only 19.5, x0.931. A=15.72. TD 42% vs his 0.5 TD/g season pace, -0.07, for 15.65. Gap to consensus is 1."
+        },
+        {
+          "rank": 5,
+          "player": "Brock Bowers",
+          "team": "LV",
+          "opp": "vs LAR",
+          "tier": "Tier 1 - elite",
+          "proj_points": 14.56,
+          "floor": 9.1,
+          "ceiling": 19.4,
+          "implied_total": "22.0 (LV +4.5)",
+          "td_prob": "41% (BetMGM +130, 5% vig removed)",
+          "consensus_avg_rank": "1.62 (n=8: FP 1, DS 1, FBG 1, RB 1, SI 4, Huddle 1, Fantrax 3, BR 1); consensus order #1",
+          "status": "No 2026 Week 7 injury news found. Knee: limited practice Week 4, full Weeks 5-6 (nflverse). An unverified FantasyPros mention says some sites list him at WR, so check his eligibility in your league.",
+          "risk": "Low-Medium: elite volume (10.75 tgt/g). LAR is the 2nd-stingiest TE defense, and BetMGM notes he went under his yards line in 12 of his last 16.",
+          "why": "U=19.32, the highest in the pool (ep 19.5, ppg3 18.2, ppg 20.55). LAR allows 7.98 TE ppg (31st), x0.775; LV implied 22.0, x0.989. A=14.80. TD 41% vs his 0.75 TD/g pace, -0.24, for 14.56. My #5 vs consensus 1.62 is a 3.4-spot gap, inside the 4-spot band. The drop is purely matchup; on usage he is TE1, so treat him as interchangeable with ranks 1-4."
+        },
+        {
+          "rank": 6,
+          "player": "Isaiah Likely",
+          "team": "NYG",
+          "opp": "at HOU",
+          "tier": "Tier 1 - elite",
+          "proj_points": 13.69,
+          "floor": 8.6,
+          "ceiling": 18.3,
+          "implied_total": "16.25 (NYG +10; lowest team total on the slate)",
+          "td_prob": "36% (median +165: Fanatics +165, DraftKings +160/+165/+175; 5% vig removed)",
+          "consensus_avg_rank": "4.29 (n=7: FP 5, DS 5, FBG 4, RB 6, SI 3, Fantrax 4, BR 3); consensus order #5",
+          "status": "No Week 7 designation found (full practice with knee in Week 5 and foot in Week 6, per nflverse)",
+          "risk": "Low-Medium: 12.0 tgt/g and 0.31 target share over his last 3 make the volume elite, but he plays on the slate's worst offense by implied total.",
+          "why": "U=18.63 (ppg3 22.63 is the best in the pool; ep 16.53; ppg 17.88). HOU allows 10.55 TE ppg (22nd), x0.891; NYG implied 16.25, x0.850. A=14.10. TD 36% vs his 0.83 TD/g pace, -0.41, for 13.69. Gap to consensus is 1."
+        },
+        {
+          "rank": 7,
+          "player": "Tyler Higbee",
+          "team": "LAR",
+          "opp": "at LV",
+          "tier": "Tier 2 - every-week starter",
+          "proj_points": 12.15,
+          "floor": 4.7,
+          "ceiling": 18.6,
+          "implied_total": "26.5 (LAR -4.5, total 48.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "13.25 (n=4: FP 11, DS 11, FBG 15, RB 16); consensus order #10",
+          "status": "No designation found (only routine veteran rest days, Weeks 4-6). ESPN says Davante Adams is out (hamstring).",
+          "risk": "Medium-High: ESPN calls Higbee vs Colby Parkinson a coin flip, and Parkinson scored 14.1 on 6 targets in Week 6 vs Higbee's 4.2 on 4. 5.8 tgt/g.",
+          "why": "U=9.70 (ep 9.52, ppg3 9.73, ppg 10.12). LV allows 17.72 TE ppg (6th most), x1.154; LAR implied 26.5, x1.085. Projection 12.15. No TD odds. I have him 3 spots above consensus order (#10). The raw average of 13.25 is 6 spots away, and that gap stands: both matchup inputs are top-6, Adams' absence frees targets, and CBS's Week 7 preview names Higbee a possible top-12 TE."
+        },
+        {
+          "rank": 8,
+          "player": "Mark Andrews",
+          "team": "BAL",
+          "opp": "vs CIN",
+          "tier": "Tier 2 - every-week starter",
+          "proj_points": 10.77,
+          "floor": 4.1,
+          "ceiling": 16.2,
+          "implied_total": "27.25 (BAL -3, total 51.5)",
+          "td_prob": "46% (Fanatics +105, 5% vig removed; the highest TD probability of any TE with a price)",
+          "consensus_avg_rank": "13.5 (n=4: FP half-PPR ECR 17, DS 9, FBG 13, RB 15); consensus order #11",
+          "status": "No Week 7 designation found (hand; full practice Weeks 4-6)",
+          "risk": "Medium-High: TD-dependent. Only 5.0 tgt/g over his last 3, 6.63 ppg3, and 1.4 pts in Week 6.",
+          "why": "U=8.53 (ep 10.08, ppg3 6.63, ppg 7.52). CIN allows 16.24 TE ppg (8th most), x1.105; BAL implied 27.25 (2nd highest), x1.101. A=10.38. Market TD 46% vs his 0.17 TD/g pace, +0.45, for 10.77. I have him 3 spots above consensus order (#11); the raw average of 13.5 is 5.5 spots away. That gap stands because the sportsbook TD price and the team total both rank top-2 among TEs."
+        },
+        {
+          "rank": 9,
+          "player": "Colston Loveland",
+          "team": "CHI",
+          "opp": "vs NE (Thu)",
+          "tier": "Tier 2 - every-week starter",
+          "proj_points": 9.94,
+          "floor": 3.9,
+          "ceiling": 15.1,
+          "implied_total": "26.75 (CHI -3, total 50.5)",
+          "td_prob": "33% (Fanatics +180, BetMGM +190; 5% vig removed)",
+          "consensus_avg_rank": "8.0 (n=4: FP 7, DS 7, FBG 8, RB 10); consensus order #7",
+          "status": "Not on CHI's Week 7 practice report (nflverse; Thursday game)",
+          "risk": "Medium: his role is rising. He is under 40 yards in 4 of 6 games (ats.io), and Polymarket prices the under 39.5 near a coin flip.",
+          "why": "U=10.14 (ep 10.63, ppg3 11.37, ppg 7.08). NE allows 10.18 TE ppg (25th), x0.875; CHI implied 26.75, x1.090. A=9.67. TD 33% vs his 0.17 TD/g pace, +0.27, for 9.94. The BetMGM yards line is 44.5 vs his 29.2 yd/g, so the market expects growth. With no receptions line, the Vegas weight stays at 25%. Last 3 games: 7.0 tgt/g, 0.21 target share, 0.87 snap share; 18.5 pts in Week 6. Gap to consensus is 2. He plays Thursday."
+        },
+        {
+          "rank": 10,
+          "player": "Dallas Goedert",
+          "team": "PHI",
+          "opp": "vs DAL (Mon)",
+          "tier": "Tier 2 - every-week starter",
+          "proj_points": 9.42,
+          "floor": 3.7,
+          "ceiling": 14.2,
+          "implied_total": "20.0 (PHI +4.5, total 44.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "9.75 (n=4: FP 12, DS 8, FBG 10, RB 9); consensus order #9",
+          "status": "No designation found. Knee: Out in Week 4, full practice Week 5. A Fox Sports page saying he missed Thursday practice (knee) looks stale.",
+          "risk": "Medium: knee history and a Monday night game (late news). 8.5 tgt/g over his last 3 is solid.",
+          "why": "U=10.19 (ep 9.11, ppg3 10.95, ppg 11.75). DAL allows 12.8 TE ppg (16th), x0.981; PHI implied 20.0, x0.943. Projection 9.42. No TD odds. Last 3 games: 0.21 target share, 0.75 snap share. Gap to consensus is 1."
+        },
+        {
+          "rank": 11,
+          "player": "Travis Kelce",
+          "team": "KC",
+          "opp": "at SEA (SNF)",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 9.22,
+          "floor": 3.6,
+          "ceiling": 14,
+          "implied_total": "20.0 (KC +2.5, total 42.5)",
+          "td_prob": "30% (BetMGM +220, 5% vig removed)",
+          "consensus_avg_rank": "8.5 (n=4: FP 8, DS 12, FBG 6, RB 8); consensus order #8",
+          "status": "No Week 7 designation found",
+          "risk": "Medium-High: declining usage (4.5 tgt/g over his last 3, 0.16 target share; 3.5 and 9.3 pts in his last two games) against a stingy defense.",
+          "why": "Raw model: U=8.96 (ep 9.13, ppg3 6.4, ppg 12.38). SEA allows 8.92 TE ppg (30th), x0.819; KC implied 20.0, x0.943. A=6.92. TD 30% vs 0.4 TD/g, for 6.90, about 25th. Consensus has him 8.5, and that 17-spot gap is not clearly supported (a down usage trend over 2 games plus a bye). I pulled him 60% toward the consensus-#8 slot (10.77): 9.22. Footballguys projects 11.71. Final gap is 3."
+        },
+        {
+          "rank": 12,
+          "player": "Dalton Schultz",
+          "team": "HOU",
+          "opp": "vs NYG",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 9.09,
+          "floor": 3.6,
+          "ceiling": 13.8,
+          "implied_total": "26.25 (HOU -10, total 42.5)",
+          "td_prob": "28% (Fanatics +215, DraftKings +265 via Legion Report; 5% vig removed)",
+          "consensus_avg_rank": "14.5 (n=2: FBG 9, RB 20); consensus order #15",
+          "status": "No Week 7 designation found (veteran rest days in Weeks 4 and 6)",
+          "risk": "High: 4.0 tgt/g and a 0.52 snap share over his last 3, 0 TDs, and 5.4 ppg3. The game script (HOU -10) may mean more running.",
+          "why": "U=8.34 (ep 9.73, ppg3 5.4, ppg 9.28). NYG allows 12.32 TE ppg (17th), x0.962; HOU implied 26.25, x1.080. A=8.67. TD 28% vs 0 TDs so far, +0.42, for 9.09. Gap to consensus is 3."
+        },
+        {
+          "rank": 13,
+          "player": "Juwan Johnson",
+          "team": "NO",
+          "opp": "vs PIT (Paris)",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 8.81,
+          "floor": 3.5,
+          "ceiling": 13.4,
+          "implied_total": "20.5 (NO +3.5, total 44.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "14.0 (n=3: DS 14, FBG 14, RB 14); consensus order #13",
+          "status": "No Week 7 designation found",
+          "risk": "High: fading. 11.9, 5.6, then 0.0 pts (2 targets) over Weeks 4-6.",
+          "why": "U=8.81 (ep 9.74, ppg3 5.83, ppg 10.97). PIT allows 11.73 TE ppg (19th), x0.939; NO implied 20.5, x0.955. That gives 7.90, about 19th vs consensus 13-14. ep 9.74 says his usage is still decent, so the 5-6 spot gap is not clearly supported. Pulled 60% toward the consensus slot: 8.81. No TD odds."
+        },
+        {
+          "rank": 14,
+          "player": "Pat Freiermuth",
+          "team": "PIT",
+          "opp": "vs NO (Paris)",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 8.77,
+          "floor": 2.3,
+          "ceiling": 14,
+          "implied_total": "24.0 (PIT -3.5, total 44.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "15.33 (n=3: DS 18, FBG 11, RB 17); consensus order #18",
+          "status": "Injury risk: calf. He was Questionable on the Week 6 report and played (3.1 pts on 3 targets); RotoBaller Week 7 says he 'suffered a bit of an injury last week'. Official Week 7 status not found. -15% applied.",
+          "risk": "High: injury plus a TD-reliant profile (4 TDs, 0.14 target share). Darnell Washington takes snaps.",
+          "why": "U=10.16 (ep 9.02, ppg3 11.77, ppg 10.57). NO allows 17.58 TE ppg (7th most), x1.150; PIT implied 24.0, x1.033. A=12.06, x0.85 questionable haircut = 10.25, about 9th vs consensus order #18. That 9-spot gap is not clearly supported, so he was pulled 70% toward the consensus slot: 8.77. Final gap is 4."
+        },
+        {
+          "rank": 15,
+          "player": "Hunter Henry",
+          "team": "NE",
+          "opp": "at CHI (Thu)",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 8.76,
+          "floor": 2.8,
+          "ceiling": 13.7,
+          "implied_total": "23.75 (NE +3, total 50.5)",
+          "td_prob": "38% (Fanatics +150, 5% vig removed)",
+          "consensus_avg_rank": "15.0 (n=4: FP half-PPR ECR 16, DS 15, FBG 18, RB 11); consensus order #16",
+          "status": "Not on NE's Week 7 practice report (nflverse; Thursday game). QB Drake Maye was a full participant (shoulder).",
+          "risk": "Medium-High: low volume (4.67 tgt/g over his last 3), so he needs a TD. Trending up: 11.2, 13.4, 14.8 in Weeks 4-6.",
+          "why": "U=9.46 (ep 7.48, ppg3 13.13, ppg 8.92). CHI allows 10.52 TE ppg (23rd), x0.889; NE implied 23.75, x1.027. A=8.65. TD 38% vs his 0.33 TD/g pace, +0.11, for 8.76. Gap to consensus is 1. He plays Thursday, so decide before kickoff."
+        },
+        {
+          "rank": 16,
+          "player": "Harold Fannin Jr.",
+          "team": "CLE",
+          "opp": "at TEN",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 8.69,
+          "floor": 3.4,
+          "ceiling": 13.2,
+          "implied_total": "19.5 (CLE -1.5, total 37.5; the slate's lowest game total)",
+          "td_prob": "32% (BetMGM +200, 5% vig removed)",
+          "consensus_avg_rank": "13.5 (n=4: FP 10, DS 19, FBG 12, RB 13); consensus order #12",
+          "status": "No Week 7 designation found",
+          "risk": "High: 1.4 and 1.9 pts in his last two games, 4.0 tgt/g over his last 3, low game total. This projection is mostly consensus-driven, so confidence is low.",
+          "why": "Raw: U=7.10 (ep 7.63, ppg3 5.0, ppg 8.93). TEN allows 10.47 TE ppg (24th), x0.887; CLE implied 19.5, x0.931. A=5.87. TD 32% vs 0.5 TD/g, for 5.72, about 32nd vs consensus #12. The data supports ranking him below consensus but not by 20 spots, so he was pulled 80% toward the consensus slot: 8.69. Final gap is 4."
+        },
+        {
+          "rank": 17,
+          "player": "T.J. Hockenson",
+          "team": "MIN",
+          "opp": "vs IND",
+          "tier": "Tier 3 - streamer",
+          "proj_points": 8.68,
+          "floor": 2.7,
+          "ceiling": 13.5,
+          "implied_total": "24.0 (MIN -6.5, total 41.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "17.0 (n=3: DS 17, FBG 22, RB 12); consensus order #19",
+          "status": "Questionable (concussion) per Legion Report (date not shown); ClutchPoints says he is managing a concussion. -15% applied. MIN had a Week 6 bye.",
+          "risk": "High: concussion status. 1.7 pts on 1 target in Week 5, and his snap share over his last 3 is 0.43.",
+          "why": "U=10.28 (ep 8.65, ppg3 13.3, which is inflated by 24.9 pts in Week 4; ppg 9.84). IND allows 13.27 TE ppg (14th), x0.999; MIN implied 24.0, x1.033. A=10.61, x0.85 questionable = 9.02, about 13th vs consensus #19. Pulled 30% toward the consensus slot: 8.68. If he is ruled out, drop him."
+        },
+        {
+          "rank": 18,
+          "player": "Mike Gesicki",
+          "team": "CIN",
+          "opp": "at BAL",
+          "tier": "Tier 4 - desperation",
+          "proj_points": 8.62,
+          "floor": 2.8,
+          "ceiling": 13.5,
+          "implied_total": "24.25 (CIN +3, total 51.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "not ranked in any top-20 list found (consensus >=21)",
+          "status": "No Week 7 designation found (he missed Week 2, reason not found; Week 6 was CIN's bye)",
+          "risk": "Very high: 4 TDs on 17 targets, 3.5 tgt/g, 0.08 target share and 0.54 snap share over his last 3. Almost pure TD dependence.",
+          "why": "U=10.42 (ep 9.52, ppg3 10.2, ppg 12.98, inflated by TDs). BAL allows 10.12 TE ppg (26th), x0.872; CIN implied 24.25, x1.038. A=9.43, about 12th, but no consensus source ranks him in the top 20. Pulled 50% toward the TE21 slot: 8.62. No TD odds."
+        },
+        {
+          "rank": 19,
+          "player": "Darnell Washington",
+          "team": "PIT",
+          "opp": "vs NO (Paris)",
+          "tier": "Tier 4 - desperation",
+          "proj_points": 8.59,
+          "floor": 2.7,
+          "ceiling": 13.3,
+          "implied_total": "24.0 (PIT -3.5, total 44.5)",
+          "td_prob": "not found",
+          "consensus_avg_rank": "not ranked in any consensus top-20 list (Erickson's individual half-PPR list has him 19th)",
+          "status": "No Week 7 designation found",
+          "risk": "Very high: 4.67 tgt/g over his last 3, 0.10 target share. He gains if Freiermuth (calf) is limited.",
+          "why": "U=7.40 (ep 6.48, ppg3 9.13, ppg 7.1). NO allows 17.58 TE ppg (7th most), x1.150; PIT implied 24.0, x1.033. Projection 8.79, pulled 20% toward the TE21 slot: 8.59. NBC/Rotoworld calls him a TE2 flyer (Week 7 waivers). No TD odds."
+        },
+        {
+          "rank": 20,
+          "player": "Tommy Tremble",
+          "team": "CAR",
+          "opp": "vs TB",
+          "tier": "Tier 4 - desperation",
+          "proj_points": 8.53,
+          "floor": 2.7,
+          "ceiling": 13.4,
+          "implied_total": "24.0 (CAR -3.5, total 44.5)",
+          "td_prob": "24% (BetMGM +300, DraftKings +280; 5% vig removed)",
+          "consensus_avg_rank": "not ranked in any top-20 list found (consensus >=21)",
+          "status": "No Week 7 designation found (rib; full practice in Week 6)",
+          "risk": "Very high: splits work with Darren Waller (0.10 target share, 4.0 tgt/g). His ppg3 rests on one 20.6-pt game on 4 targets.",
+          "why": "U=8.84 (ep 6.75, ppg3 12.9, ppg 7.96). TB allows 15.67 TE ppg (10th most), x1.085; CAR implied 24.0, x1.033. A=9.91. TD 24% vs his 0.4 TD/g pace, for 9.60. No consensus source ranks him in the top 20, so he was pulled 60% toward the TE21 slot: 8.53."
+        }
+      ],
+      "excluded": [
+        {
+          "player": "Dalton Kincaid (BUF)",
+          "reason": "BUF is on bye in Week 7"
+        },
+        {
+          "player": "Brenton Strange (JAX)",
+          "reason": "JAX is on bye in Week 7"
+        },
+        {
+          "player": "David Njoku (LAC)",
+          "reason": "LAC is on bye in Week 7"
+        },
+        {
+          "player": "Chig Okonkwo (WAS)",
+          "reason": "WAS is on bye in Week 7"
+        },
+        {
+          "player": "Terrance Ferguson (LAR)",
+          "reason": "On IR (ankle); not eligible to return until Week 8 (Rotoballer, Oct 19, 2026; The Big Lead)"
+        },
+        {
+          "player": "Tyler Warren (IND), not excluded but ranked 23rd (7.82) and outside the top 20",
+          "reason": "He is not ruled out. He is ranked low because his groin injury was Questionable on the Week 6 report and he missed Week 6, and ESPN calls it lingering in Week 7 (-15% applied). He also faces MIN, which allows the fewest TE ppg (7.62), and IND's implied total is 17.5. Footballguys has him 28th. That supports the 9-spot gap vs consensus (14.0: FP 9, RB 5, FBG 28). If he practices fully, he climbs to about 9.2, roughly TE12."
+        }
+      ],
+      "data_gaps": "1) Injury and news: both news agents ran out of the shared 200-search budget, so I have no Week 7 practice, injury or role news for any TE. Sunday-game teams have not filed official Wednesday reports yet. The only Week 7 report in the local nflverse data is NE/CHI (Henry and Loveland are not listed). The haircuts for Warren and Freiermuth come from Week 6 reports plus Week 7 articles, not from an official Week 7 status. Hockenson's 'questionable' comes from one undated source. Kraft's injury note is unspecified. Goedert's knee/practice item looks stale.\n\n2) Vegas lines:\n- No Week 7 receptions line exists for any TE. The only yards line is Loveland's (44.5 BetMGM; Polymarket U39.5), so the 50% Vegas weight was never used.\n- Anytime-TD odds not found for LaPorta, Kraft, Goedert, Higbee, J. Johnson, Freiermuth, Hockenson, Gesicki, Pitts, Warren, D. Washington, Mayer, Dulcich and Sadiq.\n- Kittle's only price (-105, StatPick, no book) was not used.\n- Vig removal is a flat 5%.\n\n3) Consensus lists:\n- No ordered Week 7 rows found from ESPN (8-ranker aggregate), Yahoo's own consensus or Boone, CBS, PFN, NBC/Rotoworld or Sporting News.\n- FantasyPros ECR is only 2 experts and ranks 1-12, and its scoring format is unconfirmed. Henry, Andrews, Mayer and J. Ferguson come from FP half-PPR ECR.\n- RotoBaller is half-PPR, and Footballguys' format is not stated.\n- SI, TheHuddle, Fantrax and Bleacher Report showed only their top 3-4.\n\n4) Players not projected or unverified:\n- Colby Parkinson (LAR; DS 13, RB 23) is not in the usage table, so he is not projected. Davante Adams being out may help him over Higbee.\n- Whether Bowers is TE-eligible on every platform (one report says WR) is unverified.\n\n5) Model limits:\n- opp_te_ppg_allowed covers only Weeks 1-6, which makes extremes like DET's 31.9 noisy.\n- With no rec/yds lines, the TD-only Vegas component estimates the non-TD part from usage.\n- Floor and ceiling are modeled, not market-derived.\n\n6) Just outside the top 20: Kyle Pitts 8.14 (21st; consensus 15.0, consensus order #17; 15.3 ppg3 but SF allows only 9.18 TE ppg, 29th), Nate Adkins 7.89, Tyler Warren 7.82, Michael Mayer 7.76 (waiver-wire darling, but LAR allows 7.98).\n\n7) Gesicki's Week 2 absence: reason not found."
+    },
+    "verdicts": [
+      {
+        "lens": "status",
+        "v": {
+          "issues": [
+            {
+              "player": "ALL (process)",
+              "claim": "Status fields for the top 15 ('No Week 7 designation found', Hockenson 'questionable', Kraft injury note, Adams out)",
+              "problem": "I could not run my own web check. Every WebSearch I sent came back 'web search budget is used up (limit: 200 per turn, shared)', so 0 of the 10+ planned queries ran. No Week 7 status could be confirmed or refuted from news sources. I checked everything I could against the local nflverse files instead: injuries.csv (2026 Weeks 1-7, but Week 7 only covers NE/CHI), stats_wk.csv, snaps.csv and games.csv, all downloaded Oct 21, 2026. No Wednesday reports exist yet for Sunday or Monday teams.",
+              "correction": "Tell the user that every Week 7 status is unconfirmed, and that they should check the Wed-Fri practice reports (Thu for NE/CHI) before locking lineups.",
+              "severity": "high",
+              "evidence": "WebSearch tool result: 'Web search was not performed: this turn's web search budget is used up' (Oct 21, 2026)"
+            },
+            {
+              "player": "Mark Andrews (BAL)",
+              "claim": "Rank 8. The gap above consensus 'stands because the sportsbook TD price and the team total both rank top-2'. Status: 'No Week 7 designation found'.",
+              "problem": "The ranking leaves out the QB change. Lamar Jackson (ankle) was OUT on the Week 5 and Week 6 reports, and Tyler Huntley started both games with 100% snaps and 32 and 31 attempts. With Huntley, Andrews scored 4.8 (6 tgt) and 1.4 (3 tgt). nflverse games.csv lists Tyler Huntley as BAL's Week 7 QB. A 46% TD price (Fanatics +105) for a TE with 1 TD in 6 games looks off and is not verified. Overriding consensus here is not supported.",
+              "correction": "Drop him to consensus order or below (about TE12-13), behind Goedert, Higbee and Henry. Move him up only if Lamar is confirmed active. Re-verify the +105 TD price.",
+              "severity": "medium",
+              "evidence": "nflverse injuries.csv: BAL Lamar Jackson, Week 5 Ankle Out/DNP, Week 6 Ankle Out/DNP. snaps.csv: Huntley 1.00 in Weeks 5-6. stats_wk.csv: Andrews Week 5 4.8 pts, Week 6 1.4 pts. games.csv 2026_07 CIN@BAL home_qb_name = Tyler Huntley."
+            },
+            {
+              "player": "Dalton Schultz (HOU)",
+              "claim": "Rank 12. '0.52 snap share over his last 3'. 'Veteran rest days in Weeks 4 and 6'.",
+              "problem": "His role is eroding. His snap share went 0.68, 0.54, 0.64, 0.52, then 0.40 in Week 6, when Foster Moreau out-snapped him (0.62) and scored 14.7 on 2 TDs. Schultz had rest-day DNP or limited practices in Weeks 2, 3, 4 and 6, not just 4 and 6. He still led on targets in Week 6 (6 vs 2), but his place as HOU's top TE is no longer secure.",
+              "correction": "Remove him from the top 12. Put Hunter Henry or Mark Andrews ahead of him. Note that Moreau is taking snaps from him.",
+              "severity": "medium",
+              "evidence": "nflverse snaps.csv 2026: Schultz Week 6 0.40, Moreau Week 6 0.62. stats_wk.csv: Moreau Week 6 2 tgt, 2 TD, 14.7. injuries.csv: Schultz 'Not injury related - resting player' in Weeks 2, 3, 4 and 6."
+            },
+            {
+              "player": "Tyler Higbee (LAR)",
+              "claim": "Rank 7, 3 spots above consensus #10. The gap 'stands' partly because 'Adams' absence frees targets' ('ESPN says Davante Adams is out (hamstring)').",
+              "problem": "The Adams claim is not supported by the local data. Adams is on no 2026 injury report in Weeks 1-6 (rest days only) and played 74% of snaps in Week 6, so he did not leave the game early. LAR has not filed a Week 7 report. The TE role is split: Higbee 4 tgt and 4.2 pts in Week 6 vs Parkinson 6 tgt and 14.1. Higbee did play more snaps (0.83 vs 0.62). Using an unverified absence to justify beating consensus is weak.",
+              "correction": "Treat Adams' status as unconfirmed and move Higbee to his consensus slot (about TE10). Re-check after LAR's Wednesday report.",
+              "severity": "medium",
+              "evidence": "nflverse injuries.csv: Davante Adams rows only 'Not injury related - resting player' (Weeks 2, 4, 5). snaps.csv: Adams Week 6 0.74, Higbee 0.83, Parkinson 0.62. stats_wk.csv: Week 6 Higbee 4.2, Parkinson 14.1."
+            },
+            {
+              "player": "Dallas Goedert (PHI)",
+              "claim": "Rank 10. Status: 'Knee: Out in Week 4, full practice Week 5'. The QB is not mentioned.",
+              "problem": "The ranking leaves out the QB change. Jalen Hurts (calf) was OUT and DNP on the Week 6 report, and Tanner McKee started Week 6 (45 attempts, 100% snaps). Hurts' Week 7 status was not found; games.csv lists Hurts, which may only be a projection. The knee history is also slightly wrong: Goedert was Out in both Week 3 and Week 4, and played 25% of snaps in Week 2, the week he got hurt. With McKee he still had 8 tgt and 12.1 pts, so his role is intact.",
+              "correction": "Keep him around TE9-10, but add the Hurts calf caveat. On MNF the QB news may come late.",
+              "severity": "medium",
+              "evidence": "nflverse injuries.csv: PHI Jalen Hurts Week 6 Calf Out/DNP; Goedert Week 3 and Week 4 Knee Out/DNP. stats_wk.csv: Tanner McKee Week 6 45 att. snaps.csv: McKee Week 6 1.00."
+            },
+            {
+              "player": "T.J. Hockenson (MIN)",
+              "claim": "Questionable (concussion) per an undated Legion Report. 'Snap share over his last 3 is 0.43.' -15% applied.",
+              "problem": "The local data cannot confirm the status. There is no 2026 nflverse injury row for Hockenson, and MIN had a Week 6 bye, so no report has been filed since. His Week 5 snap share was 0.03 (1 tgt), which fits an early exit from the game with a concussion. The 0.43 three-game snap share comes from that exit, not from a loss of role. A player still in concussion protocol can be ruled out late, so a flat -15% understates the risk.",
+              "correction": "Keep him outside the top 12 and mark him 'pending protocol clearance; drop if not a full practice by Friday'.",
+              "severity": "medium",
+              "evidence": "nflverse snaps.csv: Hockenson Week 5 0.03 (Weeks 3-4: 0.85 and 0.83). injuries.csv: no Hockenson rows. stats_wk.csv: MIN has no Week 6 game."
+            },
+            {
+              "player": "Isaiah Likely (NYG)",
+              "claim": "Rank 6. Status: 'No Week 7 designation found'. The QB is not mentioned.",
+              "problem": "NYG's QB situation is unsettled. In Week 6, Jameis Winston played 60% of snaps (26 att) and J.J. McCarthy 40% (21 att). Jaxson Dart started Week 1 (knee DNP in Week 3). The Week 7 starter is unconfirmed; games.csv lists Winston. Likely's volume held up through the switch (11 tgt, 23.9 pts), so this is a risk note, not a reason to demote him.",
+              "correction": "Keep him top 6, but add 'NYG QB in flux (Winston/McCarthy)' to his risk.",
+              "severity": "low",
+              "evidence": "nflverse snaps.csv 2026 Week 6: Winston 0.60, McCarthy 0.40. stats_wk.csv: Week 6 Winston 26 att, McCarthy 21 att. injuries.csv: Dart Week 3 knee DNP."
+            },
+            {
+              "player": "Tucker Kraft (GB)",
+              "claim": "Rank 3. RotoBaller 'don't lock him in until the injury report clears'; injury not specified.",
+              "problem": "There is no injury entry for Kraft on any 2026 nflverse report (Weeks 1-6). He played 77% of snaps with 8 targets in Week 6, so nothing suggests he got hurt that week. GB has not filed a Week 7 report. The injury flag is unverified, and so is his Week 7 status.",
+              "correction": "No haircut, but rank 3 rests on the noisy DET split. Treat him as the TE5-6 range (consensus #6) until GB's Wednesday report.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv: no Kraft rows. snaps.csv: Kraft Week 6 0.77. stats_wk.csv: Week 6 8 tgt, 8.7 pts."
+            },
+            {
+              "player": "Colston Loveland (CHI) / Hunter Henry (NE)",
+              "claim": "'Not on CHI's/NE's Week 7 practice report'. Drake Maye full (shoulder).",
+              "problem": "Confirmed: neither TE is on the Week 7 NE/CHI report, and Maye is listed as full participation (shoulder). One thing is missing: Caleb Williams (hamstring) missed Weeks 3-5 and returned in Week 6 after a full practice, which was Loveland's 18.5-pt game. That is a QB upgrade worth noting. A.J. Brown (NE) is limited with an ankle. These games are Thursday, so the decision comes first.",
+              "correction": "No status change. Add a note that Caleb is back for Loveland.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv Week 7: NE Drake Maye Shoulder Full; NE A.J. Brown Ankle Limited; no Loveland or Henry rows. Week 6: CHI Caleb Williams Hamstring Questionable/Full; stats_wk Week 6 Caleb 36 att."
+            },
+            {
+              "player": "Pat Freiermuth / Darnell Washington (PIT)",
+              "claim": "Freiermuth calf, Q in Week 6 and played (3.1 pts on 3 tgt). -15% applied.",
+              "problem": "Confirmed: Q (calf) in Week 6, and he played 72% of snaps. In that game Darnell Washington had 6 tgt (12.5 pts, 0.71 snaps) to Freiermuth's 3, so the target split is shifting toward Washington. PIT's Week 7 report is not out.",
+              "correction": "The haircut is fine. Treat the PIT TEs as a split backfield. Neither belongs in the top 12.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv: Week 6 PIT Freiermuth Calf Questionable. snaps.csv Week 6: Freiermuth 0.72, Washington 0.71. stats_wk.csv Week 6: Washington 6 tgt."
+            },
+            {
+              "player": "George Kittle (SF)",
+              "claim": "'No Week 7 designation found'. Risk cites 3.2 and 7.4 pt games.",
+              "problem": "Could not refute the status. The ranking does leave out that Kittle was on the Achilles practice report in Weeks 1-2 (Limited, then Full) and played only 46% and 48% of snaps those weeks, which explains his Week 1 dud. Since Week 3 his snap share has been 0.85-0.92, so this is not a current concern. SF WRs are banged up (Deebo Samuel Out, Mike Evans Q/DNP, Kirk Q in Week 6), which may push more targets his way.",
+              "correction": "No change. Optionally add 'Achilles early-season, now full-time'.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv: Kittle Week 1 Achilles Limited, Week 2 Full. snaps.csv: Weeks 1-2 0.46 and 0.48, Weeks 3-6 0.85-0.92. Week 6: SF Deebo Samuel Sr. Out, Mike Evans Q/DNP."
+            },
+            {
+              "player": "Brock Bowers (LV)",
+              "claim": "Knee: limited in Week 4, full Weeks 5-6. 'Some sites list him at WR' (unverified).",
+              "problem": "The knee history is confirmed, and the data adds that he missed Weeks 1-2 (Out in Week 1, Doubtful in Week 2). He played 98% of snaps in Week 6 and Kirk Cousins remains the QB, so nothing about his availability argues for dropping him. Rank 5 is purely a matchup call. The WR-eligibility note comes from an unverified mention and may confuse the user.",
+              "correction": "Drop the WR-eligibility note or mark it clearly as unverified. From an availability and role view he is a top-2 start.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv: Bowers Week 1 Knee Out, Week 2 Doubtful, Week 3 Q, Week 4 Limited, Weeks 5-6 Full. snaps.csv: Week 6 0.98."
+            },
+            {
+              "player": "Travis Kelce (KC)",
+              "claim": "Declining usage (4.5 tgt/g over his last 3).",
+              "problem": "Context: Rashee Rice (hamstring) was OUT in Week 6, and Kelce still drew only 5 targets on 66% of snaps. His role really is shrinking, not just squeezed by a healthy WR room. Rice's Week 7 status was not found.",
+              "correction": "No change to the rank. Note the 0.66 snap share in Week 6 as a role risk.",
+              "severity": "low",
+              "evidence": "nflverse injuries.csv: Week 6 KC Rashee Rice Hamstring Out. snaps.csv: Kelce Week 6 0.66."
+            },
+            {
+              "player": "Excluded: Kincaid, Strange, Njoku, Okonkwo, T. Ferguson, Warren",
+              "claim": "BUF, JAX, LAC and WAS are on bye. T. Ferguson is on IR. Warren is not out but has the groin issue.",
+              "problem": "Confirmed. BUF, JAX, LAC and WAS do not appear on the Week 7 schedule in games.csv. Ferguson has no stats after Week 3, which fits IR. Warren was Q (groin) and limited in Week 6 and did not play; IND has no Week 7 report yet. No excluded player was found to be active.",
+              "correction": "None.",
+              "severity": "low",
+              "evidence": "nflverse games.csv 2026 Week 7 (14 games; byes BUF, JAX, LAC, WAS). injuries.csv: Week 6 IND Warren Groin Q/Limited. stats_wk.csv: Warren has no Week 6 row."
+            }
+          ],
+          "suggested_top12": [
+            "Brock Bowers (LV) - fully healthy, 98% snaps in Week 6",
+            "Trey McBride (ARI)",
+            "George Kittle (SF)",
+            "Sam LaPorta (DET)",
+            "Isaiah Likely (NYG) - NYG QB in flux",
+            "Tucker Kraft (GB) - injury note unverified; check GB's Wednesday report",
+            "Colston Loveland (CHI, Thu) - clean report, Caleb back",
+            "Travis Kelce (KC)",
+            "Dallas Goedert (PHI, Mon) - Hurts calf status",
+            "Tyler Higbee (LAR) - Adams-out claim unverified; Parkinson split",
+            "Hunter Henry (NE, Thu) - clean report",
+            "Mark Andrews (BAL) - only if Lamar is active; otherwise below Fannin and Juwan Johnson"
+          ],
+          "overall_ok": false
+        }
+      },
+      {
+        "lens": "math",
+        "v": {
+          "issues": [
+            {
+              "player": "George Kittle",
+              "claim": "Rank 1 at 16.29, ahead of LaPorta, Kraft, McBride and Bowers",
+              "problem": "The #1 spot comes from treating TDs differently for different players, not from the data. Players with TD odds get their actual TD rate partly swapped for the market price: Likely -0.41, Bowers -0.24, McBride -0.07. Kittle has the highest TD rate in the top 6 (5 TD in 6 games, 0.83/g, against an ep-based xTD of 0.68/g), but he has no accepted price, so he keeps the full inflated rate.",
+              "correction": "Using his own (unused) -105 price: p = 0.5122/1.05 = 0.488, and the adjustment is 1.5*(0.488 - 0.833*1.1816) = -0.75, giving 15.55. That ranks #4, behind LaPorta 16.11, Kraft 15.99 and McBride 15.65. Using xTD instead of a market price gives -0.27 and 16.02, which is #3. Across my 24-variant grid Kittle ranks 2-5 (mean 3.25) and is never #1. Present him as one of the top 4, not the clear #1.",
+              "severity": "medium",
+              "evidence": "te_table.csv: tds 5, gp 6, M = sqrt(15.62/13.3)*sqrt(26.75/22.5) = 1.1816. ep.csv total_touchdown_exp mean is 0.68/g. proj.py applies the TD swap only to names in td_prices."
+            },
+            {
+              "player": "Sam LaPorta",
+              "claim": "ppg3 21.1 and '9.0 tgt/g over his last 3 games', giving U 16.75 and a projection of 16.11 (#2)",
+              "problem": "ppg3 and tgt3 cover calendar Weeks 4-6, not his last 3 games. DET was on bye in Week 6, so both are 2-game averages (22.4 and 19.8 pts; 13 and 5 targets) carrying 30% of the weight. Over his last 3 games played (Weeks 3-5: 7.4, 22.4, 19.8) ppg3 is 16.53 and tgt3 is 7.33. The 0.84 snap figure is also a 2-game mean.",
+              "correction": "With ppg3 = 16.53, U = 15.38 and A = 14.79, which drops him from #2 to #4 or #5 under the published method. Fix the 'last 3 games' wording, or define ppg3 as last 3 games played.",
+              "severity": "medium",
+              "evidence": "stats_wk.csv LaPorta: W3 4 tgt/7.4, W4 13/22.4, W5 5/19.8, no W6 row. games.csv shows DET's bye in Week 6."
+            },
+            {
+              "player": "Brock Bowers",
+              "claim": "Rank 5 (14.56). 'My #5 vs consensus 1.62 is a 3.4-spot gap, inside the 4-spot band'",
+              "problem": "(a) The stated rule measures gaps against consensus order, where Bowers is #1, so the gap is exactly 4, the edge of the band. The 3.4 figure uses the raw average and contradicts the rule. (b) The drop rests on one 6-game defensive split that is only sqrt-damped: LA allowed 7.1, 8.3, 7.8, 3.3, 5.3, 18.1. In the raw data LA's figure is 8.32, not 7.98. Bowers has the highest usage in the pool (U 19.32, ep 19.5, 10.75 tgt/g). (c) The consensus blend runs in one direction only. Kraft's matchup-driven 5-spot gap was pulled down by 'one noisy defensive stat', while Bowers' 4-spot matchup-driven gap was never pulled up.",
+              "correction": "With the corrected LA value of 8.32 his projection is about 14.9. With 25% shrinkage of opponent TE-allowed toward the league mean he ranks #2 (15.66); with 50% he ranks #1 (16.70). Across my grid he ranks 1-5 (mean 3.1), and consensus has him #1. Rank him #1 or #2, not #5.",
+              "severity": "medium",
+              "evidence": "Recomputed from stats_wk.csv: LA TE ppg allowed is 8.32 over 6 games. final.json: Bowers final_rank 5, crank 1, w 0.0."
+            },
+            {
+              "player": "Tucker Kraft",
+              "claim": "Pulled 50% toward the consensus-#6 slot (13.69), giving 15.99 (#3)",
+              "problem": "15.99 is not a model output. The 13.69 is Likely's raw projection, and w = 0.5 is just the first 10% step that gets the gap to <=4. The 'one noisy defensive stat' wording undersells the data: DET allowed 27.7, 31.0, 41.4, 13.6 and 45.8 TE points across 5 games, which is consistent rather than one outlier. Kraft's injury note is also unspecified (no nflverse injury rows; 77% snaps in Week 6).",
+              "correction": "Label 15.99 as a consensus-blended value. The raw model has him #1 (18.29), and across my variants he ranks 1-5 (mean 2.0). Ranking him #3-5 is defensible, but the point estimate is constructed. Check practice reports Wednesday through Friday.",
+              "severity": "low",
+              "evidence": "final.json: Kraft P 18.29, w 0.5, F 15.99. Week-by-week DET allowed is recomputed from stats_wk.csv."
+            },
+            {
+              "player": "Isaiah Likely",
+              "claim": "ppg 17.88, ppg3 22.63, projection 13.69",
+              "problem": "te_table.csv leaves out 2-point conversions, which count 2 points in full PPR. Likely had a receiving 2-pt conversion in Week 6 (23.9 pts, not 21.9). The true ppg is 18.22 and ppg3 is 23.30.",
+              "correction": "U rises to 18.90 and the projection to about 13.90. He stays #6, but the input is misread.",
+              "severity": "low",
+              "evidence": "stats_wk.csv Likely W6: receiving_2pt_conversions 1, fantasy_points_ppr 23.9. (13.6+32.4+21.9)/3 = 22.63 reproduces the table value without the 2-pt."
+            },
+            {
+              "player": "Multiple (Higbee, Bowers, Andrews, Loveland, J. Johnson, Freiermuth, D. Washington)",
+              "claim": "opp_te_ppg_allowed: NO 17.58 (7th), LA 7.98, CIN 16.24, BAL 10.12 (26th), league average 13.3",
+              "problem": "The same missing 2-pt conversion makes each of these about 2 total points low. The raw values are NO 17.92 (6th), LA 8.32, CIN 16.64 and BAL 10.45 (25th). So 'LV 17.72 = 6th most' is actually 7th, and 'NE 10.18 = 25th' is actually 26th. The 32-team mean is 13.91, not 13.3. That inflates every projection by about 2.3% (uniform, so the order is unaffected) and slightly distorts the blend.",
+              "correction": "Recompute the opponent table including 2-pt conversions, and use 13.91 as the base.",
+              "severity": "low",
+              "evidence": "Per-defense sums of TE fantasy_points_ppr over each team's games in Weeks 1-6 (stats_wk.csv and games.csv)."
+            },
+            {
+              "player": "Travis Kelce / Harold Fannin Jr. / Juwan Johnson / Freiermuth / Tremble / Gesicki / Hockenson",
+              "claim": "Ranks 11-20 projected 9.22 down to 8.53",
+              "problem": "These are mostly consensus numbers, not projections. Kelce's model value is 6.90 (about 25th), lifted 60% to 9.22. Fannin's is 5.72 (about 32nd), lifted 80% to 8.69. Johnson's 7.90 was lifted to 8.81. Meanwhile higher raw values were pulled down: Freiermuth 10.25 (raw #9) to 8.77, Tremble 9.60 (raw #11) to 8.53, Gesicki 9.43 (raw #12) to 8.62, Hockenson 9.02 to 8.68. The whole band spans 0.69 points, so its order is set by the arbitrary 10% blend steps. Kelce is outside the model's top 20 in every variant I ran, and so is Fannin. Warren alone is exempted from the blend (KEEP), even though his haircut rests on a Week 6 tag.",
+              "correction": "Show the raw model rank next to the consensus rank, and do not present Kelce (#11) or Fannin (#16) as data-supported. Kelce's #11 is a consensus call (his own last 2 games: 4 and 5 targets; SEA allows 8.92, 30th).",
+              "severity": "medium",
+              "evidence": "final.json fields P, w, F. out.json raw order: Kraft, Kittle, LaPorta, McBride, Bowers, Likely, Higbee, Andrews, Freiermuth, Loveland, Tremble, Gesicki, Goedert, Schultz, Hockenson..."
+            },
+            {
+              "player": "Dallas Goedert",
+              "claim": "#10 at 9.42; '8.5 tgt/g over his last 3'",
+              "problem": "His tgt3 and ppg3 come from only 2 games (Weeks 5-6; he missed Weeks 3-4). Over his last 3 games played, ppg is 7.77 versus the 10.95 used. His 2 TDs came in Week 1, and his ep xTD is only 0.115/g. With no odds, the TD rate is never regressed, unlike Andrews, Schultz and others.",
+              "correction": "With last-3-games ppg3 his projection is about 8.4. With an xTD regression it ranks 12-21 across my grid (mean 16.5). His #10 leans on consensus (9.75). Keep him around #10 only as a consensus call.",
+              "severity": "low",
+              "evidence": "stats_wk.csv Goedert: W1 23.7 (2 TD), W2 1.4, W5 9.8, W6 12.1. ep.csv xTD 0.115/g."
+            },
+            {
+              "player": "Kelce, Hockenson, Gesicki, Tremble, McBride (labels)",
+              "claim": "'X tgt/g over his last 3' / 'snap share over his last 3'",
+              "problem": "Several labels are wrong. Kelce's 4.5 tgt/g is 2 games (Weeks 4 and 6). Hockenson's 0.43 snap share is mean(0.83, 0.03) over 2 games. Gesicki's 3.5 is Weeks 4-5 only. McBride's '10.83 tgt/g, 0.30 target share over his last 3' are his season numbers; his last-3 figures are 10.33 and 0.27.",
+              "correction": "Relabel these as Weeks 4-6 (calendar), or recompute over the last 3 games played.",
+              "severity": "low",
+              "evidence": "stats_wk.csv and snaps.csv weekly rows. Hockenson's W5 offense_pct is 0.03, which supports an early-exit concussion."
+            },
+            {
+              "player": "Pat Freiermuth / Tyler Warren",
+              "claim": "-15% questionable haircut applied",
+              "problem": "Neither has an official Week 7 status. The nflverse Week 7 report only covers NE and CHI. Freiermuth was Questionable (calf) in Week 6 but played 72% of snaps (3 targets), so carrying the haircut forward is a guess. Without it his raw value is 12.06, which would be #7 before blending. Warren was Questionable/limited in Week 6 and missed the game; without the haircut he is about 9.2 (TE12 range). Neither is a top-12 swing once blending is applied, but the haircut was applied to Freiermuth while Kraft's unspecified note got none, which is inconsistent.",
+              "correction": "Use a scenario projection: show both values and resolve them on the Friday report.",
+              "severity": "low",
+              "evidence": "injuries.csv: W6 PIT Freiermuth 'Calf Questionable'; W6 IND Warren 'Groin Questionable / Limited'. No Week 7 rows for either team."
+            },
+            {
+              "player": "Mark Andrews",
+              "claim": "Anytime TD +105 (Fanatics), giving p = 46%, the highest of any TE",
+              "problem": "The conversion is arithmetically correct (105/205 = 0.512, /1.05 = 0.465), but the price is implausibly short for a TE with 1 TD in 6 games, 5 tgt/g over his last 3 and an ep xTD of 0.317/g. It is shorter than McBride's and Bowers'. It may be stale, from another market, or misattributed. I could not verify it because the shared web-search budget was exhausted.",
+              "correction": "Treat it as unverified. The ordering impact is nil: without it Andrews' A is 10.38, still #8. Only the +0.39 boost and the 'top-2 TD price' justification would go away.",
+              "severity": "low",
+              "evidence": "ep.csv: Andrews xTD 0.317/g. stats_wk.csv: 1 rec TD."
+            },
+            {
+              "player": "All TEs with TD odds",
+              "claim": "Divide the average implied probability by 1.05 to strip about 5% vig",
+              "problem": "All American-to-probability conversions check out: +130 is 0.435, +135 is 0.426, +120 is 0.455, +165 is 0.377, +105 is 0.488, +150 is 0.400, +180 is 0.357, +190 is 0.345, +200 is 0.333, +215 is 0.317, +265 is 0.274, +220 is 0.3125, +300 is 0.25, +280 is 0.263. However, one-way anytime-TD props carry much more than 5% hold, so p is overstated for every player with odds. This shifts priced players by about 0.05-0.1 pts relative to unpriced ones. Loveland also has conflicting yards lines (BetMGM 44.5 vs Polymarket 39.5); one is probably stale, though neither was used.",
+              "correction": "Use a larger vig factor (about 1.15-1.25) or de-vig across the full market. The effect is small and does not change the top 12. No odds could be externally re-verified because the search budget was exhausted.",
+              "severity": "low",
+              "evidence": "Recomputed by hand. proj.py imp() is correct."
+            },
+            {
+              "player": "Consensus (Bowers, Kittle, McBride, Likely vs LaPorta, Kraft)",
+              "claim": "Average rank across 8 lists",
+              "problem": "The top-3/4-only lists (SI, Huddle, Fantrax, BR) can only add votes for Bowers, Kittle, McBride and Likely, never for LaPorta or Kraft, so the sample sizes are uneven (n=7-8 vs n=4). FP ECR (2 experts) and Draft Sharks also have identical top 7s, so the two may share a ranker. The order is unchanged on the 4 full lists alone (Bowers 1.0, Kittle 2.5, McBride 2.5, LaPorta 4.25, Likely 5.0, Kraft 6.5), so the impact is minor.",
+              "correction": "Report the consensus from full lists only, or note the truncation bias.",
+              "severity": "low",
+              "evidence": "Ranks listed in the ranking's consensus_avg_rank fields and in the cons dict in proj.py."
+            },
+            {
+              "player": "Floors/ceilings (e.g., Kittle vs LaPorta)",
+              "claim": "Kittle floor 6.3 vs LaPorta floor 10.1",
+              "problem": "The gap comes from a hard bucket threshold at 7.0 season tgt/g: Kittle at 6.0 gets CV 0.74, while LaPorta at 7.4 gets 0.44. The 'hi' CV is estimated from only 5 players and 26 games. The floors are artifacts of the bucketing, not player-specific (LaPorta's own weekly scores run 7.4 to 22.4).",
+              "correction": "Use player-level CV shrunk toward the pooled value, or a continuous function of targets.",
+              "severity": "low",
+              "evidence": "Rerun of proj.py CV: hi 0.395 (n=26), mid 0.671 (n=77), lo 0.761 (n=88), each x1.105."
+            }
+          ],
+          "suggested_top12": [
+            "1. Brock Bowers (LV vs LAR): highest usage in the pool. Ranks #1-2 once the 6-game LAR split is shrunk even 25%. Consensus #1.",
+            "2. George Kittle (SF at ATL): consensus #2. Model ranks him 2-5 once TD luck is treated the same as for players with odds.",
+            "3. Trey McBride (ARI vs DEN): safest floor (10.3 tgt/g over his last 3). Model 3-5, consensus #3.",
+            "4. Sam LaPorta (DET vs GB): best team total (28.25), but his 21.1 ppg3 is a 2-game sample. 16.5 over his last 3 games.",
+            "5. Tucker Kraft (GB at DET): raw model #1 on DET's 31.9 TE ppg allowed (consistent across 5 games). Check his practice status.",
+            "6. Isaiah Likely (NYG at HOU): elite volume (12 tgt/g). Lowest team total on the slate (16.25).",
+            "7. Colston Loveland (CHI vs NE, Thu): model 8-11, consensus #7. 7 tgt/g over his last 3, CHI implied 26.75.",
+            "8. Tyler Higbee (LAR at LV): model 7-8 in every variant, but Parkinson split risk (consensus #10).",
+            "9. Mark Andrews (BAL vs CIN): model 8-12, BAL implied 27.25. His +105 TD price is unverified.",
+            "10. Dallas Goedert (PHI vs DAL, Mon): mostly a consensus pick (9.75). Model 12-21 once his 2-game ppg3 and Week 1 TDs are normalized.",
+            "11. Pat Freiermuth (PIT vs NO, Paris): model 7-13 vs NO's 17.9 TE ppg allowed. Downgrade if his calf issue shows up on the Week 7 report. If he is out, start Dalton Schultz.",
+            "12. Dalton Schultz (HOU vs NYG): HOU implied 26.25, TD +215/+265. Low snap share. Consensus alternative: Travis Kelce (consensus #8, model about 20-25th)."
+          ],
+          "overall_ok": false
+        }
+      },
+      {
+        "lens": "consensus",
+        "v": {
+          "issues": [
+            {
+              "player": "ALL (method note)",
+              "claim": "Review was meant to use at least 8 new WebSearch queries for Week 7 2026 TE rankings",
+              "problem": "Every WebSearch call came back 'web search budget is used up (limit: 200 per turn, shared by every agent)'. I ran no new searches. This review checks the ranking against the 8 consensus lists already captured in work/proj.py (FP ECR Oct 20, Draft Sharks Oct 20, Footballguys Wk7, RotoBaller, SI/Yahoo, TheHuddle, FantraxHQ, Bleacher Report) and against local 2026 nflverse data (raw/stats_wk.csv, raw/injuries.csv, te_table.csv).",
+              "correction": "Treat every consensus and odds item below as unverified beyond what the earlier agents recorded. Week 7 injury status is still 'not found' for everyone.",
+              "severity": "info",
+              "evidence": "WebSearch tool response, Oct 21 2026: 'this turn's web search budget is used up'"
+            },
+            {
+              "player": "Tucker Kraft",
+              "claim": "#3 (15.99), ahead of McBride and Bowers, because DET allows 31.9 TE ppg (2.4x the average)",
+              "problem": "Kraft is ranked far above consensus without solid data behind it. No list has him higher than 6th (FP 6, DS 6, FBG 7, RB 7). All 4 full lists rank Bowers, Kittle, McBride, LaPorta and Likely ahead of him. The 31.9 is DET's total across all opposing TEs, and much of it went to second TEs: NO had Johnson 14.4 and Fant 13.3, NYJ had Sadiq 23.5 and Ruckert 14.9, ARI had McBride 21.6 and Quitoriano 15.5. The best single TE against DET averaged 17.7 per game, versus 10.5 league-wide, so the edge for one TE is about 1.3x, not 1.55x. Kraft's own 2026 games were 9.5, 3.5, 6.6, 16.5, 11.6 and 8.7. A 15.99 projection is 1.7x his 9.4 ppg and close to his season high. RotoBaller's injury flag on him is also still unresolved.",
+              "correction": "Move him back to #6, the consensus spot. Present him as the high-ceiling option in that group, not as the TE3.",
+              "severity": "high",
+              "evidence": "stats_wk.csv 2026: TE points allowed by DET each week, and Kraft's weekly log. proj.py consensus lists."
+            },
+            {
+              "player": "Sam LaPorta",
+              "claim": "#2 (16.11), using ppg3 = 21.1",
+              "problem": "The ppg3 input is a bye-week artifact. DET had its bye in Week 6, so 'last 3' covers calendar Weeks 4-6 and averages only two games: 22.4 and 19.8. His last three games played (Weeks 3-5: 7.4, 22.4, 19.8) average 16.53. Using that, U drops from 16.75 to 15.38 and the projection drops to about 14.79. That is below Kittle (16.29) and McBride (15.65) and roughly tied with Bowers. GB is also a tough matchup: the best single TE against GB has averaged 7.6 per game.",
+              "correction": "Put LaPorta at #4, the consensus spot (4.25). Fix ppg3 to use the last 3 games played, not the last 3 calendar weeks. The same bug inflates Hockenson (ppg3 13.3 = average of 24.9 and 1.7; last 3 games = 9.9) and deflates Kelce (6.4 = average of 3.5 and 9.3; last 3 games = 8.9).",
+              "severity": "high",
+              "evidence": "stats_wk.csv 2026 LaPorta weeks 1-5: 9.8, 17.2, 7.4, 22.4, 19.8. te_table.csv ppg3 = 21.1."
+            },
+            {
+              "player": "Tyler Higbee",
+              "claim": "#7 (12.15); the 6-spot gap from consensus 'stands'",
+              "problem": "Higbee's best rank on any list is 11th (FP 11, DS 11, FBG 15, RB 16). All 4 lists have Loveland ahead of him, and 3 of 4 have Kelce and Goedert ahead. The model puts him above all three. Its main reason is LV allowing 17.72 TE ppg, but one game drives that: NO's TEs scored 42.6 against LV (Johnson 23.3, Fant 19.3). LV's median game is 14.3. The best single TE against LV averaged 10.8 per game, about the league norm of 10.5, so the matchup is neutral for one TE. Swapping in that per-TE stat lowers his projection to about 10.7. He is also in a committee: Parkinson scored 14.1 on 6 targets in Week 6, against Higbee's 4.2 on 4. The CBS source cited only calls him a possible top-12 TE, which is not support for TE7. The ESPN Adams-out item has no date.",
+              "correction": "Rank him about #10-11, behind Loveland, Goedert and Kelce.",
+              "severity": "high",
+              "evidence": "stats_wk.csv 2026: TE points allowed by LV each week, plus Higbee and Parkinson weekly logs. proj.py consensus lists."
+            },
+            {
+              "player": "Mark Andrews",
+              "claim": "#8 (10.77), held up by a 46% TD probability and BAL's 27.25 implied total",
+              "problem": "All 4 full lists have Goedert ahead of him (FP 17/12, DS 9/8, FBG 13/10, RB 15/9), all 4 have Loveland ahead, and 3 of 4 have Kelce ahead. The model puts Andrews above all three. His 2026 games were 8.9, 10.9, 5.4, 13.7, 4.8 and 1.4, and he has never scored more than 13.7. The only TD price (Fanatics +105, about 46%) comes from a single book with no date. It makes him a likelier scorer than Bowers (+130) or McBride (+120/+135), despite 1 TD in 6 games and 5.0 targets a game over his last 3, so it looks stale or misattributed. The CIN matchup is genuinely good: the best single TE against CIN has averaged 13.5 per game. That supports a top-12 spot, but not a place ahead of Loveland and Goedert.",
+              "correction": "Rank him about #10. Drop the +105 price unless a dated Week 7 source confirms it; the projection is about 10.4 without it.",
+              "severity": "medium",
+              "evidence": "stats_wk.csv 2026 Andrews weekly log; TD prices as listed in proj.py td_prices; proj.py consensus lists"
+            },
+            {
+              "player": "Brock Bowers",
+              "claim": "#5 (14.56), with the drop described as 'purely matchup'",
+              "problem": "Six of 8 lists have him at TE1, including all four full lists. Kraft was pulled toward consensus because his matchup stat was 'noisy', but Bowers' equally extreme LAR stat (7.98) was taken at face value. Bowers also has the highest usage score in the pool (U=19.32), and his worst 2026 game is 11.0. The LAR toughness is partly real: they held Kittle to 3.2, Likely to 8.3 and McBride to 12.3. That supports a near-tie with Kittle and McBride. It does not support ranking him below Kraft and LaPorta, both of whom only rank above him because of the issues flagged here.",
+              "correction": "Rank him in the top 3; I suggest #1, with Kittle and McBride effectively tied.",
+              "severity": "medium",
+              "evidence": "proj.py consensus lists (Bowers #1 in FP, DS, FBG, RB, TheHuddle, BR); stats_wk.csv TE points allowed by LA"
+            },
+            {
+              "player": "Tyler Warren",
+              "claim": "Ranked 23rd (7.82); his gap from consensus is kept as 'clearly supported'",
+              "problem": "He is a possible strong start that the ranking leaves out. FP ECR has him 9th and RotoBaller 5th; only Footballguys (28th) has him low. The 23rd-place rank combines a -15% injury cut based on Week 6 data with the stingiest TE defense. The only hard injury data is from Week 6: Questionable and a limited practice (injuries.csv), and he missed that game. His Week 7 status is 'not found'. When healthy he scored 10.3, 14.4, 14.7, 9.1 and 21.4. MIN really is tough (the best single TE against it averages 5.6 per game), which caps him around TE10-12 even if healthy.",
+              "correction": "List him as a conditional TE10-12 that depends on his Wed-Fri practice status, instead of burying him at 23rd. If he is limited or out, Hunter Henry is the next option.",
+              "severity": "medium",
+              "evidence": "injuries.csv 2026 Week 6: IND Tyler Warren, groin, Questionable, Limited Participation. proj.py consensus: FP 9, RB 5, FBG 28."
+            },
+            {
+              "player": "Travis Kelce",
+              "claim": "#11 (9.22) after a 60% pull toward consensus; raw projection 6.90",
+              "problem": "The raw projection is too low because of the same bye-week ppg3 bug. KC's Week 5 bye means his ppg3 of 6.4 averages only 3.5 and 9.3. His last three games played average 8.9, which raises U from 8.96 to 9.71. The consensus has him 8.5 (FP 8, DS 12, FBG 6, RB 8), and 3 of 4 lists rank him ahead of Higbee and Andrews. SEA really is stingy, so ranking him below Goedert is defensible.",
+              "correction": "Rank him about #9, ahead of Higbee and Andrews.",
+              "severity": "low",
+              "evidence": "stats_wk.csv Kelce weeks 3, 4, 6: 13.9, 3.5, 9.3. te_table.csv ppg3 = 6.4."
+            },
+            {
+              "player": "Dalton Schultz",
+              "claim": "#12 (9.09)",
+              "problem": "Only 2 lists have him (FBG 9, RB 20). His usage over the last 3 is weak: 4.0 targets a game, 0.13 target share, 0.52 snap share, 0 TDs. Excluding one 26.0 game in Week 2, his weekly scores were 7.5, 6.0, 2.9, 6.0 and 7.3. The rank rests on HOU's implied total and a 28% TD price. Swapping in the per-TE opponent stat gives about 8.2, which is roughly 16th.",
+              "correction": "Drop him from the top 12. The #12 spot is a near coin-flip; Warren (if active), Henry or Fannin fit the consensus better.",
+              "severity": "low",
+              "evidence": "te_table.csv (tgt3 4.0, tsh3 0.13, snap3 0.52, tds 0); stats_wk.csv weekly log"
+            },
+            {
+              "player": "Gesicki / D. Washington / Tremble vs Pitts / Mayer / Otton",
+              "claim": "Tier 4 (ranks 18-20) is three TEs absent from every consensus top-20 list",
+              "problem": "Players who are on consensus lists sit outside the top 20: Pitts (DS 10, FBG 17, RB 18), Otton (DS 16, FBG 19) and Mayer (FBG 16, RB 19). Meanwhile 3 players in no list make it. Pitts' last 3 games were 7.7, 15.2 and 23.0 on 3-7 targets. This does not affect who to start, but the bottom of the list goes against consensus without strong data.",
+              "correction": "Swap Pitts in for Tremble or Washington at ranks 18-20.",
+              "severity": "low",
+              "evidence": "proj.py consensus lists; stats_wk.csv Pitts weekly log"
+            },
+            {
+              "player": "Bottom line (top six)",
+              "claim": "'the same six TEs top every list'",
+              "problem": "This is factually wrong. Footballguys has Kelce 6th and Kraft 7th. RotoBaller has Warren 5th and Kraft 7th. The six only match in FP and Draft Sharks.",
+              "correction": "Change it to: 'the same five TEs (Bowers, Kittle, McBride, LaPorta, Likely) are top-6 on every full list; Kraft is 6th-7th'.",
+              "severity": "low",
+              "evidence": "proj.py consensus dict (Footballguys and RotoBaller entries)"
+            }
+          ],
+          "suggested_top12": [
+            "1. Brock Bowers (LV vs LAR) - consensus TE1 on 6 of 8 lists, highest usage; LAR is tough, so treat 1-3 as a near-tie",
+            "2. George Kittle (SF at ATL) - best matchup and team total among the elite TEs",
+            "3. Trey McBride (ARI vs DEN) - safest floor (10.3 tgt/g last 3)",
+            "4. Sam LaPorta (DET vs GB) - corrected projection about 14.8 once the bye-week ppg3 bug is fixed",
+            "5. Isaiah Likely (NYG at HOU) - elite recent volume, but the slate's lowest team total",
+            "6. Tucker Kraft (GB at DET) - highest ceiling of the group, but the DET edge is overstated and RotoBaller's injury flag is unresolved",
+            "7. Colston Loveland (CHI vs NE, Thu) - 7 tgt/g and 0.87 snap share over his last 3",
+            "8. Dallas Goedert (PHI vs DAL, Mon) - 8.5 tgt/g in his last 2 games, neutral matchup",
+            "9. Travis Kelce (KC at SEA) - consensus 8.5, tough matchup",
+            "10. Mark Andrews (BAL vs CIN) - good CIN matchup and BAL total, poor recent form",
+            "11. Tyler Higbee (LAR at LV) - committee with Parkinson, LV matchup neutral for a single TE",
+            "12. Tyler Warren (IND at MIN) ONLY if he practices fully; otherwise Hunter Henry (NE at CHI, Thu)"
+          ],
+          "overall_ok": false
+        }
+      }
+    ],
+    "gathered": {
+      "rA": {
+        "sources": [
+          {
+            "source": "FantasyPros Expert Consensus Rankings (ECR), Week 7 TE, weekly-te.php. Header reads 'Consensus of 2 Experts'. Panel: Andrew Erickson and Pat Fitzmaurice, with Derek Brown's column shown as N/A. Scoring format not confirmed on the page; the half-PPR TE page is separate, and the full-PPR page (ppr-te.php) never returned its rows. Ranks 13-20: not found.",
+            "date": "Oct 20, 2026",
+            "url": "https://www.fantasypros.com/nfl/fantasy-football-rankings/weekly-te.php",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Brock Bowers (LV vs LAR)"
+              },
+              {
+                "rank": 2,
+                "player": "George Kittle (SF at ATL)"
+              },
+              {
+                "rank": 3,
+                "player": "Trey McBride (ARI vs DEN)"
+              },
+              {
+                "rank": 4,
+                "player": "Sam LaPorta"
+              },
+              {
+                "rank": 5,
+                "player": "Isaiah Likely (NYG)"
+              },
+              {
+                "rank": 6,
+                "player": "Tucker Kraft"
+              },
+              {
+                "rank": 7,
+                "player": "Colston Loveland"
+              },
+              {
+                "rank": 8,
+                "player": "Travis Kelce"
+              },
+              {
+                "rank": 9,
+                "player": "Tyler Warren"
+              },
+              {
+                "rank": 10,
+                "player": "Harold Fannin Jr."
+              },
+              {
+                "rank": 11,
+                "player": "Tyler Higbee"
+              },
+              {
+                "rank": 12,
+                "player": "Dallas Goedert"
+              }
+            ]
+          },
+          {
+            "source": "FantasyPros, Andrew Erickson's own HALF-PPR Week 7 TE ranks (one expert, not the consensus). Only ranks 13-20 were visible; ranks 1-12 not found. The same table showed half-PPR ECR for some players: Henry 16, Andrews 17, Mayer 22, Jake Ferguson 24. Erickson had Ferguson 24th and Dalton Schultz 25th.",
+            "date": "Oct 20, 2026",
+            "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?position=TE",
+            "ranks": [
+              {
+                "rank": 13,
+                "player": "Juwan Johnson"
+              },
+              {
+                "rank": 14,
+                "player": "Tyler Higbee"
+              },
+              {
+                "rank": 15,
+                "player": "Kyle Pitts"
+              },
+              {
+                "rank": 16,
+                "player": "Pat Freiermuth"
+              },
+              {
+                "rank": 17,
+                "player": "Hunter Henry (NE at CHI)"
+              },
+              {
+                "rank": 18,
+                "player": "Mark Andrews (BAL vs CIN)"
+              },
+              {
+                "rank": 19,
+                "player": "Darnell Washington"
+              },
+              {
+                "rank": 20,
+                "player": "Michael Mayer (LV vs LAR)"
+              }
+            ]
+          },
+          {
+            "source": "ESPN Week 7 TE rankings, PPR aggregate of 8 rankers (Matt Bowen, Mike Clay, Tristan H. Cockcroft, Daniel Dopp, Eric Karabell, Liz Loza, Eric Moody, Field Yates). The page exists and lists the Week 7 byes as BUF, LAC, WAS, JAX, but no ranked rows came back in any of about 8 queries. Order: not found. Mike Clay's and Field Yates' individual Week 7 TE ranks: not found.",
+            "date": "Week 7 2026; exact date not shown (page says it is published each Tuesday, so likely Oct 20, 2026)",
+            "url": "https://www.espn.com/fantasy/football/story/_/page/FFWeeklyPlayerRank26-49804164/nfl-fantasy-football-rankings-2026-te-tight-end",
+            "ranks": []
+          },
+          {
+            "source": "Yahoo Sports in-house consensus, Week 7 Full PPR TE (Justin Boone, Matt Harmon, Scott Pianowski, Joel Smyth, Hayden Winks). The page exists, but its player rows never came back. Order: not found.",
+            "date": "Week 7 2026; exact date not shown",
+            "url": "https://sports.yahoo.com/fantasy/article/week-7-fantasy-football-full-ppr-te-rankings-182526723.html",
+            "ranks": []
+          },
+          {
+            "source": "Yahoo Sports, Justin Boone's Week 7 Full PPR TE rankings (he updates them through the week; final version due Sunday morning). Order: not found.",
+            "date": "Tue Oct 20, 2026 (date on the AOL syndicated copy)",
+            "url": "https://sports.yahoo.com/fantasy/article/justin-boones-week-7-fantasy-football-full-ppr-te-rankings-165910968.html",
+            "ranks": []
+          },
+          {
+            "source": "Fantasy Sports On SI, syndicated on Yahoo Sports (NOT Yahoo's own analysts). Article: 'Brock Bowers Falls Behind Isaiah Likely To His Lowest 2026 Ranking'. Only the top 4 were visible.",
+            "date": "Week 7 2026; exact date not shown",
+            "url": "https://sports.yahoo.com/articles/week-7-fantasy-football-tight-204050302.html",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Trey McBride (ARI vs DEN)"
+              },
+              {
+                "rank": 2,
+                "player": "George Kittle (SF at ATL)"
+              },
+              {
+                "rank": 3,
+                "player": "Isaiah Likely"
+              },
+              {
+                "rank": 4,
+                "player": "Brock Bowers (LV vs LAR)"
+              }
+            ]
+          },
+          {
+            "source": "USA Today / TheHuddle (Daniel Dobish), syndicated on Yahoo Sports (NOT Yahoo's own analysts): 'Fantasy Football Tight End Rankings: Week 7 2026'. Only ranks 1-3 are recorded. Results disagreed on rank 4 onward (one said Likely 4th; another said Kelce 4th, Likely 5th, LaPorta 7th, Loveland 11th, Kraft 12th), so those are left out.",
+            "date": "Week 7 2026; exact date not shown",
+            "url": "https://sports.yahoo.com/articles/fantasy-football-tight-end-rankings-131445119.html",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Brock Bowers"
+              },
+              {
+                "rank": 2,
+                "player": "Trey McBride"
+              },
+              {
+                "rank": 3,
+                "player": "George Kittle"
+              }
+            ]
+          }
+        ],
+        "notes": "I ran about 32 WebSearch queries; no WebFetch or curl was used. Every list here comes from search-result summaries, not from opening the pages, so treat the ranks as fairly reliable but check them against the live pages. Out of FantasyPros, ESPN and Yahoo, only FantasyPros gave any ordered 2026 Week 7 TE rows, and only for ranks 1-12.\n\n1) FantasyPros consensus top 12, dated Oct 20, 2026: Bowers, Kittle, McBride, LaPorta, Likely, Kraft, Loveland, Kelce, Warren, Fannin Jr., Higbee, Goedert. Three separate queries returned the same order.\n- It is only a 2-expert consensus (Erickson and Fitzmaurice), so it is thin.\n- The scoring format is not confirmed. The search tool never returned the full-PPR TE page (ppr-te.php).\n- Consensus ranks 13-20: not found.\n- Supplementary, half-PPR only: Erickson's own ranks 13-20 are J. Johnson, Higbee, Pitts, Freiermuth, H. Henry, M. Andrews, D. Washington, M. Mayer. On that page the half-PPR ECR is Henry 16, Andrews 17, Mayer 22, J. Ferguson 24.\n\n2) ESPN Week 7 TE page (aggregate of 8 rankers): no ranks found. Mike Clay's and Field Yates' individual Week 7 ranks: not found. Every ESPN Clay or Yates result was a preseason list (Clay: McBride, Bowers, Loveland, Warren, Pitts; Yates: Bowers, McBride, Loveland, Warren, Fannin), and those are not Week 7 ranks.\n\n3) Yahoo's own Full PPR consensus (Boone, Harmon, Pianowski, Smyth, Winks) and Boone's individual Full PPR TE list: rows not found. Lists hosted on Yahoo but written by others (SI, USA Today/TheHuddle) are recorded separately and labeled; do not treat them as Yahoo's consensus.\n\nOther context from Oct 19-21, 2026 results (not rankings):\n- Week 7 matchups: Bowers and Mayer vs LAR; McBride vs DEN; Kittle at ATL; Henry at CHI on Thursday; Andrews vs CIN; Ferguson at PHI.\n- ESPN's matchup piece calls Tyler Warren a borderline starter at best (lingering groin issue, tough matchup at MIN). It also calls Higbee and Colby Parkinson a coin flip while Davante Adams is out with a hamstring injury.\n- ClutchPoints says T.J. Hockenson is managing a concussion.\n- ESPN's rest-of-season update moved Isaiah Likely up to TE3.\n- An SI page saying 'Bowers expected to remain sidelined' appears to be from 2025 (si.com/onsi/fantasy/rankings/tight-ends-week-7). Ignore it. No 2026 injury status for Bowers was found, and every 2026 list ranks him.\n- A FantasyPros trade article reportedly says Bowers is listed as a WR, making Michael Mayer the Raiders' 'actual TE1'. This is unverified; check how Bowers is listed in your league.\n\nOther 2026 Week 7 lists seen, top 3 only:\n- FantraxHQ: Kittle, McBride, Bowers.\n- RotoBaller (half-PPR): Bowers, McBride, Kittle.\n- Bleacher Report (PPR): Bowers, Kittle, Likely, then McBride.\n- DraftSharks (PPR): Bowers, Kittle, McBride, LaPorta, Likely. Another result put McBride 4th on DraftSharks, so the order is uncertain.\n\nAll of these lists agree on the top tier: Bowers, McBride and Kittle, with Likely, LaPorta and Kraft next."
+      },
+      "rB": {
+        "sources": [
+          {
+            "source": "Draft Sharks - Week 7 TE Rankings PPR 2026 (Updated)",
+            "date": "Oct 20, 2026 (per search snippet)",
+            "url": "https://www.draftsharks.com/weekly-rankings/7/te/ppr",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Brock Bowers (LV)"
+              },
+              {
+                "rank": 2,
+                "player": "George Kittle (SF)"
+              },
+              {
+                "rank": 3,
+                "player": "Trey McBride (ARI)"
+              },
+              {
+                "rank": 4,
+                "player": "Sam LaPorta (DET)"
+              },
+              {
+                "rank": 5,
+                "player": "Isaiah Likely (NYG)"
+              },
+              {
+                "rank": 6,
+                "player": "Tucker Kraft (GB)"
+              },
+              {
+                "rank": 7,
+                "player": "Colston Loveland (CHI)"
+              },
+              {
+                "rank": 8,
+                "player": "Dallas Goedert (PHI)"
+              },
+              {
+                "rank": 9,
+                "player": "Mark Andrews (BAL)"
+              },
+              {
+                "rank": 10,
+                "player": "Kyle Pitts (ATL)"
+              },
+              {
+                "rank": 11,
+                "player": "Tyler Higbee (LAR)"
+              },
+              {
+                "rank": 12,
+                "player": "Travis Kelce (KC)"
+              },
+              {
+                "rank": 13,
+                "player": "Colby Parkinson (LAR)"
+              },
+              {
+                "rank": 14,
+                "player": "Juwan Johnson (NO)"
+              },
+              {
+                "rank": 15,
+                "player": "Hunter Henry (NE)"
+              },
+              {
+                "rank": 16,
+                "player": "Cade Otton (TB)"
+              },
+              {
+                "rank": 17,
+                "player": "T.J. Hockenson (MIN)"
+              },
+              {
+                "rank": 18,
+                "player": "Pat Freiermuth (PIT)"
+              },
+              {
+                "rank": 19,
+                "player": "Harold Fannin Jr. (CLE)"
+              },
+              {
+                "rank": 20,
+                "player": "AJ Barner (SEA)"
+              }
+            ]
+          },
+          {
+            "source": "Footballguys - Fantasy Football 2026 Week 7 Rankings (TE, weekly, with projected points)",
+            "date": "Page is titled 2026 Week 7; search metadata said ~37 days old, which conflicts. Related Footballguys Week 7 articles are dated 10/20/2026, and the listed matchups fit the 2026 Week 7 schedule (NE @ CHI Thu, DAL @ PHI Mon). Scoring format is not shown in the snippet.",
+            "url": "https://www.footballguys.com/rankings/duration/weekly?pos=te",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Brock Bowers (LV) - 18.87 proj"
+              },
+              {
+                "rank": 2,
+                "player": "Trey McBride (ARI)"
+              },
+              {
+                "rank": 3,
+                "player": "George Kittle (SF)"
+              },
+              {
+                "rank": 4,
+                "player": "Isaiah Likely (NYG)"
+              },
+              {
+                "rank": 5,
+                "player": "Sam LaPorta (DET)"
+              },
+              {
+                "rank": 6,
+                "player": "Travis Kelce (KC) @SEA - 11.71"
+              },
+              {
+                "rank": 7,
+                "player": "Tucker Kraft (GB) @DET - 11.36"
+              },
+              {
+                "rank": 8,
+                "player": "Colston Loveland (CHI) v NE - 9.80"
+              },
+              {
+                "rank": 9,
+                "player": "Dalton Schultz (HOU) v NYG - 9.74"
+              },
+              {
+                "rank": 10,
+                "player": "Dallas Goedert (PHI) v DAL - 9.49"
+              },
+              {
+                "rank": 11,
+                "player": "Pat Freiermuth (PIT) @NO - 9.45"
+              },
+              {
+                "rank": 12,
+                "player": "Harold Fannin Jr. (CLE) @TEN - 9.40"
+              },
+              {
+                "rank": 13,
+                "player": "Mark Andrews (BAL) v CIN - 9.13"
+              },
+              {
+                "rank": 14,
+                "player": "Juwan Johnson (NO) v PIT - 8.74"
+              },
+              {
+                "rank": 15,
+                "player": "Tyler Higbee (LAR) @LV - 8.32"
+              },
+              {
+                "rank": 16,
+                "player": "Michael Mayer (LV) v LAR - 8.14"
+              },
+              {
+                "rank": 17,
+                "player": "Kyle Pitts (ATL) v SF - 8.13"
+              },
+              {
+                "rank": 18,
+                "player": "Hunter Henry (NE) @CHI - 7.97"
+              },
+              {
+                "rank": 19,
+                "player": "Cade Otton (TB) @CAR - 7.93"
+              },
+              {
+                "rank": 20,
+                "player": "AJ Barner (SEA) v KC - 6.99"
+              }
+            ]
+          },
+          {
+            "source": "RotoBaller - Fantasy Football Rankings: Tight Ends (TE) Week 7 Early Updates (2026). This is HALF-PPR, not full PPR.",
+            "date": "Searches described it as 'posted today' / 'within the last day' (about Oct 20-21, 2026). The exact date was not shown.",
+            "url": "https://www.rotoballer.com/fantasy-football-rankings-tight-ends-te-week-7-early-updates-2026/1970864",
+            "ranks": [
+              {
+                "rank": 1,
+                "player": "Brock Bowers"
+              },
+              {
+                "rank": 2,
+                "player": "Trey McBride"
+              },
+              {
+                "rank": 3,
+                "player": "George Kittle"
+              },
+              {
+                "rank": 4,
+                "player": "Sam LaPorta"
+              },
+              {
+                "rank": 5,
+                "player": "Tyler Warren"
+              },
+              {
+                "rank": 6,
+                "player": "Isaiah Likely"
+              },
+              {
+                "rank": 7,
+                "player": "Tucker Kraft"
+              },
+              {
+                "rank": 8,
+                "player": "Travis Kelce"
+              },
+              {
+                "rank": 9,
+                "player": "Dallas Goedert"
+              },
+              {
+                "rank": 10,
+                "player": "Colston Loveland"
+              },
+              {
+                "rank": 11,
+                "player": "Hunter Henry"
+              },
+              {
+                "rank": 12,
+                "player": "T.J. Hockenson"
+              },
+              {
+                "rank": 13,
+                "player": "Harold Fannin Jr."
+              },
+              {
+                "rank": 14,
+                "player": "Juwan Johnson"
+              },
+              {
+                "rank": 15,
+                "player": "Mark Andrews"
+              },
+              {
+                "rank": 16,
+                "player": "Tyler Higbee"
+              },
+              {
+                "rank": 17,
+                "player": "Pat Freiermuth"
+              },
+              {
+                "rank": 18,
+                "player": "Kyle Pitts"
+              },
+              {
+                "rank": 19,
+                "player": "Michael Mayer"
+              },
+              {
+                "rank": 20,
+                "player": "Dalton Schultz"
+              }
+            ]
+          },
+          {
+            "source": "CBS Sports (Jamey Eisenberg / Dave Richard / Heath Cummings) - Week 7 2026 TE rankings",
+            "date": "not found",
+            "url": "https://www.cbssports.com/fantasy/football/rankings/ppr/TE/weekly/",
+            "ranks": []
+          },
+          {
+            "source": "Pro Football Network (Jason Katz) - Week 7 2026 TE rankings",
+            "date": "not found",
+            "url": "https://www.profootballnetwork.com/fantasy-football-te-rankings/",
+            "ranks": []
+          },
+          {
+            "source": "NBC Sports / Rotoworld - Week 7 2026 TE rankings",
+            "date": "not found",
+            "url": "https://www.nbcsports.com/fantasy/football",
+            "ranks": []
+          },
+          {
+            "source": "Sporting News - Week 7 2026 TE rankings",
+            "date": "not found",
+            "url": "not found",
+            "ranks": []
+          }
+        ],
+        "notes": "I ran about 30 WebSearch queries. All results reached me as search-engine summaries, not raw pages, so treat every rank as \"as reported by search snippet\".\n\nFOUND (2026 Week 7 lists):\n(1) Draft Sharks, full PPR, Oct 20, 2026: full top 20.\n(2) Footballguys, 2026 Week 7 weekly TE page: full top 20 with projected points. The page metadata age conflicts, but the matchups fit 2026 Week 7. Also listed: T.J. Hockenson TE22 (6.73) and Tyler Warren TE28 (6.09). Scoring format is not stated in the snippet.\n(3) RotoBaller Week 7 Early Updates: full top 20, but it is HALF-PPR. Also listed: Colby Parkinson TE23. Tiers: Kelce, Goedert, Hockenson and Fannin are tier 5; Higbee and Parkinson are tier 6.\n\nNOT FOUND:\n- CBS Sports: no 2026 Week 7 TE ranking list was found. The CBS PPR TE weekly page snippet showed McBride first, Loveland second and LaPorta third, but its matchups (McBride @LAC, Kittle @LAR, Likely vs DAL) do not fit Week 7 2026, since LAC is on bye. That snippet is stale, so I did not use it. Dave Richard's Week 7 2026 trade chart is a rest-of-season value list, not a weekly rank. It puts Bowers first, then McBride, Kittle, LaPorta and Likely. The CBS Week 7 TE preview (\"Don't run away from Pat Freiermuth and Tyler Higbee\") favors Higbee as a possible top-12 TE this week.\n- Pro Football Network (Katz): only 2025 Week 7 TE articles and season-long 2026 pages turned up. PFN's Week 7 2026 waiver piece pushes Michael Mayer (8% rostered) and Hunter Henry as streamers.\n- NBC/Rotoworld: no Week 7 2026 TE list. Their Week 7 2026 waiver piece names Michael Mayer as the top TE pickup and Darnell Washington as a TE2 flyer.\n- Sporting News: the WebSearch domain filter for sportingnews.com returned a 400 error (domain not accessible), and no other query surfaced a Sporting News page.\n\nCONTEXT FROM 2026 WEEK 7 RESULTS (not from the requested sources):\n- Bleacher Report Week 7 2026 PPR: 1 Bowers, 2 Kittle, 3 Likely, 4 McBride. Date not shown. https://bleacherreport.com/articles/25513596-brs-week-7-ppr-fantasy-football-2026-player-rankings\n- FantraxHQ Week 7 2026: 1 Kittle, 2 McBride, 3 Bowers, 4 Likely. Date not shown. https://fantraxhq.com/2026-fantasy-football-week-7-tight-end-rankings/\n- Injuries per ClutchPoints Week 7 2026: Tyler Warren (groin) and T.J. Hockenson (concussion). This may explain Warren's low Footballguys rank.\n- RotoBaller notes Tucker Kraft is \"don't lock him in until the injury report clears\" and Pat Freiermuth \"suffered a bit of an injury last week\". The Detroit defense has allowed the most fantasy points to TEs, which helps Kraft at DET.\n\nWeek 7 matchups seen in the snippets: LV vs LAR, SF @ ATL, ARI vs DEN, NYG @ HOU, DET vs GB, KC @ SEA, NE @ CHI (Thu), DAL @ PHI (Mon).\n\nAcross the three found lists, Bowers is TE1 in all three. Kittle and McBride are TE2 or TE3, and LaPorta and Likely are TE4 to TE6. Kraft is TE6 or TE7, and Loveland, Kelce and Goedert are in the TE6 to TE12 range."
+      },
+      "tdOdds": {
+        "props": [
+          {
+            "player": "Brock Bowers (LV) vs LAR",
+            "market": "Anytime TD",
+            "line_or_odds": "+130",
+            "book": "BetMGM (BetMGM blog: Rams vs Raiders Prediction, Odds & Best Prop Bets, Week 7)",
+            "date": "Not shown on page; Week 7 preview for Sun Oct 25, 2026 game",
+            "url": "https://sports.betmgm.com/en/blog/nfl/rams-raiders-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          },
+          {
+            "player": "Mark Andrews (BAL) vs CIN",
+            "market": "Anytime TD",
+            "line_or_odds": "+105",
+            "book": "Fanatics (betfanatics.com: Bengals vs. Ravens Odds, Spreads, and Lines)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://betfanatics.com/blog/bengals-vs-ravens-odds-spreads-and-lines"
+          },
+          {
+            "player": "Hunter Henry (NE) at CHI",
+            "market": "Anytime TD",
+            "line_or_odds": "+150",
+            "book": "Fanatics (betfanatics.com: Patriots vs. Bears Odds, Spreads, and Lines)",
+            "date": "Not shown; described as about 1 day old as of Oct 21, 2026 (game Thu Oct 22, 2026)",
+            "url": "https://betfanatics.com/blog/patriots-vs-bears-odds-spreads-and-lines"
+          },
+          {
+            "player": "Isaiah Likely (NYG) at HOU",
+            "market": "Anytime TD",
+            "line_or_odds": "+165",
+            "book": "Fanatics (betfanatics.com: Giants vs. Texans Odds, Spreads, and Lines)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://betfanatics.com/blog/giants-vs-texans-odds-spreads-and-lines"
+          },
+          {
+            "player": "Isaiah Likely (NYG) at HOU",
+            "market": "Anytime TD",
+            "line_or_odds": "+175",
+            "book": "DraftKings Network snapshot (cited by FootballNation USA)",
+            "date": "Info cutoff Oct 20, 2026",
+            "url": "https://www.footballnationusa.com/post/giants-texans-player-props-week-7-2026"
+          },
+          {
+            "player": "Colston Loveland (CHI) vs NE",
+            "market": "Anytime TD",
+            "line_or_odds": "+180",
+            "book": "Fanatics (betfanatics.com: Patriots vs. Bears Odds, Spreads, and Lines)",
+            "date": "Not shown; about Oct 20, 2026 (game Thu Oct 22, 2026)",
+            "url": "https://betfanatics.com/blog/patriots-vs-bears-odds-spreads-and-lines"
+          },
+          {
+            "player": "Colston Loveland (CHI) vs NE",
+            "market": "Anytime TD",
+            "line_or_odds": "+190",
+            "book": "BetMGM (BetMGM blog: Patriots vs Bears Prediction, Odds & Best Prop Bets)",
+            "date": "Not shown; Week 7 preview",
+            "url": "https://sports.betmgm.com/en/blog/nfl/patriots-bears-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          },
+          {
+            "player": "Colston Loveland (CHI) vs NE",
+            "market": "Anytime TD (Sharp Football Analysis pick)",
+            "line_or_odds": "+190",
+            "book": "Sharp Football Analysis odds table (specific book not found)",
+            "date": "Odds updated Oct 19, 2026",
+            "url": "https://www.sharpfootballanalysis.com/betting/nfl-player-props-odds-picks-predictions/"
+          },
+          {
+            "player": "Harold Fannin Jr. (CLE) at TEN",
+            "market": "Anytime TD",
+            "line_or_odds": "+200",
+            "book": "BetMGM (Titans-Browns: First & Anytime TD Odds & Picks)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://sports.betmgm.com/en/blog/nfl/browns-titans-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Dalton Schultz (HOU) vs NYG",
+            "market": "Anytime TD",
+            "line_or_odds": "+215",
+            "book": "Fanatics (betfanatics.com: Giants vs. Texans Odds, Spreads, and Lines)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://betfanatics.com/blog/giants-vs-texans-odds-spreads-and-lines"
+          },
+          {
+            "player": "Travis Kelce (KC) at SEA",
+            "market": "Anytime TD",
+            "line_or_odds": "+220",
+            "book": "BetMGM (Seahawks-Chiefs: First & Anytime TD Odds & Picks; also in BetMGM Chiefs vs Seahawks prop preview)",
+            "date": "Not shown; described as published within the last 1-2 days (about Oct 19-21, 2026)",
+            "url": "https://sports.betmgm.com/en/blog/nfl/chiefs-seahawks-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Jake Ferguson (DAL) at PHI",
+            "market": "Anytime TD",
+            "line_or_odds": "+260 (BetRivers +285)",
+            "book": "Fanatics +260 / BetRivers +285 (per Covers Dallas Cowboys picks page)",
+            "date": "Not shown; Week 7 game Mon Oct 26, 2026",
+            "url": "https://www.covers.com/sport/football/nfl/teams/main/dallas-cowboys/picks"
+          },
+          {
+            "player": "AJ Barner (SEA) vs KC",
+            "market": "Anytime TD",
+            "line_or_odds": "+270",
+            "book": "BetMGM (Seahawks-Chiefs: First & Anytime TD Odds & Picks)",
+            "date": "Not shown; about Oct 19-21, 2026",
+            "url": "https://sports.betmgm.com/en/blog/nfl/chiefs-seahawks-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Tommy Tremble (CAR) vs TB",
+            "market": "Anytime TD",
+            "line_or_odds": "+300",
+            "book": "BetMGM (Panthers-Buccaneers: First & Anytime TD Odds & Picks - Week 7)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://sports.betmgm.com/en/blog/nfl/buccaneers-panthers-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Tommy Tremble (CAR) vs TB",
+            "market": "Anytime TD",
+            "line_or_odds": "+280",
+            "book": "DraftKings Network snapshot (cited by FootballNation USA)",
+            "date": "About Oct 20, 2026",
+            "url": "https://www.footballnationusa.com/post/buccaneers-panthers-player-props-week-7-2026"
+          },
+          {
+            "player": "Darren Waller (CAR) vs TB",
+            "market": "Anytime TD",
+            "line_or_odds": "+310",
+            "book": "BetMGM (Panthers-Buccaneers: First & Anytime TD Odds & Picks - Week 7)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://sports.betmgm.com/en/blog/nfl/buccaneers-panthers-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Cade Otton (TB) at CAR",
+            "market": "Anytime TD",
+            "line_or_odds": "+333",
+            "book": "BetMGM (Panthers-Buccaneers: First & Anytime TD Odds & Picks - Week 7)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://sports.betmgm.com/en/blog/nfl/buccaneers-panthers-first-anytime-td-odds-picks-week-7-gaa/"
+          },
+          {
+            "player": "Trey McBride (ARI) vs DEN",
+            "market": "Anytime TD (best price listed)",
+            "line_or_odds": "+135",
+            "book": "bet365 (per Covers Denver Broncos picks page; 0.47 projected TDs)",
+            "date": "Not shown; Week 7 game Oct 25, 2026",
+            "url": "https://www.covers.com/sport/football/nfl/teams/main/denver-broncos/picks"
+          },
+          {
+            "player": "Trey McBride (ARI) vs DEN",
+            "market": "Total TDs over 0.5 (best price)",
+            "line_or_odds": "+110",
+            "book": "Not found (BettorEdge best-price listing)",
+            "date": "Not shown",
+            "url": "https://www.bettoredge.com/nfl/broncos-vs-cardinals"
+          },
+          {
+            "player": "George Kittle (SF) at ATL",
+            "market": "Anytime TD (UNVERIFIED)",
+            "line_or_odds": "-105",
+            "book": "Not found (StatPick.ai start/sit page; book not named; unusually short for a TE, so treat as unreliable)",
+            "date": "Not shown; Week 7 page",
+            "url": "https://www.statpick.ai/start-sit/compare/dk-metcalf-vs-george-kittle"
+          }
+        ],
+        "game_lines": [
+          {
+            "game": "NE at CHI (Thu Oct 22)",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Updated Oct 19, 2026",
+            "spread": "CHI -2.5",
+            "total": "49.5"
+          },
+          {
+            "game": "NE at CHI (Thu Oct 22)",
+            "source": "Fox Sports (bet365)",
+            "date": "Oct 20, 2026",
+            "spread": "CHI -2.5 (ML CHI -162 / NE +137)",
+            "total": "50.5"
+          },
+          {
+            "game": "NE at CHI (Thu Oct 22)",
+            "source": "FanDuel Research",
+            "date": "Not shown (Week 7 2026)",
+            "spread": "CHI -3 (ML -158)",
+            "total": "50.5"
+          },
+          {
+            "game": "NE at CHI (Thu Oct 22)",
+            "source": "Covers (opening lines)",
+            "date": "Oct 20, 2026",
+            "spread": "CHI -2.5 open, moved as high as -3.5",
+            "total": "49.5"
+          },
+          {
+            "game": "PIT vs NO (Paris, Sun Oct 25 9:30 ET)",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "PIT -2.5",
+            "total": "44.5"
+          },
+          {
+            "game": "PIT vs NO (Paris)",
+            "source": "ESPN",
+            "date": "Not shown (Week 7 2026)",
+            "spread": "PIT -3.5 (ML -180/+150)",
+            "total": "44.5"
+          },
+          {
+            "game": "CIN at BAL",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "BAL -2.5",
+            "total": "50.5"
+          },
+          {
+            "game": "CIN at BAL",
+            "source": "VegasInsider",
+            "date": "Updated Oct 19, 2026",
+            "spread": "BAL -3.5",
+            "total": "50.5"
+          },
+          {
+            "game": "CIN at BAL",
+            "source": "SportsLine",
+            "date": "Not shown (2026 Week 7)",
+            "spread": "BAL -3",
+            "total": "51"
+          },
+          {
+            "game": "CLE at TEN",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "CLE -1.5",
+            "total": "36.5"
+          },
+          {
+            "game": "IND at MIN",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "MIN -5.5",
+            "total": "41.5"
+          },
+          {
+            "game": "IND at MIN",
+            "source": "BetMGM preview",
+            "date": "Not shown (Week 7 2026)",
+            "spread": "MIN -6",
+            "total": "42.5"
+          },
+          {
+            "game": "MIA at NYJ",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "NYJ -5.5",
+            "total": "39.5"
+          },
+          {
+            "game": "MIA at NYJ",
+            "source": "Fox Sports (bet365) / ESPN",
+            "date": "Oct 20, 2026",
+            "spread": "NYJ -4.5 (ML NYJ -245 / MIA +200)",
+            "total": "39.5 (ESPN 38.5)"
+          },
+          {
+            "game": "NYG at HOU",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "HOU -8.5",
+            "total": "43.5"
+          },
+          {
+            "game": "NYG at HOU",
+            "source": "Fox Sports",
+            "date": "Oct 20, 2026",
+            "spread": "HOU -9.5",
+            "total": "42.5"
+          },
+          {
+            "game": "SF at ATL",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "SF -4.5",
+            "total": "50.5"
+          },
+          {
+            "game": "SF at ATL",
+            "source": "Fox Sports (bet365)",
+            "date": "Oct 20-21, 2026",
+            "spread": "SF -3.5 (ML SF -174 / ATL +147)",
+            "total": "50.5"
+          },
+          {
+            "game": "TB at CAR",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "CAR -3.5",
+            "total": "44.5"
+          },
+          {
+            "game": "DEN at ARI",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "DEN -4.5",
+            "total": "43.5"
+          },
+          {
+            "game": "DEN at ARI",
+            "source": "VegasInsider consensus",
+            "date": "Oct 20, 2026",
+            "spread": "DEN -4.5 (Fanatics -4)",
+            "total": "43.5"
+          },
+          {
+            "game": "GB at DET",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "DET -3.5",
+            "total": "52.5"
+          },
+          {
+            "game": "GB at DET",
+            "source": "Fox Sports / SI (BetMGM)",
+            "date": "Oct 20-21, 2026",
+            "spread": "DET -3.5 (Fox); DET -3 (-108) BetMGM",
+            "total": "53.5"
+          },
+          {
+            "game": "LAR at LV",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "LAR -5.5",
+            "total": "47.5"
+          },
+          {
+            "game": "LAR at LV",
+            "source": "Fox Sports / SI (BetMGM)",
+            "date": "Oct 20, 2026",
+            "spread": "LAR -4.5",
+            "total": "47.5"
+          },
+          {
+            "game": "KC at SEA (SNF)",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "SEA -2.5 (ML KC +120 / SEA -142)",
+            "total": "42.5"
+          },
+          {
+            "game": "DAL at PHI (MNF Mon Oct 26)",
+            "source": "Sportsbook Review (bet365)",
+            "date": "Oct 19, 2026",
+            "spread": "DAL -4.5",
+            "total": "44.5"
+          },
+          {
+            "game": "DAL at PHI (MNF)",
+            "source": "ESPN",
+            "date": "Not shown (Week 7 2026)",
+            "spread": "DAL -4.5 (ML -218)",
+            "total": "44.5"
+          }
+        ],
+        "not_found": [
+          "Sam LaPorta (DET) - not found (ESPN odds page lists him, but the price could not be matched to him)",
+          "Tucker Kraft (GB) - not found",
+          "George Kittle (SF) - no verified book price found (only an unverified -105 from StatPick, with no book named)",
+          "Kyle Pitts (ATL) - not found (the only number seen, +220 on StatPick, was about 37 days old and not tied to this game)",
+          "Tyler Warren (IND) - not found (missed Week 6 with a groin injury; Week 7 status unconfirmed)",
+          "T.J. Hockenson (MIN) - not found (listed questionable / concussion designation)",
+          "Mike Gesicki (CIN) - not found",
+          "Dallas Goedert (PHI) - not found",
+          "Juwan Johnson (NO) - not found",
+          "Pat Freiermuth (PIT) - not found (was questionable with a calf injury in Week 6)",
+          "Tyler Higbee (LAR) - not found",
+          "Michael Mayer (LV) - not found",
+          "Greg Dulcich (MIA) - not found",
+          "Kenyon Sadiq (NYJ) - not found (last posted price was +475 in Week 6 vs NE, not Week 7)",
+          "Terrance Ferguson (LAR) - not found (The Big Lead reports he is on IR and cannot return until Week 8)"
+        ]
+      },
+      "ydProps": {
+        "props": [
+          {
+            "player": "Colston Loveland (CHI)",
+            "market": "Receiving yards O/U (Week 7, NE at CHI, Thu Oct 22 2026)",
+            "line_or_odds": "44.5 - Over -115 / Under -115",
+            "book": "BetMGM (BetMGM blog: Patriots vs Bears Prediction, Odds & Best Prop Bets, Week 7)",
+            "date": "Week 7 2026 page; exact publish date not shown (other results for this game were dated Oct 20-21, 2026)",
+            "url": "https://sports.betmgm.com/en/blog/nfl/patriots-bears-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          },
+          {
+            "player": "Colston Loveland (CHI)",
+            "market": "Receiving yards Under 39.5 (prediction-market price)",
+            "line_or_odds": "Under 39.5 at about 49 cents on Polymarket; ats.io model gives the under about 54.6%. Basis: he is under 40 yds in 4 of 6 games (175 yds total, 29.2/game)",
+            "book": "Polymarket (via ats.io pick article)",
+            "date": "Oct 20, 2026 (ats.io page for the 10-22-2026 game, updated Oct 20)",
+            "url": "https://ats.io/nfl/patriots-vs-bears-thursday-night-football-player-props-10-22-2026/"
+          },
+          {
+            "player": "Colston Loveland (CHI)",
+            "market": "Anytime TD (not a yards/receptions line)",
+            "line_or_odds": "+190 (price cited by most sources)",
+            "book": "not found (book not named in the search summary)",
+            "date": "Oct 20-21, 2026"
+          },
+          {
+            "player": "Brock Bowers (LV)",
+            "market": "Anytime TD (not a yards/receptions line), LAR at LV",
+            "line_or_odds": "+130",
+            "book": "BetMGM (Rams vs Raiders Week 7 preview)",
+            "date": "Week 7 2026 page; exact date not shown",
+            "url": "https://sports.betmgm.com/en/blog/nfl/rams-raiders-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          },
+          {
+            "player": "Trey McBride (ARI)",
+            "market": "Anytime TD (not a yards/receptions line), DEN at ARI",
+            "line_or_odds": "+120",
+            "book": "DraftKings (via Legion Report Broncos vs Cardinals props page)",
+            "date": "Game date Oct 25, 2026; page publish date not shown",
+            "url": "https://legionreport.com/broncos-vs-cardinals-player-props/"
+          },
+          {
+            "player": "Dalton Schultz (HOU)",
+            "market": "Anytime TD (not a yards/receptions line), NYG at HOU",
+            "line_or_odds": "+260 to +270 (one Oct 25 page shows +265, another shows +270)",
+            "book": "DraftKings (via Legion Report)",
+            "date": "Game date Oct 25, 2026; page publish date not shown",
+            "url": "https://legionreport.com/giants-vs-texans-player-props/"
+          },
+          {
+            "player": "Isaiah Likely (NYG)",
+            "market": "Anytime TD (not a yards/receptions line), NYG at HOU",
+            "line_or_odds": "+160 on one page, +165 on another",
+            "book": "DraftKings (via Legion Report)",
+            "date": "Game date Oct 25, 2026; page publish date not shown",
+            "url": "https://legionreport.com/giants-vs-texans-player-props/"
+          },
+          {
+            "player": "Travis Kelce (KC)",
+            "market": "Anytime TD (not a yards/receptions line), KC at SEA",
+            "line_or_odds": "+220",
+            "book": "BetMGM (Chiefs vs Seahawks Week 7 preview)",
+            "date": "Week 7 2026 page; exact date not shown",
+            "url": "https://sports.betmgm.com/en/blog/nfl/chiefs-seahawks-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          },
+          {
+            "player": "AJ Barner (SEA)",
+            "market": "Anytime TD (not a yards/receptions line), KC at SEA",
+            "line_or_odds": "+270 (the preview also says he went under his receiving-yards line in 14 of his last 20 games)",
+            "book": "BetMGM (Chiefs vs Seahawks Week 7 preview)",
+            "date": "Week 7 2026 page; exact date not shown",
+            "url": "https://sports.betmgm.com/en/blog/nfl/chiefs-seahawks-prediction-odds-player-prop-bets-picks-week-7-jaa/"
+          }
+        ],
+        "game_lines": [
+          {
+            "game": "NE at CHI (Thu Oct 22)",
+            "source": "SI (2026 Week 7 preview); BetMGM blog",
+            "date": "Oct 2026 (SI); BetMGM date not shown",
+            "spread": "CHI -2.5 (-115) / NE +2.5 (-105) per SI; CHI -2.5 (-135) per BetMGM",
+            "total": "49.5 (SI); 50 (BetMGM); 50.5 (Covers/Kalshi, updated Oct 19)"
+          },
+          {
+            "game": "PIT at NO (Paris, Sun Oct 25 9:30am ET)",
+            "source": "BetMGM blog Week 7 preview",
+            "date": "Week 7 2026; exact date not shown",
+            "spread": "PIT -2.5 (a second BetMGM piece uses PIT -3)",
+            "total": "44.5"
+          },
+          {
+            "game": "GB at DET (Sun Oct 25)",
+            "source": "BetMGM blog; Yahoo/Pride of Detroit opening lines",
+            "date": "Oct 20-22, 2026",
+            "spread": "DET -3 (-110) per BetMGM; FanDuel opened DET -3.5",
+            "total": "52.5"
+          },
+          {
+            "game": "IND at MIN (Sun Oct 25)",
+            "source": "BetMGM blog; Legion Report",
+            "date": "Week 7 2026",
+            "spread": "MIN -6 per BetMGM (opened IND +6, later +5.5); Legion Report MIN -5.5",
+            "total": "42.5 (BetMGM); 41.5 (Legion Report)"
+          },
+          {
+            "game": "LAR at LV (Sun Oct 25)",
+            "source": "BetMGM blog Week 7 preview",
+            "date": "Week 7 2026; exact date not shown",
+            "spread": "LAR -6",
+            "total": "48.5"
+          },
+          {
+            "game": "KC at SEA (SNF, Sun Oct 25)",
+            "source": "BetMGM blog Week 7 preview",
+            "date": "Week 7 2026; exact date not shown",
+            "spread": "SEA -2",
+            "total": "44"
+          },
+          {
+            "game": "NYG at HOU (Sun Oct 25)",
+            "source": "Legion Report (DraftKings odds)",
+            "date": "Game date Oct 25, 2026",
+            "spread": "HOU -9.5 to -10 (DraftKings -10)",
+            "total": "42.5-43.5"
+          },
+          {
+            "game": "MIA at NYJ (Sun Oct 25)",
+            "source": "Dimers (opening odds); DeFi Rate",
+            "date": "Week 7 2026 early preview",
+            "spread": "NYJ -5.5 (+100) / MIA +5.5 (-104)",
+            "total": "38.5 (Dimers opening); 39.5 (DeFi Rate)"
+          },
+          {
+            "game": "DAL at PHI (MNF, Mon Oct 26)",
+            "source": "BetMGM blog Week 7 preview; BetMGM survivor article",
+            "date": "Week 7 2026; exact date not shown",
+            "spread": "DAL -6 per the BetMGM preview; DAL -4.5 per the BetMGM survivor piece",
+            "total": "45"
+          }
+        ],
+        "not_found": [
+          "Brock Bowers (LV) - no Week 7 2026 receiving-yards or receptions line found; only anytime TD +130 (BetMGM). BetMGM trend: under his receiving-yards line in 12 of his last 16 games",
+          "Isaiah Likely (NYG) - no Week 7 yards/receptions line. The DraftKings 6+ receptions +111 price came from an SI Saints-Giants article labeled Week 6 2026, so it is not a Week 7 line",
+          "Trey McBride (ARI) - no yards/receptions line (only anytime TD +120 DK). Stats as of Week 5: 42 receptions, 308 yards, 3 TD (Stat Sniper)",
+          "Sam LaPorta (DET) - no Week 7 2026 line. The 46.5 yards in a CBS DraftKings parlay is from 2025 (Chiefs 3-3 context) and the 43.5 FTN line is undated. BetMGM says he is back in the lineup after a bye",
+          "George Kittle (SF) - no sportsbook line. Football Nation's 44.5 is its own research threshold, not a posted line. Season: 21 receptions, 268 yards, 4 TD (Legion Report)",
+          "Tyler Warren (IND) - no line. BetMGM trend: under his receiving-yards line in 11 of his last 14 games. He was a late addition to last week's injury report (groin)",
+          "Mike Gesicki (CIN) - no Week 7 2026 line found",
+          "Travis Kelce (KC) - no yards/receptions line (only anytime TD +220 BetMGM). Football Nation's 44.5 yards / 5.5 receptions are research thresholds, not book lines",
+          "Dallas Goedert (PHI) - no Week 7 2026 line found. A Fox Sports page says he missed Thursday practice (knee), but the page looks stale",
+          "Juwan Johnson (NO) - no numeric line. BetMGM trend: over his receptions line in his last 7 home games. The Paris game is a neutral site",
+          "Pat Freiermuth (PIT) - no line. He was questionable with a calf injury before Week 6 (Rotoballer, Oct 18, 2026)",
+          "Tyler Higbee (LAR) - no line. Rotoballer (Oct 19, 2026): 24 of 29 targets caught for 246 yards and 1 TD through 6 games, still a streamer option at LV",
+          "Michael Mayer (LV) - no Week 7 2026 line found",
+          "T.J. Hockenson (MIN) - no line. Concussion being monitored, listed questionable on one injury report (Legion Report)",
+          "Tucker Kraft (GB) - no line. Bleacher Report projects 6 receptions, 64 yards, 1 TD vs DET (a projection, not a line)",
+          "Dalton Schultz (HOU) - no yards/receptions line (only anytime TD +260 to +270 DK)",
+          "Harold Fannin Jr. (CLE) - no Week 7 2026 line found",
+          "Hunter Henry (NE) - no 2026 line. The FTN 27.5 line and BetMGM's 39.5 yards / 3.5 receptions lines are from other seasons or games (the latter is Week 3 vs JAX)",
+          "Kyle Pitts (ATL) - no line. FanDuel's player page showed no Kyle Pitts props available for this game yet",
+          "Mark Andrews (BAL) - no Week 7 2026 line. The FTN 54.5 and 69.5 lines are from earlier seasons",
+          "Jake Ferguson (DAL) - no numeric line. BetMGM trend: under his receiving-yards line in 12 of his last 16 games",
+          "Tommy Tremble (CAR) - no Week 7 2026 line found",
+          "Darren Waller (CAR) - no Week 7 2026 line found",
+          "Cade Otton (TB) - no Week 7 2026 line. The FTN 28.5 vs CAR is undated (CBS used the same number in 2022)",
+          "Greg Dulcich (MIA) - no Week 7 2026 line found",
+          "Kenyon Sadiq (NYJ) - no Week 7 2026 line found",
+          "AJ Barner (SEA) - no yards/receptions line (only anytime TD +270 BetMGM). Season per PFF: 15 receptions, 138 yards, 0 TD",
+          "Terrance Ferguson (LAR) - no line. He is on IR with an ankle injury and not eligible to return until Week 8 (Rotoballer, Oct 19, 2026), so he is out for Week 7",
+          "NOTE: the shared web-search budget ran out after about 50 queries. The BetMGM preview pages for Bengals-Ravens, Broncos-Cardinals, 49ers-Falcons, Giants-Texans, Bucs-Panthers, Dolphins-Jets and Browns-Titans were not checked for TE yards/receptions lines. Most search results were from 2022-2025 and were excluded"
+        ]
+      },
+      "newsA": {
+        "players": [
+          {
+            "player": "Brock Bowers",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: web search budget used up before any results came back",
+            "date": "not found"
+          },
+          {
+            "player": "Isaiah Likely",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: web search budget used up before any results came back",
+            "date": "not found"
+          },
+          {
+            "player": "Trey McBride",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: web search budget used up before any results came back",
+            "date": "not found"
+          },
+          {
+            "player": "Sam LaPorta",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "George Kittle",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Tyler Warren",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Mike Gesicki",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Travis Kelce",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Dallas Goedert",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Juwan Johnson",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Pat Freiermuth",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Tyler Higbee",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Michael Mayer",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "T.J. Hockenson",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          },
+          {
+            "player": "Tucker Kraft",
+            "week7_status": "not found",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none: no search was run",
+            "date": "not found"
+          }
+        ],
+        "notes": "I have no Week 7 data for any of these 15 tight ends, so every field is set to \"not found\". This is not a finding of \"no injury designation\". I tried three WebSearch queries (Brock Bowers, Isaiah Likely, Trey McBride). All three were refused because this turn's web search budget was already used up: 200 searches per turn, shared by every agent in the run. None returned results, so I ran no further queries. I did not try curl, wget, WebFetch, or any proxy or reader service to get around the limit. I also left out team, QB situation, practice reports and role news rather than fill them from memory, because they may have changed by Oct 2026. To get this data, the user can send a follow-up message to start a new turn with a fresh search budget, or raise CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION. Until this step is rerun, the orchestrator should not rank these players using my output. The bye-week list from the task context (BUF, JAX, LAC, WAS: Kincaid, Strange, Njoku, Okonkwo) was not checked here."
+      },
+      "newsB": {
+        "players": [
+          {
+            "player": "Dalton Schultz",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - WebSearch returned 'budget used up' before any results",
+            "date": "n/a"
+          },
+          {
+            "player": "Harold Fannin Jr.",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - WebSearch returned 'budget used up' before any results",
+            "date": "n/a"
+          },
+          {
+            "player": "Hunter Henry",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - WebSearch returned 'budget used up' before any results",
+            "date": "n/a"
+          },
+          {
+            "player": "Kyle Pitts",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Mark Andrews",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Colston Loveland",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Jake Ferguson",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Tommy Tremble",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Darren Waller",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Cade Otton",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Greg Dulcich",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Kenyon Sadiq",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "AJ Barner",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Terrance Ferguson",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          },
+          {
+            "player": "Noah Fant",
+            "team": "not verified (no search completed)",
+            "week7_status": "not found (search not performed: web search budget exhausted)",
+            "practice": "not found",
+            "role_news": "not found",
+            "qb_situation": "not found",
+            "source": "none - no search attempted after budget exhaustion",
+            "date": "n/a"
+          }
+        ],
+        "notes": "I couldn't collect any data. My first three WebSearch queries (Dalton Schultz Week 7 injury, Harold Fannin Jr. Browns Week 7, Hunter Henry Patriots injury) all came back saying search was not performed because this turn's web search limit of 200 calls is used up. That limit is shared by every agent in the run. The tool said not to get around it with curl, wget, search engines, readers or proxies, so I stopped searching. I did not reach the 15 queries the task asked for.\n\nNone of the 15 tight ends has a confirmed Week 7 injury status, Wednesday practice report, role news, team or QB situation. Every field is marked \"not found\" or \"not verified\" so nothing is made up from training knowledge, which could be out of date for October 2026. The only known facts are the ones already in the task: Week 7 byes are BUF, JAX, LAC and WAS, scoring is full PPR, and the week runs Thu Oct 22 to Mon Oct 26.\n\nTo finish this research, the user can send a follow-up message to start a new turn with a fresh search budget, or raise CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION. Any start/sit ranking built from this output should say plainly that injury and role data for these players is missing."
+      }
+    }
+  },
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "index": 1,
+      "title": "Gather"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 2,
+      "title": "Rank"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 3,
+      "title": "Verify"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 1,
+      "label": "ranks:FP-ESPN-Yahoo",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "ae55699ffeeeb6ba5",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792584840000,
+      "queuedAt": 1792584839968,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "I ran about 32 WebSearch queries; no WebFetch or curl was u…",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585083328,
+      "tokens": 106083,
+      "toolCalls": 37,
+      "durationMs": 243327,
+      "resultPreview": "{\"sources\":[{\"source\":\"FantasyPros Expert Consensus Rankings (ECR), Week 7 TE, weekly-te.php. Header reads 'Consensus of 2 Experts'. Panel: Andrew Erickson and Pat Fitzmaurice, with Derek Brown's column shown as N/A. Scoring format not confirmed on the page; the half-PPR TE page is separate, and the full-PPR page (ppr-te.php) never returned its rows. Ranks 13-20: not found.\",\"date\":\"Oct 20, 2026\",…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 2,
+      "label": "ranks:PFN-CBS-NBC-other",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "a0081813cd5c690a5",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792584840000,
+      "queuedAt": 1792584839968,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "I ran about 30 WebSearch queries. All results reached me as…",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585044246,
+      "tokens": 107733,
+      "toolCalls": 41,
+      "durationMs": 203318,
+      "resultPreview": "{\"sources\":[{\"source\":\"Draft Sharks - Week 7 TE Rankings PPR 2026 (Updated)\",\"date\":\"Oct 20, 2026 (per search snippet)\",\"url\":\"https://www.draftsharks.com/weekly-rankings/7/te/ppr\",\"ranks\":[{\"rank\":1,\"player\":\"Brock Bowers (LV)\"},{\"rank\":2,\"player\":\"George Kittle (SF)\"},{\"rank\":3,\"player\":\"Trey McBride (ARI)\"},{\"rank\":4,\"player\":\"Sam LaPorta (DET)\"},{\"rank\":5,\"player\":\"Isaiah Likely (NYG)\"},{\"rank…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 3,
+      "label": "vegas:TD-odds",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "a74bf6f5f0d8cc487",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585046485,
+      "queuedAt": 1792584839968,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585375354,
+      "tokens": 151152,
+      "toolCalls": 66,
+      "durationMs": 328868,
+      "resultPreview": "{\"props\":[{\"player\":\"Brock Bowers (LV) vs LAR\",\"market\":\"Anytime TD\",\"line_or_odds\":\"+130\",\"book\":\"BetMGM (BetMGM blog: Rams vs Raiders Prediction, Odds & Best Prop Bets, Week 7)\",\"date\":\"Not shown on page; Week 7 preview for Sun Oct 25, 2026 game\",\"url\":\"https://sports.betmgm.com/en/blog/nfl/rams-raiders-prediction-odds-player-prop-bets-picks-week-7-jaa/\"},{\"player\":\"Mark Andrews (BAL) vs CIN\",\"m…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 4,
+      "label": "vegas:yards-receptions",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "ad21803d697c84c1d",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585085627,
+      "queuedAt": 1792584839968,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585387519,
+      "tokens": 137604,
+      "toolCalls": 66,
+      "durationMs": 301892,
+      "resultPreview": "{\"props\":[{\"player\":\"Colston Loveland (CHI)\",\"market\":\"Receiving yards O/U (Week 7, NE at CHI, Thu Oct 22 2026)\",\"line_or_odds\":\"44.5 - Over -115 / Under -115\",\"book\":\"BetMGM (BetMGM blog: Patriots vs Bears Prediction, Odds & Best Prop Bets, Week 7)\",\"date\":\"Week 7 2026 page; exact publish date not shown (other results for this game were dated Oct 20-21, 2026)\",\"url\":\"https://sports.betmgm.com/en/…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 5,
+      "label": "news:TE-group-A",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "a4792d58e6a94b912",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585377423,
+      "queuedAt": 1792584839968,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "I have no Week 7 data for any of these 15 tight ends, so ev…",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585397299,
+      "tokens": 49066,
+      "toolCalls": 5,
+      "durationMs": 19875,
+      "resultPreview": "{\"players\":[{\"player\":\"Brock Bowers\",\"week7_status\":\"not found\",\"practice\":\"not found\",\"role_news\":\"not found\",\"qb_situation\":\"not found\",\"source\":\"none: web search budget used up before any results came back\",\"date\":\"not found\"},{\"player\":\"Isaiah Likely\",\"week7_status\":\"not found\",\"practice\":\"not found\",\"role_news\":\"not found\",\"qb_situation\":\"not found\",\"source\":\"none: web search budget used up b…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 6,
+      "label": "news:TE-group-B",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "ada404bf6253729a0",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585389391,
+      "queuedAt": 1792584839969,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "I couldn't collect any data. My first three WebSearch queri…",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585412366,
+      "tokens": 49060,
+      "toolCalls": 5,
+      "durationMs": 22974,
+      "resultPreview": "{\"players\":[{\"player\":\"Dalton Schultz\",\"team\":\"not verified (no search completed)\",\"week7_status\":\"not found (search not performed: web search budget exhausted)\",\"practice\":\"not found\",\"role_news\":\"not found\",\"qb_situation\":\"not found\",\"source\":\"none - WebSearch returned 'budget used up' before any results\",\"date\":\"n/a\"},{\"player\":\"Harold Fannin Jr.\",\"team\":\"not verified (no search completed)\",\"we…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 7,
+      "label": "rank:blend",
+      "phaseIndex": 2,
+      "phaseTitle": "Rank",
+      "agentId": "a22ae86d5140957aa",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585414432,
+      "queuedAt": 1792585414409,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Full PPR, Week 7 2026. The script is /tmp/claude-0/-home-us…",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792585991124,
+      "tokens": 145687,
+      "toolCalls": 12,
+      "durationMs": 576691,
+      "resultPreview": "{\"method\":\"Full PPR, Week 7 2026. The script is /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/te7/work/proj.py, and the consensus step is in .../te7/work/final3.py.\\n\\n(1) Usage baseline: U = 0.5*ep_pg + 0.3*ppg3 + 0.2*ppg, all from te_table.csv. When ppg3 is missing, the weights are rescaled.\\n\\n(2) Matchup: A = U * sqrt(opp_te_ppg_allowed/13.3) * sqrt(implied/22…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 8,
+      "label": "verify:status",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "a59446841d741fa5c",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585993422,
+      "queuedAt": 1792585993391,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792586181473,
+      "tokens": 89990,
+      "toolCalls": 15,
+      "durationMs": 188050,
+      "resultPreview": "{\"issues\":[{\"player\":\"ALL (process)\",\"claim\":\"Status fields for the top 15 ('No Week 7 designation found', Hockenson 'questionable', Kraft injury note, Adams out)\",\"problem\":\"I could not run my own web check. Every WebSearch I sent came back 'web search budget is used up (limit: 200 per turn, shared)', so 0 of the 10+ planned queries ran. No Week 7 status could be confirmed or refuted from news so…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 9,
+      "label": "verify:math",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "afe2478f625df4c1a",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792585993422,
+      "queuedAt": 1792585993392,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792586437349,
+      "tokens": 133319,
+      "toolCalls": 20,
+      "durationMs": 442554,
+      "resultPreview": "{\"issues\":[{\"player\":\"George Kittle\",\"claim\":\"Rank 1 at 16.29, ahead of LaPorta, Kraft, McBride and Bowers\",\"problem\":\"The #1 spot comes from treating TDs differently for different players, not from the data. Players with TD odds get their actual TD rate partly swapped for the market price: Likely -0.41, Bowers -0.24, McBride -0.07. Kittle has the highest TD rate in the top 6 (5 TD in 6 games, 0.8…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 10,
+      "label": "verify:consensus",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "a25e8b74867a1b82d",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792586184631,
+      "queuedAt": 1792585993392,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "Context: today is Wednesday Oct 21, 2026. NFL Week 7 runs Thu Oct 22 (NE at CHI) through Mon Oct 26 (DAL at PHI). Byes this week: BUF, JAX, LAC, WAS (so Dalton Kincaid, Brenton Strange, David Njoku, Chig Okonkwo are on bye). Fantasy scoring: full PPR (1 per catch, 0.1 per yard, 6 per TD), no TE premium. In this environment ONLY WebSearch works; WebFetch and curl are blocked for news, fantasy and s…",
+      "promptFramed": true,
+      "lastProgressAt": 1792586479657,
+      "tokens": 104030,
+      "toolCalls": 15,
+      "durationMs": 295025,
+      "resultPreview": "{\"issues\":[{\"player\":\"ALL (method note)\",\"claim\":\"Review was meant to use at least 8 new WebSearch queries for Week 7 2026 TE rankings\",\"problem\":\"Every WebSearch call came back 'web search budget is used up (limit: 200 per turn, shared by every agent)'. I ran no new searches. This review checks the ranking against the 8 consensus lists already captured in work/proj.py (FP ECR Oct 20, Draft Sharks…"
+    }
+  ],
+  "totalTokens": 1073724,
+  "totalToolCalls": 282
+}
