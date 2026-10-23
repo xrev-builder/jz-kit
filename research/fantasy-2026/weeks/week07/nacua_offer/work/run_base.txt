@@ -1,0 +1,168 @@
+=== PPG curve fits (2026 Wk1-6 actual PPR ppg by positional rank, >=3 games; ppg = a + b*ln(rank)) ===
+pos  n_fit      a      b    r2  rank1  rank4  rank6  rank10  rank16  rank22  rank30  rank36  rank45  rank55
+ QB     32 33.390 -5.266 0.848  33.39  26.09  23.95   21.26   18.79   17.11   15.48   14.52   13.34   12.29
+ RB     64 31.746 -6.568 0.981  31.75  22.64  19.98   16.62   13.54   11.44    9.41    8.21    6.74    5.42
+ WR     90 29.036 -5.164 0.978  29.04  21.88  19.78   17.15   14.72   13.07   11.47   10.53    9.38    8.34
+ TE     32 21.110 -4.189 0.993  21.11  15.30  13.60   11.46    9.49    8.16    6.86    6.10    5.16    4.32
+
+Waiver replacement ppg : {'QB': 18.07, 'RB': 7.53, 'WR': 8.6, 'TE': 9.31} mode=always
+
+=== Player ROS ppg inputs ===
+                  pos team  bye  ros_ecr  curve_ppg  ep_ppg  actual_ppg_wk1_6  games_wk1_6  ros_ppg
+player                                                                                             
+Brock Purdy        QB   SF    8     3.33      27.05   23.86             27.00            6    25.45
+Kyler Murray       QB  MIN    6    20.50      17.48   13.24             10.94            4    15.36
+Chase Brown        RB  CIN    6    11.83      15.52   16.12             13.00            5    15.82
+Kyren Williams     RB   LA   11     8.50      17.69   19.38             19.83            6    18.53
+Jadarian Price     RB  SEA   11    48.17       6.30    8.94              4.67            3     7.62
+Emanuel Wilson     RB  SEA   11    37.33       7.97   12.34              9.38            6    10.15
+Puka Nacua         WR   LA   11     3.67      22.32   24.09             22.95            4    23.21
+George Pickens     WR  DAL   14    16.50      14.56   15.86             13.63            6    15.21
+Carnell Tate       WR  TEN    9    32.67      11.03   11.31             11.23            6     9.00
+Devaughn Vele      WR   NO    8    54.33       8.41   12.79             11.57            6    10.60
+Dontayvion Wicks   WR  PHI   10    48.00       9.05    8.92              8.90            6     8.98
+Romeo Doubs        WR   NE   11    46.67       9.19    8.00              9.68            6     8.60
+Harold Fannin Jr.  TE  CLE   11     9.67      11.60    7.63              8.93            6     9.62
+Kyle Pitts         TE  ATL   11    19.17       8.74    6.57              8.32            6     7.65
+Javonte Williams   RB  DAL   14     9.67      16.84   17.55             18.17            6    17.19
+Jordyn Tyson       WR   NO    8    53.50       8.49     NaN               NaN            0    10.53
+Michael Wilson     WR  ARI   14    21.83      13.11   17.34             11.88            6    15.22
+Blake Corum        RB   LA   11    30.67       9.26    7.64              8.73            6     8.45
+Chris Olave        WR   NO    8     6.17      19.64   17.71             18.83            6    18.67
+James Cook         RB  BUF    7     6.00      19.98   15.66             18.93            6    17.82
+Terry McLaurin     WR  WAS    7    29.67      11.53    9.98              9.20            5     0.00
+Isaiah Likely      TE  NYG    8     5.83      13.72   16.53             18.22            6    15.13
+
+=== Drops forced by each option (chosen by min lineup-point cost) ===
+(a) Javonte + Tyson + M. Wilson (as offered): drop ['Jadarian Price', 'Kyle Pitts']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(b) Javonte + M. Wilson + Corum: drop ['Jadarian Price', 'Kyle Pitts']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(c) Javonte + M. Wilson (2-for-1): drop ['Jadarian Price']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(d) Javonte + Olave: drop ['Jadarian Price']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(f) Cook + M. Wilson: drop ['Jadarian Price']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(g) Javonte + M. Wilson + McLaurin: drop ['Jadarian Price', 'Terry McLaurin']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely: drop ['Jadarian Price', 'Kyle Pitts']  (modeled cost of the drops, Wk8-17 total: 0.00 pts)
+
+=== HOLD lineups by week (Nacua healthy from Week 8) ===
+8 119.9 ['QB:streamer QB(18.1)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Emanuel Wilson(10.2)', 'FLEX:streamer TE(9.3)']
+9 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+10 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+11 101.9 ['QB:Brock Purdy(25.5)', 'RB:Chase Brown(15.8)', 'RB:streamer RB(7.5)', 'WR:George Pickens(15.2)', 'WR:Devaughn Vele(10.6)', 'TE:streamer TE(9.3)', 'FLEX:Carnell Tate(9.0)', 'FLEX:Dontayvion Wicks(9.0)']
+12 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+13 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+14 122.7 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:Devaughn Vele(10.6)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Emanuel Wilson(10.2)', 'FLEX:streamer TE(9.3)']
+15 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+16 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+17 128.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Puka Nacua(23.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Emanuel Wilson(10.2)']
+
+=== Option (a) lineups by week ===
+8 119.8 ['QB:streamer QB(18.1)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Emanuel Wilson(10.2)']
+9 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+10 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+11 119.3 ['QB:Brock Purdy(25.5)', 'RB:Javonte Williams(17.2)', 'RB:Chase Brown(15.8)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:streamer TE(9.3)', 'FLEX:Devaughn Vele(10.6)', 'FLEX:Jordyn Tyson(10.5)']
+12 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+13 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+14 110.0 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Chase Brown(15.8)', 'WR:Devaughn Vele(10.6)', 'WR:Jordyn Tyson(10.5)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Emanuel Wilson(10.2)', 'FLEX:streamer TE(9.3)']
+15 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+16 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+17 127.6 ['QB:Brock Purdy(25.5)', 'RB:Kyren Williams(18.5)', 'RB:Javonte Williams(17.2)', 'WR:Michael Wilson(15.2)', 'WR:George Pickens(15.2)', 'TE:Harold Fannin Jr.(9.6)', 'FLEX:Chase Brown(15.8)', 'FLEX:Devaughn Vele(10.6)']
+
+=== Scenario results (avg lineup points/week, DST excluded) ===
+                                        option  nacua_weeks_missed  out_through_week  ppg_wk8_14  ppg_wk15_17  total_wk8_17  delta_wk8_14  delta_wk15_17  delta_total_wk8_17
+                                          HOLD                   1                 7      122.70       128.59       1244.64          0.00           0.00                0.00
+                                          HOLD                   2                 8      120.67       128.59       1230.43          0.00           0.00                0.00
+                                          HOLD                   4                10      116.69       128.59       1202.63          0.00           0.00                0.00
+                                          HOLD                   6                12      114.71       128.59       1188.73          0.00           0.00                0.00
+                                          HOLD                  10                16      110.69       119.32       1132.83          0.00           0.00                0.00
+  (a) Javonte + Tyson + M. Wilson (as offered)                   1                 7      122.82       127.65       1242.71          0.13          -0.94               -1.93
+  (a) Javonte + Tyson + M. Wilson (as offered)                   2                 8      122.82       127.65       1242.71          2.16          -0.94               12.28
+  (a) Javonte + Tyson + M. Wilson (as offered)                   4                10      122.82       127.65       1242.71          6.13          -0.94               40.08
+  (a) Javonte + Tyson + M. Wilson (as offered)                   6                12      122.82       127.65       1242.71          8.11          -0.94               53.98
+  (a) Javonte + Tyson + M. Wilson (as offered)                  10                16      122.82       127.65       1242.71         12.13           8.32              109.88
+               (b) Javonte + M. Wilson + Corum                   1                 7      122.39       127.65       1239.65         -0.31          -0.94               -4.99
+               (b) Javonte + M. Wilson + Corum                   2                 8      122.39       127.65       1239.65          1.72          -0.94                9.22
+               (b) Javonte + M. Wilson + Corum                   4                10      122.39       127.65       1239.65          5.69          -0.94               37.02
+               (b) Javonte + M. Wilson + Corum                   6                12      122.39       127.65       1239.65          7.68          -0.94               50.92
+               (b) Javonte + M. Wilson + Corum                  10                16      122.39       127.65       1239.65         11.69           8.32              106.82
+             (c) Javonte + M. Wilson (2-for-1)                   1                 7      122.39       127.65       1239.65         -0.31          -0.94               -4.99
+             (c) Javonte + M. Wilson (2-for-1)                   2                 8      122.39       127.65       1239.65          1.72          -0.94                9.22
+             (c) Javonte + M. Wilson (2-for-1)                   4                10      122.39       127.65       1239.65          5.69          -0.94               37.02
+             (c) Javonte + M. Wilson (2-for-1)                   6                12      122.39       127.65       1239.65          7.68          -0.94               50.92
+             (c) Javonte + M. Wilson (2-for-1)                  10                16      122.39       127.65       1239.65         11.69           8.32              106.82
+                           (d) Javonte + Olave                   1                 7      125.34       131.10       1270.69          2.65           2.51               26.05
+                           (d) Javonte + Olave                   2                 8      125.34       131.10       1270.69          4.68           2.51               40.26
+                           (d) Javonte + Olave                   4                10      125.34       131.10       1270.69          8.65           2.51               68.06
+                           (d) Javonte + Olave                   6                12      125.34       131.10       1270.69         10.63           2.51               81.96
+                           (d) Javonte + Olave                  10                16      125.34       131.10       1270.69         14.65          11.77              137.86
+                         (e) Olave straight up                   1                 7      118.81       124.06       1203.86         -3.88          -4.53              -40.78
+                         (e) Olave straight up                   2                 8      118.81       124.06       1203.86         -1.85          -4.53              -26.58
+                         (e) Olave straight up                   4                10      118.81       124.06       1203.86          2.12          -4.53                1.22
+                         (e) Olave straight up                   6                12      118.81       124.06       1203.86          4.10          -4.53               15.12
+                         (e) Olave straight up                  10                16      118.81       124.06       1203.86          8.12           4.73               71.03
+                          (f) Cook + M. Wilson                   1                 7      124.14       128.27       1253.76          1.44          -0.32                9.12
+                          (f) Cook + M. Wilson                   2                 8      124.14       128.27       1253.76          3.47          -0.32               23.33
+                          (f) Cook + M. Wilson                   4                10      124.14       128.27       1253.76          7.44          -0.32               51.13
+                          (f) Cook + M. Wilson                   6                12      124.14       128.27       1253.76          9.43          -0.32               65.03
+                          (f) Cook + M. Wilson                  10                16      124.14       128.27       1253.76         13.44           8.95              120.93
+            (g) Javonte + M. Wilson + McLaurin                   1                 7      122.39       127.65       1239.65         -0.31          -0.94               -4.99
+            (g) Javonte + M. Wilson + McLaurin                   2                 8      122.39       127.65       1239.65          1.72          -0.94                9.22
+            (g) Javonte + M. Wilson + McLaurin                   4                10      122.39       127.65       1239.65          5.69          -0.94               37.02
+            (g) Javonte + M. Wilson + McLaurin                   6                12      122.39       127.65       1239.65          7.68          -0.94               50.92
+            (g) Javonte + M. Wilson + McLaurin                  10                16      122.39       127.65       1239.65         11.69           8.32              106.82
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely                   1                 7      127.24       133.16       1290.14          4.54           4.56               45.50
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely                   2                 8      127.24       133.16       1290.14          6.57           4.56               59.71
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely                   4                10      127.24       133.16       1290.14         10.54           4.56               87.50
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely                   6                12      127.24       133.16       1290.14         12.53           4.56              101.40
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely                  10                16      127.24       133.16       1290.14         16.55          13.83              157.31
+
+=== Most likely (probability-weighted: {1: 0.45, 2: 0.3, 4: 0.15, 6: 0.06, 10: 0.04} ) ===
+                                        option          nacua_weeks_missed  ppg_wk8_14  ppg_wk15_17  total_wk8_17  delta_wk8_14  delta_wk15_17  delta_total_wk8_17
+                                          HOLD most likely (prob-weighted)      120.23       128.22       1226.25          0.00           0.00                0.00
+  (a) Javonte + Tyson + M. Wilson (as offered) most likely (prob-weighted)      122.82       127.65       1242.71          2.60          -0.57               16.46
+               (b) Javonte + M. Wilson + Corum most likely (prob-weighted)      122.39       127.65       1239.65          2.16          -0.57               13.40
+             (c) Javonte + M. Wilson (2-for-1) most likely (prob-weighted)      122.39       127.65       1239.65          2.16          -0.57               13.40
+                           (d) Javonte + Olave most likely (prob-weighted)      125.34       131.10       1270.69          5.12           2.88               44.44
+                         (e) Olave straight up most likely (prob-weighted)      118.81       124.06       1203.86         -1.41          -4.16              -22.39
+                          (f) Cook + M. Wilson most likely (prob-weighted)      124.14       128.27       1253.76          3.91           0.05               27.51
+            (g) Javonte + M. Wilson + McLaurin most likely (prob-weighted)      122.39       127.65       1239.65          2.16          -0.57               13.40
+(h) EXTRA: Javonte + M. Wilson + Isaiah Likely most likely (prob-weighted)      127.24       133.16       1290.14          7.01           4.94               63.89
+
+=== Breakeven sweep (option total minus HOLD total, points) ===
+(a) Javonte + Tyson + M. Wilson (as offered)
+ n  out_through  d_total  d_reg  d_po
+ 1            7    -1.93   0.90 -2.82
+ 2            8    12.28  15.10 -2.82
+ 3            9    26.18  29.00 -2.82
+ 4           10    40.08  42.90 -2.82
+ 5           11    40.08  42.90 -2.82
+ 6           12    53.98  56.80 -2.82
+ 7           13    67.88  70.70 -2.82
+ 8           14    82.08  84.91 -2.82
+ 9           15    95.98  84.91 11.07
+10           16   109.88  84.91 24.97
+11           17   123.78  84.91 38.87
+(c) Javonte + M. Wilson (2-for-1)
+ n  out_through  d_total  d_reg  d_po
+ 1            7    -4.99  -2.17 -2.82
+ 2            8     9.22  12.04 -2.82
+ 3            9    23.12  25.94 -2.82
+ 4           10    37.02  39.84 -2.82
+ 5           11    37.02  39.84 -2.82
+ 6           12    50.92  53.74 -2.82
+ 7           13    64.81  67.64 -2.82
+ 8           14    79.02  81.85 -2.82
+ 9           15    92.92  81.85 11.07
+10           16   106.82  81.85 24.97
+11           17   120.72  81.85 38.87
+(b) Javonte + M. Wilson + Corum
+ n  out_through  d_total  d_reg  d_po
+ 1            7    -4.99  -2.17 -2.82
+ 2            8     9.22  12.04 -2.82
+ 3            9    23.12  25.94 -2.82
+ 4           10    37.02  39.84 -2.82
+ 5           11    37.02  39.84 -2.82
+ 6           12    50.92  53.74 -2.82
+ 7           13    64.81  67.64 -2.82
+ 8           14    79.02  81.85 -2.82
+ 9           15    92.92  81.85 11.07
+10           16   106.82  81.85 24.97
+11           17   120.72  81.85 38.87

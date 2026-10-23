@@ -1,0 +1,1660 @@
+{
+  "summary": "Evaluate Daoud offer (Javonte + Tyson + M. Wilson for injured Nacua) and counters under injury scenarios, then adversarially verify",
+  "agentCount": 8,
+  "logs": [
+    "Gather done: ok, ok, ok, ok"
+  ],
+  "result": {
+    "valued": {
+      "method": "Script: /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/nac/work/nacua_trade_model.py. Sensitivity runner: run_sensitivity.sh in the same folder. Outputs: results*.json and run_base.txt. Jamal's roster is ASSUMED from the last known state (Sept 23): QB Purdy, Murray; RB Chase Brown, Kyren Williams, Jadarian Price, Emanuel Wilson; WR Nacua, Pickens, Tate, Vele, Wicks, Doubs; TE Fannin, Pitts; DST 49ers.\n\n(1) Points-per-game curve. I took 2026 Weeks 1-6 nflverse actual PPR points per game, with QBs rescored to 6-pt passing TDs, for players with at least 3 games. I ranked them within position and fit ppg = a + b*ln(rank):\n- QB: 33.39 - 5.27 ln r (R2 0.85)\n- RB: 31.75 - 6.57 ln r (R2 0.98)\n- WR: 29.04 - 5.16 ln r (R2 0.98)\n- TE: 21.11 - 4.19 ln r (R2 0.99)\n\n(2) Player ROS ppg. Each player gets 50% curve value at their FantasyPros ROS positional ECR (scraped Oct 16) plus 50% their own Weeks 1-6 expected points per game from ep.csv (QB passing TDs rescored to 6 points). Overrides:\n- Tate is capped at 9.0.\n- McLaurin is set to 0: torn patellar tendon, season over (ESPN/NFL.com, Oct 20). His Oct 16 ECR is stale.\n- Tyson is 0 through Week 9. He has been on IR since Aug 30, is not practicing in Week 7, his 21-day practice window has not opened, NO is on bye in Week 8, and analysts' earliest debut is Week 9. In the model he debuts Week 10 at 60%, then plays at curve(WR36) = 10.53 ppg. That is a low-end fantasy WR3, a little below the 11.6 actual / 12.8 EP ppg that Vele has produced in the NO WR2 role Tyson was drafted for. The discount reflects rookie ramp-up and his history of hamstring recurrences.\n\n(3) Byes come from games.csv: LA 11, SEA 11, CLE 11, ATL 11, NE 11, DAL 14, ARI 14, NO 8, SF 8, TEN 9, PHI 10. Week 11 is a hole for HOLD (Nacua, Kyren and both TEs on bye). Week 14, the last regular-season week, is a hole for every Javonte/M. Wilson option, because Pickens, Javonte and Wilson are all on bye.\n\n(4) Lineups. Each week 8-17, the best legal QB/2RB/2WR/TE/2FLEX lineup is picked greedily, which is optimal for nested slots. DST is the same 49ers unit in every option, so it is excluded. Week 7 is excluded: the task window starts at Week 8, and the trade most likely processes after Week 7 kickoffs. Every roster, HOLD included, can use one replacement-level free agent per position each week. Replacement levels are computed on the same blended basis at QB20/RB45/WR55/TE16: QB 18.07, RB 7.53, WR 8.60, TE 9.31.\n\n(5) Drops. These are chosen by brute force as the set that costs the fewest lineup points over Weeks 8-17, with ties going to the lowest ppg:\n- 3-for-1 options (a), (b) and the extra Likely option: drop Jadarian Price and Kyle Pitts.\n- (g): drop Price and McLaurin.\n- 2-for-1 options: drop Price.\n- Modeled cost is 0.0 points in every case. Price, Pitts, Doubs, Wicks and Kyler Murray all project at or below the free-agent streamer, so the model is indifferent among them.\n- Emanuel Wilson should NOT be dropped. He is a regular FLEX starter (10.15 ppg).\n- If Jamal has an open ESPN IR slot, Tyson or McLaurin could go there, saving one drop at no modeled cost.\n\n(6) Nacua scenarios count calendar weeks missed starting with Week 7. N=1 means he is out Week 7 only and back Week 8. Every trade option is unaffected by Nacua's health, so only HOLD changes between scenarios. The 'most likely' row is a probability-weighted mix: 1 week 45%, 2 weeks 30%, 4 weeks 15%, 6 weeks 6%, 10 weeks 4%. These weights are my judgment from the evidence, not a sourced forecast:\n- He was limited, not DNP, on Thursday Oct 22 (ESPN, OC Register).\n- No MRI or severity has been reported, and no Friday designation was found.\n- Early reads were Rotoworld 'highly questionable' and SI 'very questionable' for Week 7.\n- 4for4's historical benchmark is about 2 missed weeks for WR calf strains.\n- The tail risk comes from the pre-hernia/surgery talk (Florio, Schefter, Newsweek, early Oct).\n\nSensitivity runs:\n- A waiver fill only for empty slots, or no waivers at all, both make (a) look 3-8 points better.\n- M. Wilson at curve only (13.11) or at 12.0.\n- Nacua at 25.0.\n- Javonte at 15.0.\n- Tyson returning Week 9, or Week 12 at WR45.\n\nKnown biases:\n- The curve is built from rank-ordered actual results after only 6 weeks, which inflates the top ranks (helps Nacua, Olave and Cook). The EP blend partly offsets this.\n- The ECR predates Week 6, McLaurin's injury and Nacua's calf injury.\n- The model uses means only. It ignores Nacua's ceiling, injury risk to the incoming players, Tyson cutting into Vele's role, Corum's value as Kyren's handcuff, and the NFL's off-field review of Nacua (no timeline, no suspension).",
+      "ppg_inputs": [
+        {
+          "player": "Puka Nacua",
+          "ros_ppg": 23.21,
+          "basis": "WR LA, bye Wk11; 0.5*curve(ROS WR3.67)=22.32 + 0.5*EP/g=24.09; Wk1-6 actual 22.95 ppg in 4 g. Healthy value; zeroed in weeks missed per scenario"
+        },
+        {
+          "player": "Brock Purdy",
+          "ros_ppg": 25.45,
+          "basis": "QB SF, bye Wk8; 0.5*curve(QB3.33)=27.05 + 0.5*EP/g=23.86 (6-pt pass TD); actual 27.00 in 6 g"
+        },
+        {
+          "player": "Kyler Murray",
+          "ros_ppg": 15.36,
+          "basis": "QB MIN, bye Wk6; 0.5*curve(QB20.5)=17.48 + 0.5*EP/g=13.24; actual 10.95 in 4 g (below QB streamer 18.07)"
+        },
+        {
+          "player": "Chase Brown",
+          "ros_ppg": 15.82,
+          "basis": "RB CIN, bye Wk6; 0.5*curve(RB11.83)=15.52 + 0.5*EP/g=16.12; actual 13.00 in 5 g"
+        },
+        {
+          "player": "Kyren Williams",
+          "ros_ppg": 18.53,
+          "basis": "RB LA, bye Wk11; 0.5*curve(RB8.5)=17.69 + 0.5*EP/g=19.38; actual 19.83 in 6 g"
+        },
+        {
+          "player": "Jadarian Price",
+          "ros_ppg": 7.62,
+          "basis": "RB SEA, bye Wk11; 0.5*curve(RB48.17)=6.30 + 0.5*EP/g=8.94; actual 4.67 in 3 g"
+        },
+        {
+          "player": "Emanuel Wilson",
+          "ros_ppg": 10.15,
+          "basis": "RB SEA, bye Wk11; 0.5*curve(RB37.33)=7.97 + 0.5*EP/g=12.34; actual 9.38 in 6 g"
+        },
+        {
+          "player": "George Pickens",
+          "ros_ppg": 15.21,
+          "basis": "WR DAL, bye Wk14; 0.5*curve(WR16.5)=14.56 + 0.5*EP/g=15.86; actual 13.63 in 6 g"
+        },
+        {
+          "player": "Carnell Tate",
+          "ros_ppg": 9,
+          "basis": "WR TEN, bye Wk9; model value 11.17 (curve WR32.67=11.03, EP 11.31), capped at 9.0 because the user says he is not startable"
+        },
+        {
+          "player": "Devaughn Vele",
+          "ros_ppg": 10.6,
+          "basis": "WR NO, bye Wk8; 0.5*curve(WR54.33)=8.41 + 0.5*EP/g=12.79; actual 11.57 in 6 g"
+        },
+        {
+          "player": "Dontayvion Wicks",
+          "ros_ppg": 8.98,
+          "basis": "WR PHI, bye Wk10; 0.5*curve(WR48)=9.05 + 0.5*EP/g=8.92"
+        },
+        {
+          "player": "Romeo Doubs",
+          "ros_ppg": 8.6,
+          "basis": "WR NE, bye Wk11; 0.5*curve(WR46.67)=9.19 + 0.5*EP/g=8.00"
+        },
+        {
+          "player": "Harold Fannin Jr.",
+          "ros_ppg": 9.62,
+          "basis": "TE CLE, bye Wk11; 0.5*curve(TE9.67)=11.60 + 0.5*EP/g=7.63; actual 8.93"
+        },
+        {
+          "player": "Kyle Pitts",
+          "ros_ppg": 7.65,
+          "basis": "TE ATL, bye Wk11; 0.5*curve(TE19.17)=8.74 + 0.5*EP/g=6.57 (below TE streamer 9.31)"
+        },
+        {
+          "player": "Javonte Williams",
+          "ros_ppg": 17.19,
+          "basis": "RB DAL, bye Wk14; 0.5*curve(RB9.67)=16.84 + 0.5*EP/g=17.55; actual 18.17 in 6 g; healthy, DAL plays MNF Wk7 (incoming research)"
+        },
+        {
+          "player": "Michael Wilson",
+          "ros_ppg": 15.22,
+          "basis": "WR ARI, bye Wk14; 0.5*curve(WR21.83)=13.11 + 0.5*EP/g=17.34; actual 11.88 in 6 g. EP is propped up by Wks 3-4 volume; since the Harrison Jr. trade he has gone 4-30 and 4-32 (RotoBaller 10/19). This is the key sensitivity"
+        },
+        {
+          "player": "Jordyn Tyson",
+          "ros_ppg": 10.53,
+          "basis": "WR NO, bye Wk8; 0 through Wk9 (IR right hamstring since Aug 30; not practicing Wk7, window not opened per Rotowire/BVM 10/21; NO bye Wk8). Debut Wk10 at 60%, then curve(WR36)=10.53 (rookie low-end WR3, below Vele's NO WR2 output). Weeks 9 and 12 tested"
+        },
+        {
+          "player": "Blake Corum",
+          "ros_ppg": 8.45,
+          "basis": "RB LA, bye Wk11; 0.5*curve(RB30.67)=9.26 + 0.5*EP/g=7.64; Kyren's backup (about 28% of snaps, NBC 10/18)"
+        },
+        {
+          "player": "Chris Olave",
+          "ros_ppg": 18.67,
+          "basis": "WR NO, bye Wk8; 0.5*curve(WR6.17)=19.64 + 0.5*EP/g=17.71; actual 18.83 in 6 g"
+        },
+        {
+          "player": "James Cook",
+          "ros_ppg": 17.82,
+          "basis": "RB BUF, bye Wk7 (past); 0.5*curve(RB6)=19.98 + 0.5*EP/g=15.66; actual 18.93 in 6 g"
+        },
+        {
+          "player": "Terry McLaurin",
+          "ros_ppg": 0,
+          "basis": "WR WAS; season over, torn left patellar tendon (ESPN/NFL.com 2026-10-20). His Oct 16 ECR (WR29.67) is stale"
+        },
+        {
+          "player": "Isaiah Likely",
+          "ros_ppg": 15.13,
+          "basis": "EXTRA counter idea. TE NYG, bye Wk8; 0.5*curve(TE5.83)=13.72 + 0.5*EP/g=16.53; actual 18.22 in 6 g; QB is now J.J. McCarthy (NFL.com 10/21)"
+        }
+      ],
+      "scenarios": [
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 122.7,
+          "lineup_ppg_wk15_17": 128.59,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 120.67,
+          "lineup_ppg_wk15_17": 128.59,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 116.69,
+          "lineup_ppg_wk15_17": 128.59,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 114.71,
+          "lineup_ppg_wk15_17": 128.59,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 110.69,
+          "lineup_ppg_wk15_17": 119.32,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "HOLD",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 120.23,
+          "lineup_ppg_wk15_17": 128.22,
+          "delta_vs_hold_wk8_14": 0,
+          "delta_vs_hold_wk15_17": 0
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 0.13,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 2.16,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 6.13,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 8.11,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 12.13,
+          "delta_vs_hold_wk15_17": 8.32
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered)",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 122.82,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 2.6,
+          "delta_vs_hold_wk15_17": -0.57
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": -0.31,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 1.72,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 5.69,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 7.68,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 11.69,
+          "delta_vs_hold_wk15_17": 8.32
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 2.16,
+          "delta_vs_hold_wk15_17": -0.57
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": -0.31,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 1.72,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 5.69,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 7.68,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 11.69,
+          "delta_vs_hold_wk15_17": 8.32
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 2.16,
+          "delta_vs_hold_wk15_17": -0.57
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 2.65,
+          "delta_vs_hold_wk15_17": 2.51
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 4.68,
+          "delta_vs_hold_wk15_17": 2.51
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 8.65,
+          "delta_vs_hold_wk15_17": 2.51
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 10.63,
+          "delta_vs_hold_wk15_17": 2.51
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 14.65,
+          "delta_vs_hold_wk15_17": 11.77
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 125.34,
+          "lineup_ppg_wk15_17": 131.1,
+          "delta_vs_hold_wk8_14": 5.12,
+          "delta_vs_hold_wk15_17": 2.88
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": -3.88,
+          "delta_vs_hold_wk15_17": -4.53
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": -1.85,
+          "delta_vs_hold_wk15_17": -4.53
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": 2.12,
+          "delta_vs_hold_wk15_17": -4.53
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": 4.1,
+          "delta_vs_hold_wk15_17": -4.53
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": 8.12,
+          "delta_vs_hold_wk15_17": 4.73
+        },
+        {
+          "option": "(e) Olave straight up",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 118.81,
+          "lineup_ppg_wk15_17": 124.06,
+          "delta_vs_hold_wk8_14": -1.41,
+          "delta_vs_hold_wk15_17": -4.16
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 1.44,
+          "delta_vs_hold_wk15_17": -0.32
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 3.47,
+          "delta_vs_hold_wk15_17": -0.32
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 7.44,
+          "delta_vs_hold_wk15_17": -0.32
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 9.43,
+          "delta_vs_hold_wk15_17": -0.32
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 13.44,
+          "delta_vs_hold_wk15_17": 8.95
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 124.14,
+          "lineup_ppg_wk15_17": 128.27,
+          "delta_vs_hold_wk8_14": 3.91,
+          "delta_vs_hold_wk15_17": 0.05
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": -0.31,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 1.72,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 5.69,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 7.68,
+          "delta_vs_hold_wk15_17": -0.94
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 11.69,
+          "delta_vs_hold_wk15_17": 8.32
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 122.39,
+          "lineup_ppg_wk15_17": 127.65,
+          "delta_vs_hold_wk8_14": 2.16,
+          "delta_vs_hold_wk15_17": -0.57
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "1 (out Wk7 only; back Wk8)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 4.54,
+          "delta_vs_hold_wk15_17": 4.56
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "2 (out Wks 7-8; back Wk9)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 6.57,
+          "delta_vs_hold_wk15_17": 4.56
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "4 (out Wks 7-10; back Wk12 after LAR Wk11 bye)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 10.54,
+          "delta_vs_hold_wk15_17": 4.56
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "6 (out Wks 7-12; back Wk13)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 12.53,
+          "delta_vs_hold_wk15_17": 4.56
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "10 (out Wks 7-16; back Wk17)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 16.55,
+          "delta_vs_hold_wk15_17": 13.83
+        },
+        {
+          "option": "(h) EXTRA: Javonte + M. Wilson + Isaiah Likely",
+          "nacua_weeks_missed": "most likely: prob-weighted (1 wk 45%, 2 wk 30%, 4 wk 15%, 6 wk 6%, 10 wk 4%)",
+          "lineup_ppg_wk8_14": 127.24,
+          "lineup_ppg_wk15_17": 133.16,
+          "delta_vs_hold_wk8_14": 7.01,
+          "delta_vs_hold_wk15_17": 4.94
+        }
+      ],
+      "breakeven": "Base model: option (a) beats HOLD over Weeks 8-17 once Nacua misses 2 or more weeks counting Week 7, meaning he also misses Week 8.\n- N=1: -1.9 pts total. That is +0.13 per week in Weeks 8-14 and -0.94 per week in Weeks 15-17.\n- N=2: +12.3 pts.\n- N=3: +26.2 pts.\n- N=4: +40.1 pts.\n\nIn probability terms, (a) has the higher expected value if the chance he also misses Week 8 is above about 14% (1.93 / (1.93 + 12.28)).\n\nFor the playoffs alone (Weeks 15-17), (a) wins only if Nacua is still out in Week 15 (N of 9 or more). Otherwise HOLD is 2.8 points better across the three playoff weeks.\n\nThe breakeven depends on the inputs, and M. Wilson matters most:\n- M. Wilson at his ECR curve value only (13.1 ppg instead of 15.2): breakeven is 3 weeks, and the probability-weighted delta is -2.6 pts.\n- M. Wilson at 12.0, close to his 11.9 actual: breakeven is 4 weeks, delta -12.6.\n- Nacua at 25 ppg: breakeven 3 weeks.\n- Javonte at 15 ppg: breakeven 3 weeks.\n- With waivers allowed only for empty slots, or no waivers at all: breakeven 1 week.\n\nThe model does not cover Week 7. The trade will likely process after kickoffs, so Week 7 is lost either way if Nacua sits.",
+      "recommendation": "Don't accept yet, and don't spend the counter on Corum, McLaurin or a 2-for-1. Those are equal to or worse than the offer for Jamal.\n\nAs offered, the trade is roughly break-even if Nacua is back for Week 8:\n- -1.9 pts over Weeks 8-17.\n- +0.1 per week in the rest of the regular season.\n- -0.9 per week in the playoffs.\n\nIt only clearly wins if he also misses Week 8: +12 pts at 2 weeks missed, +40 at 4 weeks. Weighted by my injury probabilities it is worth +16.5 pts (+2.6 per week in Weeks 8-14, -0.6 per week in Weeks 15-17). That edge disappears (-2.6) if M. Wilson's two duds since the Harrison trade are real and he is worth his ECR value (13.1 ppg).\n\nThe trade also moves bye-week pain around:\n- It fixes Week 11 for Jamal (119 vs 102 lineup points).\n- It wrecks Week 14, the last regular-season week, when Javonte, Pickens and M. Wilson are all on bye (110 vs 123).\n- Tyson adds only about 3 pts all season.\n\nThe offer is open until Sat Oct 24 7:09 PM ET. The Rams' Friday final injury report and McVay's Friday comments have not been found yet, and they will matter more than anything modeled here.\n\nPlan:\n1. Message Daoud (rather than using ESPN's formal counter, which I believe declines the original offer — worth confirming) and ask for Javonte + M. Wilson + Isaiah Likely in place of Tyson. Likely is an extra idea outside the requested list. It is the only version that beats holding even with a healthy Nacua (+45 pts over Weeks 8-17, +4.6 per week in the playoffs), because TE is Jamal's weakest slot.\n2. If Daoud says no, accept the original offer as sent if the Friday/Saturday news says Nacua is OUT for Week 7 with a strain, a multi-week timeline, an MRI finding, or any return of the groin/pre-hernia issue.\n3. HOLD if Nacua is questionable or expected back by Week 8.\n\nDrops for a 3-for-1: Jadarian Price and Kyle Pitts, both at zero modeled cost. Keep Emanuel Wilson. All of this rests on the assumed Sept 23 roster.",
+      "counter_ranking": [
+        {
+          "option": "(h) EXTRA (not in requested list): Javonte + M. Wilson + Isaiah Likely",
+          "why": "Highest value to Jamal. +45.5 pts over Wks 8-17 even if Nacua is back Wk8, +63.9 probability-weighted; +4.5 to +4.6 per week in both the regular season and playoffs. Likely (15.1 ppg; ROS TE5.83; RotoBaller's half-PPR TE1) replaces Fannin's 9.6 at Jamal's weakest position. Risk: the Giants' QB just changed to J.J. McCarthy, and his Wk6 spike came with Theo Johnson out.",
+          "daoud_acceptance": "Uncertain, moderate-low. Likely is not on Daoud's untouchable list (Olave, Cook, Lamar), and a TE is neither the WRs he wants nor the RBs he refuses. But Likely is producing at a high level, so expect pushback."
+        },
+        {
+          "option": "(d) Javonte + Olave",
+          "why": "+26.1 pts if Nacua is back Wk8, +44.4 probability-weighted; +2.5 per week in the playoffs. Olave (18.7 ppg) almost replaces Nacua's ceiling while keeping the RB depth.",
+          "daoud_acceptance": "Very low. Daoud named Olave untouchable."
+        },
+        {
+          "option": "(f) Cook + M. Wilson",
+          "why": "+9.1 pts if Nacua is back Wk8, +27.5 probability-weighted; playoffs about even (-0.3 per week). Cook (17.8 ppg) is roughly Javonte-level but has a better team context and no Week 14 bye.",
+          "daoud_acceptance": "Very low. Daoud named Cook untouchable."
+        },
+        {
+          "option": "(a) Javonte + Tyson + M. Wilson (as offered, reference)",
+          "why": "-1.9 pts if Nacua is back Wk8, +12.3 if he misses through Wk8, +16.5 probability-weighted; -0.94 per week in the playoffs if Nacua is healthy. Tyson is worth about +3 pts total (FLEX in Wks 11 and 14). The result is very sensitive to M. Wilson's value.",
+          "daoud_acceptance": "Already offered: certain until it expires Sat Oct 24 7:09 PM ET, provided Jamal doesn't counter and void it."
+        },
+        {
+          "option": "(b) Javonte + M. Wilson + Corum",
+          "why": "-5.0 pts if Nacua is back Wk8, +13.4 probability-weighted, which is 3 pts worse than (a). Corum (8.45 ppg) never makes Jamal's lineup in the model, while Tyson fills in during Wks 11 and 14. The only upside, not modeled, is Corum as Kyren Williams' handcuff (same LAR backfield).",
+          "daoud_acceptance": "Moderate-high. Daoud keeps a WR (Tyson), which fits him wanting WRs, and sheds an RB, which fits 'no running backs'. Not worth asking for, given it lowers Jamal's modeled value."
+        },
+        {
+          "option": "(c) Javonte + M. Wilson (2-for-1)",
+          "why": "Same lineups as (b): -5.0 pts if Nacua is back Wk8, +13.4 probability-weighted; 3 pts worse than (a). Its only advantage is one fewer drop (Price), which costs nothing in the model.",
+          "daoud_acceptance": "High. Daoud gives less than he already offered. No reason for Jamal to ask for it."
+        },
+        {
+          "option": "(g) Javonte + M. Wilson + McLaurin",
+          "why": "For Jamal this is identical to (c): McLaurin is worth 0 because his season is over (torn patellar tendon, Oct 20), and he would be dropped or IR'd. It is 3 pts worse than (a) and adds a roster spot to clear.",
+          "daoud_acceptance": "High. Daoud called McLaurin dead weight and would be glad to dump him, but that helps only Daoud."
+        },
+        {
+          "option": "(e) Olave straight up",
+          "why": "Worst for Jamal: -40.8 pts if Nacua is back Wk8, -22.4 probability-weighted; -4.5 per week in the playoffs. Olave is a bit below Nacua per game, and Jamal loses the RB depth that makes the other versions work.",
+          "daoud_acceptance": "Very low (Olave untouchable). Jamal shouldn't want it anyway."
+        }
+      ],
+      "script_path": "/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/nac/work/nacua_trade_model.py"
+    },
+    "verdicts": [
+      {
+        "lens": "injury",
+        "v": {
+          "issues": [
+            {
+              "topic": "Accept trigger is looser than the model's own breakeven",
+              "problem": "Plan step 2 says to accept if Friday/Saturday news shows Nacua OUT for Week 7 'with a strain'. In the model, missing only Week 7 (N=1) is a loss for option (a) over Weeks 8-17: -1.93 at base, -20.96 with M. Wilson at his ECR curve value (results_mwcurve.json) and -30.95 at 12.0 ppg (results_mw12.json). With M. Wilson at ECR, even N=2 (out through Week 8) is -6.75. A Week 7 OUT designation by itself does not show the trade wins.",
+              "correction": "Make the accept trigger a multi-week signal: credible reporting that he will also miss Week 8 (and Week 9 if M. Wilson's 4-30 and 4-32 games since the Harrison trade are real), imaging showing a real strain, an IR move, or the groin/pre-hernia issue coming back. If he is OUT for Week 7 with day-to-day wording, or tagged questionable, HOLD.",
+              "severity": "high",
+              "evidence": "Model outputs: results.json (a) delta_total_wk8_17 by N = -1.93/12.28/40.08/53.98/109.88; results_mwcurve.json = -20.96/-6.75/21.05/34.95/90.85; results_mw12.json = -30.95/-16.74/11.06/24.96/80.86. M. Wilson Weeks 5-6 lines: RotoBaller 2026-10-19, NBC 2026-10-11."
+            },
+            {
+              "topic": "Missed-weeks distribution runs longer than the only quantitative benchmark",
+              "problem": "The weights 45/30/15/6/4 on N=1/2/4/6/10 give a mean of 2.41 calendar weeks, counting Week 7. The only benchmark I found, 4for4's Injury Index, puts WR calf strains at 1.8 weeks missed on average. Nacua has not been diagnosed with a strain: he finished Thursday as a limited participant and no imaging has been reported. Shifting to 60/25/10/3/2 (mean 1.88) cuts the expected edge for (a) from +16.5 to +9.7 at base, from -2.6 to -9.3 with M. Wilson at ECR, and from -12.6 to -19.3 with M. Wilson at 12.0.",
+              "correction": "Re-weight toward the benchmark (about 60% back by Week 8). Report expected value under both the model's weights and the benchmark weights. Say plainly that the sign of the result depends on M. Wilson's value more than on the injury.",
+              "severity": "medium",
+              "evidence": "4for4 'Fantasy Football Injury Index: How Do Injuries Affect Player Performance?' (2022 preseason, NFL 2017-2021 data): WR calf strain 1.8 weeks missed. ESPN (Barshop) 2026-10-22, story 50252934: left practice, listed limited. CBS/RotoWire 2026-10-22 (Grosbard, OC Register): limited. PFT/NBC 2026-10-22: 'no immediate word on the seriousness'. My recomputation uses the model's per-N deltas."
+            },
+            {
+              "topic": "The 6+ week tail is not tied to the calf and drives almost half the edge",
+              "problem": "The 10% weight on 6+ weeks out (6 weeks 6%, 10 weeks 4%) supplies 7.6 of the +16.5 expected points (46%). It rests on the September/October groin 'pre-hernia' talk. No source I found links the calf to the groin, RotoBaller said there was no sign surgery was needed, and he played Weeks 4-6 heavily (17 catches in Week 5). The N=10 scenario (back Week 17) is also longer than any reported surgery timeline: about 6-8 weeks in one report, 'one to two months' in another. Surgery today would put him back around Week 15.",
+              "correction": "Cap the tail at about 8 weeks (back Week 15) and model the hernia as a separate risk that existed before the calf injury and was already in his pre-injury value, instead of treating it as calf-timeline risk. Replacing N=10 with N=8 alone removes about 1.1 expected points. Lowering the tail weight to about 5% removes about 4 more.",
+              "severity": "medium",
+              "evidence": "No calf-groin link found in searches through 2026-10-23. Pre-hernia: Newsweek/RotoBaller/4for4, early Oct 2026. Erin Andrews (FOX) via NBC, 2026-10-04. Surgery recovery '6-8 weeks' and 'one to two months' (DraftSharks; undated StackedFantasy summary of Schefter). Week 5 17-138-1: Deseret News 2026-10-13. Tail contribution computed from results.json."
+            },
+            {
+              "topic": "'Most likely' row mislabeled",
+              "problem": "The row labeled 'most likely' is a probability-weighted mean pulled up by the tail. The most likely single outcome in the model's own weights is N=1, back by Week 8 (45%). In that case (a) loses 1.9 points at base and about 21 with M. Wilson at ECR. The recommendation's '+16.5 weighted' framing hides that the modal outcome is a sell-low.",
+              "correction": "Rename the row 'expected (prob-weighted)'. Add one line: 'Most likely outcome: back by Week 8, trade is -2 to -21 pts depending on M. Wilson.'",
+              "severity": "medium",
+              "evidence": "MOST_LIKELY_W = {1: 0.45, 2: 0.30, 4: 0.15, 6: 0.06, 10: 0.04} in nacua_trade_model.py line 108. results.json and results_mwcurve.json, N=1 rows."
+            },
+            {
+              "topic": "Benchmark misread; return-week dip and re-injury not modeled",
+              "problem": "The gathered evidence says calf strains 'have not historically cut fantasy production much after return' (4for4 Training Room, undated). 4for4's Injury Index says the opposite: WR calf strains showed a 33.1% fantasy production drop the week after injury, the biggest one-week dip of the injuries studied, and an 18.1% re-injury rate. An NFL calf-strain study found WRs have the highest calf-strain incidence and 20.7% of players had a later calf strain or Achilles injury. The model returns Nacua at his full 23.21 ppg immediately.",
+              "correction": "Apply about a 33% haircut to Nacua's first game back in the N>=2 scenarios (about 7.7 pts). That adds about 3-4 expected points to (a), offsetting part of the two re-weighting issues above, but it does not flip the result when M. Wilson is at ECR. Mention re-injury risk qualitatively.",
+              "severity": "low",
+              "evidence": "4for4 Injury Index (2022, 2017-2021 data): WR calf strain 1.8 wks, 18.1% re-injury, -33.1% the week after. Zofkie & Gallo, 'Calf Strains in the NFL' poster, OJSM 2024 (doi 10.1177/2325967124S00353): WRs highest incidence (48), 20.7% recurrence or Achilles injury."
+            },
+            {
+              "topic": "Week 7 framing (no 'plays Week 7' scenario)",
+              "problem": "N=1 is labeled 'out Wk7 only', and the narrative treats a Week 7 absence as the base case. The evidence is mixed: he was limited, not DNP. The Big Lead said 'questionable tag, at best', Rotoworld 'highly questionable', SI 'very questionable'. Playing Week 7 is possible. The Weeks 8-17 numbers do not change (N=0 equals N=1 in the window), but the label overstates the injury.",
+              "correction": "Relabel N=1 as 'back by Week 8 (may play Week 7)'.",
+              "severity": "low",
+              "evidence": "The Big Lead 2026-10-22. NBC Sports/Rotoworld 2026-10-22 ('highly questionable, seek out a backup plan'). SI Fantasy 2026-10-22 ('very questionable'). ESPN 2026-10-22 (limited)."
+            },
+            {
+              "topic": "Misattributed or stale quotes to keep out of the write-up",
+              "problem": "Several search results attach claims to the calf injury that belong elsewhere. (i) McVay's 'cleanup type of procedure' and 'couple of days' quotes are about Davante Adams' hamstring, yet some write-ups place them next to Nacua. (ii) 'Not believed to be serious' (Barshop/Schefter) comes from Nacua's Oct 31, 2024 knee injury. (iii) NFLTradeRumors.co says Barshop reported he would be 'deemed questionable for Thursday's game', which is garbled: Thursday's official entry was LIMITED, and no designation is given on Thursday. The model does not use any of these, which is correct.",
+              "correction": "Do not cite any of these as Nacua calf information. Keep 'severity: not found'.",
+              "severity": "low",
+              "evidence": "PFT/NBC, RotoBaller, Yahoo, 2026-10-21/22: 'Davante Adams will have a cleanup procedure on his hamstring'. ESPN story 42120171 (2024-10-31): knee, 'not believed to be serious'. NFLTradeRumors.co 'Rams WR Puka Nacua Suffered Calf Injury' (2026-10-22)."
+            }
+          ],
+          "verdict": "As of Friday Oct 23, no source says how bad Nacua's calf injury is. It has not been shown to be minor (0-1 games missed) or serious. I ran 28 WebSearch queries; 26 returned results before the search budget ran out. The latest reporting is from Thursday Oct 22 (ESPN/Barshop, Schefter, Rapoport, PFT, CBS/RotoWire, Rotoworld, SI, AP/Yahoo). He left practice early with a calf injury, a team spokesperson confirmed it, and he was officially LIMITED, not DNP. PFT said there was 'no immediate word on the seriousness.' No MRI or imaging result, no McVay quote about the calf, no Friday practice line and no Week 7 designation turned up. Early Week 7 reads were 'highly questionable' (Rotoworld), 'very questionable' (SI) and 'questionable at best' (The Big Lead, a guess). Nothing reported points to a serious injury, and the base rate for a WR calf strain is about 1.8 weeks missed (4for4, 2017-2021 data). The most likely outcome is that he is back by Week 8 or Week 9.\n\nThe center of the model's timeline (45% back by Week 8) holds up, but the rest leans too long. The mean of 2.41 weeks is above the benchmark. The 10% chance of 6+ weeks comes from the groin/pre-hernia history, which no source connects to the calf, and that tail supplies 46% of the +16.5 edge. The 'most likely' label actually names a weighted average. With benchmark weights the edge for (a) falls to about +9.7 at base and about -9.3 with M. Wilson at his ECR value. Adding a return-week production dip would win back about 3-4 points.\n\nIf he is back by Week 8, which is the single most likely outcome, taking the offer means selling low: -1.9 points at base and about -21 to -31 with M. Wilson at a realistic 12-13 ppg. The model's recommendation to wait is right. Its accept trigger ('OUT for Week 7 with a strain') is too loose, because by the model's own numbers a Week 7-only absence still loses. The trade becomes favorable only on credible news that he will miss Week 8 or longer.",
+          "best_action": "Don't accept before the Rams' Friday Oct 23 final injury report and McVay's Friday press conference, plus any Saturday news. The offer runs until Sat Oct 24 7:09 PM ET. Accept as sent only if credible reporting shows he will also miss Week 8 or longer. Examples: a multi-week timeline, imaging showing a real strain, an IR move, or a groin/pre-hernia flare. If M. Wilson's post-trade slump looks real, require him to be out through Week 9. If he is questionable, practicing, or ruled OUT for Week 7 only with day-to-day wording, treat the injury as minor and HOLD, because selling now would be selling low. Then pursue the Javonte + M. Wilson + Isaiah Likely counter. Before showing the model to the user: rename 'most likely' to 'expected', re-weight the scenarios toward the 1.8-week benchmark, cap the tail at about 8 weeks, and add a return-week haircut."
+        }
+      },
+      {
+        "lens": "fit",
+        "v": {
+          "issues": [
+            {
+              "topic": "Michael Wilson ROS ppg is inflated and the pro-trade lean depends on it",
+              "problem": "The model sets M. Wilson at 15.22 ppg. On the model's own WR curve that equals about WR14.5 (ln r = (29.04-15.22)/5.164), against a FantasyPros ROS ECR of WR21.83 (curve value 13.11). It also puts him level with Pickens (15.21), although Pickens has a better ECR (WR16.5) and better actual ppg (13.63 vs 11.88). The only support for 15.22 is the season-long EP of 17.34, and that comes from Weeks 3-4 (17 and 13 targets, EP 32.95 and 23.93). In the two games since Marvin Harrison Jr. left, his volume dropped: 7 targets each week, target share 15% and 21% (down from 34-37%), EP 12.31 and 14.77 (average 13.54), actual 7.28 and 7.20 PPR. Every recent indicator puts him between 7 and 13.5, not 15.2. So the headline numbers (+16.5 probability-weighted, a 14% breakeven, roughly even at N=1) use the most trade-friendly reading of the main input.",
+              "evidence": "ep.csv 2026 Wk1-6 M. Wilson total_fantasy_points_exp: 11.13, 8.92, 32.95, 23.93, 12.31, 14.77. stats_wk.csv target_share: .19, .27, .34, .37, .15, .21; PPR 10.6, 3.8, 25.9, 16.5, 7.28, 7.2. ecr.csv (scrape 2026-10-16) WR21.83, sd 3.93. RotoBaller 10/19: 'second straight bust'. Re-run (results_mwcurve.json, M. Wilson 13.11): (a) N1 -21.0, N2 -6.8, N3 +7.1, probability-weighted -2.6, breakeven 3 weeks. results_mw12.json: probability-weighted -12.6, breakeven 4 weeks.",
+              "correction": "Use about 13.1-13.5 ppg for M. Wilson as the base case (the ECR curve value, or the ECR curve blended with post-trade EP). Keep 15.2 only as an upside sensitivity. Restate the result: as offered, the trade loses to HOLD unless Nacua misses at least Weeks 7-9. The probability-weighted value is about -3, not +16.5.",
+              "severity": "high"
+            },
+            {
+              "topic": "Javonte Williams value also leans on early-season EP; combined recency check flips the result",
+              "problem": "Javonte's 17.19 matches his ECR (RB9.67, curve 16.84), but his EP fell from 20.1/14.9/16.9/26.6 in Weeks 1-4 to 14.1/12.6 in Weeks 5-6. His touches in Weeks 5-6 were 14 and 13, with 3 and 2 targets. His 18.17 actual ppg is TD-heavy: 8 TDs in 6 games account for about 48 of his 109 points. If both incoming starters are blended with recent EP instead of season EP (M. Wilson 13.33, Javonte 15.11), the offer needs Nacua out through Week 10 to break even. It also costs about 4.9 points per playoff week with a healthy Nacua.",
+              "evidence": "ep.csv Javonte weekly EP 20.13, 14.86, 16.91, 26.62, 14.12, 12.64. stats_wk.csv Wk5-6: 12 carries + 3 targets, then 11 carries + 2 targets. My re-run (/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/nacrev/work/results_recent.json): (a) N1 -37.7, N2 -23.5, N3 -9.6, N4 +4.3, probability-weighted -19.4, breakeven 4 weeks, playoffs -14.8 over Wks 15-17. The model's own results_jav15.json: breakeven 3 weeks, probability-weighted -3.3.",
+              "correction": "Report the trade as unfavorable under recency-weighted inputs, and present the base model as the optimistic case, not the central one.",
+              "severity": "high"
+            },
+            {
+              "topic": "The accept trigger is too loose for the model's own sensitivities",
+              "problem": "Plan step 2 says to accept the original offer if Friday/Saturday news says Nacua is 'OUT for Week 7 with a strain'. A Week 7 absence alone is N=1 in the model, where (a) is already -1.9 in the base case. Under the more defensible M. Wilson value (13.1), the trade needs N of 3 or more (out through Week 9). With recency-adjusted Javonte as well, it needs N of 4 or more (out through Week 10). An OUT tag for Week 7 does not show that.",
+              "evidence": "Base breakeven sweep in run_base.txt: N1 -1.93, N2 +12.28. results_mwcurve.json: N2 -6.8, N3 +7.1. results_recent.json: N3 -9.6, N4 +4.3. The evidence packet has no timeline, MRI or grade: 'Grade or severity of the calf injury and any official return timeline: not found'.",
+              "correction": "Accept the original offer only if there is evidence of an absence through at least Week 9: a reported multi-week timeline, IR, an imaging-confirmed strain of grade 2 or higher, or the groin/pre-hernia issue flaring again. If he is only listed OUT for Week 7 with no timeline, hold or keep negotiating.",
+              "severity": "high"
+            },
+            {
+              "topic": "Results are knife-edge, so the stated precision overstates confidence",
+              "problem": "Moving any of the three main inputs by about 2 ppg shifts (a) by roughly 20 points, in either direction. Nacua at 21.0 makes (a) +17.9 even at N=1, with breakeven at 1 week. Nacua at 25.0, M. Wilson at 13.1 or Javonte at 15 each push breakeven to 3 weeks. Nacua's own EP of 24.09 depends on one 24-target game (EP 45.81). Without Week 5 his EP is 16.85. On the other side, Davante Adams being out 6-10 weeks should add to Nacua's volume, and the Oct 16 ECR (Adams WR18.33) does not reflect that. Reporting -1.9, +16.5 and 14% as point figures hides that the sign of the answer depends on the inputs.",
+              "evidence": "My re-run results_nacua21.json: (a) N1 +17.9, probability-weighted +33.4. The model's results_nacua25.json: N1 -18.1, breakeven 3. ep.csv Nacua EP by week: 17.84, 21.05, 45.81, 11.67. ecr.csv still lists Davante Adams at WR18.33 (scrape 2026-10-16), from before his hamstring rupture (AJC/AP 10/19-22).",
+              "correction": "Describe the offer as close to a coin flip on mean value when Nacua returns by Week 8. Present the answer as a decision table keyed on Nacua's absence length and M. Wilson's role, not as one probability-weighted number.",
+              "severity": "medium"
+            },
+            {
+              "topic": "Drop advice (cut Kyle Pitts) is the wrong roster fit",
+              "problem": "The model calls the drops tied at zero cost and breaks the tie by lowest season-blend ppg, which removes Pitts. Recent usage says Pitts is now Jamal's better TE. In Weeks 5-6 Pitts had 6 and 7 targets (EP 12.68 and 12.81, PPR 15.2 and 23.0). Fannin had 4 and 3 targets (EP 5.90 and 3.51, PPR 1.4 and 1.9). Fannin's 9.62 rests mostly on an Oct 16 ECR (TE9.67, sd 3.82) set before Week 6. After a 3-for-1, Jamal would hold 7 WRs (M. Wilson, Pickens, Vele, Tyson, Tate, Wicks, Doubs) and 2 TEs, with TE his weakest position. When Pitts is set to 10.5, the model itself switches the drop to Price and Doubs.",
+              "evidence": "ep.csv and stats_wk.csv weekly lines for Pitts and Fannin. My re-run results_pitts_up.json: drops(a) = ['Jadarian Price', 'Romeo Doubs'], with (a) essentially unchanged (N1 -2.2).",
+              "correction": "For any 3-for-1, drop Price plus Doubs or Wicks, or put Tyson in an open ESPN IR slot and drop only Price. Keep Pitts. Also confirm the roster size and current roster first: the model's roster is 14 players plus DST as of Sept 23, so a 3-for-1 may need only one drop.",
+              "severity": "medium"
+            },
+            {
+              "topic": "'Week 7 is lost either way' is unverified; Javonte plays Monday night",
+              "problem": "The model drops Week 7 because the trade 'will likely process after kickoffs'. But Dallas plays at Philadelphia on Monday Oct 26 at 8:15 PM ET. If Jamal accepts by Friday or Saturday and the league's trade review period ends before then, Javonte could start for Jamal in Week 7 while Nacua (Sunday 4:25 PM ET) is out. That is a real Week 7 gain the model leaves out. Going the other way, if Nacua plays Week 7 and the trade processes first, HOLD keeps his Week 7 points.",
+              "evidence": "games.csv Week 7: DAL @ PHI, Monday 2026-10-26 20:15; LA @ LV, Sunday 16:25; DEN @ ARI, Sunday 16:05. The league's trade review period does not appear in any evidence.",
+              "correction": "Check the league's trade review setting. If the trade can process before MNF, count Javonte's Week 7 value (about +5 to +8 over Jamal's fill-in, if Nacua is OUT) in the decision. If it cannot, say so explicitly rather than assuming it.",
+              "severity": "medium"
+            },
+            {
+              "topic": "Probability weights lean on a weak reading of the 'limited' tag",
+              "problem": "The weights (55% chance he misses Week 8) are presented as judgment. One cited support is 'He was limited, not DNP'. But the limited tag reflects that he practiced part of the session before leaving early with the injury. It says nothing about severity. The evidence gatherer's own estimate was '0-1 weeks (most likely)', and the model's 45% on N=1 is a bit more pessimistic than that. This does not matter in the base model (breakeven 14%), but it does matter once M. Wilson is corrected and breakeven needs 3 or more weeks.",
+              "evidence": "Evidence packet: 'LIMITED on the official injury report after leaving early' (ESPN Barshop / OC Register 10/22). nacua_medical timeline_estimate: '0-1 weeks (most likely, given what is known now)'.",
+              "correction": "Drop 'limited, not DNP' as evidence of a short absence. Key the weights to the Friday/Saturday designation and any timeline once they come out.",
+              "severity": "low"
+            },
+            {
+              "topic": "Internal inconsistency about the Likely counter",
+              "problem": "The recommendation says (h) Javonte + M. Wilson + Likely 'is the only version that beats holding even with a healthy Nacua'. The model's own table shows (d) Javonte + Olave at +26.05 and (f) Cook + M. Wilson at +9.12 at N=1. Separately, (h) beating HOLD is not robust either: with Likely at 12.0 and recency-adjusted M. Wilson and Javonte, (h) is -18.4 at N=1 and -0.1 probability-weighted. What does hold up is that (h) beats (a) by about 47 points while Likely stays well above Fannin.",
+              "evidence": "run_base.txt scenario table: (d) N1 delta_total +26.05, (f) N1 +9.12. My re-run results_likely12_recent.json: (h) N1 -18.4, probability-weighted -0.1.",
+              "correction": "Say (h) is the only attainable version (Olave and Cook were called untouchable) that beats HOLD in the base model. Present it as clearly better than the offer as sent, not as a guaranteed win over holding.",
+              "severity": "low"
+            },
+            {
+              "topic": "Regular-season vs playoff weighting ignores Jamal's standing",
+              "problem": "The model sums Weeks 8-17 with equal weight. In the base case, (a)'s value comes from the regular season (Week 11 fix +17.4, Week 14 hole -12.7). It costs -0.94 per playoff week (base) to -4.9 (recency inputs) when Nacua is healthy. Whether regular-season points or playoff points matter more depends on Jamal's record and playoff odds (6 of 10 make it), which were not gathered.",
+              "evidence": "results.json weekly HOLD|1 vs (a)|1: Wk11 101.9 vs 119.3, Wk14 122.7 vs 110.0, Wks 15-17 128.6 vs 127.6. results_recent.json d_po -14.8.",
+              "correction": "Condition the advice on Jamal's record. If he is comfortably in, weight Weeks 15-17 more, which favors HOLD. If he is on the bubble, the Week 11 gain and the Week 14 loss both matter more.",
+              "severity": "low"
+            },
+            {
+              "topic": "Tyson modeling (checked): honest and immaterial",
+              "problem": "No material flaw. Tyson is 0 through Week 9, debuts Week 10 at 60%, then plays at WR36 (10.53). That per-game rate is a bit generous given Vele's recent EP of 9.88 in the same role and Tyson's hamstring recurrence history. But he only starts in Weeks 11 and 14 and adds about 3.1 points in total. A Week 12 debut at WR45 changes (a) by only -2.7.",
+              "evidence": "run_base.txt option (a) lineups: Tyson FLEX in Wk11 (10.5) and WR in Wk14 (10.5). results_tyson12.json: N1 -4.6 vs base -1.9. results_tyson9.json: no change.",
+              "correction": "None needed beyond saying Tyson is worth about 0-3 points. The offer is effectively Javonte + M. Wilson for Nacua.",
+              "severity": "low"
+            },
+            {
+              "topic": "Mechanics verified (byes, scoring, lineup selection, reproducibility)",
+              "problem": "No error found. Byes match games.csv: LA/SEA/CLE/ATL/NE 11, DAL/ARI 14, NO/SF/NYG 8, TEN 9, PHI 10, CIN/MIN 6, BUF/WAS 7. QB scoring is rescored to 6-pt passing TDs (+2 per TD). The lineup optimizer does start the incoming players: Javonte at RB2 and M. Wilson at WR every non-bye week, Chase Brown moves to FLEX, Emanuel Wilson is benched. The base run and all eight sensitivity files reproduce exactly.",
+              "evidence": "Re-ran a copy of nacua_trade_model.py. The output is byte-identical to run_base.txt. Bye check run against games.csv. Lineup listings are in run_base.txt.",
+              "correction": "None.",
+              "severity": "info"
+            }
+          ],
+          "verdict": "The model is mechanically correct: it reproduces exactly, byes and 6-pt pass TD scoring check out, the lineups start Javonte and M. Wilson, and Tyson is modeled honestly. But the pro-trade lean (+16.5 probability-weighted, 14% breakeven, roughly even if Nacua returns Week 8) rests on an inflated M. Wilson input. The model's 15.22 ppg works out to about WR14.5, against a WR22 ECR, a post-Harrison-trade EP of 13.5 and recent actuals of 7.2. With M. Wilson at his ECR value the offer as sent is -2.6 probability-weighted and needs Nacua out through Week 9. If Javonte's Weeks 5-6 usage is also weighted in, it needs him out through Week 10 and costs about 5 points per playoff week. The 'don't accept now, counter for Likely, hold if questionable' structure survives the check. The accept trigger ('OUT for Week 7 with a strain') and the advice to drop Pitts do not.",
+          "best_action": "Don't accept the offer just because Nacua is ruled OUT for Week 7. Accept the original offer only if there is evidence he will miss at least through Week 9: a reported multi-week timeline, IR, an imaging-confirmed significant strain, or the groin/pre-hernia issue flaring again. Otherwise hold, or counter for Javonte + M. Wilson + Isaiah Likely, which beats the offer by about 47 points in every run. Before deciding, check the league's trade review period, because Javonte plays Monday night in Week 7. If a 3-for-1 goes through, drop Jadarian Price plus Doubs or Wicks, or put Tyson on IR. Keep Kyle Pitts: his Weeks 5-6 usage is ahead of Fannin's. Re-run files are in /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/nacrev/work/ (results_recent.json, results_nacua21.json, results_pitts_up.json, results_likely12_recent.json)."
+        }
+      },
+      {
+        "lens": "daoud",
+        "v": {
+          "issues": [
+            {
+              "topic": "Daoud's acceptance of the top counter (h) Javonte + M. Wilson + Likely",
+              "problem": "The model rates (h) 'uncertain, moderate-low' with the reasoning that 'a TE is neither the WRs he wants nor the RBs he refuses'. Position type is the wrong test. What matters is what the swap costs Daoud. Tyson is worth 0 to Daoud right now. Likely is a weekly starter and appears to be his only TE. A manager who sent a buy-low offer the day Nacua got hurt is being asked to add a starter for nothing. The model's own numbers show (h)'s value to Jamal comes from Daoud's loss, not from a better fit. The version Daoud could more easily accept, (i) Javonte + Tyson + Likely (Daoud keeps M. Wilson, close to neutral for him in points over replacement), is worth only +2.5 to Jamal if Nacua is healthy and +20.9 probability-weighted. At Likely = 12 it drops to -25.6 healthy.",
+              "correction": "Lower (h)'s acceptance to low, about 10-20% (my judgment). Explain that Daoud would have to replace his only known TE with a streamer and lose about 5.8 ppg a week right away (Likely 15.13 minus the TE streamer at 9.31). Ask for (h) only if Friday's Rams news is good, when Daoud has a reason to pay more.",
+              "severity": "high",
+              "evidence": "counter_targets: of the 9 Daoud players researched, Likely is the only TE (RotoBaller 10/19; NFL.com 10/21). Model inputs: Likely 15.13, Tyson 0 through Wk9, TE streamer 9.31, WR streamer 8.60, M. Wilson 15.22. My rerun (/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/daoudrev/work/model_ext.py, results_base.json): (i) Javonte+Tyson+Likely +2.5 healthy (N1) / +20.9 weighted; results_likely12.json: (i) -25.6 / -7.2."
+            },
+            {
+              "topic": "(h) value is fragile; combined downside not tested",
+              "problem": "(h) is ranked first on +45.5 healthy / +63.9 weighted. That needs Likely at 15.1 and M. Wilson at 15.2 at the same time, and the model only tested each input alone. The recent-form evidence points down for all three incoming pieces. Javonte's EP was 14.1 and 12.6 in Weeks 5-6 against his 17.55 EP/g. M. Wilson's EP was 12.3 and 14.8 after the Harrison trade against 17.34. Likely's QB just changed to McCarthy, and his Week 6 spike came with Theo Johnson out.",
+              "correction": "Report the combined stress test: Javonte 15 + M. Wilson 13.11 gives (h) +6.7 healthy / +25.1 weighted; adding Likely 12 gives (h) -21.4 / -3.0. Treat (h) as conditional, not as the default top counter. The Cook-based counters stay positive in every one of these runs.",
+              "severity": "high",
+              "evidence": "ep.csv weekly total_fantasy_points_exp (Javonte Wk5 14.12, Wk6 12.64; M. Wilson Wk5 12.31, Wk6 14.77). RotoBaller 10/15 and 10/19 (Javonte 14 and 13 touches; M. Wilson 'second straight bust'). NFL.com 10/21 (McCarthy starting). Reruns: results_recent.json, results_recent_l12.json in /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/daoudrev/work/."
+            },
+            {
+              "topic": "Missing counters that match Daoud's stated wants (RB surplus, keep his WRs)",
+              "problem": "Daoud said he wants 'good WRs, no running backs'. He has four RBs: Cook, Barkley (Garafolo: 'in line to play' MNF), Javonte and Corum. His WR room fell apart this week. The ranking never tests taking his RB surplus while letting him keep both his WRs (M. Wilson and Tyson). It also ranks (f) Cook + M. Wilson, but (j) Javonte + Cook beats it for Jamal (+25.7 vs +9.1 healthy) and suits Daoud better because he keeps his WR. Barkley is not a useful substitute: he models at 10.48 ppg (actual 9, 3, 9, 2 in Weeks 1-4; ECR RB18.33). Javonte+M. Wilson+Barkley comes out at -2.0 healthy, the same as (a).",
+              "correction": "Add (j) Javonte + Cook (2-for-1): +25.7 healthy / +44.1 weighted. Add (k) Javonte + Tyson + Cook: +28.8 / +47.1. Both stay positive under recent-form inputs (+5.9/+24.3 and +9.0/+27.4) and do not depend on M. Wilson or Likely. If Cook really is untouchable, say so with a source and drop them. Otherwise rank them above (h) on value times acceptance.",
+              "severity": "high",
+              "evidence": "counter_targets: McLaurin season over (ESPN 10/20), Concepcion questionable with calf/quad (NBC/ESPN 10/22), Tyson not practicing (Rotowire/BVM 10/21), Godwin 'WR4 tier' (NBC 10/18), Barkley in line to play (Garafolo via PhillyVoice/Yahoo 10/22), Cook healthy with Wk7 bye (Fingerlakes1 10/18). Reruns: results_base.json, results_recent.json."
+            },
+            {
+              "topic": "Unsourced Daoud statements drive the acceptance column",
+              "problem": "The ranking relies on 'Daoud's untouchable list (Olave, Cook, Lamar)' and 'Daoud called McLaurin dead weight'. Neither appears in the evidence bundle or the task context. The only Daoud statements given are 'good WRs, no running backs' and that he 'values Olave above Pickens'. Valuing Olave above Pickens is a price comparison. It does not say Olave is off the table. These claims rule out the two strongest counters, Olave and Cook.",
+              "correction": "Quote Daoud's actual message, or mark the untouchable list as unverified. If Olave has a price rather than a veto, consider giving Daoud two WRs: (q) Nacua + Pickens for Olave + Javonte + M. Wilson. That is +26.2 healthy / +44.6 weighted, but it is fragile: -12.6 healthy / +5.8 weighted under recent form, because M. Wilson is still in it.",
+              "severity": "medium",
+              "evidence": "Task context (computed task): 'He told Jamal he wants good WRs, no running backs, and he values Olave above Pickens.' No untouchable quote anywhere in nacua_news, nacua_medical, incoming or counter_targets. Rerun (q): results_base.json, results_recent.json."
+            },
+            {
+              "topic": "Week 7 written off without evidence",
+              "problem": "'Week 7 is lost either way' assumes the trade processes after every Week 7 kickoff. Javonte plays Monday night (DAL at PHI, Oct 26, 8:15 PM ET) and M. Wilson plays Sunday at 4:05 PM ET. If the trade processes before those games and Nacua sits, Jamal's Week 7 lineup goes from 114.7 (HOLD) to 127.6 (offer), about +13.0. With only Javonte available it is about +7.9. That moves the offer at N=1 from -1.9 to +11.0. The same timing hurts Daoud, who would lose Javonte and M. Wilson for Week 7 while Nacua sits.",
+              "correction": "State that the league's trade review period and processing time are not found. Add the Week 7 case: if the trade can process before MNF and Nacua is OUT for Week 7, add about +8 to +13 points to accepting.",
+              "severity": "medium",
+              "evidence": "incoming: Fox 7 Austin / dallascowboys.com (DAL at PHI, Mon Oct 26, 8:15 PM ET); Fox10 Phoenix (ARI vs DEN, Sun Oct 25, 4:05 ET). Rerun START_WEEK=7: results_wk7.json, Week 7 HOLD 114.69 vs (a) 127.65."
+            },
+            {
+              "topic": "'Certain until it expires' and the plan's sequence",
+              "problem": "The model calls the original offer 'certain until it expires Sat Oct 24 7:09 PM ET'. Nothing in the evidence says Daoud can't withdraw it. The timing also works against Jamal: the offer is worth most to Jamal when Nacua's news is worst, which is when a buy-low trader is most likely to rethink. Messaging first for a richer deal gives Daoud time to read the Friday Rams report.",
+              "correction": "Treat the offer as revocable. If Friday/Saturday news shows a multi-week injury and Jamal decides to accept, he should accept right away rather than negotiate first. Use a private message, not ESPN's formal counter, which per the model probably declines the original offer. I could not verify that or Daoud's ability to cancel, because the web search budget was used up.",
+              "severity": "medium",
+              "evidence": "Model counter_ranking (a): 'certain until it expires'. nacua_news: Friday designation and McVay comments not found. My two WebSearch attempts (Nacua Friday status; ESPN counter rules) returned 'search budget used up'."
+            },
+            {
+              "topic": "Accept trigger 'OUT Week 7 with a strain' is too loose",
+              "problem": "Plan step 2 says to accept the original offer if Nacua is OUT for Week 7 with a strain. Under recent-form inputs (Javonte 15, M. Wilson 13.11), the offer needs Nacua out about 4 weeks (through Week 10) to break even: -26.5 at N=2, -12.6 at N=3, +1.3 at N=4. With only M. Wilson at his curve value, N=2 is still -6.8. The typical calf strain (4for4: about 2 weeks) falls in the losing zone.",
+              "correction": "Accept the offer as made only on a reported timeline of 3-4 weeks or more, an imaging finding, or a return of the groin/pre-hernia issue. Relax this only if the trade can process in time to use Javonte on Week 7 MNF.",
+              "severity": "medium",
+              "evidence": "Breakeven sweeps for (a) in results_recent.json [(1,-40.7),(2,-26.5),(3,-12.6),(4,1.3)] and results_mw.json [(2,-6.8),(3,7.1)]. 4for4 calf benchmark (nacua_medical; date not found)."
+            },
+            {
+              "topic": "Corum added as a sweetener is untested",
+              "problem": "The model tests Corum only in place of Tyson (b). Daoud would most easily accept adding Corum as a fourth piece, since Corum is his RB surplus, and Corum is Kyren Williams' handcuff on Jamal's roster. In a 4-for-1 the brute-force drop step drops Corum himself, so his handcuff value can never be credited.",
+              "correction": "If the counter stalls, list 'add Corum' as an easy ask. It needs three drops: Price, Pitts, and one of Murray, Doubs or Wicks rather than Corum. Its modeled value is about 0. Its real value is insurance for Kyren.",
+              "severity": "low",
+              "evidence": "Rerun option (o) Javonte+M. Wilson+Tyson+Corum: drops ['Jadarian Price','Kyle Pitts','Blake Corum'], value identical to (a). Corum about 28% of snaps behind Kyren (NBC 10/18)."
+            },
+            {
+              "topic": "Missing exact counter message",
+              "problem": "The lens asked for an exact counter message. The recommendation gives none.",
+              "correction": "Suggested private message (not an ESPN counter): 'Hey Daoud, thanks for the offer. I'm not selling Puka off one practice; he was limited Thursday, not a DNP. Tyson doesn't help me right now: he's on IR, his practice window hasn't opened, and the Saints are off in Week 8. You said you want WRs, not RBs, so keep both of your WRs: Puka for Javonte + James Cook, and you keep Michael Wilson and Tyson. If Cook's off the table, I'd do Puka for Javonte + Michael Wilson + Isaiah Likely, and you keep Tyson. Let me know before your offer runs out Saturday.'",
+              "severity": "medium",
+              "evidence": "Limited (not DNP) Thursday: ESPN / OC Register 10/22. Tyson IR with window not opened and NO Week 8 bye: Rotowire/BVM 10/21, 4for4, Field Level Media 10/5. Offer expiry: task context."
+            }
+          ],
+          "verdict": "Partly refuted. The model's numbers reproduce exactly, and it is right on three points: don't ask for Corum, McLaurin or a 2-for-1; use a private message rather than ESPN's counter; and wait for the Friday news. The counter ranking itself does not hold up.\n\n1. (h) Likely-for-Tyson is ranked first, but Daoud is unlikely to accept it. It costs him his only known TE and about 5.8 ppg a week, in exchange for leaving him a stash that scores 0 right now. Its value to Jamal also turns negative when recent-form Javonte/M. Wilson and Likely at 12 are combined (-21.4 healthy).\n2. The ranking skips the RB-surplus counters that match Daoud's 'good WRs, no running backs': Javonte + Cook, or Javonte + Tyson + Cook. They are worth +26 to +29 healthy and +44 to +47 probability-weighted, and they stay positive in every stress test. They were excluded on an 'untouchable' claim that is not in the evidence.\n3. It calls the original offer 'certain', but Daoud can probably withdraw it.\n4. It ignores that Javonte's Monday-night Week 7 game is worth about +8 to +13 if the trade processes in time.\n\nThe web search budget was used up, so I could not check the Rams' Friday report or ESPN's counter and cancel rules.",
+          "best_action": "Don't accept the offer yet, and don't use ESPN's formal counter.\n\n1. Today, send Daoud a private message. Primary ask: Nacua for Javonte + Cook, with Daoud keeping M. Wilson and Tyson. Fallback: Javonte + M. Wilson + Likely.\n2. If Daoud really has Cook and Olave off limits, check his actual message first, then make the Likely ask only.\n3. Check the Rams' Friday report and McVay's comments before 7:09 PM ET Saturday.\n4. Accept the original offer immediately, without more negotiating, only if Nacua has a reported timeline of 3-4 weeks or more, an MRI/imaging finding, or a return of the groin/hernia issue. Also accept if he is OUT for Week 7 and the league's trade review would clear before Javonte's Monday night game.\n5. If Nacua is questionable or expected back by Week 8, keep him.\n\nFiles: /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/daoudrev/work/model_ext.py (extended model) and results_base.json, results_wk7.json, results_recent.json, results_recent_l12.json, results_likely12.json, results_mw.json in the same folder."
+        }
+      }
+    ],
+    "gathered": {
+      "nacNews": {
+        "items": [
+          {
+            "player": "Puka Nacua",
+            "claim": "Body part: CALF. Nacua left the Rams' Thursday Oct 22 practice early with a calf injury, and a team spokesperson confirmed it. As of Thursday's reports, nobody had said how serious it is.",
+            "source": "ESPN (Rams WR Puka Nacua leaves practice with calf injury)",
+            "date": "2026-10-22",
+            "url": "https://www.espn.com/nfl/story/_/id/50252934/rams-wr-puka-nacua-leaves-practice-calf-injury"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Thursday Oct 22 practice: LIMITED on the official injury report after leaving early. ESPN's Sarah Barshop reported he would be listed as limited, and the Orange County Register's Adam Grosbard reported the same.",
+            "source": "Bleacher Report; DraftSharks; Underdog NFL on X",
+            "date": "2026-10-22",
+            "url": "https://www.draftsharks.com/fantasy-football-news/83622/puka-nacua-limited-thursday-with-new-calf-injury"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Schefter (ESPN): 'Rams WR Puka Nacua left practice early today due to a calf...' (the post text is cut off in the search snippet). Rapoport: 'Rams WR Puka Nacua left practice today because of a calf injury.' Both posts sit on ESPN contributor pages.",
+            "source": "Adam Schefter and Ian Rapoport posts on ESPN contributor pages",
+            "date": "2026-10-22",
+            "url": "https://www.espn.com/contributor/adam-schefter/342997f3ec8cf"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "NFL.com's Thursday news roundup led with 'Puka Nacua exits Rams practice with calf injury'. PFT/NBC Sports said there was 'no immediate word on the seriousness of the injury.' NBC Sports fantasy called him 'highly questionable' to play.",
+            "source": "NFL.com news roundup; NBC Sports / ProFootballTalk",
+            "date": "2026-10-22",
+            "url": "https://www.nfl.com/news/nfl-news-roundup-latest-league-updates-from-thursday-oct-22"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Wednesday Oct 21 practice: no direct Nacua line found. A Yahoo Week 7 Rams injury-report write-up says Nacua 'was added Thursday with a calf injury', which implies he was not on Wednesday's report, but I could not confirm it directly. A summary of an NFL.com video page said he left practice early on Wednesday and that Rapoport reported he did not practice Wednesday. That conflicts with every written report, all of which say Thursday, so treat it as an error.",
+            "source": "Yahoo Sports (Rams Week 7 injury report); NFL.com video summary (conflicting)",
+            "date": "2026-10-21/22",
+            "url": "https://sports.yahoo.com/articles/rams-injury-report-week-7-024318535.html"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "How it happened (play or drill, contact or non-contact): not found. Friday Oct 23 practice participation: not found. Official Week 7 game designation vs Raiders: not found yet. Outlets said McVay would speak Friday morning and the final injury report with designations would come out Friday. The Big Lead guessed he is 'probably heading for a questionable tag, at best', but that is speculation, not an official status.",
+            "source": "The Big Lead; Heavy; Bleacher Report",
+            "date": "2026-10-22",
+            "url": "https://www.thebiglead.com/puka-nacua-leaves-practice-early-injury-week-7-status-question/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "MRI or imaging: not found. No report of an MRI or test results for the calf.",
+            "source": "Searches of ESPN, NFL.com, CBS, NBC/PFT and therams.com coverage",
+            "date": "2026-10-22/23",
+            "url": "https://www.cbssports.com/fantasy/football/news/rams-puka-nacua-exits-thursdays-practice-with-calf-injury/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "McVay quotes on the calf: not found. Search summaries attribute two quotes to McVay, but I could not confirm their context. One is 'It's building up pretty quickly' (Thursday session, apparently about the pile of injuries). The other is 'I think they're going to give it a couple of days and figure out exactly when is the best time'. That one most likely refers to the timing of Davante Adams' hamstring procedure, not Nacua. Do not read either as a Nacua prognosis.",
+            "source": "Rotowire / Yahoo / Sporting Tribune via search summaries (unverified context)",
+            "date": "2026-10-22",
+            "url": "https://www.thesportingtribune.com/2026/10/22/rams-wr-puka-nakua-leaves-practice-early-status-uncertain"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Reports from Pelissero, from Jourdan Rodrigue, and on therams.com about the calf injury: not found. Pelissero's only 2026 Nacua items (exempt list, groin soreness) are from August and September. therams.com has a Rams Audio item titled about McVay, Nacua's injury and receiver depth during Week 7 practices, but I could not get its contents.",
+            "source": "Search results (therams.com audio page title)",
+            "date": "2026-10-22/23",
+            "url": "https://www.therams.com/audio/rams-audio-sean-mcvay-puka-nacua-injury-depth-receiver-room-week-7-practices"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Game context: Week 7 is Sunday Oct 25 at the Raiders (Allegiant Stadium). The Rams are 2-4. Davante Adams is out 6-10 weeks with a ruptured hamstring (semitendinosus) per McVay. He is having a cleanup procedure and hopes to return around the Rams' Week 11 bye, per Rapoport. If Nacua sits, Konata Mumpfield, Jordan Whittington and Tutu Atwell would top the WR depth chart.",
+            "source": "AJC/AP; Field Level Media; Heavy; DraftSharks",
+            "date": "2026-10-19/22",
+            "url": "https://www.ajc.com/news/2026/10/rams-wr-davante-adams-out-6-10-weeks-with-hamstring-injury-dt-poona-ford-out-for-season/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Not an injury, but it affects his availability: on Wednesday, NFL spokesman Brian McCarthy said Nacua remains under league review for an off-field incident (a civil suit alleging a bite) and there is no timeline for a decision. He was not placed on the Commissioner's Exempt List. Schefter said there is 'a real possibility' he goes through the season without discipline. No suspension has been issued.",
+            "source": "FantasyGuru / Yahoo (citing California Post); NBC Sports (Schefter)",
+            "date": "2026-10-21/22",
+            "url": "https://www.fantasyguru.com/rams-puka-nacua-remains-under-league-review-no-timeline-for-decision"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "2026 history, confirmed. He developed psoas/groin soreness at the Aug 11 joint practice with Dallas and missed camp practices, then played Week 1 vs SF (Sep 10, Melbourne): 5 catches, 74 yards. He was inactive Week 2 vs NYG (Sep 21 MNF; listed as hip, McVay described groin soreness and said it was unrelated to the camp psoas issue) and inactive Week 3 at DEN (Sep 27 SNF; doubtful, then inactive). ESPN's Oct 22 story labels the Weeks 2-3 absence as psoas, so labels differ: hip, groin or psoas.",
+            "source": "Bleacher Report; Bolavip; NBC Sports; ESPN",
+            "date": "2026-08-11 to 2026-09-27",
+            "url": "https://bleacherreport.com/articles/25501963-puka-nacua-injury-update-new-timeline-return-rams-after-missing-week-2-vs-giants"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Possible lingering core issue: during the Week 4 broadcast, FOX's Erin Andrews said Nacua is dealing with 'some sort of sports-hernia situation.' Newsweek reported the condition may be a 'pre-hernia' that could still need surgery later in the season.",
+            "source": "NBC Sports / RotoBaller (Erin Andrews broadcast note); Newsweek",
+            "date": "2026-10-04",
+            "url": "https://www.newsweek.com/sports/nfl/puka-nacua-injury-update-raises-concerns-for-rams-12525900"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Week 4 vs PHI (Oct 4, won 24-20): 9 catches on 12 targets, 125 yards, plus a 2-yard rushing TD. This was his return from the hip/groin absence.",
+            "source": "NBC Sports; Deseret News",
+            "date": "2026-10-04",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-04/puka-nacua-returns-with-dominant-9-125-statline"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Week 5 vs BUF (Mon Oct 12, lost 37-34 in OT): 17 catches, 138 yards, 1 receiving TD. That is the Monday Night Football receptions record and his career high. Targets were 24 per Deseret and RotoBaller, 21 per Fox News.",
+            "source": "Deseret News; Fox News",
+            "date": "2026-10-13",
+            "url": "https://www.deseret.com/sports/2026/10/13/puka-nacua-receptions-record-los-angeles-rams-loss-buffalo-bills-monday-night-football/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Week 6 vs ARI (Oct 18, lost 18-16): 6 catches on 7 targets, 80 yards, 0 TD. Season to date: 37 catches, 417 yards, 1 receiving TD on 52 targets in 4 games. Weeks 4-6 total: 32 catches, 343 yards, 1 receiving TD, 1 rushing TD.",
+            "source": "The Fantasy Footballers; CBS Sports game log; ESPN",
+            "date": "2026-10-18/19",
+            "url": "https://www.thefantasyfootballers.com/news/643184/puka-nacua-tallies-80-yards-in-week-6/"
+          }
+        ],
+        "summary": "Puka Nacua hurt his CALF at the Rams' practice on Thursday Oct 22, 2026. He left early, which a team spokesperson confirmed, and was listed as LIMITED that day. ESPN, Schefter, Rapoport, NFL.com, PFT, CBS, Bleacher Report and the OC Register all report it. One write-up says he was 'added Thursday', which implies he was not on Wednesday's report, but I could not find his Wednesday line directly. Nobody has reported how the injury happened, an MRI or imaging, a McVay quote about the calf, or how serious it is. As of every result I found, the Friday Oct 23 practice status and the official Week 7 designation for Sunday's game at the Raiders were not out yet. Outlets said McVay would speak Friday morning and the final report would follow. One outlet guessed 'questionable at best', which is speculation. The rest of his 2026 season checks out. He had psoas/groin soreness in camp (Aug 11). He played Week 1 (5-74) and missed Weeks 2-3; the injury was listed as hip, McVay described it as groin, and ESPN later called it psoas. He returned for Weeks 4-6: 9-125 plus a rushing TD, then 17-138-1, then 6-80. Season total is 37-417-1 in 4 games. Two other things matter for his outlook. FOX's Erin Andrews mentioned a possible 'sports-hernia situation' during the Week 4 broadcast. And the NFL's off-field review of Nacua is still open with no timeline (league spokesman, Oct 21), though no suspension has been issued. Context: the Rams are 2-4, Davante Adams is out 6-10 weeks, and the Rams' bye is Week 11.",
+        "not_found": [
+          "Exactly how the calf injury happened (drill, play, contact or non-contact)",
+          "Nacua's own Wednesday Oct 21 practice line (one write-up says he was 'added Thursday', which implies he was not listed Wednesday; one NFL.com video summary conflicts by saying Wednesday)",
+          "Friday Oct 23 practice participation",
+          "Official Week 7 game designation vs the Raiders (Friday final report not found yet)",
+          "Any MRI or imaging result",
+          "Any confirmed Sean McVay quote about the calf injury",
+          "Calf-injury reports from Tom Pelissero or Jourdan Rodrigue",
+          "therams.com written injury report or article on the calf (only an audio page title was found)",
+          "Grade or severity of the calf injury and any official return timeline"
+        ],
+        "timeline_estimate": "No source gives a timeline. The best-supported status as of Fri Oct 23: a new calf injury of unknown severity. He left practice early on Thu Oct 22 and was officially limited (ESPN 10/22; Schefter and Rapoport posts 10/22; DraftSharks/OC Register 10/22). No MRI result has been reported. His Week 7 status at Las Vegas (Sun Oct 25) is undecided until the Friday final injury report and McVay's Friday press conference, neither of which showed up in search results. The only forecast is speculation from The Big Lead (10/22): 'questionable tag, at best'. NBC Sports fantasy (10/22) called him 'highly questionable'. Earlier in 2026 the Rams were cautious with his injuries: he missed camp time and Weeks 2-3 for a groin/hip issue McVay had first called minor (Bleacher Report, Bolavip, NBC Sports Sept 2026). That history, plus Davante Adams already being out 6-10 weeks, makes a Week 7 absence plausible. No source says whether this is a one-week issue or a longer one, so anything beyond Week 7 is not found. Two other unresolved risks: the possible sports-hernia issue (Erin Andrews/FOX, Newsweek, Oct 4) and the NFL off-field review with no timeline (league spokesman via FantasyGuru/Yahoo, Oct 21-22). For a trade decision, check the Rams' Friday Oct 23 injury report and the inactives list 90 minutes before Sunday's 4:05/4:25 PM ET window (kickoff time not confirmed) before the offer expires Sat Oct 24 7:09 PM ET."
+      },
+      "nacMed": {
+        "items": [
+          {
+            "player": "Puka Nacua",
+            "claim": "Nacua left Thursday's practice (Oct 22) early with a calf injury and was listed as a limited participant. Rotoworld said to 'consider Nacua highly questionable to play, and seek out a backup plan' for Week 7 at Las Vegas. Severity: not found.",
+            "source": "NBC Sports / Rotoworld player news, 'Puka Nacua (calf) leaves practice early on Thurs.'",
+            "date": "2026-10-22",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-22/puka-nacua-calf-leaves-practice-early-on-thurs"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "PFT news item: Nacua left practice early with a calf injury. No word yet on how serious it is.",
+            "source": "NBC Sports / ProFootballTalk",
+            "date": "2026-10-22 (Thursday report, per search summary)",
+            "url": "https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/puka-nacua-leaves-practice-early-with-calf-injury"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "CBS/RotoWire fantasy blurb: Nacua was a limited participant after a calf injury in Thursday's practice. It 'remains to be seen' whether he could miss Sunday's game at Las Vegas, and McVay was expected to address it Friday, possibly with a game designation.",
+            "source": "CBS Sports Fantasy, 'Rams' Puka Nacua: Exits Thursday's practice with calf injury' (RotoWire-style blurb, same headline as RotoWire item 643810)",
+            "date": "2026-10-22 (per search summary)",
+            "url": "https://www.cbssports.com/fantasy/football/news/rams-puka-nacua-exits-thursdays-practice-with-calf-injury/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "RotoWire headline: 'Exits Thursday's practice with calf injury.' No diagnosis grade or timetable appeared in the search results.",
+            "source": "RotoWire headlines",
+            "date": "2026-10-22 (per search summary)",
+            "url": "https://www.rotowire.com/football/headlines/puka-nacua-injury-exits-thursdays-practice-with-calf-injury-643810"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Underdog NFL: 'Puka Nacua left practice early Thursday with a calf injury. He was limited.' No severity or advice.",
+            "source": "Underdog NFL on X",
+            "date": "Thursday 2026-10-22 (date inferred from post text; exact timestamp not shown)",
+            "url": "https://x.com/UnderdogNFL/status/2113392962499682544"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "DraftSharks headline: 'Puka Nacua Limited Thursday With New Calf Injury.' Body text and advice: not found.",
+            "source": "DraftSharks",
+            "date": "2026-10-22 (per search context)",
+            "url": "https://www.draftsharks.com/fantasy-football-news/83622/puka-nacua-limited-thursday-with-new-calf-injury"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "RotoBaller headline: 'Puka Nacua Leaves Practice Early on Thursday With Calf Injury.' No hold/sell advice or timeline was found in the search results.",
+            "source": "RotoBaller player news",
+            "date": "2026-10-22 (per search context)",
+            "url": "https://www.rotoballer.com/player-news/puka-nacua-leaves-practice-early-on-thursday-with-calf-injury/1973145"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "SI Fantasy: the extent of the injury is unknown, 'we'd consider him very questionable to play.' Konata Mumpfield would become the de facto WR1 if Nacua sits.",
+            "source": "Sports Illustrated (On SI Fantasy), 'Fantasy Football Impact: Puka Nacua Leaves Practice With Injury, Making Konata Mumpfield A Top Waiver Wire Target'",
+            "date": "2026-10-22 (per search summary; exact date not shown)",
+            "url": "https://www.si.com/onsi/fantasy/injuries/fantasy-football-impact-puka-nacua-leaves-practice-with-injury-making-konata-mumpfield-a-top-waiver-wire-target"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "The Big Lead: Nacua is 'probably heading for a questionable tag, at best.' McVay would speak Friday and the Rams would release final designations.",
+            "source": "The Big Lead (also syndicated on Yahoo)",
+            "date": "2026-10-22 (per search summary)",
+            "url": "https://www.thebiglead.com/puka-nacua-leaves-practice-early-injury-week-7-status-question/"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "AP/Yahoo: the calf injury is new, its severity is unknown, and 'mid-week injuries are typically bad news.' Davante Adams is on IR with a ruptured hamstring, so the Rams are thin at WR.",
+            "source": "Yahoo Sports / AP syndication ('Rams star Puka Nacua leaves practice after sustaining a calf injury'; 'All-Pro Rams WR Puka Nacua leaves practice early with calf injury')",
+            "date": "2026-10-22",
+            "url": "https://sports.yahoo.com/articles/rams-star-puka-nacua-leaves-222352301.html"
+          },
+          {
+            "player": "Puka Nacua",
+            "claim": "Friday (Oct 23) Rams injury report designation and McVay's Friday comments on the calf: not found in any search.",
+            "source": "Searches run 2026-10-23",
+            "date": "2026-10-23",
+            "url": ""
+          },
+          {
+            "player": "Puka Nacua (history)",
+            "claim": "Nacua missed Weeks 2 and 3 of 2026. The Rams listed a hip injury; McVay called it more of a groin issue. ESPN sources said it hurt his explosiveness, the team saw it as short-term, and it did not expect surgery to be needed.",
+            "source": "Search summaries of ESPN/TSN ('sources: Rams don't intend to limit Nacua's workload'), NFL.com ('Rams' Puka Nacua doubtful to play Sunday night vs. Broncos'), Fantasy Footballers ('Inactive in Week 2/Week 3')",
+            "date": "Late Sept 2026",
+            "url": "https://www.nfl.com/news/rams-puka-nacua-doubtful-to-play-sunday-night-broncos"
+          },
+          {
+            "player": "Puka Nacua (history)",
+            "claim": "Schefter (via Rotoworld): surgery is 'not entirely off the table' if the groin does not keep improving.",
+            "source": "NBC Sports / Rotoworld, 'Surgery is not entirely off the table for Nacua'",
+            "date": "2026-09-27",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-09-27/surgery-is-not-entirely-off-the-table-for-nacua"
+          },
+          {
+            "player": "Puka Nacua (history)",
+            "claim": "The issue was described as a 'pre-hernia' (McVay used the comparison while saying Nacua does not have a hernia). PFT's Mike Florio wrote that it 'could still result in a condition that will require surgery, during or after the 2026 season.' RotoBaller said there was no indication that had happened, and Nacua stays a high-end WR1 as long as he plays through it without a setback.",
+            "source": "Newsweek ('Puka Nacua injury update raises concerns for Rams'); RotoBaller ('Puka Nacua's Pre-Hernia Issue Could Require Surgery'); 4for4 ('Rams WR Puka Nacua dealing with pre-hernia')",
+            "date": "Early Oct 2026 (RotoBaller item about Oct 5 per search summary)",
+            "url": "https://www.rotoballer.com/?p=1958527"
+          },
+          {
+            "player": "Puka Nacua (re-injury risk)",
+            "claim": "Several doctors flagged re-injury risk for the hip/groin. Dr. Jesse Morse (X) said Nacua would be limited in Week 4 and at 'moderately increased risk for reinjury.' Dr. Jeff Mueller said the area took enough trauma to need rehab but not sports hernia surgery, and warned that a sharp twist could tear the tissue further into a true sports hernia.",
+            "source": "Sports Illustrated (Rams On SI), 'Multiple Doctors Believe Rams WR Puka Nacua Is at Risk of Re-Injury' (also on Yahoo)",
+            "date": "Early Oct 2026 (exact date not found)",
+            "url": "https://www.si.com/nfl/rams/onsi/rams-puka-nacua-reinjury-risk-doctors-warning"
+          },
+          {
+            "player": "Puka Nacua (history)",
+            "claim": "If surgery were needed for the groin/hernia issue, the reported recovery was about 6-8 weeks in one report and 'one to two months' in an undated StackedFantasy summary of Schefter. No surgery has been reported.",
+            "source": "Search summaries (pre-hernia search results; StackedFantasy video summary, undated)",
+            "date": "Late Sept / early Oct 2026 (one source undated)",
+            "url": "https://www.draftsharks.com/fantasy-football-news/82908/puka-nacua-still-lacks-explosiveness-surgery-remains-possible"
+          },
+          {
+            "player": "Puka Nacua (recent form)",
+            "claim": "He returned in Week 4 at PHI with 9 catches on 12 targets for 125 yards plus a 2-yard rushing TD in a 24-20 win. In Week 6 (Oct 18) vs ARI he had 6 catches on 7 targets for 80 yards in an 18-16 loss. CBS listed his 2026 totals at 37 catches, 417 yards, 1 receiving TD (Week 6 line from CBS only).",
+            "source": "Newsweek; CBS Sports player page / fantasy news",
+            "date": "Oct 2026",
+            "url": "https://www.cbssports.com/nfl/players/playerpage/3121687/puka-nacua/"
+          },
+          {
+            "player": "Puka Nacua (calf link to groin)",
+            "claim": "No analyst or doctor was found tying the new calf injury to the September hip/groin/pre-hernia issue (compensation pattern or otherwise). Not found.",
+            "source": "Searches run 2026-10-23",
+            "date": "2026-10-23",
+            "url": ""
+          },
+          {
+            "player": "Calf strain benchmark (general, not Nacua-specific)",
+            "claim": "A 4for4 injury analyst wrote that since 2018, WRs with a calf strain missed about two weeks on average, and calf strains have not historically cut fantasy production much after return. The same piece cited a 3-5 week team timetable for Michael Gallup's calf strain. Article date: not found (historical).",
+            "source": "4for4, 'The Training Room' injury updates",
+            "date": "Not found (pre-2026, historical)",
+            "url": "https://www.4for4.com/node/154321"
+          },
+          {
+            "player": "Calf strain benchmark (general, history)",
+            "claim": "Deebo Samuel's 2024 calf strain: Kyle Shanahan expected him to miss 'a couple weeks.'",
+            "source": "49ers.com / ESPN",
+            "date": "2024 (labeled history)",
+            "url": "https://www.49ers.com/news/deebo-samuel-sr-expected-to-miss-a-couple-of-weeks-with-calf-injury"
+          },
+          {
+            "player": "Puka Nacua (trade value, pre-calf)",
+            "claim": "Week 7 trade value charts had Nacua near the top at WR: FantasyPros 55.4 (+1.4, WR2 behind Jaxon Smith-Njigba), Yahoo/Justin Boone WR2, CBS Dave Richard 49 in PPR. These likely came out before the Thursday calf news (publish dates not confirmed). None gave calf-specific hold/sell advice.",
+            "source": "FantasyPros Week 7 (2026) Trade Value Chart; Yahoo Week 7 trade chart; CBS Dave Richard Week 7 chart",
+            "date": "Week 7 2026 (exact dates not found; likely before Oct 22)",
+            "url": "https://www.fantasypros.com/2026/10/fantasy-football-trade-value-chart-week-7-2026/"
+          },
+          {
+            "player": "Rams schedule context",
+            "claim": "The Rams' 2026 bye is Week 11, so no bye week before then gives extra recovery time.",
+            "source": "Fox Sports 2026 bye weeks list; NFL.com Rams schedule",
+            "date": "2026",
+            "url": "https://www.foxsports.com/stories/nfl/2026-nfl-bye-weeks-schedule-all-32-teams"
+          }
+        ],
+        "summary": "Nacua's new injury is a calf injury. He left the Rams' practice early on Thursday, Oct 22, 2026, and was listed as limited (reported by Rotoworld, PFT, CBS/RotoWire, Underdog, DraftSharks, RotoBaller, SI and AP). The injury grade (strain vs. tightness, or anything more) and any imaging have not been reported. As of these searches, the Friday Oct 23 designation and McVay's Friday comments were not found. Early fantasy takes on Week 7 at Las Vegas: Rotoworld says 'highly questionable, seek out a backup plan', SI says 'very questionable', The Big Lead says 'questionable tag, at best'. No analyst was found giving a hold or sell verdict on the calf. Nobody was found linking the calf to his September hip/groin issue.\n\nThat earlier issue cost him Weeks 2-3. It was described as a 'pre-hernia': Florio and Schefter said surgery was still possible during or after 2026, and Dr. Jesse Morse and Dr. Jeff Mueller flagged elevated re-injury risk. Since returning he has produced at a high level: 9-125 plus a rushing TD in Week 4, and 6-80 in Week 6.\n\nGeneral calf-strain benchmark (4for4, historical): WRs miss about 2 weeks on average, with little production drop-off after return. Pre-injury Week 7 trade charts had him around WR2 overall.\n\nWhat this means for the trade (my inference, not an expert quote): based only on Thursday's information, selling now means selling at the low point of uncertainty. Waiting for Friday/Saturday news before the offer expires (Sat Oct 24, 7:09 PM ET) costs nothing and would show whether he is questionable or out. The real long-term risk is the groin/pre-hernia history, not the calf alone.",
+        "not_found": [
+          "Fantasy Doctors / Edwin Porras assessment of the Oct 2026 calf injury",
+          "Jeff Mueller comment on the calf injury (only his early-Oct comments on the hip/groin were found)",
+          "Deepak Chona / SIC Score assessment of Nacua (any 2026 item)",
+          "FantasyPros injury-update article on the calf",
+          "PFN (Pro Football Network) article on the calf",
+          "Calf injury grade/diagnosis (strain grade, which muscle, MRI/imaging results)",
+          "Rams Friday Oct 23 injury report designation for Week 7",
+          "McVay's Friday Oct 23 comments on the calf",
+          "Any expert linking the calf injury to the September hip/groin/pre-hernia issue (compensation risk)",
+          "Any explicit expert hold-vs-sell recommendation made after the calf news",
+          "Body text of the DraftSharks, RotoBaller and Heavy calf articles beyond headlines/summaries",
+          "Publication date of the 4for4 calf-strain benchmark article"
+        ],
+        "timeline_estimate": "These are evidence-weighted ranges, not expert quotes. The weighting between the three ranges is my own inference.\n\n0-1 weeks (most likely, given what is known now): the injury happened mid-practice Thursday and he was still logged as limited, not a DNP. No severity, imaging or IR talk has been reported. The early fantasy reads (Rotoworld 'highly questionable', The Big Lead 'questionable at best', SI 'very questionable') are about Week 7 only. A minor calf tweak usually means missing 0-1 games.\n\n2-4 weeks (plausible if it turns out to be a true calf strain): 4for4 found WRs average about 2 missed weeks for calf strains since 2018 (historical). Deebo Samuel's 2024 calf strain was 'a couple weeks', and Michael Gallup's team timetable was 3-5 weeks. A Grade 1-2 strain would most likely cost Weeks 7-8, possibly into Week 9. The Rams' bye is not until Week 11, so no bye gives extra rest before then.\n\n6+ weeks (low probability on current evidence): this range only applies if the calf turns into something severe, which nothing so far suggests. The other path is the separate groin 'pre-hernia' flaring and needing surgery. Reported surgery recovery is about 6-8 weeks in one report and 'one to two months' in an undated Schefter summary. Doctors (Morse, Mueller) and Florio flagged that risk in early October. No surgery has been reported, and nobody has tied the calf to the groin.\n\nKey unknowns: the Friday Oct 23 designation and McVay's comments were not found. Check them before the offer expires Sat Oct 24, 7:09 PM ET."
+      },
+      "incoming": {
+        "items": [
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 7: Dallas plays at Philadelphia on Monday Oct 26, 2026, 8:15 PM ET (ESPN/ABC). Dallas is NOT on bye in Week 7. One Razzball player page lists a Week 7 bye, but the official schedule coverage contradicts it.",
+            "source": "Fox 7 Austin 2026 Cowboys schedule; dallascowboys.com schedule release; DIRECTV game page",
+            "date": "Schedule released May 2026",
+            "url": "https://www.fox7austin.com/sports/dallas-cowboys-2026-schedule-dates-primetime-games-opponents-more"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Cowboys' 2026 bye is Week 14 (Sun Dec 13), the same week as Arizona. Week 14 is the last week of this league's regular season.",
+            "source": "Fox Sports '2026 NFL Bye Weeks Schedule for All 32 Teams'",
+            "date": "2026 (exact date not shown)",
+            "url": "https://www.foxsports.com/stories/nfl/2026-nfl-bye-weeks-schedule-all-32-teams"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Injury: no 2026 injury or practice designation found for Week 7. His most recent injury news is from last season: shoulder/neck, placed on IR Jan 3, 2026 (2025 season, history only). A FootballNationUSA Week 7 guide lists him as an RB2 and mentions no injury.",
+            "source": "The Ticket (IR, history); FootballNationUSA Cowboys at Eagles Week 7 guide",
+            "date": "2026-01-03 (history); Week 7 guide ~Oct 20, 2026",
+            "url": "https://www.theticket.com/2026/01/03/cowboys-place-rb-javonte-williams-on-ir/"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 1 vs NYG (28-20 loss): 12 carries, 41 yds, 1 rush TD; 5/5 targets, 31 yds, 1 rec TD; 24.4 PPR. He took 12 of the 15 RB carries; Emari Demercado played 5 offensive snaps.",
+            "source": "The Fantasy Footballers (Emari Demercado news); DraftSharks",
+            "date": "~Sept 13-14, 2026",
+            "url": "https://www.thefantasyfootballers.com/news/637456/emari-demercado-two-carries-in-cowboys-debut/"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 2 vs WAS: exact line not confirmed. A PFF snapshot (updated 9/20) looks partial. Derived from the season totals below, Week 2 was roughly 30 rush yds and 0 rush TD, but this is arithmetic, not a reported line.",
+            "source": "PFF player page; derived from RotoBaller 4-week totals",
+            "date": "2026-09-20",
+            "url": "https://www.pff.com/nfl/players/Javonte%20Williams/77803"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 3 vs BAL (loss): 19 carries, 98 yds, 1 TD; 2 catches, 5 yds.",
+            "source": "NBC Sports / Rotoworld player news",
+            "date": "2026-09-27",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-09-27/javonte-williams-scores-runs-for-98-yards-vs-bal"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 4 vs HOU (34-30 win): 62 rush yds, 3 rush TDs. Through 4 weeks: 62 carries, 231 yds, 5 TDs. Labeled a must-start 'as long as he remains healthy.'",
+            "source": "RotoBaller; NBC Sports / Rotoworld",
+            "date": "2026-10-04",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-04/javonte-williams-picks-up-three-rushing-tuds"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 5 vs TB (loss): season-high 85% snap share but a season-low 14 touches, 62 yds and a TD, as Dallas fell behind and abandoned the run. Through 5 games: 91 touches, 7 TDs, PPR RB7. Backups Tyler Goodson, Emari Demercado and Hunter Luepke combined for 19 touches. Called a low-end RB1 if healthy.",
+            "source": "RotoBaller 'Javonte Williams Continues to Face Minimal Competition for Touches'; TheLines Week 6 prop trends",
+            "date": "2026-10-15",
+            "url": "https://www.rotoballer.com/?p=1966942"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Week 6 at GB (23-13 loss, SNF Oct 18): 11 carries, 41 yds, 1-yd TD; 2/2 targets, 9 yds. Dallas was held under 20 points for the second straight game. YPC is down to 3.73 (4.77 in 2025), but he is still described as the 'clear workhorse.' Week 6 snap share: not found.",
+            "source": "RotoBaller 'Javonte Williams Stays Afloat With Short TD Plunge'",
+            "date": "~2026-10-19",
+            "url": "https://www.rotoballer.com/?p=1969992"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Backup competition: Jaydon Blue and Phil Mafah were cut in late August. Malik Davis (expected RB2) hurt his hip and went to IR after hip surgery. The remaining depth is Emari Demercado, Tyler Goodson, FB Hunter Luepke and Israel Abanikanda (practice squad).",
+            "source": "Rotowire Malik Davis note; FFToday update; Bleacher Report (Blue waived)",
+            "date": "Late Aug 2026; FFToday 2026-09-11; B/R 2026-08-30",
+            "url": "https://www.fftoday.com/stats/players/17753/Javonte_Williams?LeagueID=0"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Goal-line role: FFToday says he 'owns the goal-line work.' Short scores so far include a 1-yd TD in Week 6 and 3 rush TDs in Week 4. No 2026 goal-line carry counts found.",
+            "source": "FFToday; RotoBaller",
+            "date": "Sept 2026; Oct 2026",
+            "url": "https://www.fftoday.com/stats/players/17753/Javonte_Williams?LeagueID=0"
+          },
+          {
+            "player": "Javonte Williams (DAL)",
+            "claim": "Dallas QB: Dak Prescott is the starter. Week 4 box score: 335 pass yds, 1 TD, 3 INT. No 2026 Prescott injury found. The Week 7 guide calls Prescott a 'high end QB2' and says Dallas is 2-4. CeeDee Lamb had a Week 5 quad bruise but was a full participant Oct 14.",
+            "source": "FantasyData Week 4 box score; FootballNationUSA Week 7 guide; dallascowboys.com October updates",
+            "date": "2026-10-04; ~2026-10-20; 2026-10-14",
+            "url": "https://fantasydata.com/nfl/boxscore/19508-dallas-cowboys-vs-houston-texans-week-4-2026"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Placed on IR Aug 30 with a designation to return (counted as one of the roster cuts to 53). Not eligible until the Week 5 game vs MIN (Oct 11). The injury is a right hamstring strain from the Aug 13 joint practice with JAX, and the initial report was about two months out.",
+            "source": "4for4; PFT/NBC Sports; NBC Sports (Rapoport 'out two months')",
+            "date": "2026-08-30; 2026-08-17",
+            "url": "https://www.4for4.com/news/saints-place-jordyn-tyson-injured-reserve-designated-return"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Oct 5: ESPN/Schefter said he was 'weeks away.' The team was targeting Week 7 at the earliest, but the Week 7 game vs PIT is in Paris (Oct 25), which could push his debut to Week 9 vs Cleveland, after New Orleans' Week 8 bye.",
+            "source": "Field Level Media; 4for4; NBC Sports 'Schefty: Tyson hammy weeks away'",
+            "date": "2026-10-05",
+            "url": "https://fieldlevelmedia.com/news/report-saints-wr-jordyn-tyson-hamstring-still-weeks-away-from-debut/"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Kellen Moore said Tyson is 'progressing well,' with no reported setbacks, but when asked if he would practice that week, answered 'Not right now.' The 21-day practice window had NOT been opened. The comment came on a Monday after the Week 5 loss to MIN (exact date not shown).",
+            "source": "The Fantasy Footballers 'Not yet ready to practice'; ClutchPoints",
+            "date": "Monday after Week 5 (~Oct 12, 2026; exact date not shown)",
+            "url": "https://www.thefantasyfootballers.com/news/642204/jordyn-tyson-not-yet-ready-to-practice/"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Week 7 (this week): he will not practice and will not play in Paris vs PIT. GM Mickey Loomis reportedly said he is 'getting closer,' with no specific timetable. The Loomis quote came from one search summary and a follow-up search could not re-confirm the exact wording. No report shows the practice window opening.",
+            "source": "Rotowire 'Jordyn Tyson Injury: Will not practice this week'; Yahoo Sports 'Saints Will Be Without Key Playmaker vs. Steelers'; BVM Sports 'NFC Notes: ... Tyson Sits'",
+            "date": "BVM Sports 2026-10-21; Rotowire/Yahoo week of Oct 19 (exact date not shown)",
+            "url": "https://www.rotowire.com/football/headlines/jordyn-tyson-injury-will-not-practice-this-week-643575"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Expected role: before the injury he was expected to start opposite Chris Olave from Day 1. Moore praised his deep-ball and slot ability. Without him, Devaughn Vele has been the WR2 behind Olave (12/16, 133 yds, 1 TD over the first two games) and has good rapport with QB Tyler Shough. Stacked Fantasy reported he had resumed running off to the side.",
+            "source": "Rotowire player page; The Fantasy Footballers (Vele 'Five snags in victory'); Stacked Fantasy",
+            "date": "Sept 2026 (Vele); preseason/Oct 2026 (role notes)",
+            "url": "https://www.thefantasyfootballers.com/news/638374/devaughn-vele-five-snags-in-victory/"
+          },
+          {
+            "player": "Jordyn Tyson (NO)",
+            "claim": "Hamstring history (context): Loomis acknowledged 'a small recurrence during the pre-draft process.' He was held out of practice for 'maintenance' in May 2026. He also had hamstring issues at Arizona State.",
+            "source": "NBC Sports/Rotowire camp notes; Fox10 (May 2026); CBS Sports (college, history)",
+            "date": "2026-05-09; 2026-07-31",
+            "url": "https://www.fox10tv.com/2026/05/09/saints-first-round-pick-jordyn-tyson-misses-out-practice-saturday-part-maintenance-plan/"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Week 7: Arizona hosts Denver on Sun Oct 25, 1:05 PM MST (4:05 ET, CBS). Week 8 is at Dallas, Nov 1. Arizona's bye is Week 14.",
+            "source": "Fox10 Phoenix 2026 Cardinals schedule; Fox Sports bye list",
+            "date": "Schedule released May 2026",
+            "url": "https://www.fox10phoenix.com/sports/arizona-cardinals-2026-schedule-released"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Role change: Marvin Harrison Jr. was traded to the Houston Texans. The deal was reported as finalizing around Oct 10 (Harrison was inactive for Week 5 vs DET) and later made official. Arizona gets 2027 2nd- and 6th-round picks. Harrison had 5 catches, 85 yds, 1 TD in 4 games this year.",
+            "source": "ESPN; azcardinals.com; Pro Football Rumors; NBC Sports (Schefter)",
+            "date": "2026-10-10 (finalizing); official mid-Oct 2026",
+            "url": "https://www.espn.com/nfl/story/_/id/50160631/texans-complete-trade-cardinals-wr-marvin-harrison-jr"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Through 5 games: 29 catches on 51 targets (tied 3rd in the NFL), 288 yds, 1 TD; WR24 in half-PPR. RotoBaller calls him a high-floor WR1 for Arizona after the trade, but notes Kendrick Bourne has been more involved. Risks named: injury, or Jacoby Brissett being benched for rookie Carson Beck.",
+            "source": "RotoBaller 'Michael Wilson Even More of a Target Hog After WR Trade'",
+            "date": "2026-10-15",
+            "url": "https://www.rotoballer.com/?p=1967002"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Week 5 vs DET (loss): 4/7, 30 yds, plus a 7-yd pass on a trick play. He nearly threw a TD and nearly caught a 47-yd TD. He had '30 targets over the past two weeks' (Weeks 4-5).",
+            "source": "NBC Sports / Rotoworld",
+            "date": "2026-10-11",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-11/michael-wilson-goes-4-30-nearly-throws-touchdown"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Week 6 at LAR: 4/7, 32 yds, outproduced by TE Trey McBride and WR Kendrick Bourne (5/8, 47). Called his 'second straight bust,' but still projected as a mid-to-low WR2 with an easier schedule ahead. The game result is unclear: RotoBaller items conflict on win vs loss.",
+            "source": "RotoBaller 'Michael Wilson Underperforms Again in Week 6'; RotoBaller Bourne note",
+            "date": "2026-10-19",
+            "url": "https://www.rotoballer.com/?p=1969956"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Early-season target competition: in Week 2 he was second on the team in targets behind McBride (10). Through 2 games, Bourne and Wilson combined for 25 targets while Harrison had 1 catch on 4 targets. 2026 target-share percentage: not found.",
+            "source": "Rotowire player page; Newsweek",
+            "date": "Sept 2026",
+            "url": "https://www.newsweek.com/sports/nfl/cardinals-hc-breaks-silence-on-lack-of-marvin-harrison-jr-usage-12473521"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Injury: he had no injury designation for Week 6 and had not appeared on an injury report this season. No Week 7 practice report found. Arizona's Week 7 report notes a back issue for rookie QB Carson Beck, and Brissett remains the starter.",
+            "source": "StatChasers (updated Oct 16); FootballNationUSA 'Carson Beck Back Injury: Cardinals Week 7 Impact'",
+            "date": "2026-10-16; week of Oct 19, 2026",
+            "url": "https://statchasers.com/nfl/players/michael-wilson/injury/"
+          },
+          {
+            "player": "Michael Wilson (ARI)",
+            "claim": "Contract and history: signed a 3-year, $75M extension ($47M guaranteed) through 2029 on Sept 3, 2026. In 2025 (history): 78 catches, 1,006 yds, 7 TDs on 126 targets, with a 23.2% target share from Week 6 on. His 2025 volume jumped when Harrison was out (16.3 targets per game without Harrison vs 4.5 with him). The new head coach is Mike LaFleur.",
+            "source": "NFL.com; Action Network; Fantasy Nerds",
+            "date": "2026-09-03; Aug 2026 previews",
+            "url": "https://www.nfl.com/news/cardinals-michael-wilson-three-year-extension"
+          }
+        ],
+        "summary": "Assessment of the three incoming players as of Fri Oct 23, 2026 (36 WebSearch queries).\n\nJAVONTE WILLIAMS (DAL): Healthy. No 2026 injury report found. Dallas plays at PHI on Monday night Oct 26, so he is available for Week 7. A Razzball page claiming a Week 7 bye is contradicted by the official schedule. Dallas's bye is Week 14, the last week of this league's regular season. He is the clear workhorse: 85% snap share in Week 5, 91 touches and 7 TDs through 5 games, PPR RB7 as of Oct 15. He reportedly owns the goal-line work. Dallas cut Jaydon Blue and Mafah, and Malik Davis is on IR, so competition is minimal: Goodson, Demercado and Luepke combined for 19 touches through Week 5. Weekly line:\n- W1: 12-41-1 rushing, 5/5 targets for 31 yds and a TD\n- W3: 19-98-1\n- W4: 3 rush TDs (62 carries, 231 yds, 5 TD through W4)\n- W5: 14 touches, 62 yds, 1 TD\n- W6: 11-41-1 rushing, 2/2 receiving for 9 yds\n\nConcerns: efficiency is down (3.73 YPC), touches have fallen to 14 and 13 in Weeks 5-6, and Dallas is 2-4, held under 20 points for two straight games, which makes game scripts negative. Dak Prescott is starting with no injury found.\n\nJORDYN TYSON (NO): On IR since Aug 30 (right hamstring, hurt Aug 13). He carries the designate-to-return tag, but no report shows his 21-day practice window opening. Around Oct 12, Moore said 'Not right now' about practicing. This week he is not practicing and is out for the Paris game vs PIT (Rotowire, Yahoo, BVM Sports Oct 21). The Saints are on bye in Week 8. Week 9 vs CLE is the earliest projected debut, but that is an analyst projection, not a team statement. He has a history of hamstring recurrences. Once healthy he is expected to start opposite Olave, with Vele (currently WR2) losing work.\n\nMICHAEL WILSON (ARI): Healthy, with no injury designation this season. Week 7 is at home vs DEN. Marvin Harrison Jr. was traded to Houston around Oct 10, leaving Wilson the nominal WR1. Through 5 games he had 51 targets (tied 3rd in the NFL), but only 288 yds and 1 TD (WR24 half-PPR). He then went 4/7 for 30 yds (W5) and 4/7 for 32 yds (W6), outproduced in Week 6 by McBride and Bourne. RotoBaller still projects him as a mid-to-low WR2. The QB is Jacoby Brissett, with rookie Carson Beck (back issue) behind him. Arizona's bye is also Week 14.\n\nCaveat: an SI piece with '23 targets through six weeks vs Harrison 34 / McBride 53' appears to be from 2025 and was excluded. Nothing here covers Puka Nacua's injury, which was outside this task.",
+        "not_found": [
+          "Javonte Williams official Week 7 (Cowboys at Eagles) practice/injury designation",
+          "Javonte Williams Week 6 snap share and confirmed Week 2 (vs WAS) stat line",
+          "Javonte Williams 2026 goal-line / red-zone carry counts",
+          "Javonte Williams 2026 target counts for Weeks 4-5",
+          "Any 2026 Dak Prescott injury report (none found; appears healthy)",
+          "Exact date the Saints open Jordyn Tyson's 21-day practice window (no report it has opened)",
+          "Official Saints Week 7 injury designation for Tyson (reports say he will not play; no official listing seen)",
+          "Team-confirmed Tyson debut week (Week 9 is an analyst projection only)",
+          "Specific post-return snap/target split plan for Tyson vs Olave and Vele",
+          "Michael Wilson Week 7 (vs DEN) practice report",
+          "Michael Wilson 2026 target-share percentage",
+          "Confirmed final score of Cardinals-Rams Week 6 (RotoBaller items conflict)",
+          "Michael Wilson Week 4 2026 box score (about 23 targets is only inferred from '30 targets over two weeks')"
+        ],
+        "timeline_estimate": "Tyson: earliest realistic debut is Week 9 vs CLE, after the Saints' Week 8 bye. That comes from analyst projections (Field Level Media, 4for4, Stacked); the team has not confirmed it. As of this week he is not practicing and the practice window has not opened. If the window opens only after the bye, the debut could slip past Week 9 (inference, not reported). Even in the best case, that leaves him about 5 usable regular-season weeks (9-13; the Saints' Week 14 status was not checked) before the fantasy playoffs. Javonte Williams and Michael Wilson are both healthy and active for Week 7; both have their bye in Week 14."
+      },
+      "counters": {
+        "items": [
+          {
+            "player": "Terry McLaurin (WR, WAS)",
+            "claim": "SEASON OVER. He was carted off in the first quarter of Washington's 23-17 Monday Night Football loss to the 49ers on Mon Oct 19, 2026. On Tuesday Oct 20, Dan Quinn announced a torn patellar tendon in his left knee that needs surgery and ends his season. He had 15 catches for 230 yards before the injury. Stefon Diggs is now expected to be Washington's top WR. He has no value for the rest of the season.",
+            "source": "ESPN (story id 50230371, 'Commanders WR Terry McLaurin has torn patellar tendon'); NFL.com ('out rest of season with torn patellar tendon'); Fox News/OutKick",
+            "date": "2026-10-20",
+            "url": "https://www.espn.com/nfl/story/_/id/50230371/commanders-wr-terry-mclaurin-torn-patellar-tendon"
+          },
+          {
+            "player": "Lamar Jackson (QB, BAL)",
+            "claim": "He sprained his ankle on Oct 4 against Tennessee (Week 4) and missed Weeks 5-6, with Tyler Huntley starting. He was not placed on IR. On Wed Oct 21 he was LIMITED, his first on-field work in 17 days. HC Jesse Minter called it 'day-by-day'. The Banner reported a medial sprain.",
+            "source": "ESPN ('Ravens' Lamar Jackson returns to practice but status remains unclear vs. Bengals', id 50241195); The Banner; bengals.com Week 7 2026 injury report",
+            "date": "2026-10-21",
+            "url": "https://www.espn.com/nfl/story/_/id/50241195/lamar-jackson-practice-unclear-vs-bengals-week-7"
+          },
+          {
+            "player": "Lamar Jackson (QB, BAL)",
+            "claim": "LIMITED again on Thu Oct 22. He was in uniform at the start of practice and reportedly did more work than on Wednesday. Cincy Jungle and ESPN's Jamison Hensley say he limped out of practice and into the facility. Outlook is mixed: one outlet calls him a 'near-lock' to play and ESPN calls it uncertain. A Newsweek headline says 'questionable', but I could not confirm an official Friday designation. Game is Sun Oct 25, 1 PM ET, vs CIN in Baltimore.",
+            "source": "Russell Street Report Thursday injury report; Cincy Jungle; atozsports; Newsweek ('Ravens Get More Concerning Injury News on Lamar Jackson')",
+            "date": "2026-10-22",
+            "url": "https://russellstreetreport.com/2026/10/22/injury-report/injury-report-ravens-vs-bengals-thursday-2/"
+          },
+          {
+            "player": "Saquon Barkley (RB, PHI)",
+            "claim": "He hurt his right hamstring on his first carry of the Week 4 loss to the Rams and was called week-to-week. He missed Weeks 5 and 6, both Eagles losses. On Thu Oct 22 he was LIMITED (hamstring) on the Eagles' first Week 7 report. NFL Network's Mike Garafolo reported he is 'in line to play' Mon Oct 26 vs the Cowboys on MNF. No final designation was found.",
+            "source": "PhillyVoice Eagles-Cowboys Week 7 injury report; Yahoo ('Eagles Injury Report: Saquon Barkley limited...'); NBC Sports Philadelphia (Oct 20); NFL.com (week-to-week)",
+            "date": "2026-10-22",
+            "url": "https://www.phillyvoice.com/eagles-cowboys-week-7-injury-report-analysis-saquon-barkley-devonta-smith-dallas-goedert/"
+          },
+          {
+            "player": "Saquon Barkley (RB, PHI)",
+            "claim": "There is trade speculation only, and no deal has been reported. A PFF piece dated Oct 21 says the Eagles' slide could lead to a Barkley trade, and ESPN trade proposals included him (via Bleeding Green Nation). The Eagles brought back RB Elijah Mitchell 'amid running back injuries'. The 2026 trade deadline is Nov 10, 4 PM ET (per ABC7 NY).",
+            "source": "PFF (via trade-news search); Bleeding Green Nation; NBC Sports Philadelphia; ABC7 New York trade-deadline tracker",
+            "date": "2026-10-21",
+            "url": "https://abc7ny.com/post/2026-nfl-trade-deadline-updates-latest-season-deals-news/19884108/"
+          },
+          {
+            "player": "James Cook III (RB, BUF)",
+            "claim": "HEALTHY but on BYE in Week 7. In Week 6 (Oct 18) he had 22 carries for 95 yards and the go-ahead 3-yard TD, plus 3 catches for 58 yards (153 total), in a 33-30 win at Las Vegas. He has 716 scrimmage yards in 6 games. The Bills are 5-1 and host the Ravens in Week 8 on Sun Nov 1. I found no injury. A Newsweek headline mentions Josh Allen backing Cook 'amid fumbling issues' (article date not found).",
+            "source": "Fingerlakes1 (Bills survive late Raiders comeback, head into bye week with 5-1 record); CBS Sports gametracker NFL_20261018_BUF@LV; The Fantasy Footballers; Newsweek",
+            "date": "2026-10-18",
+            "url": "https://www.fingerlakes1.com/2026/10/18/bills-survive-late-raiders-comeback-head-into-bye-week-with-5-1-record-full-coverage/"
+          },
+          {
+            "player": "Chris Olave (WR, NO)",
+            "claim": "He was questionable for Week 6 with an ILLNESS: DNP Wed and Thu, limited Fri (Oct 14-16). He played and caught 4 of 7 targets for 43 yards and 1 TD in the 34-27 win at the Giants on Oct 18. Through Week 6 he has about 43 catches, 580 yards and 2 TDs (sources vary slightly), but only 13 targets over the last two games.",
+            "source": "NBC Sports player news ('Chris Olave scores TD in Week 6 win vs. Giants'); CBS Sports; neworleanssaints.com Morning Break 10-17-2026",
+            "date": "2026-10-18",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-18/chris-olave-scores-td-in-week-6-win-vs-giants"
+          },
+          {
+            "player": "Chris Olave (WR, NO)",
+            "claim": "He does not appear on the Saints' Week 7 Wed/Thu injury reports in any result I found. Thursday's report had 11 players: Carlson and Ruiz DNP, Kamara (back) and Elliss (calf) limited, Shough (hand) full, and backup QB Rattler (knee) full. The Saints play the Steelers in Paris on Sun Oct 25. I did not see an explicit 'Olave full' line item; his absence from the report is inferred from the summaries.",
+            "source": "neworleanssaints.com Saints Thursday Injury Report 2026 Week 7 vs Steelers; Steelers Depot (2026/10)",
+            "date": "2026-10-22",
+            "url": "https://www.neworleanssaints.com/news/saints-thursday-injury-report-2026-week-7-vs-pittsburgh-steelers"
+          },
+          {
+            "player": "Chris Godwin Jr. (WR, TB)",
+            "claim": "His ROLE IS DECLINING. In Week 6 (Oct 18) he caught 4 of 8 targets for 37 yards in a 26-19 OT loss to Pittsburgh, and he still has no TD in 2026. NBC says Emeka Egbuka is now the WR1 and Godwin is 'falling to WR4 tier'. FantasyPros ranks him WR #46 for Week 7. Season totals conflict: FantasyData has 19 catches, 179 yards through 5 games, and CBS has 23 catches, 216 yards.",
+            "source": "NBC Sports ('Godwin remains missing in action in Week 6 loss'); CBS Sports; FantasyPros; FantasyData",
+            "date": "2026-10-18",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-18/godwin-remains-missing-in-action-in-week-6-loss"
+          },
+          {
+            "player": "Chris Godwin Jr. (WR, TB)",
+            "claim": "He was a DNP on Thu Oct 22, listed as REST, not injury, on the Bucs-Panthers Week 7 report. He had a late-September ankle issue. Egbuka (concussion/foot) missed both practices and must clear protocol, which could raise Godwin's volume if Egbuka sits. Baker Mayfield (thumb) was practicing fully after Jalon Daniels had been starting.",
+            "source": "buccaneers.com ('Buccaneers-Panthers Injury Report Oct.22: Egbuka, Godwin Jr. and Goedeke Among Non-Participants'); Bucs Nation; Yahoo",
+            "date": "2026-10-22",
+            "url": "https://www.buccaneers.com/news/buccaneers-panthers-injury-report-oct-22-week-7-2026"
+          },
+          {
+            "player": "Blake Corum (RB, LAR)",
+            "claim": "HEALTHY, backup to Kyren Williams. In Week 6 (Oct 18, a loss to Arizona) he had 9 carries for 42 yards and 2 catches for 18 yards and a receiving TD. He played about 28% of snaps to Williams' 72%, with 11 touches to Williams' 13. Statchasers puts his season weighted-opportunity share at 30.7% vs Williams' 66.4%. For Week 7 vs the Raiders he is a flex/streamer pick: NBC Flex Finder and Fantasy Life recommend him, ESPN ranks him RB31 and FantasyPros RB #23 (7.3 projected points). I found no injury listing.",
+            "source": "NBC Sports ('Blake Corum banks catch-and-run score in Week 6'); Yahoo backup RB rankings; Statchasers; NBC Flex Finder Week 7; FantasyPros",
+            "date": "2026-10-18",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-18/blake-corum-banks-catch-and-run-score-in-week-6"
+          },
+          {
+            "player": "KC Concepcion (WR, CLE, rookie)",
+            "claim": "He had a concussion in Week 5 vs the Jets (hit by Minkah Fitzpatrick, Oct 11). He cleared protocol and played Week 6 (Oct 18, 13-10 win over Baltimore): 4 catches on 6 targets for 37 yards, 2 carries for 2 yards and a 13-yard punt return. He had 18 catches for 149 yards through 5 games.",
+            "source": "CBS Sports ('Browns' KC Concepcion: Out of concussion protocol' / Week 6 line); NBC Sports (2026-10-11 concussion note)",
+            "date": "2026-10-18",
+            "url": "https://www.cbssports.com/fantasy/football/news/browns-kc-concepcion-out-of-concussion-protocol/"
+          },
+          {
+            "player": "KC Concepcion (WR, CLE, rookie)",
+            "claim": "He has a NEW calf/quad injury and was LIMITED Wed Oct 21 and Thu Oct 22. ESPN's game page lists him QUESTIONABLE (calf) for Week 7 at Tennessee on Sun Oct 25. Fellow rookie WR Denzel Boston (foot) is also limited and questionable.",
+            "source": "NBC Sports ('KC Concepcion (calf/quad) limited to begin Week 7', 2026-10-21; 'KC Concepcion, Denzel Boston limited again on Thu.', 2026-10-22); Rotowire; ESPN game page 401873013",
+            "date": "2026-10-22",
+            "url": "https://www.nbcsports.com/fantasy/football/player-news/2026-10-22/kc-concepcion-denzel-boston-limited-again-on-thu"
+          },
+          {
+            "player": "Isaiah Likely (TE, NYG)",
+            "claim": "HOT, with no current injury found. He had knee/groin issues in early October (limited Oct 7-8) but played. Week 5: career-high 11 catches in a 27-27 tie vs Washington. Week 6 (Oct 18, 34-27 loss to the Saints): 6 catches on 11 targets (DraftSharks says 10) for 99 yards and 1 TD, a 24% target share, with Theo Johnson out. He has 39 catches, 383 yards and 5 TDs in 6 games, and RotoBaller ranks him the overall TE1 in half-PPR. I found no Week 7 injury listing for him.",
+            "source": "RotoBaller ('Isaiah Likely's Breakout in Full Swing After Another Big Game in Week 6'); DraftSharks; NBC Sports (2026-10-07/08 knee/groin notes)",
+            "date": "2026-10-19",
+            "url": "https://www.rotoballer.com/?p=1969949"
+          },
+          {
+            "player": "Isaiah Likely (TE, NYG)",
+            "claim": "His QUARTERBACK CHANGED. HC John Harbaugh named J.J. McCarthy the starter for Week 7 at Houston (Sun Oct 25). McCarthy was acquired from Minnesota in September for a 2027 5th-round pick. Jameis Winston was benched during Week 6, and Jaxson Dart is on IR with a knee injury (one report says out for the season). The Giants are 10.5-point underdogs.",
+            "source": "NFL.com ('Giants to start J.J. McCarthy at quarterback in Week 7 vs. Texans'); ESPN (id 50238746); BVM Sports 2026-10-21",
+            "date": "2026-10-21",
+            "url": "https://www.nfl.com/news/giants-start-jj-mccarthy-quarterback-week-7-texans"
+          },
+          {
+            "player": "CONTEXT - Puka Nacua (WR, LAR, the player Jamal would trade)",
+            "claim": "He left Thursday's (Oct 22) practice early with a CALF injury and was listed limited. Sean McVay was expected to give an update Friday Oct 23, and I found no Friday update. Davante Adams is on IR (hamstring), so the Rams WR room is thin. Rams vs Raiders is Sun Oct 25.",
+            "source": "Yahoo ('Rams WR Puka Nacua leaves practice early with calf injury, status uncertain'); Rotowire; The Sporting Tribune 2026-10-22; Bleacher Report",
+            "date": "2026-10-22",
+            "url": "https://www.thesportingtribune.com/2026/10/22/rams-wr-puka-nakua-leaves-practice-early-status-uncertain"
+          },
+          {
+            "player": "CONTEXT - Marvin Harrison Jr. (ARI to HOU), relevant to Michael Wilson in the offer",
+            "claim": "Marvin Harrison Jr. was traded from the Cardinals to the Texans on Oct 12, 2026. Arizona received 2027 2nd- and 7th-round picks, per NFL.com trade grades. None of the 9 Daoud players I researched has been traded.",
+            "source": "ABC7 New York 2026 trade-deadline tracker; NFL.com trade grades",
+            "date": "2026-10-12",
+            "url": "https://www.nfl.com/news/nfl-trade-grades-evaluating-every-deal-made-ahead-of-the-2026-deadline"
+          }
+        ],
+        "summary": "I ran about 29 web searches. Of Daoud's 9 players, the counter-offer news is:\n\n- **Terry McLaurin is done for the season.** He tore his left patellar tendon on MNF Oct 19, and Washington confirmed it Oct 20. Don't ask for him.\n- **Lamar Jackson is back at practice but not cleared.** He was limited Wed and Thu (Oct 21-22) after his Week 4 ankle sprain and was seen limping afterward. He is not on IR. His Friday designation wasn't found and his Week 7 status is uncertain.\n- **Saquon Barkley is close to returning.** He missed Weeks 5-6 with a hamstring injury and was limited Thu Oct 22. Garafolo reports he is 'in line to play' Mon Oct 26 vs Dallas. Eagles trade rumors about him are speculation only.\n- **James Cook is healthy but on bye in Week 7.** He had 153 total yards in Week 6 and has 716 scrimmage yards in 6 games. He's back Nov 1.\n- **Chris Olave is healthy.** An illness had him questionable for Week 6, but he played (4 catches, 43 yards, 1 TD). He isn't on the Week 7 Wed/Thu reports I found. The Saints play in Paris on Sunday.\n- **Chris Godwin Jr. is losing his role.** He has no TD this year and NBC calls him a WR4. He missed Thursday's practice on a rest day, not for an injury. Egbuka is in concussion protocol, which might mean more targets for Godwin.\n- **Blake Corum is healthy and in a backup role.** He gets about 28-31% of the Rams backfield work but has scored in back-to-back games. He's a Week 7 flex/streamer option.\n- **KC Concepcion has a new calf/quad injury.** He was limited Wed and Thu and is listed questionable at Tennessee. He returned from a Week 5 concussion to play Week 6.\n- **Isaiah Likely is producing well.** He's the top half-PPR TE per RotoBaller with no current injury. His QB changes to J.J. McCarthy (Dart on IR, Winston benched).\n\n**Benchings:** none among the 9 players; the only one in this research is Giants QB Winston, which affects Likely.\n\n**Trades:** none of the 9 has been traded.\n\nContext outside the 9: Puka Nacua left Thursday's practice early with a calf injury and was listed limited. McVay's Friday update wasn't found, and Davante Adams is on IR. Marvin Harrison Jr. was traded from ARI to HOU on Oct 12, which may matter for Michael Wilson. The trade deadline is Nov 10.\n\nFor counter-offer value, the healthy, productive targets are Likely, Olave, and Cook (after his bye), with Barkley a near-term return. McLaurin has no value, and Godwin's value is low. Some search results were really 2025 articles (a McLaurin quad injury, a Barkley Week 7 exit vs the Vikings, a Godwin fibula injury vs the Lions), and I left those out.",
+        "not_found": [
+          "Friday Oct 23 official game designations for Lamar Jackson, Chris Olave, KC Concepcion, Chris Godwin Jr.: not found (Newsweek headline says Lamar 'questionable' but unconfirmed vs official report)",
+          "Explicit Week 7 practice participation line for Chris Olave: not found (only his absence from Saints' Wed/Thu report summaries)",
+          "Isaiah Likely Week 7 practice status: not found",
+          "Blake Corum Week 7 injury listing: not found (none indicated)",
+          "Saquon Barkley Friday/Saturday practice status and final designation for MNF Oct 26: not found",
+          "Chris Godwin Jr. Wednesday Oct 21 practice status: not clearly found (Thursday DNP-rest confirmed)",
+          "Sean McVay's Friday Oct 23 update on Puka Nacua's calf: not found",
+          "Any trade involving Olave, Cook, Barkley, McLaurin, Godwin, Corum, Concepcion, Likely, or Lamar Jackson: not found (Barkley trade speculation only)",
+          "Week 6 snap counts for KC Concepcion: not found"
+        ],
+        "timeline_estimate": "McLaurin: out for the season (patellar tendon tear, Oct 19-20). Lamar Jackson: day-to-day. He was limited Oct 21-22 and his status for Sun Oct 25 vs CIN is uncertain; Week 8 at the latest per one report. Barkley: in line to return Mon Oct 26 (Week 7 MNF) after missing Weeks 5-6. Cook: Week 7 bye, back Week 8 (Nov 1 vs BAL). Concepcion: questionable for Oct 25 with a calf/quad injury. Olave, Godwin (rest day only), Corum and Likely: no injury expected to cost Week 7 time. Trade deadline is Nov 10."
+      }
+    }
+  },
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "index": 1,
+      "title": "Gather"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 2,
+      "title": "Value"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 3,
+      "title": "Verify"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 1,
+      "label": "nacua:news",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "ab68d2e9ae72b1ab0",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792713920464,
+      "queuedAt": 1792713920433,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Puka Nacua hurt his CALF at the Rams' practice on Thursday …",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792714155888,
+      "tokens": 127328,
+      "toolCalls": 56,
+      "durationMs": 235423,
+      "resultPreview": "{\"items\":[{\"player\":\"Puka Nacua\",\"claim\":\"Body part: CALF. Nacua left the Rams' Thursday Oct 22 practice early with a calf injury, and a team spokesperson confirmed it. As of Thursday's reports, nobody had said how serious it is.\",\"source\":\"ESPN (Rams WR Puka Nacua leaves practice with calf injury)\",\"date\":\"2026-10-22\",\"url\":\"https://www.espn.com/nfl/story/_/id/50252934/rams-wr-puka-nacua-leaves-p…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 2,
+      "label": "nacua:medical",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "ae408c0848332916f",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792713920464,
+      "queuedAt": 1792713920434,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Nacua's new injury is a calf injury. He left the Rams' prac…",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792714129913,
+      "tokens": 104112,
+      "toolCalls": 42,
+      "durationMs": 207913,
+      "resultPreview": "{\"items\":[{\"player\":\"Puka Nacua\",\"claim\":\"Nacua left Thursday's practice (Oct 22) early with a calf injury and was listed as a limited participant. Rotoworld said to 'consider Nacua highly questionable to play, and seek out a backup plan' for Week 7 at Las Vegas. Severity: not found.\",\"source\":\"NBC Sports / Rotoworld player news, 'Puka Nacua (calf) leaves practice early on Thurs.'\",\"date\":\"2026-10…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 3,
+      "label": "incoming:3-players",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "a6da22e574b25f49b",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792714132080,
+      "queuedAt": 1792713920434,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Assessment of the three incoming players as of Fri Oct 23, …",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792714380930,
+      "tokens": 104320,
+      "toolCalls": 42,
+      "durationMs": 248849,
+      "resultPreview": "{\"items\":[{\"player\":\"Javonte Williams (DAL)\",\"claim\":\"Week 7: Dallas plays at Philadelphia on Monday Oct 26, 2026, 8:15 PM ET (ESPN/ABC). Dallas is NOT on bye in Week 7. One Razzball player page lists a Week 7 bye, but the official schedule coverage contradicts it.\",\"source\":\"Fox 7 Austin 2026 Cowboys schedule; dallascowboys.com schedule release; DIRECTV game page\",\"date\":\"Schedule released May 20…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 4,
+      "label": "counters:daoud-roster-news",
+      "phaseIndex": 1,
+      "phaseTitle": "Gather",
+      "agentId": "a79e22d0bc31c09ad",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792714157628,
+      "queuedAt": 1792713920434,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "I ran about 29 web searches. Of Daoud's 9 players, the coun…",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792714403451,
+      "tokens": 106371,
+      "toolCalls": 40,
+      "durationMs": 245823,
+      "resultPreview": "{\"items\":[{\"player\":\"Terry McLaurin (WR, WAS)\",\"claim\":\"SEASON OVER. He was carted off in the first quarter of Washington's 23-17 Monday Night Football loss to the 49ers on Mon Oct 19, 2026. On Tuesday Oct 20, Dan Quinn announced a torn patellar tendon in his left knee that needs surgery and ends his season. He had 15 catches for 230 yards before the injury. Stefon Diggs is now expected to be Wash…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 5,
+      "label": "value:ros-model",
+      "phaseIndex": 2,
+      "phaseTitle": "Value",
+      "agentId": "a879243f61813e5bb",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792714405679,
+      "queuedAt": 1792714405652,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Script: /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-…",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792715051811,
+      "tokens": 183231,
+      "toolCalls": 23,
+      "durationMs": 646130,
+      "resultPreview": "{\"method\":\"Script: /tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad/nac/work/nacua_trade_model.py. Sensitivity runner: run_sensitivity.sh in the same folder. Outputs: results*.json and run_base.txt. Jamal's roster is ASSUMED from the last known state (Sept 23): QB Purdy, Murray; RB Chase Brown, Kyren Williams, Jadarian Price, Emanuel Wilson; WR Nacua, Pickens, Tate, …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 6,
+      "label": "verify:injury",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "a754a769a8a624c8a",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792715053865,
+      "queuedAt": 1792715053838,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "As of Friday Oct 23, no source says how bad Nacua's calf in…",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792715357740,
+      "tokens": 146340,
+      "toolCalls": 35,
+      "durationMs": 303874,
+      "resultPreview": "{\"issues\":[{\"topic\":\"Accept trigger is looser than the model's own breakeven\",\"problem\":\"Plan step 2 says to accept if Friday/Saturday news shows Nacua OUT for Week 7 'with a strain'. In the model, missing only Week 7 (N=1) is a loss for option (a) over Weeks 8-17: -1.93 at base, -20.96 with M. Wilson at his ECR curve value (results_mwcurve.json) and -30.95 at 12.0 ppg (results_mw12.json). With M.…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 7,
+      "label": "verify:fit",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "a964caf718295e820",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792715053866,
+      "queuedAt": 1792715053838,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "The model is mechanically correct: it reproduces exactly, b…",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792715454736,
+      "tokens": 150115,
+      "toolCalls": 13,
+      "durationMs": 399904,
+      "resultPreview": "{\"issues\":[{\"topic\":\"Michael Wilson ROS ppg is inflated and the pro-trade lean depends on it\",\"problem\":\"The model sets M. Wilson at 15.22 ppg. On the model's own WR curve that equals about WR14.5 (ln r = (29.04-15.22)/5.164), against a FantasyPros ROS ECR of WR21.83 (curve value 13.11). It also puts him level with Pickens (15.21), although Pickens has a better ECR (WR16.5) and better actual ppg (…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 8,
+      "label": "verify:daoud",
+      "phaseIndex": 3,
+      "phaseTitle": "Verify",
+      "agentId": "ad69656fffbda59b5",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1792715359833,
+      "queuedAt": 1792715053839,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Partly refuted. The model's numbers reproduce exactly, and …",
+      "promptPreview": "Context: today is Friday Oct 23, 2026, NFL Week 7 (Thu Oct 22 through Mon Oct 26). Fantasy league: 10 teams, ESPN, full PPR, 6-pt passing TDs, lineup QB, 2 RB, 2 WR, TE, 2 FLEX (RB/WR/TE), DST; 6 of 10 make playoffs; regular season Weeks 1-14, playoffs Weeks 15-17. The user (team 'Stairway to 9 (wins)', manager Jamal) received this offer from manager Daoud ('Likely to Cook'), expiring Sat Oct 24 7…",
+      "promptFramed": true,
+      "lastProgressAt": 1792715857808,
+      "tokens": 160841,
+      "toolCalls": 19,
+      "durationMs": 497974,
+      "resultPreview": "{\"issues\":[{\"topic\":\"Daoud's acceptance of the top counter (h) Javonte + M. Wilson + Likely\",\"problem\":\"The model rates (h) 'uncertain, moderate-low' with the reasoning that 'a TE is neither the WRs he wants nor the RBs he refuses'. Position type is the wrong test. What matters is what the swap costs Daoud. Tyson is worth 0 to Daoud right now. Likely is a weekly starter and appears to be his only …"
+    }
+  ],
+  "totalTokens": 1082658,
+  "totalToolCalls": 270
+}
