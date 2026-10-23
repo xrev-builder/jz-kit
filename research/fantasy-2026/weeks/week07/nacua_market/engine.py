@@ -2,7 +2,7 @@
 Input: rosters CSV (manager,player) -> values every package for Nacua for both sides over Weeks 8-17.
 ppg = 0.5*curve(ROS positional ECR, Oct 16) + 0.5*EP (half season, half last-3 games); byes from schedule;
 weekly best lineup QB/2RB/2WR/TE/2FLEX with waiver replacement fill. Nacua availability set by NACUA_OUT weeks."""
-import pandas as pd, numpy as np, itertools, re, sys, os, json
+import pandas as pd, numpy as np, itertools, re, sys, os, json, functools
 S='/tmp/claude-0/-home-user-jz-kit/8f34411e-cae9-5317-988c-4b9094bb09b9/scratchpad'
 RAW=S+'/nac/raw'
 ROSTERS=sys.argv[1] if len(sys.argv)>1 else S+'/nl/rosters_current.csv'
@@ -26,7 +26,10 @@ for w in WEEKS:
 TFIX={'LAR':'LA','JAC':'JAX','WSH':'WAS'}
 # status overrides: (ppg override or None, first week available)
 OVRD={norm('Terry McLaurin'):(0,99), norm('Jordyn Tyson'):(10.5,10), norm('Carnell Tate'):(9.0,8),
-      norm('Davante Adams'):(None,9)}
+      norm('Davante Adams'):(None,10), norm('Travis Etienne Jr.'):(None,10), norm('Tank Dell'):(None,99), norm('Christian Kirk'):(None,11),
+      norm('Jadarian Price'):(None,11), norm('Jordan Mason'):(None,9), norm('Alec Pierce'):(None,10), norm('Jonah Coleman'):(None,10),
+      norm('Jacory Croskey-Merritt'):(None,10), norm('Tyreek Hill'):(None,99)}
+@functools.lru_cache(maxsize=None)
 def ppg(name):
     k=norm(name)
     if k in OVRD and OVRD[k][0] is not None: return OVRD[k][0]
@@ -39,10 +42,12 @@ def ppg(name):
     if e is None or pos=='QB': return round(c,2)
     eb=0.5*e[0]+0.5*(e[1] if not np.isnan(e[1]) else e[0])
     return round(0.5*c+0.5*eb,2)
+@functools.lru_cache(maxsize=None)
 def info(name):
     k=norm(name); pos=POSR.get(k,(None,))[0] or (EPS[k][2] if k in EPS else None)
     tm=TEAM.get(k) or (EPS[k][3] if k in EPS else None); tm=TFIX.get(tm,tm)
     return pos,tm
+@functools.lru_cache(maxsize=None)
 def avail(name,w):
     k=norm(name)
     if k==norm('Puka Nacua') and w<7+NACUA_OUT: return False
@@ -68,7 +73,7 @@ def paper(names): return sum(100*np.exp(-OVR.get(norm(n),250)/45) for n in names
 if __name__=='__main__':
     R=pd.read_csv(ROSTERS); T={m:list(g.player) for m,g in R.groupby('manager')}
     J=T['Jamal']; base_j=season(J)
-    JEXTRA=[None]+[p for p in J if p not in ('Puka Nacua',) and info(p)[0] in REPL]
+    JEXTRA=[None]+[p for p in ['Carnell Tate','Devaughn Vele','Harold Fannin Jr.','Juwan Johnson','Malik Washington','Dak Prescott','Kyren Williams','Chase Brown','George Pickens'] if p in J]
     out=[]
     for m,ro in T.items():
         if m=='Jamal': continue
