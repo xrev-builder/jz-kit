@@ -34,13 +34,27 @@ Not every task deserves the full machine. First, route:
 cd ~/triple-stack-llm && .venv/bin/python brain/cli.py route "<the task>"
 ```
 
+Then score the task with `model-router` (always available; stdlib-only) to get a tier
+suggestion. Run it on the task as a whole, and again on any sub-task before dispatching a
+swarm agent for it:
+
+```
+python3 ~/.claude/skills/model-router/router.py route "<the task or sub-task>" --threshold 0.5 --json
+```
+
+- Treat the result as a **floor-setting hint, not an order**: it sets the model for cheap
+  phases (research, build tasks, probe lenses). Override it by judgment, and never go below
+  `sonnet` for security-sensitive or irreversible work.
+- If the brain CLI and `model-router` disagree, take the higher tier.
+- If `router.py` is missing, skip this step and use the profile's default tier.
+
 - **Trivial** (one-file fix, obvious change): bail out of the loop. Do it directly or hand to
   `/gsd:fast`. Say so — don't run swarms on a one-liner.
 - **Non-trivial**: classify the domain → pick the profile and read its config:
   - software → `profiles/software.md`
   - design / brand / UI → `profiles/design.md`
   - everything else (research, writing, strategy) → `profiles/general.md`
-- Adopt the tier the route + profile recommend for the cheap phases. State the chosen
+- Adopt the tier the route (brain CLI and/or `model-router`) + profile recommend for the cheap phases. State the chosen
   profile and why in one line before proceeding.
 
 ## Phase 1 · SHARPEN (perfect the prompt, then clarify) — `prompt-perfect-agent`
