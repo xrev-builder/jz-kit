@@ -1,0 +1,13 @@
+model-router vendors and adapts code from RouteLLM
+(https://github.com/lm-sys/RouteLLM), Copyright the RouteLLM authors,
+licensed under the Apache License 2.0 (see LICENSE-RouteLLM).
+
+Adapted from RouteLLM:
+  - routellm/routers/routers.py : the abstract `Router` class and `route()` rule
+    (strong win rate >= threshold -> strong model, else weak model)
+  - routellm/controller.py      : the `router-[name]-[threshold]` model-name
+    convention and its parser
+  - routellm/calibrate_threshold.py : quantile threshold calibration
+
+Changes: dependencies on torch/transformers/litellm/OpenAI embeddings removed;
+a stdlib-only heuristic router and a Claude tier mapping were added.

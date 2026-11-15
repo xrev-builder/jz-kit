@@ -11,6 +11,7 @@ and these load into `~/.claude/` identically.
 | `skills/design-perfect-agent` | skill | Critique **or** generate UI against an 8-dimension falsifiable rubric (Refactoring UI / Apple HIG / Material / WCAG). |
 | `skills/design-preferences` | skill | The taste layer — premium, monochrome-first, "designed-not-AI-generated" defaults. |
 | `skills/perfect-loop` | skill | Self-improving build loop: triage → spec → build → pressure-test → verify → learn. Swappable profiles (software/design/general). |
+| `skills/model-router` | skill | Picks haiku/sonnet/opus per task with a RouteLLM-style cost threshold (logic adapted from RouteLLM, Apache-2.0; stdlib-only). |
 | `workflows/build-from-spec.js` | workflow | Parallel build swarm — decompose a locked spec, build in worktree-isolated agents, verify each. |
 | `workflows/pressure-test.js` | workflow | Adversarial swarm — diverse lenses probe in parallel, independent skeptics confirm high-severity findings. |
 
