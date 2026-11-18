@@ -1,0 +1,35 @@
+---
+// Persistent membership CTA on phones (P0). Hidden on desktop, where the header carries "Join now".
+interface Props { from: number; variant?: 'join' | 'rental' }
+const { from, variant = 'join' } = Astro.props;
+---
+<div class="mbar" data-mbar>
+  {variant === 'rental' ? (
+    <>
+      <div class="price"><b>Rentals</b></div>
+      <a href="tel:+13134360043" class="btn btn-secondary btn-sm">Call</a>
+      <a href="#quote" class="btn btn-primary btn-sm" data-track="rental_click" data-placement="mobile_bar">Get a quote</a>
+    </>
+  ) : (
+    <>
+      <div class="price"><span class="muted">From</span> <b class="mono">${from}</b><span class="muted">/mo</span></div>
+      <a href="/membership/#tour" class="btn btn-secondary btn-sm" data-track="tour_click" data-placement="mobile_bar">Book a tour</a>
+      <a href="/membership/#plans" class="btn btn-primary btn-sm" data-track="join_click" data-placement="mobile_bar">Join now</a>
+    </>
+  )}
+</div>
+<style>
+  .mbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+  }
+  .price { margin-right: auto; font-size: var(--t-13); white-space: nowrap; }
+  .price b { font-size: var(--t-18); color: var(--fg); }
+  :global(html.nav-open) .mbar { display: none; }
+  :global(body) { --mobile-bar: 64px; }
+  @media (min-width: 900px) { .mbar { display: none; } :global(body) { --mobile-bar: 0px; } }
+  @media (max-width: 359px) { .price { display: none; } }
+</style>

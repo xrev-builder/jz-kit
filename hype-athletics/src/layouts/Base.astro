@@ -1,47 +1,47 @@
 ---
-import '@fontsource-variable/big-shoulders-display';
+import '@fontsource/barlow-condensed/600-italic.css';
+import displayFont from '@fontsource/barlow-condensed/files/barlow-condensed-latin-600-italic.woff2?url';
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import Analytics from '../components/Analytics.astro';
 import { photo } from '../lib/photos';
-import { org, locations } from '../data/site';
+import { org, locations, membership } from '../data/site';
 
 interface Props {
-  title: string;            // page name; " | HYPE Athletics" is appended
+  title: string;             // page name; " | HYPE Athletics" is appended
   description: string;
   ogPhoto?: string;
   jsonLd?: object | object[];
-  bare?: boolean;           // home page uses the full title as-is
+  bare?: boolean;            // use title as-is
+  crumbs?: { name: string; href: string }[];   // breadcrumb trail (without Home)
+  bar?: 'join' | 'rental';                    // which sticky CTA phones see
 }
-const { title, description, ogPhoto = 'dh-courts', jsonLd, bare = false } = Astro.props;
+const { title, description, ogPhoto = 'dh-courts', jsonLd, bare = false, crumbs, bar = 'join' } = Astro.props;
 const fullTitle = bare ? title : `${title} | HYPE Athletics`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = await getImage({ src: photo(ogPhoto), width: 1200, height: 630, format: 'jpg', quality: 78, fit: 'cover' });
 const ogUrl = new URL(og.src, Astro.site).href;
+const from = Math.min(...membership.locations.map((l) => l.tiers.find((t) => t.name === 'Individual')!.eft));
 
 const orgLd = {
-  '@context': 'https://schema.org',
-  '@type': 'NGO',
-  name: org.name,
-  alternateName: org.expansion,
-  url: 'https://hypeathletics.org/',
-  logo: 'https://hypeathletics.org/favicon.svg',
-  email: org.email,
-  telephone: '+1-313-436-0043',
-  foundingDate: String(org.founded),
-  founder: { '@type': 'Person', name: org.founder },
-  description: org.mission,
-  areaServed: 'Wayne County, Michigan',
+  '@context': 'https://schema.org', '@type': 'NGO', '@id': 'https://hypeathletics.org/#org',
+  name: org.name, alternateName: org.expansion, url: 'https://hypeathletics.org/',
+  logo: 'https://hypeathletics.org/favicon.svg', email: org.email, telephone: '+1-313-436-0043',
+  foundingDate: String(org.founded), founder: { '@type': 'Person', name: org.founder },
+  description: org.mission, areaServed: { '@type': 'AdministrativeArea', name: 'Wayne County, Michigan' },
   sameAs: [org.instagram, org.facebook],
-  location: Object.values(locations).map((l) => ({
-    '@type': 'Place', name: l.fullName,
-    address: { '@type': 'PostalAddress', streetAddress: l.street, addressLocality: l.city, addressRegion: l.region, postalCode: l.zip, addressCountry: 'US' },
-  })),
+  subOrganization: Object.values(locations).map((l) => ({ '@id': `https://hypeathletics.org/${l.id}/#place` })),
 };
-const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+const crumbLd = crumbs?.length ? {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [{ name: 'Home', href: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, Astro.site).href })),
+} : null;
+const ld = [orgLd, ...(crumbLd ? [crumbLd] : []), ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
 ---
 <!doctype html>
 <html lang="en">
@@ -52,10 +52,11 @@ const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#0a0a0a" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="HYPE Athletics" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -63,14 +64,14 @@ const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="geo.region" content="US-MI" />
+    <meta name="geo.placename" content="Dearborn Heights" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="HYPE Athletics facts for AI assistants" />
     <script is:inline>
-      try {
-        var t = localStorage.getItem('hype-theme');
-        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-        document.documentElement.dataset.themePref = t || 'system';
-      } catch (e) {}
+      try { if (localStorage.getItem('hype-theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
     </script>
     {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+    <Analytics />
   </head>
   <body>
     <a href="#main" class="skip">Skip to content</a>
@@ -79,5 +80,6 @@ const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
       <slot />
     </main>
     <Footer />
+    <MobileBar from={from} variant={bar} />
   </body>
 </html>

@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import FacilityTour from '../components/FacilityTour.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { spaces, locations } from '../data/site';
+const counts = { courts: 5 };
+const ld = Object.values(locations).map((l) => ({
+  '@context': 'https://schema.org', '@type': 'SportsActivityLocation', name: l.fullName, url: `https://hypeathletics.org/${l.id}/`,
+  amenityFeature: spaces.filter((s) => s.location === l.id).map((s) => ({ '@type': 'LocationFeatureSpecification', name: s.name, value: true })),
+}));
+---
+<Base title="Facility Tour" description="Take a virtual tour of HYPE Athletics: 5 basketball courts, indoor turf, cardio and strength floors, women-only gym, saunas, child care, an event hall for 400 and the 38-acre Belle Isle complex."
+  ogPhoto="dh-turf" jsonLd={ld} crumbs={[{ name: 'Facilities', href: '/facilities/' }]}>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow red">Facility tour</p>
+      <h1 class="display h1">Step inside</h1>
+      <p class="lede">Pick a center, then click through every space. Use the arrows, swipe, or your keyboard.</p>
+    </div>
+  </section>
+  <section class="tour-sec">
+    <div class="wrap"><FacilityTour deepLink /></div>
+  </section>
+  <section class="section">
+    <div class="wrap cta-grid">
+      <div class="stack-16">
+        <p class="eyebrow">Like what you see?</p>
+        <h2 class="display h2">Come see it in person</h2>
+        <p class="muted">We’ll show you around and answer every question. Or skip ahead and start your free week.</p>
+        <div class="btn-row"><a href="/membership/#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="facilities">Try 7 days free</a><a href="/rentals/" class="btn btn-ghost">Rent a space<Icon name="ArrowRight" size={16} /></a></div>
+      </div>
+      <div class="card form-card"><LeadForm kind="tour" id="fac-tour" /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .hero { padding-block: 56px 32px; }
+  @media (min-width: 900px) { .hero { padding-block: 96px 40px; } }
+  .hero .h1 { margin: 16px 0 18px; }
+  .tour-sec { padding-bottom: 32px; }
+  .cta-grid { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .cta-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 72px; align-items: start; } }
+  .form-card { padding: 28px; }
+  @media (min-width: 640px) { .form-card { padding: 36px; } }
+</style>

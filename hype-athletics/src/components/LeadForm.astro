@@ -1,0 +1,151 @@
+---
+// On-site form that posts to /api/lead (Cloudflare Pages Function in /functions/api/lead.js).
+// If the endpoint isn't configured or the network fails, the form shows direct contact options instead,
+// so a lead is never silently lost.
+import Icon from './Icon.astro';
+interface Props { kind: 'tour' | 'rental'; id?: string; defaultLocation?: string }
+const { kind, id = `lead-${kind}`, defaultLocation = '' } = Astro.props;
+const turnstile = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const locOptions = kind === 'tour'
+  ? [['dearborn-heights', 'Dearborn Heights'], ['wayne', 'Wayne']]
+  : [['dearborn-heights', 'Dearborn Heights · courts & gym'], ['wayne', 'Wayne · event hall & courts'], ['belle-isle', 'Belle Isle · fields & courts']];
+---
+<form class="lead" id={id} data-lead data-kind={kind} novalidate>
+  <input type="hidden" name="kind" value={kind} />
+  <div class="hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
+  <div class="row">
+    <div class="field"><label for={`${id}-name`}>Name</label><input class="input" id={`${id}-name`} name="name" autocomplete="name" required /></div>
+    <div class="field"><label for={`${id}-phone`}>Phone</label><input class="input" id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required /></div>
+  </div>
+  <div class="row">
+    <div class="field"><label for={`${id}-email`}>Email <span class="opt">optional</span></label><input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" /></div>
+    <div class="field">
+      <label for={`${id}-loc`}>{kind === 'tour' ? 'Center' : 'Space'}</label>
+      <select class="select" id={`${id}-loc`} name="location" required>
+        {locOptions.map(([v, l]) => <option value={v} selected={v === defaultLocation}>{l}</option>)}
+      </select>
+    </div>
+  </div>
+  {kind === 'tour' ? (
+    <div class="field">
+      <span class="label" id={`${id}-time-l`}>Best time to visit</span>
+      <div class="pills" role="radiogroup" aria-labelledby={`${id}-time-l`}>
+        {['Weekday morning', 'Weekday afternoon', 'Weekday evening', 'Weekend'].map((t, i) => (
+          <label class="pill"><input type="radio" name="when" value={t} checked={i === 2} /><span>{t}</span></label>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <>
+      <div class="row">
+        <div class="field">
+          <label for={`${id}-type`}>Event type</label>
+          <select class="select" id={`${id}-type`} name="eventType">
+            {['Tournament or league', 'Team practice', 'Birthday or party', 'Banquet or reception', 'Meeting or seminar', 'Camp or field trip', 'Other'].map((t) => <option>{t}</option>)}
+          </select>
+        </div>
+        <div class="field"><label for={`${id}-date`}>Preferred date</label><input class="input" id={`${id}-date`} name="date" type="date" /></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for={`${id}-guests`}>Guests or players</label><input class="input" id={`${id}-guests`} name="guests" type="number" min="1" inputmode="numeric" /></div>
+        <div class="field"><label for={`${id}-time`}>Start – end time</label><input class="input" id={`${id}-time`} name="time" placeholder="e.g. 6–9 PM" /></div>
+      </div>
+      <div class="field"><label for={`${id}-msg`}>Anything else? <span class="opt">optional</span></label><textarea class="textarea" id={`${id}-msg`} name="message" rows="3" placeholder="Catering, number of courts, recurring dates…"></textarea></div>
+    </>
+  )}
+  {turnstile && <div class="cf-turnstile" data-sitekey={turnstile} data-theme="auto"></div>}
+  <p class="err small" data-err hidden role="alert"></p>
+  <button class="btn btn-primary btn-lg submit" type="submit" data-submit>
+    <span data-label>{kind === 'tour' ? 'Request my tour' : 'Send inquiry'}</span><Icon name="ArrowRight" size={18} />
+  </button>
+  <p class="small muted note">{kind === 'tour' ? 'We’ll call or text to confirm a time.' : 'Our rental coordinator will reply with availability and pricing.'}</p>
+
+  <div class="done" data-done hidden tabindex="-1">
+    <Icon name="CircleCheck" size={28} />
+    <p class="h4">{kind === 'tour' ? 'Tour requested' : 'Inquiry sent'}</p>
+    <p class="small muted">Thanks, we’ll be in touch shortly. Need us sooner? Call <a href="tel:+13134360043">(313) 436-0043</a>.</p>
+  </div>
+  <div class="done" data-fallback hidden tabindex="-1">
+    <Icon name="PhoneCall" size={28} />
+    <p class="h4">Let’s do this by phone</p>
+    <p class="small muted">Online requests aren’t available right now. Reach us directly and we’ll set it up:</p>
+    <div class="btn-row" data-fallback-links></div>
+  </div>
+</form>
+{turnstile && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  const CONTACTS: Record<string, { tel: string; telLabel: string; email: string }> = {
+    'dearborn-heights': { tel: '+13134360043', telLabel: '(313) 436-0043', email: 'info@hypeathletics.org' },
+    'wayne': { tel: '+17347217400', telLabel: '(734) 721-7400', email: 'jstrange@hypeathletics.org' },
+    'belle-isle': { tel: '+17347217400,240', telLabel: '(734) 721-7400 ext. 240', email: 'jstrange@hypeathletics.org' },
+  };
+  const RENTAL_EMAIL: Record<string, string> = { 'dearborn-heights': 'zsaab@hypeathletics.org' };
+  document.querySelectorAll<HTMLFormElement>('[data-lead]').forEach((form) => {
+    const err = form.querySelector<HTMLElement>('[data-err]')!;
+    const btn = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const label = btn.querySelector('[data-label]')!;
+    const kind = form.dataset.kind!;
+    let started = false;
+    form.addEventListener('input', () => { if (!started) { started = true; (window as any).hypeTrack?.('form_start', { kind }); } }, { once: true });
+    const showFallback = (loc: string) => {
+      const c = CONTACTS[loc] ?? CONTACTS['dearborn-heights'];
+      const email = kind === 'rental' ? (RENTAL_EMAIL[loc] ?? c.email) : c.email;
+      const box = form.querySelector<HTMLElement>('[data-fallback]')!;
+      box.querySelector('[data-fallback-links]')!.innerHTML =
+        `<a class="btn btn-primary" href="tel:${c.tel}">Call ${c.telLabel}</a><a class="btn btn-secondary" href="mailto:${email}?subject=${encodeURIComponent(kind === 'tour' ? 'Tour request' : 'Rental inquiry')}">Email us</a>`;
+      [...form.children].forEach((el) => { if (el !== box) (el as HTMLElement).hidden = true; });
+      box.hidden = false; box.focus();
+    };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      const fd = new FormData(form);
+      const name = String(fd.get('name') ?? '').trim();
+      const phone = String(fd.get('phone') ?? '').replace(/\D/g, '');
+      if (!name || phone.length < 10) {
+        err.textContent = !name ? 'Please add your name.' : 'Please add a 10-digit phone number so we can confirm.';
+        err.hidden = false;
+        (form.querySelector(!name ? '[name=name]' : '[name=phone]') as HTMLInputElement).focus();
+        return;
+      }
+      btn.disabled = true; label.textContent = 'Sending…';
+      const payload = Object.fromEntries(fd.entries());
+      (payload as any).page = location.pathname;
+      try {
+        const res = await fetch('/api/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error(String(res.status));
+        (window as any).hypeTrack?.(kind === 'tour' ? 'tour_submit' : 'lead_submit', { kind, location: payload.location });
+        [...form.children].forEach((el) => { if (!(el as HTMLElement).hasAttribute('data-done')) (el as HTMLElement).hidden = true; });
+        const done = form.querySelector<HTMLElement>('[data-done]')!; done.hidden = false; done.focus();
+      } catch {
+        (window as any).hypeTrack?.('form_fallback', { kind });
+        showFallback(String(payload.location ?? ''));
+      } finally {
+        btn.disabled = false; label.textContent = kind === 'tour' ? 'Request my tour' : 'Send inquiry';
+      }
+    });
+  });
+</script>
+
+<style>
+  .lead { display: grid; gap: 18px; }
+  .row { display: grid; gap: 18px; }
+  @media (min-width: 640px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .opt { color: var(--fg-3); font-weight: 400; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { position: relative; cursor: pointer; }
+  .pill input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .pill span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--r-full); border: 1px solid var(--line-strong); font-size: var(--t-14); transition: all var(--d-micro) var(--ease); }
+  .pill input:checked + span { border-color: var(--accent); background: var(--accent-soft); color: var(--fg); }
+  .pill input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .err { color: var(--accent-text); font-weight: 500; }
+  .submit { justify-self: start; margin-top: 4px; }
+  .submit:disabled { opacity: .6; cursor: progress; }
+  .note { margin-top: -6px; }
+  .done { display: grid; gap: 8px; justify-items: start; padding: 8px 0; }
+  .done > :global(.icon) { color: var(--ok); }
+  [data-fallback] > :global(.icon) { color: var(--accent-text); }
+  .done .btn-row { margin-top: 8px; }
+</style>

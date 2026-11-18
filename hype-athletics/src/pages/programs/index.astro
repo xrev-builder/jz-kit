@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProgramCard from '../../components/ProgramCard.astro';
+import Icon from '../../components/Icon.astro';
+import { sports } from '../../data/site';
+import { currentPrograms, ageBuckets } from '../../data/programs';
+const order = sports.map((s) => s.id);
+const list = [...currentPrograms].sort((a, b) => order.indexOf(a.sport) - order.indexOf(b.sport) || (a.start ?? '9').localeCompare(b.start ?? '9'));
+const usedSports = sports.filter((s) => list.some((p) => p.sport === s.id));
+const ld = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'HYPE Athletics programs',
+  itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `https://hypeathletics.org/programs/${p.slug}/`, name: p.title })),
+};
+---
+<Base title="Youth & Adult Programs" description="Find HYPE Athletics leagues, camps, clinics and classes by age, sport and location in Dearborn Heights and Wayne. Dates, times and fees for every program." crumbs={[{ name: 'Programs', href: '/programs/' }]} jsonLd={ld}>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow red">Programs</p>
+      <h1 class="display h1">Find their<br />next season</h1>
+
+      <form class="filters" data-filters onsubmit="return false">
+        <fieldset class="ages">
+          <legend class="label">Age</legend>
+          <div class="chips">
+            <label><input type="radio" name="age" value="" checked /><span>All ages</span></label>
+            {ageBuckets.map((b) => <label><input type="radio" name="age" value={b.id} /><span>{b.label}</span></label>)}
+          </div>
+        </fieldset>
+        <div class="row">
+          <div class="field">
+            <label for="sport">Sport</label>
+            <select class="select" id="sport" name="sport">
+              <option value="">All sports</option>
+              {usedSports.map((s) => <option value={s.id}>{s.name}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="loc">Location</label>
+            <select class="select" id="loc" name="loc">
+              <option value="">Both centers</option>
+              <option value="dearborn-heights">Dearborn Heights</option>
+              <option value="wayne">Wayne</option>
+            </select>
+          </div>
+          <div class="field grow">
+            <label for="q">Search</label>
+            <input class="input" id="q" name="q" type="search" placeholder="Futsal, league, camp…" autocomplete="off" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="results">
+    <div class="wrap">
+      <p class="count mono small" aria-live="polite" data-count>{list.length} programs</p>
+      <div class="grid grid-3" data-list>{list.map((p) => <ProgramCard p={p} />)}</div>
+      <div class="empty" data-empty hidden>
+        <p class="display h3">Nothing matches yet</p>
+        <p class="muted">New sessions open every season. Try another age or location, or call us and we’ll find the right fit.</p>
+        <div class="btn-row"><button class="btn btn-secondary" type="button" data-reset>Clear filters</button><a class="btn btn-ghost" href="tel:+13134360043"><Icon name="Phone" size={16} />(313) 436-0043</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Competitive</p><h2 class="display h2">Travel teams</h2></div></div>
+      <div class="grid grid-3">
+        <a href="/travel-basketball-aau/" class="card card-pad team"><span class="display h3">AAU Basketball</span><span class="muted small">Regional and national tournament teams.</span><span class="link-arrow">Join the interest list<Icon name="ArrowRight" size={14} /></span></a>
+        <a href="/hype-wolves-soccer/" class="card card-pad team"><span class="display h3">HYPE Wolves Soccer</span><span class="muted small">Michigan Wolves travel soccer, selected by tryout.</span><span class="link-arrow">Tryouts &amp; interest form<Icon name="ArrowRight" size={14} /></span></a>
+        <a href="/summer-discovery/" class="card card-pad team"><span class="display h3">Summer Discovery</span><span class="muted small">Free 5-week summer program. Enrollment opens March 1.</span><span class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-filters]')!;
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-list] > article')];
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  const get = (n: string) => (form.elements.namedItem(n) as RadioNodeList | HTMLInputElement).value;
+  const set = (n: string, v: string) => { const el = form.elements.namedItem(n) as RadioNodeList | HTMLInputElement; el.value = v; };
+  const params = new URLSearchParams(location.search);
+  for (const k of ['age', 'sport', 'loc', 'q']) if (params.get(k)) set(k, params.get(k)!);
+  let timer: number | undefined;
+  const run = (track = false) => {
+    const age = get('age'), sport = get('sport'), loc = get('loc'), q = get('q').trim().toLowerCase();
+    const terms = q.split(/\s+/).filter(Boolean);
+    let n = 0;
+    for (const c of cards) {
+      const ok = (!age || c.dataset.ages!.split(' ').includes(age)) && (!sport || c.dataset.sport === sport) && (!loc || c.dataset.loc === loc) && terms.every((t) => c.dataset.text!.includes(t));
+      c.hidden = !ok; if (ok) n++;
+    }
+    count.textContent = `${n} program${n === 1 ? '' : 's'}`;
+    empty.hidden = n > 0;
+    const u = new URL(location.href);
+    for (const [k, v] of [['age', age], ['sport', sport], ['loc', loc], ['q', q]]) v ? u.searchParams.set(k, v) : u.searchParams.delete(k);
+    history.replaceState(null, '', u);
+    if (track) { clearTimeout(timer); timer = window.setTimeout(() => (window as any).hypeTrack?.('program_filter', { age, sport, location: loc, results: n }), 600); }
+  };
+  form.addEventListener('input', () => run(true));
+  form.addEventListener('change', () => run(true));
+  document.querySelector('[data-reset]')!.addEventListener('click', () => { form.reset(); run(); });
+  run();
+</script>
+
+<style>
+  .head { padding-block: 56px 32px; }
+  @media (min-width: 900px) { .head { padding-block: 96px 40px; } }
+  .head .h1 { margin-top: 16px; }
+  .filters { margin-top: 40px; display: grid; gap: 20px; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  .label, .field label { font-size: var(--t-13); font-weight: 500; color: var(--fg-2); margin-bottom: 10px; display: block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .chips span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--r-full); border: 1px solid var(--line-strong); font-size: var(--t-14); font-weight: 500; transition: all var(--d-micro) var(--ease); }
+  .chips label:hover span { border-color: var(--fg-3); }
+  .chips input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .chips input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .row { display: grid; gap: 14px; }
+  @media (min-width: 720px) { .row { grid-template-columns: 220px 220px minmax(0, 1fr); } }
+  .field label { margin-bottom: 4px; }
+  .results { padding-bottom: 96px; }
+  .count { color: var(--fg-3); margin-bottom: 16px; }
+  .empty { display: grid; gap: 12px; justify-items: start; padding: 48px 0; max-width: 520px; }
+  .team { display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
+  .team .link-arrow { margin-top: auto; }
+</style>

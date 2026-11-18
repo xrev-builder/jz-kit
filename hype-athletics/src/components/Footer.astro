@@ -1,12 +1,12 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { org, locations, hours } from '../data/site';
+import { org, locations, hours, portals } from '../data/site';
 const year = new Date().getFullYear();
 const cols = [
-  { title: 'Programs', links: [['All programs', '/programs/'], ['Basketball', '/basketball/'], ['Soccer', '/soccer/'], ['Summer Discovery', '/summer-discovery/'], ['Adult Leagues', '/adult-leagues/'], ['Personal Training', '/personal-group-fitness/']] },
-  { title: 'Visit', links: [['Membership', '/membership/'], ['Rentals', '/rentals/'], ['Events', '/events/'], ['Facility updates', '/facility-updates/'], ['Policies', '/policies-2/'], ['FAQ', '/faq/']] },
-  { title: 'Organization', links: [['Our story', '/about-us/'], ['Leadership', '/meet-the-team/'], ['Community services', '/social-services/'], ['Careers', '/careers/'], ['Volunteer', '/volunteer/'], ['Report an incident', '/incident-report/']] },
+  { title: 'Join', links: [['Membership & prices', '/membership/'], ['Book a tour', '/membership/#tour'], ['Facility tour', '/facilities/'], ['Insurance memberships', '/silver-fitness-training/'], ['Personal training', '/personal-group-fitness/']] },
+  { title: 'Play', links: [['All programs', '/programs/'], ['Basketball', '/basketball/'], ['Soccer', '/soccer/'], ['Adult leagues', '/adult-leagues/'], ['Summer Discovery', '/summer-discovery/']] },
+  { title: 'HYPE', links: [['Rentals', '/rentals/'], ['Events', '/events/'], ['Our story', '/about-us/'], ['Community services', '/social-services/'], ['Donate', '/donate/'], ['Careers', '/careers/']] },
 ];
 ---
 <footer class="site-footer">
@@ -14,16 +14,12 @@ const cols = [
     <div class="top">
       <div class="intro">
         <a href="/" class="f-logo" aria-label="HYPE Athletics home"><Logo /></a>
-        <p class="exp display">Helping Youth Progress &amp; Excel</p>
-        <p class="small muted mission">A nonprofit serving Wayne County youth and families since {org.founded} through sports, education, mentoring and prevention.</p>
-        <div class="btn-row">
-          <a href="/donate/" class="btn btn-primary btn-sm"><Icon name="Heart" size={14} />Donate</a>
-          <a href="/volunteer/" class="btn btn-secondary btn-sm">Volunteer</a>
-        </div>
+        <p class="tag display">Helping Youth Progress &amp; Excel</p>
+        <p class="small muted">A Wayne County nonprofit since {org.founded}.</p>
       </div>
       {cols.map((c) => (
         <nav aria-label={c.title}>
-          <p class="eyebrow">{c.title}</p>
+          <p class="eyebrow plain">{c.title}</p>
           <ul>{c.links.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
         </nav>
       ))}
@@ -32,58 +28,69 @@ const cols = [
     <div class="locs">
       {Object.values(locations).map((l) => (
         <div>
-          <p class="h4">{l.name}</p>
+          <a href={`/${l.id}/`} class="h4 loc-name">{l.name}</a>
           <address class="small">
-            <a href={l.mapsUrl} rel="noopener" target="_blank">{l.street}<br />{l.city}, {l.region} {l.zip}</a><br />
+            <a href={l.mapsUrl} rel="noopener" target="_blank" data-track="directions_click" data-location={l.id}>{l.street}, {l.city}</a><br />
             <a href={`tel:${l.phoneHref}`} class="mono">{l.phone}</a>
           </address>
         </div>
       ))}
       <div>
         <p class="h4">Hours</p>
-        <dl class="small hours">
-          {hours.map((h) => <div><dt>{h.days}</dt><dd class="mono">{h.time}</dd></div>)}
-        </dl>
-        <p class="small muted">Dearborn Heights &amp; Wayne. Holiday hours on <a href="/facility-updates/">Facility Updates</a>.</p>
+        <dl class="small hours">{hours.map((h) => <div><dt>{h.days}</dt><dd class="mono">{h.time}</dd></div>)}</dl>
       </div>
     </div>
 
     <div class="bottom small">
-      <p>© {org.founded}–{year} HYPE Athletics. A nonprofit organization.</p>
-      <div class="social">
-        <a href={`mailto:${org.email}`} class="icon-link"><Icon name="Mail" size={18} label="Email HYPE Athletics" /></a>
-        <a href={org.instagram} class="icon-link" rel="noopener" target="_blank"><Icon name="Instagram" size={18} label="HYPE Athletics on Instagram" /></a>
-        <a href={org.facebook} class="icon-link" rel="noopener" target="_blank"><Icon name="Facebook" size={18} label="HYPE Athletics on Facebook" /></a>
+      <p class="muted">© {org.founded}–{year} HYPE Athletics · Nonprofit organization · <a href="/policies-2/">Policies</a> · <a href="/incident-report/">Report an incident</a></p>
+      <div class="tools">
+        <a href={portals.membershipLogin} rel="noopener" target="_blank" class="tool" data-track="portal_click" data-portal="iclub">Member login</a>
+        <button type="button" class="tool" data-theme-toggle><Icon name="SunMoon" size={16} /><span data-theme-label>Light mode</span></button>
+        <a href={org.instagram} class="icon-link" rel="noopener" target="_blank" data-track="social_click"><Icon name="Instagram" size={18} label="HYPE Athletics on Instagram" /></a>
+        <a href={org.facebook} class="icon-link" rel="noopener" target="_blank" data-track="social_click"><Icon name="Facebook" size={18} label="HYPE Athletics on Facebook" /></a>
       </div>
     </div>
   </div>
 </footer>
 
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
+  const label = btn.querySelector('[data-theme-label]')!;
+  const sync = () => { label.textContent = document.documentElement.dataset.theme === 'light' ? 'Dark mode' : 'Light mode'; };
+  sync();
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    if (next === 'light') document.documentElement.dataset.theme = 'light'; else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem('hype-theme', next); } catch {}
+    sync();
+  });
+</script>
+
 <style>
-  .site-footer { background: var(--surface-2); border-top: 1px solid var(--line); padding-block: 56px 32px; padding-bottom: max(32px, env(safe-area-inset-bottom, 0px)); margin-top: 0; }
-  .top { display: grid; gap: 32px; }
+  .site-footer { border-top: 1px solid var(--line); padding-block: 72px 32px; background: var(--bg); }
+  .top { display: grid; gap: 40px; }
   @media (min-width: 720px) { .top { grid-template-columns: repeat(3, minmax(0, 1fr)); } .intro { grid-column: 1 / -1; } }
-  @media (min-width: 1024px) { .top { grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); } .intro { grid-column: auto; } }
-  .f-logo { display: block; width: 168px; }
-  .exp { font-size: var(--t-25); margin-top: 16px; }
-  .mission { margin-top: 8px; max-width: 40ch; }
-  .intro .btn-row { margin-top: 20px; }
-  nav .eyebrow { margin-bottom: 12px; }
-  nav ul { list-style: none; display: grid; gap: 8px; }
+  @media (min-width: 1024px) { .top { grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); } .intro { grid-column: auto; } }
+  .f-logo { display: block; width: 176px; }
+  .tag { font-size: var(--t-32); margin: 20px 0 8px; max-width: 12ch; }
+  nav .eyebrow { margin-bottom: 14px; }
+  nav ul { list-style: none; display: grid; gap: 10px; }
   nav a { text-decoration: none; color: var(--fg-2); font-size: var(--t-14); }
-  nav a:hover { color: var(--fg); text-decoration: underline; }
-  .locs { display: grid; gap: 24px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  nav a:hover { color: var(--fg); }
+  .locs { display: grid; gap: 24px; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
   @media (min-width: 640px) { .locs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1024px) { .locs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .locs .h4 { font-size: var(--t-14); margin-bottom: 6px; }
-  address { font-style: normal; color: var(--fg-2); line-height: 1.7; }
-  address a { text-decoration: none; color: inherit; }
-  address a:hover { text-decoration: underline; }
-  .hours { margin: 0 0 6px; display: grid; gap: 2px; color: var(--fg-2); }
+  .loc-name, .locs .h4 { display: block; font-size: var(--t-14); margin-bottom: 6px; text-decoration: none; }
+  address { font-style: normal; color: var(--fg-2); line-height: 1.8; }
+  address a { color: inherit; text-decoration: none; }
+  address a:hover { color: var(--fg); text-decoration: underline; }
+  .hours { margin: 0; display: grid; gap: 2px; color: var(--fg-2); }
   .hours div { display: flex; justify-content: space-between; gap: 12px; }
   .hours dd { margin: 0; }
-  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--fg-3); }
-  .social { display: flex; gap: 4px; }
+  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .bottom p a { color: var(--fg-3); text-decoration-color: var(--line-strong); text-decoration-thickness: 1px; }
+  .tools { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .tool { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 0; background: none; color: var(--fg-2); font-size: var(--t-13); text-decoration: none; cursor: pointer; border-radius: var(--r-8); }
+  .tool:hover, .icon-link:hover { background: var(--surface-2); color: var(--fg); }
   .icon-link { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: var(--r-8); color: var(--fg-2); }
-  .icon-link:hover { background: var(--surface-3); color: var(--fg); }
 </style>

@@ -12,10 +12,8 @@ const { title, text } = Astro.props;
   </div>
 </section>
 <style>
-  .cta-band { background: var(--fg); color: var(--bg); padding-block: 56px; }
+  .cta-band { padding-block: 72px; border-top: 1px solid var(--line); background: radial-gradient(60% 90% at 90% 10%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%), var(--bg-2); }
   .inner { display: grid; gap: 24px; align-items: end; }
   @media (min-width: 900px) { .inner { grid-template-columns: minmax(0, 1fr) auto; } }
-  .lede { color: color-mix(in srgb, var(--bg) 72%, var(--fg)); margin-top: 12px; }
-  .cta-band :global(.btn-secondary) { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--fg)); }
-  .cta-band :global(.btn-secondary:hover) { background: color-mix(in srgb, var(--bg) 10%, var(--fg)); }
+  .lede { margin-top: 12px; }
 </style>

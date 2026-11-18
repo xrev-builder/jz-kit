@@ -1,8 +1,10 @@
+// Order follows the revenue model: memberships first, then programs, facilities (which sell both), rentals.
 export type NavLink = { label: string; href: string; desc?: string };
 export type NavGroup = { title: string; links: NavLink[] };
 export type NavItem = { label: string; href: string; groups?: NavGroup[] };
 
 export const nav: NavItem[] = [
+  { label: 'Membership', href: '/membership/' },
   {
     label: 'Programs',
     href: '/programs/',
@@ -17,33 +19,33 @@ export const nav: NavItem[] = [
           { label: 'Boxing', href: '/boxing/' },
           { label: 'Wrestling', href: '/wrestling/' },
           { label: 'Football', href: '/football/' },
-          { label: 'Pickleball', href: '/pickleball/' },
           { label: 'Gymnastics', href: '/gymnastics/' },
+          { label: 'Pickleball', href: '/pickleball/' },
         ],
       },
       {
-        title: 'Teams & training',
+        title: 'Teams, camps & adults',
         links: [
+          { label: 'All programs', href: '/programs/', desc: 'Filter by age, sport and location' },
           { label: 'Travel Basketball (AAU)', href: '/travel-basketball-aau/' },
           { label: 'HYPE Wolves Soccer', href: '/hype-wolves-soccer/' },
-          { label: 'Basketball Training', href: '/basketball-training/' },
-          { label: 'Speed & Strength', href: '/speed-strength/' },
+          { label: 'Summer Discovery', href: '/summer-discovery/', desc: 'Free summer camp' },
           { label: 'Adult Leagues', href: '/adult-leagues/' },
-          { label: 'Summer Discovery (free camp)', href: '/summer-discovery/' },
         ],
       },
       {
-        title: 'Fitness',
+        title: 'Training',
         links: [
-          { label: 'Personal & Group Training', href: '/personal-group-fitness/' },
-          { label: 'Insurance-Paid Memberships', href: '/silver-fitness-training/' },
-          { label: 'Personalized Meal Plans', href: '/personalized-meal-plans/' },
+          { label: 'Personal Training', href: '/personal-group-fitness/' },
+          { label: 'Basketball Training', href: '/basketball-training/' },
+          { label: 'Speed & Strength', href: '/speed-strength/' },
+          { label: 'Meal Plans', href: '/personalized-meal-plans/' },
         ],
       },
     ],
   },
-  { label: 'Events', href: '/events/' },
-  { label: 'Membership', href: '/membership/' },
+  { label: 'Facilities', href: '/facilities/' },
+  { label: 'Rentals', href: '/rentals/' },
   {
     label: 'Locations',
     href: '/dearborn-heights/',
@@ -53,47 +55,24 @@ export const nav: NavItem[] = [
         links: [
           { label: 'Dearborn Heights', href: '/dearborn-heights/', desc: '23302 W. Warren Ave.' },
           { label: 'Wayne', href: '/wayne/', desc: '4635 Howe Rd.' },
-          { label: 'Belle Isle Athletic Complex', href: '/belle-isle/', desc: '2402 Vista Dr., Detroit' },
-        ],
-      },
-      {
-        title: 'Visiting',
-        links: [
-          { label: 'Amenities', href: '/amenities/' },
-          { label: 'Facility Updates & Closures', href: '/facility-updates/' },
-          { label: 'Policies', href: '/policies-2/' },
+          { label: 'Belle Isle', href: '/belle-isle/', desc: 'Athletic complex, Detroit' },
+          { label: 'Hours & closures', href: '/facility-updates/' },
         ],
       },
     ],
   },
-  {
-    label: 'Community',
-    href: '/social-services/',
-    groups: [
-      {
-        title: 'Community services',
-        links: [
-          { label: 'Overview', href: '/social-services/' },
-          { label: 'S.A.F.E. Wellness', href: '/s-a-f-e/', desc: 'Substance Abuse Free Environment' },
-          { label: 'Academic Assistance', href: '/academic-assistance/' },
-          { label: 'Vocational Training', href: '/vocational-training/' },
-          { label: 'Scholarship', href: '/scholarship/' },
-        ],
-      },
-    ],
-  },
-  { label: 'Rentals', href: '/rentals/' },
   {
     label: 'About',
     href: '/about-us/',
     groups: [
       {
-        title: 'HYPE Athletics',
+        title: 'HYPE',
         links: [
-          { label: 'Our Story', href: '/about-us/' },
+          { label: 'Our story', href: '/about-us/' },
+          { label: 'Events', href: '/events/' },
+          { label: 'Community services', href: '/social-services/' },
           { label: 'Leadership', href: '/meet-the-team/' },
-          { label: 'Trainers & Coaches', href: '/our-trainers/' },
-          { label: 'Careers', href: '/careers/' },
+          { label: 'Trainers & coaches', href: '/our-trainers/' },
         ],
       },
       {
@@ -101,6 +80,7 @@ export const nav: NavItem[] = [
         links: [
           { label: 'Donate', href: '/donate/' },
           { label: 'Volunteer', href: '/volunteer/' },
+          { label: 'Careers', href: '/careers/' },
           { label: 'FAQ', href: '/faq/' },
           { label: 'Contact', href: '/contact-us/' },
         ],

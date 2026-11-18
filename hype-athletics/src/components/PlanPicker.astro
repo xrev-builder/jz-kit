@@ -1,0 +1,127 @@
+---
+import Icon from './Icon.astro';
+import { membership, locations, joinUrl } from '../data/site';
+const locs = membership.locations.map((m) => ({ id: m.id as 'dearborn-heights' | 'wayne', name: locations[m.id].name, access: m.access, tiers: m.tiers, join: joinUrl[m.id as 'dearborn-heights' | 'wayne'] }));
+const planNames = locs[0].tiers.map((t) => t.name);
+const blurbs: Record<string, string> = {
+  'Individual': 'One adult',
+  'Adult Couple': 'Two adults',
+  'Family': 'Your whole household',
+  'Senior (59+)': 'One adult, 59+',
+  'Senior Couple': 'Two adults, 59+',
+};
+const data = JSON.stringify(Object.fromEntries(locs.map((l) => [l.id, { access: l.access, join: l.join, tiers: Object.fromEntries(l.tiers.map((t) => [t.name, [t.eft, t.card]])) }])));
+const d0 = locs[0];
+---
+<div class="picker" data-picker data-plans={data}>
+  <form class="steps" onsubmit="return false">
+    <fieldset>
+      <legend><span class="n mono">01</span>Choose your home center</legend>
+      <div class="seg">
+        {locs.map((l, i) => (
+          <label>
+            <input type="radio" name="loc" value={l.id} checked={i === 0} />
+            <span><b>{l.name}</b><small>{l.access.replace('Access to ', '')}</small></span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><span class="n mono">02</span>Pick a plan</legend>
+      <div class="plans">
+        {planNames.map((n, i) => (
+          <label>
+            <input type="radio" name="plan" value={n} checked={i === 0} />
+            <span>
+              <b>{n}</b><small>{blurbs[n]}</small>
+              <em class="mono" data-plan-price={n}>${d0.tiers[i].eft}</em>
+            </span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend><span class="n mono">03</span>How you’ll pay</legend>
+      <div class="seg small-seg">
+        <label><input type="radio" name="pay" value="eft" checked /><span><b>Bank draft</b><small>Lowest price</small></span></label>
+        <label><input type="radio" name="pay" value="card" /><span><b>Credit card</b><small>Autopay</small></span></label>
+      </div>
+    </fieldset>
+  </form>
+
+  <aside class="summary" aria-live="polite">
+    <p class="eyebrow plain" data-sum-label>{d0.name} · Individual</p>
+    <p class="price"><span class="cur">$</span><span class="amt" data-sum-price>{d0.tiers[0].eft}</span><span class="per">/month</span></p>
+    <ul class="checks small">
+      <li><Icon name="Check" size={14} /><span data-sum-access>{d0.access}</span></li>
+      {membership.included.map((i) => <li><Icon name="Check" size={14} />{i}</li>)}
+    </ul>
+    <a href={d0.join} class="btn btn-primary btn-lg cta" rel="noopener" target="_blank" data-join data-track="join_click" data-placement="plan_picker" data-plan="Individual" data-location={d0.id} data-pay="eft">
+      Start your 7-day free trial<Icon name="ArrowRight" size={18} />
+    </a>
+    <p class="fine small muted">You’ll finish signing up on our secure member portal. Prefer to see it first? <a href="#tour">Book a free tour</a>.</p>
+  </aside>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-picker]').forEach((root) => {
+    const plans = JSON.parse(root.dataset.plans!);
+    const val = (n: string) => (root.querySelector<HTMLInputElement>(`input[name="${n}"]:checked`)!).value;
+    const join = root.querySelector<HTMLAnchorElement>('[data-join]')!;
+    const update = () => {
+      const loc = val('loc'), plan = val('plan'), pay = val('pay');
+      const p = plans[loc];
+      const idx = pay === 'card' ? 1 : 0;
+      root.querySelectorAll<HTMLElement>('[data-plan-price]').forEach((el) => { el.textContent = `$${p.tiers[el.dataset.planPrice!][idx]}`; });
+      root.querySelector('[data-sum-price]')!.textContent = String(p.tiers[plan][idx]);
+      const name = (root.querySelector(`input[name="loc"][value="${loc}"]`)!.nextElementSibling!.querySelector('b')!).textContent;
+      root.querySelector('[data-sum-label]')!.textContent = `${name} · ${plan}${pay === 'card' ? ' · Credit card' : ''}`;
+      root.querySelector('[data-sum-access]')!.textContent = p.access;
+      join.href = p.join;
+      Object.assign(join.dataset, { plan, location: loc, pay });
+    };
+    root.addEventListener('change', (e) => {
+      update();
+      const t = e.target as HTMLInputElement;
+      (window as any).hypeTrack?.('plan_select', { [t.name]: t.value, page: location.pathname });
+    });
+    update();
+  });
+</script>
+
+<style>
+  .picker { display: grid; gap: 24px; }
+  @media (min-width: 1000px) { .picker { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; align-items: start; } }
+  .steps { display: grid; gap: 32px; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: var(--t-18); margin-bottom: 14px; }
+  .n { font-size: var(--t-12); color: var(--accent-text); letter-spacing: .08em; }
+  label { position: relative; cursor: pointer; display: block; }
+  input[type='radio'] { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  label > span {
+    display: grid; gap: 2px; height: 100%; padding: 16px 18px; border-radius: var(--r-10);
+    border: 1px solid var(--line-strong); background: var(--surface);
+    transition: border-color var(--d-micro) var(--ease), background-color var(--d-micro) var(--ease), box-shadow var(--d-micro) var(--ease);
+  }
+  label:hover > span { border-color: var(--fg-3); }
+  input:checked + span { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  label b { font-size: var(--t-16); font-weight: 600; }
+  label small { font-size: var(--t-13); color: var(--fg-3); }
+  .seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .plans { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 640px) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .plans em { font-style: normal; font-size: var(--t-18); font-weight: 500; margin-top: 8px; color: var(--fg); }
+
+  .summary {
+    position: sticky; top: calc(var(--header-h) + 24px);
+    padding: 32px; border-radius: var(--r-18); background: var(--surface); border: 1px solid var(--line);
+    background-image: radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%);
+  }
+  .price { display: flex; align-items: flex-start; margin: 12px 0 20px; font-family: var(--font-display); font-style: italic; font-weight: 600; line-height: .85; }
+  .cur { font-size: var(--t-40); margin-top: 8px; color: var(--fg-2); }
+  .amt { font-size: clamp(var(--t-80), 12vw, 8.5rem); font-variant-numeric: tabular-nums; }
+  .per { font-family: var(--font-body); font-style: normal; font-weight: 500; font-size: var(--t-16); color: var(--fg-3); align-self: flex-end; margin: 0 0 12px 8px; }
+  .cta { width: 100%; margin-top: 28px; }
+  .fine { margin-top: 14px; }
+</style>

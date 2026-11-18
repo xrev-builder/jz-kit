@@ -17,6 +17,7 @@ const rent = rentals[id];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': id === 'belle-isle' ? 'SportsActivityLocation' : ['SportsActivityLocation', 'ExerciseGym'],
+  '@id': `https://hypeathletics.org/${id}/#place`,
   name: l.fullName,
   parentOrganization: { '@type': 'NGO', name: 'HYPE Athletics' },
   telephone: l.phone,

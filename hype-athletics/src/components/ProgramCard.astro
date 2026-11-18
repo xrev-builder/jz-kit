@@ -1,38 +1,67 @@
 ---
 import Icon from './Icon.astro';
-import { locations, sportById, type Program } from '../data/site';
+import { locations, sportById } from '../data/site';
+import { status, bucketsFor, type Program } from '../data/programs';
 interface Props { p: Program; showSport?: boolean; showLoc?: boolean }
 const { p, showSport = true, showLoc = true } = Astro.props;
 const loc = locations[p.location];
 const sport = sportById[p.sport];
+const st = status(p);
+const when = [p.days, p.time].filter(Boolean).join(' · ');
+const text = `${p.title} ${sport.name} ${loc.name} ${p.ages ?? ''} ${p.days ?? ''}`.toLowerCase();
 ---
-<article class="pcard card" data-sport={p.sport} data-loc={p.location} data-text={`${p.title} ${sport.name} ${loc.name} ${p.ages ?? ''}`.toLowerCase()}>
-  {(showSport || showLoc) && (
-    <div class="meta">
-      {showSport && <span class="chip">{sport.name}</span>}
-      {showLoc && <span class="chip"><Icon name="MapPin" size={12} />{loc.short}</span>}
-    </div>
-  )}
-  <h3 class="h4">{p.title}</h3>
-  {(p.ages || p.days) && (
-    <dl class="facts">
-      {p.ages && <div><dt>Who</dt><dd>{p.ages}</dd></div>}
-      {p.days && <div><dt>When</dt><dd>{p.days}</dd></div>}
-    </dl>
-  )}
+<article class="pc" data-sport={p.sport} data-loc={p.location} data-ages={bucketsFor(p).join(' ')} data-text={text}>
+  <a href={`/programs/${p.slug}/`} class="cover" aria-label={`${p.title}${p.ages ? `, ${p.ages}` : ''}: details`}></a>
+  <div class="top">
+    <span class:list={['st', st.tone]}>{st.label}</span>
+    {p.spots && 50 >= p.spots && <span class="spots mono">{p.spots} spots left</span>}
+  </div>
+  <div class="tags small">
+    {showSport && <span>{sport.name}</span>}
+    {showLoc && <span>{loc.short}</span>}
+  </div>
+  <h3 class="title">{p.title}</h3>
+  <ul class="meta small">
+    <li><Icon name="Users" size={14} />{p.ages ?? <span class="tbd">Ages coming soon</span>}</li>
+    {when && <li><Icon name="Clock" size={14} />{when}</li>}
+    {p.dates && <li><Icon name="CalendarDays" size={14} />{p.dates}</li>}
+  </ul>
   <div class="foot">
+    <p class="fee">
+      {p.fee ? <><b class="mono">{p.fee}</b>{p.feeNote && <span class="muted"> {p.feeNote}</span>}</> : <span class="tbd">Fee coming soon</span>}
+    </p>
     {p.url ? (
-      <a href={p.url} class="btn btn-secondary btn-sm" rel="noopener" target="_blank">
-        Details &amp; register<Icon name="ArrowUpRight" size={14} /><span class="sr-only">(opens registration site)</span>
+      <a href={p.url} class="btn btn-primary btn-sm reg" rel="noopener" target="_blank" data-track="program_register_click" data-program={p.slug} data-sport={p.sport} data-location={p.location} data-placement="card">
+        Register<span class="sr-only"> for {p.title} (opens registration site)</span>
       </a>
-    ) : null}
-    {p.note && <p class="small muted note">{p.note}</p>}
+    ) : (
+      <span class="small muted">Front desk</span>
+    )}
   </div>
 </article>
 <style>
-  .pcard { display: flex; flex-direction: column; gap: 12px; padding: 20px; min-width: 0; }
-  .meta { display: flex; flex-wrap: wrap; gap: 6px; }
-  .h4 { font-size: var(--t-16); }
-  .foot { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-  .note { font-size: var(--t-13); }
+  .pc {
+    position: relative; display: flex; flex-direction: column; gap: 12px; padding: 22px; min-width: 0;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-12);
+    transition: border-color var(--d-std) var(--ease), transform var(--d-std) var(--ease-out), background-color var(--d-std) var(--ease);
+  }
+  .pc:hover { border-color: var(--line-strong); background: var(--surface-2); transform: translateY(-2px); }
+  .cover { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+  .reg { position: relative; z-index: 2; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .st { font-family: var(--font-mono); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; color: var(--fg-2); }
+  .st::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--fg-3); }
+  .st.open::before, .st.soon::before { background: var(--ok); }
+  .st.live::before { background: var(--accent); }
+  .spots { font-size: var(--t-11); color: var(--accent-text); letter-spacing: .04em; }
+  .tags { display: flex; gap: 8px; color: var(--fg-3); }
+  .tags span + span::before { content: '·'; margin-right: 8px; }
+  .title { font-family: var(--font-display); font-style: italic; font-weight: 600; text-transform: uppercase; font-size: var(--t-25); line-height: 1; letter-spacing: -0.005em; }
+  .meta { list-style: none; display: grid; gap: 6px; color: var(--fg-2); }
+  .meta li { display: flex; gap: 8px; align-items: flex-start; }
+  .meta :global(.icon) { margin-top: 3px; color: var(--fg-3); }
+  .tbd { color: var(--fg-3); font-style: italic; }
+  .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .fee { font-size: var(--t-13); min-width: 0; }
+  .fee b { font-size: var(--t-21); font-weight: 500; color: var(--fg); }
 </style>

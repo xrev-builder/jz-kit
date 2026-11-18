@@ -104,93 +104,7 @@ export type SportId =
   | 'basketball' | 'soccer' | 'volleyball' | 'martial-arts' | 'boxing' | 'wrestling'
   | 'football' | 'pickleball' | 'gymnastics' | 'adult-leagues' | 'speed-strength' | 'basketball-training';
 
-export type Program = {
-  title: string;
-  sport: SportId;
-  location: LocationId;
-  ages?: string;      // only when stated by HYPE
-  days?: string;
-  url?: string;       // registration link
-  note?: string;
-};
-
-const LA_DH = 'https://hypedearborn.leagueapps.com';
-const LA_W = 'https://hypewayne.leagueapps.com';
-
-export const programs: Program[] = [
-  // Basketball · Dearborn Heights
-  { title: 'Little Shooters Winter 2027', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/camps/5184653-little-shooters-winter-2027` },
-  { title: 'Big Shooters Winter 2027', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/camps/5184745-big-shooters-winter-2027` },
-  { title: 'Fundamental Basketball Clinic Winter 2027', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/camps/5184588-fundamental-basketball-clinic-winter-2027` },
-  { title: 'Premier Winter Basketball League 2026/27', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/leagues/basketball/5063232-premier-winter-basketball-league-2627` },
-  { title: 'Premier Winter Basketball League 2027 · Boys Varsity', sport: 'basketball', location: 'dearborn-heights', ages: 'Grades 6–8', url: `${LA_DH}/leagues/basketball/5165234-premier-winter-basketball-league-2027-boys-varsity-6th-8th-grade` },
-  { title: 'Winter Break Basketball Camp · Session 1', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/camps/5114207-winter-break-basketball-camp-session-1` },
-  { title: 'Winter Break Basketball Camp · Session 2', sport: 'basketball', location: 'dearborn-heights', url: `${LA_DH}/camps/5114213-winter-break-basketball-camp-session-2` },
-  { title: 'Premier Spring High School Boys Basketball League 2027', sport: 'basketball', location: 'dearborn-heights', ages: 'High school boys', url: `${LA_DH}/leagues/basketball/5230462-premier-spring-high-school-boys-basketball-league-2027` },
-  // Basketball · Wayne
-  { title: 'Little Shooters', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5133236-little-shooters-october-session` },
-  { title: 'Big Shooters', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5133266-big-shooters` },
-  { title: 'HYPE Up Classic', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5133329-hype-up-classic` },
-  { title: 'Fall Break Basketball Camp', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5133282-fall-break-basketball-camp` },
-  { title: 'Winter Break Basketball Camp', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5133352-winter-break-basketball-camp` },
-  { title: 'HYPE Elite Basketball Camp', sport: 'basketball', location: 'wayne', url: `${LA_W}/camps/5207013-hype-elite-basketball-camp` },
-  { title: 'HYPE Basketball League · Winter 2027', sport: 'basketball', location: 'wayne', url: `${LA_W}/leagues/basketball/5091042-winter-hype-basketball-league-2027` },
-
-  // Soccer · Dearborn Heights
-  { title: 'Friday Futsal', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 3–6', days: 'Fridays', url: `${LA_DH}/events/5187601-friday-futsal` },
-  { title: 'Friday Futsal', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 7–13', days: 'Fridays', url: `${LA_DH}/events/5187743-friday-futsal-ages-7-9` },
-  { title: 'Saad Soccer Winter Game Days', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 5–7', url: `${LA_DH}/events/5187631-saad-soccer-winter-game-days-ages-5-7` },
-  { title: 'Saad Soccer Winter Game Days', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 8–10', url: `${LA_DH}/events/5187651-saad-soccer-winter-game-days-ages-8-10` },
-  { title: 'Saad Soccer Winter Game Days', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 11–13', url: `${LA_DH}/events/5187661-saad-soccer-winter-game-days-ages-11-13` },
-  { title: 'Saad Soccer Winter Game Days · Competitive', sport: 'soccer', location: 'dearborn-heights', ages: 'Ages 11–13', url: `${LA_DH}/events/5187671-saad-soccer-winter-game-days-ages-11-13-competitive` },
-  { title: 'Winter Indoor Soccer Clinic 2026/27', sport: 'soccer', location: 'dearborn-heights', url: `${LA_DH}/camps/5174130-winter-indoor-soccer-clinic-2627` },
-
-  // Volleyball
-  { title: 'Level-Up Spikers', sport: 'volleyball', location: 'dearborn-heights', ages: 'Co-ed, ages 6–10', url: `${LA_DH}/camps/5141160-level-up-spikers---volleyball-november--coed-ages-6-10` },
-  { title: 'HYPE Fall Volleyball Clinic', sport: 'volleyball', location: 'dearborn-heights', ages: 'Girls, ages 11–13', url: `${LA_DH}/camps/5114266-hype-fall-volleyball-clinic-girls-ages-11-13` },
-  { title: 'Winter Break Volleyball Clinic', sport: 'volleyball', location: 'dearborn-heights', url: `${LA_DH}/camps/5095442-winter-break-volleyball-clinic` },
-  { title: 'HYPE Wayne Volleyball Program', sport: 'volleyball', location: 'wayne', url: `${LA_W}/camps/4893153-hype-wayne-volleyball-program` },
-
-  // Martial arts
-  { title: 'Tae Kwon Do', sport: 'martial-arts', location: 'dearborn-heights', ages: 'Ages 4–16', days: 'Mon, Wed & Fri', url: `${LA_DH}/events/4747085-tae-kwon-do-ages-4-16-monday-wednesday--friday`, note: 'Register at the front desk' },
-  { title: 'Tae Kwon Do', sport: 'martial-arts', location: 'dearborn-heights', ages: 'Ages 4–16', days: 'Tue & Thu', url: `${LA_DH}/events/4747069-tae-kwon-do-ages-4-16-tuesdays--thursdays`, note: 'Register at the front desk' },
-  { title: 'Tae Kwon Do', sport: 'martial-arts', location: 'dearborn-heights', ages: 'Ages 17+', days: 'Tue & Thu', url: `${LA_DH}/events/4747095-tae-kwon-do-ages-17-tuesday--thursday`, note: 'Register at the front desk' },
-  { title: 'Karate', sport: 'martial-arts', location: 'wayne', url: `${LA_W}/events/4747181-karate` },
-
-  // Boxing
-  { title: 'Boxing Fitness & Training', sport: 'boxing', location: 'dearborn-heights', ages: 'Ages 8–16', days: 'Mon, Wed & Fri', url: `${LA_DH}/events/4747111-boxing-fitness--training-ages-8-16-monday-wednesday--friday` },
-  { title: 'Boxing Fitness & Training · Adult', sport: 'boxing', location: 'dearborn-heights', ages: 'Ages 17+', days: 'Tue & Thu', url: `${LA_DH}/events/4747121-boxing-fitness--training-adult-boxing-ages-17-tuesday--thursday` },
-
-  // Wrestling
-  { title: 'Elite Wrestling Institute', sport: 'wrestling', location: 'dearborn-heights', days: 'Mon, Wed & Thu', url: `${LA_DH}/events/4747153-elite-wrestling-institute-monday-wednesday--thursday` },
-  { title: 'Elite Wrestling Institute · Drop-ins', sport: 'wrestling', location: 'dearborn-heights', url: `${LA_DH}/events/4747164-elite-wrestling-institute-drop-ins` },
-
-  // Football
-  { title: 'HYPE Elite Football Training', sport: 'football', location: 'dearborn-heights', url: `${LA_DH}/events/4869503-hype-elite-football-training` },
-
-  // Pickleball
-  { title: 'Drop-in Pickleball', sport: 'pickleball', location: 'dearborn-heights', note: 'Ask at the front desk for drop-in times' },
-
-  // Gymnastics
-  { title: 'Gymnastics with Michigan Academy of Gymnastics', sport: 'gymnastics', location: 'wayne', ages: 'Ages 1.5 and up', days: 'Fridays', url: 'https://www.michiganacademy.com/hype-athletics-center-wayne/' },
-
-  // Adult leagues
-  { title: 'Men’s Winter Basketball League', sport: 'adult-leagues', location: 'dearborn-heights', ages: 'Adults', url: `${LA_DH}/leagues/basketball/5154881-mens-league-winter-basketball--wahidi` },
-  { title: 'HYPE Adult Co-ed Volleyball League', sport: 'adult-leagues', location: 'dearborn-heights', ages: 'Adults', url: `${LA_DH}/leagues/volleyball-(indoor)/5171125-hype-adult-co-ed-volleyball-league` },
-
-  // Speed & strength
-  { title: 'Sports Fitness & Performance Training', sport: 'speed-strength', location: 'dearborn-heights', url: 'https://hypedearborn.leagueapps.com/events/4747103-sports-fitness--performance-training' },
-  { title: 'Sports Fitness · Speed & Agility', sport: 'speed-strength', location: 'wayne', url: `${LA_W}/camps/4837500-sports-fitness-speed--agility` },
-
-  // Basketball training
-  { title: 'HYPE Skillz Training with Jamey Petree', sport: 'basketball-training', location: 'dearborn-heights', ages: 'Grade 3 through high school', url: `${LA_DH}/events/5052658-hype-skillz-training-with-jamey-petree`, note: 'First session free' },
-  { title: 'Fearless Training · Free Basketball Camp', sport: 'basketball-training', location: 'wayne', url: `${LA_W}/camps/5004405-fearless-training---free-basketball-camp` },
-  { title: 'Fearless Training with Joshua Dudley · Big Group Walk-in', sport: 'basketball-training', location: 'wayne', url: `${LA_W}/camps/4966290-fearless-training-w-joshua-dudley-big-group-walk-in-training` },
-  { title: 'Fearless Training with Joshua Dudley · Big Group, 8 Sessions', sport: 'basketball-training', location: 'wayne', url: `${LA_W}/camps/4964939-fearless-training-w-joshua-dudley-big-group---8-session-package` },
-  { title: 'Fearless Training with Joshua Dudley · Big Group, 16 Sessions', sport: 'basketball-training', location: 'wayne', url: `${LA_W}/camps/4964961-fearless-training-w-joshua-dudley-big-group-unlimited-sessions-package--16-sessi` },
-  { title: 'Fearless Training with Joshua Dudley · Small Group Starter, 4 Sessions', sport: 'basketball-training', location: 'wayne', ages: '2–5 athletes per group', url: `${LA_W}/camps/4964999-fearless-training-w-joshua-dudley-small-group-training-2-5-athletes--starter-4-s` },
-  { title: 'Fearless Training with Joshua Dudley · Small Group, 12 Sessions', sport: 'basketball-training', location: 'wayne', ages: '2–5 athletes per group', url: `${LA_W}/camps/4965017-fearless-training-w-joshua-dudley-small-group-training-2-5-athletes-12-sessions` },
-];
+export { programs, currentPrograms, status, isCurrent, type Program } from './programs';
 
 export type Sport = {
   id: SportId;
@@ -431,4 +345,68 @@ export const summerDiscovery = {
   ],
   hiringUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfNKD7GLawM4FHvmb12PYb5XTc_VvY-rjjEsTY1CSW0UW3wVw/viewform',
   campPhoneExt: '(313) 436-0043 ext. 125',
+};
+
+// ---------------------------------------------------------------- Facility tour
+// Spaces without a photo show a "photo coming soon" panel. Add photos to src/assets/photos and set `photo`.
+export type Space = {
+  id: string; name: string; location: LocationId; photo?: string; alt?: string; icon: string;
+  stat?: string; text: string; access: ('Members' | 'Programs' | 'Rentable' | 'Open to all')[];
+};
+export const spaces: Space[] = [
+  { id: 'courts', name: 'Basketball courts', location: 'dearborn-heights', photo: 'dh-courts', alt: 'Hardwood courts with the HYPE logo at center court', icon: 'Trophy', stat: '5 courts',
+    text: 'Five full hardwood courts with an indoor track around them. Home to our leagues, camps, tournaments and open gym.', access: ['Members', 'Programs', 'Rentable'] },
+  { id: 'turf', name: 'Indoor turf', location: 'dearborn-heights', photo: 'dh-turf', alt: 'The indoor turf soccer field', icon: 'Goal', stat: 'Full field',
+    text: 'A fully finished indoor soccer complex for clinics, futsal, game days and year-round training.', access: ['Programs', 'Rentable'] },
+  { id: 'fitness', name: 'Cardio & fitness floor', location: 'dearborn-heights', photo: 'dh-fitness', alt: 'Rows of treadmills next to the lockers', icon: 'HeartPulse',
+    text: 'Rows of treadmills, bikes and ellipticals with lockers right next to the floor.', access: ['Members'] },
+  { id: 'strength', name: 'Strength & turf lane', location: 'dearborn-heights', photo: 'dh-gym', alt: 'Strength equipment and a turf lane for sled work', icon: 'Dumbbell',
+    text: 'Racks, cable machines and a turf lane for sled pushes, sprints and functional work.', access: ['Members'] },
+  { id: 'machines', name: 'Machine circuit', location: 'dearborn-heights', photo: 'dh-equipment', alt: 'Strength machines on the fitness floor', icon: 'Settings2',
+    text: 'A full line of selectorized strength machines for every muscle group.', access: ['Members'] },
+  { id: 'womens-gym', name: 'Women-only gym', location: 'dearborn-heights', icon: 'Users',
+    text: 'A private gym and group fitness classes for women only.', access: ['Members'] },
+  { id: 'sauna', name: 'Steam rooms & saunas', location: 'dearborn-heights', icon: 'Flame',
+    text: 'Separate men’s and women’s steam rooms and saunas for recovery.', access: ['Members'] },
+  { id: 'studio', name: 'Martial arts studio', location: 'dearborn-heights', icon: 'Swords',
+    text: 'Home of Tae Kwon Do, boxing and wrestling. Open to non-members for classes.', access: ['Programs', 'Open to all'] },
+  { id: 'kids', name: 'Child care & Homework Club', location: 'dearborn-heights', icon: 'Baby',
+    text: 'Free child care while you work out, plus the after-school Homework Club with STEM, robotics and art.', access: ['Members'] },
+  { id: 'cafe', name: 'HYPE Hoops Café', location: 'dearborn-heights', photo: 'meals', alt: 'Fresh prepared meals from the café', icon: 'Coffee',
+    text: 'Fresh meals daily from Chef Ali Fawaz, ready to grab after your workout.', access: ['Open to all'] },
+
+  { id: 'wayne-courts', name: 'Gymnasium', location: 'wayne', photo: 'wayne-courts', alt: 'Courts under red roof trusses at HYPE Wayne', icon: 'Trophy',
+    text: 'Basketball and volleyball courts under a high-truss roof. Home of the HYPE Wayne leagues.', access: ['Members', 'Programs', 'Rentable'] },
+  { id: 'wayne-fitness', name: 'Fitness floor', location: 'wayne', photo: 'wayne-gym', alt: 'The Wayne fitness floor under the HYPE Athletics sign', icon: 'HeartPulse',
+    text: 'Cardio and strength equipment on an open floor overlooking the gym.', access: ['Members'] },
+  { id: 'wayne-weights', name: 'Weight room', location: 'wayne', photo: 'wayne-weights', alt: 'The weight room at HYPE Wayne', icon: 'Dumbbell',
+    text: 'Free weights, racks and benches.', access: ['Members'] },
+  { id: 'wayne-turf', name: 'Training turf', location: 'wayne', photo: 'wayne-turf', alt: 'Turf area with battle ropes', icon: 'Zap',
+    text: 'Functional training space with battle ropes and room to move.', access: ['Members', 'Programs'] },
+  { id: 'wayne-track', name: 'Indoor track', location: 'wayne', photo: 'wayne-track', alt: 'The indoor track at HYPE Wayne', icon: 'Footprints',
+    text: 'Walk or run indoors all year.', access: ['Members'] },
+  { id: 'wayne-hall', name: 'Event hall', location: 'wayne', photo: 'wayne-hall', alt: 'The event hall set with round tables for a banquet', icon: 'PartyPopper', stat: '50–400 guests',
+    text: 'Banquets, weddings, showers and meetings, with table setup included, catering and a kitchen.', access: ['Rentable'] },
+  { id: 'wayne-gymnastics', name: 'Gymnastics', location: 'wayne', photo: 'gymnastics', alt: 'Young gymnasts stretching on a mat', icon: 'Sparkles',
+    text: 'Friday classes with Michigan Academy of Gymnastics, from Parent & Tot to tumbling.', access: ['Programs'] },
+
+  { id: 'belle-isle-fields', name: 'Athletic complex', location: 'belle-isle', photo: 'belle-isle', alt: 'The Athletic Field sign and ball diamonds on Belle Isle', icon: 'Trees', stat: '38 acres',
+    text: '4 ball diamonds, 6 soccer fields, 9 tennis courts, 2 basketball courts, 5 handball courts and a football field.', access: ['Rentable', 'Programs'] },
+];
+
+// ---------------------------------------------------------------- Conversion settings
+export const portals = {
+  // VERIFY: iClub member sign-in for the HYPE club. Join links come from the old site.
+  membershipLogin: 'https://www.myiclubonline.com/iclub/members',
+  programsLoginDH: 'https://hypedearborn.leagueapps.com/login',
+  programsLoginWayne: 'https://hypewayne.leagueapps.com/login',
+  // Add App Store / Google Play links here if HYPE has a member app; buttons appear automatically.
+  appStore: '',
+  googlePlay: '',
+};
+
+export const joinUrl: Record<'dearborn-heights' | 'wayne', string> = {
+  // VERIFY: the old site only published club 9554. Confirm whether Wayne has its own club number.
+  'dearborn-heights': 'https://signup.myiclubonline.com/iclub/signup/home.htm#plans?clubNumber=9554',
+  wayne: 'https://signup.myiclubonline.com/iclub/signup/home.htm#plans?clubNumber=9554',
 };

@@ -1,56 +1,79 @@
 ---
-import Page from '../components/Page.astro';
+import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
+import LeadForm from '../components/LeadForm.astro';
 import { rentals, locations } from '../data/site';
 const spaces = [
-  { id: 'dearborn-heights' as const, photo: 'dh-courts', alt: 'Hardwood courts at HYPE Dearborn Heights', title: 'Courts & gym', form: rentals['dearborn-heights'].formUrl },
-  { id: 'wayne' as const, photo: 'wayne-hall', alt: 'The Wayne event hall set for a banquet', title: 'Event hall' },
-  { id: 'belle-isle' as const, photo: 'belle-isle', alt: 'Ball diamonds at Belle Isle', title: 'Fields & courts' },
+  { id: 'dearborn-heights' as const, photo: 'dh-courts', alt: 'Hardwood courts at HYPE Dearborn Heights', title: 'Courts & gym', stat: '5 courts', blurb: 'Tournaments, leagues, camps, practices, futsal, expos and parties.' },
+  { id: 'wayne' as const, photo: 'wayne-hall', alt: 'The Wayne event hall set for a banquet', title: 'Event hall', stat: '50–400 guests', blurb: 'Banquets, weddings, showers and meetings. Table setup included, catering and kitchen available.' },
+  { id: 'belle-isle' as const, photo: 'belle-isle', alt: 'Ball diamonds at Belle Isle', title: 'Fields & courts', stat: '38 acres', blurb: 'Ball diamonds, soccer and football fields, tennis and basketball. Season, practice and one-time permits.' },
 ];
 ---
-<Page title="Rentals" seoTitle="Court, Field & Event Hall Rentals" description="Rent basketball courts in Dearborn Heights, an event hall for 50–400 guests in Wayne, or fields and courts at the Belle Isle Athletic Complex."
-  eyebrow="Rentals" lede="Tournaments, practices, parties, banquets and league play. Choose a location and send an inquiry. Our rental coordinators reply directly.">
-  <section class="section">
-    <div class="wrap stack-24">
+<Base bar="rental" title="Rent Courts, Fields & an Event Hall" description="Rent basketball courts in Dearborn Heights, a 400-guest event hall in Wayne, or fields at the Belle Isle Athletic Complex. Get a quote online in one short form."
+  ogPhoto="wayne-hall" crumbs={[{ name: 'Rentals', href: '/rentals/' }]}>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow red">Rentals</p>
+      <h1 class="display h1">Host it at HYPE</h1>
+      <p class="lede">Pick a space, tell us the date, and our rental coordinator will reply with availability and pricing.</p>
+      <div class="btn-row" style="margin-top:28px"><a href="#quote" class="btn btn-primary btn-lg" data-track="rental_click" data-placement="rentals_hero">Get a quote</a></div>
+    </div>
+  </section>
+
+  <section class="spaces">
+    <div class="wrap grid grid-3">
       {spaces.map((s) => {
         const r = rentals[s.id];
         return (
-          <article class="space card">
-            <div class="img"><Photo src={s.photo} alt={s.alt} sizes="(min-width: 960px) 460px, 100vw" widths={[480, 920]} /></div>
-            <div class="body">
-              <p class="eyebrow">{locations[s.id].name} · {s.title}</p>
-              <h2 class="display h3">{locations[s.id].fullName}</h2>
-              <p class="muted">{r.blurb}</p>
-              {'idealFor' in r && <ul class="tags">{r.idealFor.map((t) => <li class="chip">{t}</li>)}</ul>}
-              <div class="contact small">
-                <span><Icon name="User" size={14} />{r.contact.name}</span>
-                <a href={`mailto:${r.contact.email}`}><Icon name="Mail" size={14} />{r.contact.email}</a>
-                <a href={`tel:${r.contact.phoneHref}`} class="mono"><Icon name="Phone" size={14} />{r.contact.phone}</a>
-              </div>
-              <div class="btn-row">
-                {s.form
-                  ? <a href={s.form} class="btn btn-primary" rel="noopener" target="_blank">Send an inquiry<Icon name="ArrowUpRight" size={16} /></a>
-                  : <a href={`mailto:${r.contact.email}?subject=${encodeURIComponent(`Rental inquiry: ${locations[s.id].name}`)}`} class="btn btn-primary">Email an inquiry</a>}
-                {s.id === 'belle-isle' && <a href="/belle-isle/" class="btn btn-secondary">Rates &amp; permits</a>}
+          <article class="space reveal">
+            <div class="img"><Photo src={s.photo} alt={s.alt} sizes="(min-width: 960px) 400px, 100vw" widths={[400, 800]} /><span class="stat">{s.stat}</span></div>
+            <p class="eyebrow">{locations[s.id].name}</p>
+            <h2 class="display h3">{s.title}</h2>
+            <p class="small muted">{s.blurb}</p>
+            <div class="contact small">
+              <p><b>{r.contact.name}</b></p>
+              <div class="quick">
+                <a href={`tel:${r.contact.phoneHref}`} class="btn btn-secondary btn-sm" data-location={s.id}><Icon name="Phone" size={14} />Call</a>
+                <a href={`sms:${r.contact.phoneHref.split(',')[0]}`} class="btn btn-secondary btn-sm" data-location={s.id}><Icon name="MessageSquare" size={14} />Text</a>
+                <a href={`mailto:${r.contact.email}?subject=${encodeURIComponent('Rental inquiry')}`} class="btn btn-secondary btn-sm" data-location={s.id}><Icon name="Mail" size={14} />Email</a>
               </div>
             </div>
+            {s.id === 'belle-isle' && <a href="/belle-isle/" class="link-arrow">Field rates &amp; permits<Icon name="ArrowRight" size={14} /></a>}
           </article>
         );
       })}
-      <p class="small muted">For Wayne inquiries, include your preferred and alternate dates, start and end times, guest count, event type and whether you’d like catering.</p>
     </div>
   </section>
-</Page>
+
+  <section class="section" id="quote">
+    <div class="wrap q-grid">
+      <div class="stack-16">
+        <p class="eyebrow">Get a quote</p>
+        <h2 class="display h2">Tell us about your event</h2>
+        <p class="muted">Takes a minute. We’ll reply with availability and pricing.</p>
+        <ul class="checks small">
+          <li><Icon name="Check" size={14} />Field trips: book at least three weeks ahead</li>
+          <li><Icon name="Check" size={14} />Parties: bounce houses available through partners</li>
+          <li><Icon name="Check" size={14} />Leagues: send your schedule for season permits</li>
+        </ul>
+      </div>
+      <div class="card form-card"><LeadForm kind="rental" id="rental-quote" /></div>
+    </div>
+  </section>
+</Base>
 <style>
-  .space { display: grid; overflow: hidden; }
-  @media (min-width: 900px) { .space { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
-  .img { aspect-ratio: 16 / 10; }
-  @media (min-width: 900px) { .img { aspect-ratio: auto; min-height: 100%; } }
-  .body { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
-  .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
-  .contact { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--fg-2); }
-  .contact > * { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
-  .contact a:hover { text-decoration: underline; }
-  .btn-row { margin-top: 4px; }
+  .hero { padding-block: 56px 40px; }
+  @media (min-width: 900px) { .hero { padding-block: 96px 56px; } }
+  .hero .h1 { margin: 16px 0 18px; }
+  .spaces { padding-bottom: 24px; }
+  .space { display: flex; flex-direction: column; gap: 12px; }
+  .img { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-12); overflow: hidden; margin-bottom: 8px; }
+  .stat { position: absolute; left: 14px; bottom: 14px; background: var(--accent); color: #fff; font-size: var(--t-12); font-weight: 600; padding: 4px 10px; border-radius: var(--r-full); }
+  .contact { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; }
+  .q-grid { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .q-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 72px; align-items: start; } }
+  .form-card { padding: 28px; }
+  @media (min-width: 640px) { .form-card { padding: 36px; } }
 </style>

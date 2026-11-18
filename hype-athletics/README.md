@@ -1,57 +1,72 @@
 # HYPE Athletics website
 
-The rebuilt hypeathletics.org: a fast static site (Astro) that replaces the WordPress + Elementor
-site. No page builder, no plugins, no database. Every change is a commit.
+The rebuilt hypeathletics.org. A fast static site (Astro) built around HYPE's revenue priorities:
+
+1. **Sell memberships**: plan picker, 7-day free trial, tour booking, sticky "Join" bar on phones
+2. **Fill programs and teams**: every program with ages, days, dates and fees; find-by-age filter; one page per program
+3. **Rentals and donations**: on-site quote form with call/text/email to the right coordinator
+
+No page builder, no plugins, no database. Every change is a commit.
 
 ## Run it
 
 ```bash
 npm install
 npm run dev       # http://localhost:4321
-npm run build     # outputs static files to dist/
-npm run preview   # serves dist/
+npm run build     # static site in dist/
+npm run preview   # serve dist/
 ```
 
-## Where content lives
+## Where things live
 
 | What | File |
 |---|---|
-| Programs, registration links, locations, hours, membership prices, rentals, events, trainers, leadership, sponsors | `src/data/site.ts` |
-| Menu structure | `src/data/nav.ts` |
+| Programs: dates, ages, fees, registration links | `src/data/programs.ts` |
+| Locations, hours, membership prices, rentals, events, people, facility tour spaces, portal links | `src/data/site.ts` |
+| Menu | `src/data/nav.ts` |
 | Photos | `src/assets/photos/`, `src/assets/team/`, `src/assets/sponsors/` |
-| Page copy | `src/pages/*.astro` |
-| Design tokens (colors, type scale, radius, motion) | `src/styles/global.css` |
+| Design tokens (color, type, motion) | `src/styles/global.css` |
+| Form handler (Cloudflare Pages Function) | `functions/api/lead.js` |
+| Tracking plan | `ANALYTICS.md` |
 
-**Adding a program** is one line in `programs` in `src/data/site.ts`: title, sport, location,
-optional ages/days and the LeagueApps link. It appears automatically on the sport page, the
-location page and the program finder.
+**Add a program:** one entry in `src/data/programs.ts`. It shows up on the finder, its sport page,
+its location page, its own page at `/programs/<slug>/`, the sitemap and `/llms.txt`. Programs whose
+`end` date has passed drop off automatically at the next build.
 
-Photos are optimized at build time (AVIF/WebP at several sizes), so drop in full-size originals.
+**Add a facility photo:** drop it in `src/assets/photos/` and set `photo` on the space in `spaces`
+(`src/data/site.ts`). Spaces without photos show a "Photo coming soon" panel.
 
-## URLs
+## Deploy on Cloudflare Pages
 
-Every page keeps its old WordPress URL (`/basketball/`, `/membership/`, `/dearborn-heights/` …)
-so existing links and Google rankings carry over. Retired pages redirect:
-`public/_redirects` gives real 301s on Cloudflare Pages; Astro also emits meta-refresh fallbacks.
+1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → `xrev-builder/jz-kit`
+2. Build settings: root directory `hype-athletics`, build command `npm run build`, output `dist`
+3. Environment variables: see `ANALYTICS.md` (analytics IDs, form delivery, Turnstile)
+4. Add the custom domain `hypeathletics.org` (DNS is already on Cloudflare)
+5. Optional: a daily deploy hook so finished programs drop off and "Starts …" labels stay current
 
-## Deploy (recommended: Cloudflare Pages)
+Every branch gets its own preview URL, so changes can be reviewed before they go live.
 
-The domain already runs through Cloudflare. Create a Pages project from this repo with:
+## Search & AI answers (SEO/GEO)
 
-- Root directory: `hype-athletics`
-- Build command: `npm run build`
-- Output directory: `dist`
+- Every page: unique title and description, canonical URL, Open Graph image, breadcrumbs
+- Structured data: NGO, ExerciseGym/SportsActivityLocation with hours and address, membership Offers,
+  SportsEvent for every dated program, FAQPage, BreadcrumbList
+- `/llms.txt`: a plain-text fact sheet for AI assistants, generated from the same data
+- `robots.txt` welcomes search engines and AI crawlers; `sitemap-index.xml` lists every page
+- All old WordPress URLs keep working (same paths, or 301s in `public/_redirects`)
 
-Then point `hypeathletics.org` at the Pages project.
+## Needs confirming with staff (Ali)
 
-## Confirm with staff before launch
-
-These came from the old site but are stale or inconsistent there:
-
-- **Wayne Senior Couple price**: the old site lists $38 for both EFT and credit card (every other plan is +$3).
-- **Homework Club hours**: the site said Mon–Thu 5–7 PM (2024); the Nov 2025 Instagram post says 5–8 PM, ages 6–12. The new site uses the 2025 version.
-- **Hours**: Mon–Fri 6 AM–11 PM, Sat–Sun 8 AM–8 PM comes from the old FAQ and is shown for both centers.
-- **Wayne & Belle Isle rental inquiry**: the old site used a WordPress form, which can't move to a static site. The new site uses an email link to Jamie Strange. A Google Form (like Dearborn Heights has) would be better.
-- **Program details**: most programs have no ages, dates or fees on the old site, only a LeagueApps link. Adding `ages` and `days` in `site.ts` makes the cards far more useful.
-- **26th Anniversary Gala (April 8, 2027)**: sponsorship/ticket link to add when ready.
-- **Facility closures**: only Thanksgiving and Christmas 2026 remain. Add 2027 dates to `closures2026` (rename as needed).
+- **Program details still missing** (shown as "To be announced"): Elite Wrestling ages, Elite Football ages,
+  HYPE Elite Basketball Camp ages and description, Drop-in Pickleball days/times/fee, Fearless walk-in fee
+  and ages, Skillz session times and what the $360 package covers, varsity and spring league game times,
+  current Sports Performance session dates
+- **iClub links**: confirm the member login URL and whether Wayne has its own club number (both centers
+  currently use club 9554 from the old site), in `portals` / `joinUrl` in `src/data/site.ts`
+- **Member app**: if members use a mobile app, add store links in `portals`
+- **Wayne Senior Couple price**: old site lists $38 for both bank draft and card
+- **Form delivery**: choose an inbox/webhook and set `RESEND_API_KEY` or `LEAD_WEBHOOK_URL`
+- **Photos** for: women-only gym, steam/sauna, martial arts studio, child care, and real program photos
+  to replace the stock images on some sport pages
+- **Testimonials**: real member and parent quotes (with permission) would strengthen the membership page
+- **Hours**: the FAQ's Mon–Fri 6 AM–11 PM, Sat–Sun 8 AM–8 PM is used for both centers

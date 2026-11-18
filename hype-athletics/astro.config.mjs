@@ -13,6 +13,7 @@ const redirects = {
   '/gala2026': '/events/',
   '/summer-discovery-at-wayne': '/summer-discovery/',
   '/basketball-playoff-brackets': '/basketball/',
+  '/amenities': '/facilities/',
 };
 
 export default defineConfig({

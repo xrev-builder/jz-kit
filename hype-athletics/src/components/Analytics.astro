@@ -1,0 +1,74 @@
+---
+// Tracking layer. Every vendor is optional and switched on by an environment variable at build time:
+//   PUBLIC_GA4_ID=G-XXXX   PUBLIC_META_PIXEL_ID=123   PUBLIC_CF_BEACON_TOKEN=abc
+// Events (see ANALYTICS.md) are pushed to window.dataLayer either way, so GTM can be added later.
+const ga = import.meta.env.PUBLIC_GA4_ID ?? '';
+const pixel = import.meta.env.PUBLIC_META_PIXEL_ID ?? '';
+const cf = import.meta.env.PUBLIC_CF_BEACON_TOKEN ?? '';
+---
+<script is:inline define:vars={{ ga, pixel, cf }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  var META = { join_start: 'InitiateCheckout', lead_submit: 'Lead', tour_submit: 'Schedule', phone_click: 'Contact', email_click: 'Contact', donate_click: 'Donate', program_register_click: 'AddToCart' };
+
+  window.hypeTrack = function (name, params) {
+    params = params || {};
+    window.dataLayer.push(Object.assign({ event: name }, params));
+    if (ga) window.gtag('event', name, params);
+    if (pixel && window.fbq) { META[name] ? window.fbq('track', META[name], params) : window.fbq('trackCustom', name, params); }
+  };
+
+  function load() {
+    if (ga) {
+      var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ga; document.head.appendChild(s);
+      window.gtag('js', new Date());
+      window.gtag('config', ga, { linker: { domains: ['hypedearborn.leagueapps.com', 'hypewayne.leagueapps.com', 'signup.myiclubonline.com'] } });
+    }
+    if (pixel) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      window.fbq('init', pixel); window.fbq('track', 'PageView');
+    }
+    if (cf) {
+      var c = document.createElement('script'); c.defer = true; c.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      c.setAttribute('data-cf-beacon', JSON.stringify({ token: cf })); document.head.appendChild(c);
+    }
+  }
+  // Load vendors after the page is interactive so they never slow the first paint.
+  if (ga || pixel || cf) {
+    var go = function () { ('requestIdleCallback' in window) ? requestIdleCallback(load, { timeout: 3000 }) : setTimeout(load, 1500); };
+    document.readyState === 'complete' ? go() : window.addEventListener('load', go);
+  }
+
+  // Outbound partners: tag with UTM so registrations and joins can be attributed to the site.
+  var PARTNERS = /(^|\.)(leagueapps\.com|myiclubonline\.com|ezfacility\.com|michiganacademy\.com)$/;
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('a, button');
+    if (!el) return;
+    var d = el.dataset || {};
+    var params = {};
+    ['placement', 'plan', 'location', 'program', 'sport', 'portal', 'space', 'pay'].forEach(function (k) { if (d[k]) params[k] = d[k]; });
+    params.page = location.pathname;
+    var href = el.getAttribute && el.getAttribute('href');
+    if (d.track) window.hypeTrack(d.track, params);
+    if (!href) return;
+    if (href.indexOf('tel:') === 0) window.hypeTrack('phone_click', params);
+    else if (href.indexOf('mailto:') === 0) window.hypeTrack('email_click', params);
+    else if (href.indexOf('sms:') === 0) window.hypeTrack('text_click', params);
+    try {
+      var u = new URL(href, location.href);
+      if (u.host !== location.host) {
+        if (PARTNERS.test(u.hostname)) {
+          if (!u.searchParams.has('utm_source')) {
+            u.searchParams.set('utm_source', 'hypeathletics.org');
+            u.searchParams.set('utm_medium', 'website');
+            u.searchParams.set('utm_campaign', d.campaign || location.pathname.replace(/\//g, '') || 'home');
+            el.setAttribute('href', u.toString());
+          }
+          if (/myiclubonline\.com$/.test(u.hostname) && u.pathname.indexOf('signup') > -1) window.hypeTrack('join_start', params);
+          if (/ezfacility\.com$/.test(u.hostname)) window.hypeTrack('donate_click', params);
+        }
+        if (!d.track) window.hypeTrack('outbound_click', Object.assign({ url: u.hostname + u.pathname }, params));
+      }
+    } catch (err) {}
+  }, true);
+</script>

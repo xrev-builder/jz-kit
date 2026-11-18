@@ -3,340 +3,217 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import ProgramCard from '../components/ProgramCard.astro';
-import LocationCard from '../components/LocationCard.astro';
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import { programs, sports, sponsors, events, membership, org } from '../data/site';
+import PlanPicker from '../components/PlanPicker.astro';
+import FacilityTour from '../components/FacilityTour.astro';
+import { org, membership, locations } from '../data/site';
+import { currentPrograms, ageBuckets } from '../data/programs';
 
-const featuredTitles = [
-  'Little Shooters Winter 2027',
-  'Premier Winter Basketball League 2026/27',
-  'Winter Indoor Soccer Clinic 2026/27',
-  'Winter Break Volleyball Clinic',
-  'HYPE Basketball League · Winter 2027',
-  'HYPE Skillz Training with Jamey Petree',
-];
-const featured = featuredTitles.map((t) => programs.find((p) => p.title === t)!).filter(Boolean);
-const sponsorLogos = import.meta.glob<{ default: ImageMetadata }>('../assets/sponsors/*.png', { eager: true });
-const sportTiles = sports.filter((s) => s.group === 'sports');
-const minPrice = Math.min(...membership.locations.map((l) => l.tiers.find((t) => t.name === 'Individual')!.eft));
+const from = Math.min(...membership.locations.map((l) => l.tiers.find((t) => t.name === 'Individual')!.eft));
+const today = new Date().toISOString().slice(0, 10);
+// Next programs to start (dated, not yet started), then anything in progress
+const upcoming = currentPrograms.filter((p) => p.start && p.start > today && p.url).sort((a, b) => a.start!.localeCompare(b.start!));
+const varied = upcoming.filter((p, i, a) => a.findIndex((x) => x.sport === p.sport && x.location === p.location) === i);
+const featured = [...varied, ...upcoming.filter((p) => !varied.includes(p))].slice(0, 6);
+const sportsList = ['Basketball', 'Soccer', 'Volleyball', 'Tae Kwon Do', 'Boxing', 'Wrestling', 'Futsal', 'Pickleball', 'Gymnastics', 'Karate', 'Zumba', 'Strength', 'Speed & agility'];
+const ld = {
+  '@context': 'https://schema.org', '@type': 'WebSite', name: 'HYPE Athletics', url: 'https://hypeathletics.org/',
+  publisher: { '@id': 'https://hypeathletics.org/#org' },
+};
 ---
-<Base
-  bare
-  title="HYPE Athletics | Youth Sports, Fitness & Community in Dearborn Heights and Wayne"
-  description="HYPE Athletics is a Wayne County nonprofit offering youth sports leagues, camps, fitness memberships and community programs in Dearborn Heights, Wayne and on Belle Isle since 2001."
->
-  <!-- Hero -->
+<Base bare
+  title="HYPE Athletics | Gym, Courts & Youth Sports in Dearborn Heights & Wayne, MI"
+  description={`Gym memberships from $${from}/month with free child care and group classes, plus youth leagues, camps and court rentals at HYPE Athletics in Dearborn Heights and Wayne, MI. Try 7 days free.`}
+  jsonLd={ld}>
+
+  <!-- 1 · Hero: one promise, one action -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow red">Nonprofit · Wayne County · Since {org.founded}</p>
-        <h1 class="display hype" aria-label="HYPE: Helping Youth Progress and Excel">
-          <span><b>H</b>elping</span>
-          <span><b>Y</b>outh</span>
-          <span><b>P</b>rogress</span>
-          <span>&amp; <b>E</b>xcel</span>
-        </h1>
-        <p class="lede">Sports leagues, camps, fitness and community programs for kids, families and adults in Dearborn Heights, Wayne and on Belle Isle.</p>
-
-        <form class="finder card" action="/programs/" method="get">
-          <div class="field">
-            <label for="f-sport">Sport</label>
-            <select id="f-sport" name="sport">
-              <option value="">All sports</option>
-              {sports.map((s) => <option value={s.id}>{s.name}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="f-loc">Location</label>
-            <select id="f-loc" name="loc">
-              <option value="">All locations</option>
-              <option value="dearborn-heights">Dearborn Heights</option>
-              <option value="wayne">Wayne</option>
-            </select>
-          </div>
-          <button class="btn btn-primary btn-lg" type="submit"><Icon name="Search" size={16} />Find programs</button>
-        </form>
-        <p class="small muted quick">
-          <a href="/membership/">Memberships from ${minPrice}/month</a>
-          <span aria-hidden="true">·</span>
-          <a href="/summer-discovery/">Free Summer Discovery camp</a>
-        </p>
+    <Photo src="dh-courts-wide" alt="" eager sizes="100vw" widths={[750, 1200, 1800, 2400]} class="hero-bg" position="center 60%" />
+    <div class="wrap hero-in">
+      <p class="eyebrow">Dearborn Heights · Wayne · Since {org.founded}</p>
+      <h1 class="display hero-h">This is<br />your <span class="accent">court.</span></h1>
+      <p class="lede">Courts, turf, a full gym, classes and free child care, all under one roof. Memberships from <b class="mono">${from}</b> a month.</p>
+      <div class="btn-row">
+        <a href="#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="hero">Try 7 days free<Icon name="ArrowRight" size={18} /></a>
+        <a href="/facilities/" class="btn btn-secondary btn-lg" data-track="tour_click" data-placement="hero"><Icon name="Play" size={16} />Take the tour</a>
       </div>
-
-      <div class="hero-media">
-        <div class="hm-main">
-          <Photo src="dh-courts" alt="The HYPE Athletics gym in Dearborn Heights: hardwood basketball courts with the HYPE logo at center court" eager sizes="(min-width: 960px) 600px, 100vw" widths={[480, 800, 1200]} />
-        </div>
-        <div class="hm-inset">
-          <Photo src="team-aau" alt="A HYPE youth basketball team posing together on the court in matching uniforms" sizes="240px" widths={[240, 480]} position="center 40%" />
-        </div>
-        <p class="hm-cap mono">Dearborn Heights · 5 courts</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Open for registration -->
-  <section class="section">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Now registering</p>
-          <h2 class="display h2">Winter 2026–27 season</h2>
-          <p class="lede">Leagues, clinics and break camps open now. Registration takes a few minutes online.</p>
-        </div>
-        <a href="/programs/" class="btn btn-secondary">All {programs.length} programs<Icon name="ArrowRight" size={16} /></a>
-      </div>
-      <div class="grid grid-3">
-        {featured.map((p) => <ProgramCard p={p} />)}
-      </div>
-    </div>
-  </section>
-
-  <!-- Sports -->
-  <section class="section tint">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="eyebrow">Programs</p>
-          <h2 class="display h2">Pick a sport</h2>
-        </div>
-        <a href="/programs/" class="link-arrow">Browse everything<Icon name="ArrowRight" size={14} /></a>
-      </div>
-      <ul class="sports">
-        {sportTiles.map((s) => (
-          <li>
-            <a href={`/${s.id}/`} class="sport">
-              <Photo src={s.photo} alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
-              <span class="display">{s.name}</span>
-            </a>
-          </li>
-        ))}
-        <li>
-          <a href="/travel-basketball-aau/" class="sport">
-            <Photo src="team-elite" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
-            <span class="display">Travel AAU</span>
-          </a>
-        </li>
-        <li>
-          <a href="/adult-leagues/" class="sport">
-            <Photo src="team-huddle" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
-            <span class="display">Adult Leagues</span>
-          </a>
-        </li>
-        <li>
-          <a href="/summer-discovery/" class="sport">
-            <Photo src="summer-camp" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
-            <span class="display">Summer Camp</span>
-          </a>
-        </li>
+      <ul class="proof">
+        <li><Icon name="Check" size={14} />7-day free trial</li>
+        <li><Icon name="Check" size={14} />Free child care</li>
+        <li><Icon name="Check" size={14} />Nonprofit since {org.founded}</li>
       </ul>
     </div>
   </section>
 
-  <!-- Locations -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[0, 1].map(() => <ul>{sportsList.map((s) => <li>{s}</li>)}</ul>)}
+    </div>
+  </div>
+
+  <!-- 2 · Show the space (facility tour) -->
   <section class="section">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <div>
-          <p class="eyebrow">Locations</p>
-          <h2 class="display h2">Three places to play</h2>
+          <p class="eyebrow">Take a look inside</p>
+          <h2 class="display h2">Everything under<br />one roof</h2>
+        </div>
+        <a href="/facilities/" class="link-arrow">Full facility tour<Icon name="ArrowRight" size={16} /></a>
+      </div>
+      <div class="reveal"><FacilityTour only={['dearborn-heights', 'wayne']} id="home-tour" /></div>
+    </div>
+  </section>
+
+  <!-- 3 · Sell the membership -->
+  <section class="section tint" id="plans">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow red">Membership</p>
+          <h2 class="display h2">Your first week<br />is on us</h2>
+          <p class="lede">Pick a center and a plan, then try everything free for 7 days.</p>
         </div>
       </div>
-      <div class="grid grid-3">
-        <LocationCard id="dearborn-heights" photo="dh-exterior" alt="The HYPE Recreation Center building in Dearborn Heights" />
-        <LocationCard id="wayne" photo="wayne-courts" alt="Basketball courts under red roof trusses at HYPE Wayne" />
-        <LocationCard id="belle-isle" photo="belle-isle" alt="Athletic Field sign and ball diamonds at the Belle Isle Athletic Complex" />
+      <PlanPicker />
+      <p class="small muted alt">Have SilverSneakers, Silver&nbsp;&amp;&nbsp;Fit or Renew Active? <a href="/silver-fitness-training/">Your membership may be free</a>.</p>
+    </div>
+  </section>
+
+  <!-- 4 · Programs (P1) -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="eyebrow">Leagues · camps · clinics</p>
+          <h2 class="display h2">Registering now</h2>
+        </div>
+        <a href="/programs/" class="btn btn-secondary">All {currentPrograms.length} programs<Icon name="ArrowRight" size={16} /></a>
+      </div>
+      <div class="ages reveal" aria-label="Find programs by age">
+        <span class="small muted">Find by age</span>
+        {ageBuckets.map((b) => <a href={`/programs/?age=${b.id}`} data-track="age_shortcut" data-placement={b.id}>{b.label}</a>)}
+      </div>
+      <div class="grid grid-3 reveal-stagger">{featured.map((p) => <ProgramCard p={p} />)}</div>
+    </div>
+  </section>
+
+  <!-- 5 · Teams -->
+  <section class="split">
+    <a href="/travel-basketball-aau/" class="split-card">
+      <Photo src="team-elite" alt="HYPE Elite AAU players with their coach" sizes="(min-width: 900px) 50vw, 100vw" widths={[640, 1000, 1400]} />
+      <div><p class="eyebrow">Travel basketball</p><h3 class="display h2">AAU</h3><span class="link-arrow">Join the interest list<Icon name="ArrowRight" size={14} /></span></div>
+    </a>
+    <a href="/hype-wolves-soccer/" class="split-card">
+      <Photo src="dh-turf" alt="The indoor turf at HYPE Dearborn Heights" sizes="(min-width: 900px) 50vw, 100vw" widths={[640, 1000, 1400]} />
+      <div><p class="eyebrow">Travel soccer</p><h3 class="display h2">HYPE Wolves</h3><span class="link-arrow">Tryouts &amp; interest form<Icon name="ArrowRight" size={14} /></span></div>
+    </a>
+  </section>
+
+  <!-- 6 · Rentals -->
+  <section class="section">
+    <div class="wrap rent">
+      <div class="rent-copy reveal">
+        <p class="eyebrow">Rentals</p>
+        <h2 class="display h2">Host it at HYPE</h2>
+        <p class="lede">Tournaments, practices, birthday parties, banquets and league play. Get a quote in one short form.</p>
+        <dl class="stats">
+          <div><dt>Courts in Dearborn Heights</dt><dd class="display">5</dd></div>
+          <div><dt>Guests in the Wayne hall</dt><dd class="display">400</dd></div>
+          <div><dt>Acres on Belle Isle</dt><dd class="display">38</dd></div>
+        </dl>
+        <div class="btn-row"><a href="/rentals/#quote" class="btn btn-primary" data-track="rental_click" data-placement="home">Get a rental quote</a><a href="/rentals/" class="btn btn-ghost">See spaces<Icon name="ArrowRight" size={16} /></a></div>
+      </div>
+      <div class="rent-media reveal">
+        <Photo src="wayne-hall" alt="The Wayne event hall set with round tables for a banquet" sizes="(min-width: 960px) 560px, 100vw" widths={[560, 900, 1120]} />
       </div>
     </div>
   </section>
 
-  <!-- Story / numbers -->
+  <!-- 7 · Story -->
   <section class="story">
     <div class="wrap story-grid">
-      <div>
-        <p class="eyebrow">Since {org.founded}</p>
-        <h2 class="display h2">More than a gym</h2>
-        <p class="lede">In 2001, {org.founder} brought together young leaders, business owners and officials to build drug-free, violence-free programs for Metro Detroit’s kids. As more than 30 recreation centers closed in Detroit alone, HYPE kept its doors open with low-cost programs built on partnerships with local governments, schools and community groups.</p>
-        <div class="btn-row"><a href="/about-us/" class="btn btn-secondary">Our story</a><a href="/social-services/" class="btn btn-ghost">Community services<Icon name="ArrowRight" size={16} /></a></div>
+      <div class="story-in">
+        <p class="eyebrow">Helping Youth Progress &amp; Excel</p>
+        <p class="display quote reveal">Built in {org.founded} to keep Metro Detroit kids on the court. Still here.</p>
+        <div class="btn-row"><a href="/about-us/" class="btn btn-secondary">Our story</a><a href="/donate/" class="btn btn-ghost" data-track="donate_click" data-placement="home">Support the mission<Icon name="Heart" size={16} /></a></div>
       </div>
-      <dl class="stats">
-        <div><dt>Years serving Wayne County</dt><dd class="display">{new Date().getFullYear() - org.founded}</dd></div>
-        <div><dt>Locations</dt><dd class="display">3</dd></div>
-        <div><dt>Acres at Belle Isle</dt><dd class="display">38</dd></div>
-        <div><dt>Free summer camp sites</dt><dd class="display">10</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <!-- Membership + community -->
-  <section class="section">
-    <div class="wrap grid grid-2">
-      <div class="card card-pad feature">
-        <Icon name="Dumbbell" size={22} />
-        <h2 class="display h3">Membership</h2>
-        <p class="muted">Gym, group fitness classes and child care. Senior and family plans, and most insurance fitness programs accepted, including SilverSneakers.</p>
-        <p class="price"><span class="display">${minPrice}</span><span class="muted small">/month and up</span></p>
-        <div class="btn-row"><a href="/membership/" class="btn btn-primary">See plans</a><a href="/silver-fitness-training/" class="btn btn-ghost">Insurance-paid memberships</a></div>
-      </div>
-      <div class="card card-pad feature">
-        <Icon name="HandHeart" size={22} />
-        <h2 class="display h3">Community services</h2>
-        <ul class="checks small">
-          <li><Icon name="Check" size={14} />Free after-school Homework Club for members</li>
-          <li><Icon name="Check" size={14} />S.A.F.E. substance abuse prevention and recovery support</li>
-          <li><Icon name="Check" size={14} />Vocational training and job readiness</li>
-          <li><Icon name="Check" size={14} />Annual scholarship for students</li>
-        </ul>
-        <div class="btn-row"><a href="/social-services/" class="btn btn-secondary">Explore services</a></div>
+      <div class="story-photos reveal">
+        <div class="sp1"><Photo src="team-girls" alt="A HYPE girls basketball team with their trophies" sizes="(min-width: 960px) 320px, 50vw" widths={[360, 720]} position="center 30%" /></div>
+        <div class="sp2"><Photo src="summer-camp" alt="Kids playing outdoor games at Summer Discovery" sizes="(min-width: 960px) 320px, 50vw" widths={[360, 720]} /></div>
       </div>
     </div>
   </section>
 
-  <!-- Events -->
-  <section class="section tint">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><p class="eyebrow">Coming up</p><h2 class="display h2">Events</h2></div>
-        <a href="/events/" class="link-arrow">All events<Icon name="ArrowRight" size={14} /></a>
-      </div>
-      <div class="grid grid-2">
-        {events.map((e) => {
-          const d = new Date(e.date + 'T12:00:00');
-          return (
-            <article class="event card card-pad">
-              <div class="date mono" aria-hidden="true"><span>{d.toLocaleString('en-US', { month: 'short' })}</span><b class="display">{d.getDate()}</b><span>{d.getFullYear()}</span></div>
-              <div class="stack-8">
-                <h3 class="h4">{e.title}</h3>
-                <p class="small mono muted">{e.dateLabel}</p>
-                <p class="small muted">{e.blurb}</p>
-                {e.href && <a href={e.href} class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></a>}
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- Sponsors + donate -->
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow center">Thank you to our sponsors and donors</p>
-      <ul class="sponsors">
-        {Object.entries(sponsorLogos).map(([path, mod]) => {
-          const file = path.split('/').pop();
-          const s = sponsors.find((x) => x.file === file);
-          return <li><Image src={mod.default} alt={s?.name ?? ''} width={180} densities={[1, 2]} loading="lazy" /></li>;
-        })}
-      </ul>
-    </div>
-  </section>
-
-  <section class="donate">
-    <div class="wrap donate-grid">
-      <div>
-        <h2 class="display h2">Keep the doors open</h2>
-        <p class="lede">Your gift funds scholarships, free summer camp and low-cost youth leagues across Wayne County.</p>
-      </div>
+  <!-- 8 · Close -->
+  <section class="close">
+    <div class="wrap close-in">
+      <h2 class="display h2">See you on the court.</h2>
       <div class="btn-row">
-        <a href="/donate/" class="btn btn-primary btn-lg"><Icon name="Heart" size={16} />Donate</a>
-        <a href="/volunteer/" class="btn btn-secondary btn-lg">Volunteer</a>
+        <a href="/membership/#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="footer_cta">Start your free week</a>
+        <a href="/membership/#tour" class="btn btn-secondary btn-lg" data-track="tour_click" data-placement="footer_cta">Book a tour</a>
       </div>
+      <p class="small muted">{Object.values(locations).slice(0, 2).map((l) => `${l.name} ${l.phone}`).join('  ·  ')}</p>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Hero */
-  .hero { padding-block: 32px 56px; overflow: hidden; }
-  .hero-grid { display: grid; gap: 40px; align-items: center; }
-  @media (min-width: 960px) { .hero { padding-block: 56px 80px; } .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; } }
-  .hero-copy > * + * { margin-top: 20px; }
-  .hype { font-size: clamp(var(--t-52), 9vw, 6.5rem); line-height: .86; letter-spacing: -0.015em; display: grid; margin-top: 16px; }
-  .hype span { display: block; }
-  .hype b { color: var(--accent-text); font-weight: 600; }
-  .finder { display: grid; gap: 12px; padding: 16px; margin-top: 28px; }
-  @media (min-width: 560px) { .finder { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; align-items: end; } }
-  .field { display: grid; gap: 6px; min-width: 0; }
-  .field label { font-size: var(--t-12); font-weight: 500; color: var(--fg-2); }
-  select {
-    height: 48px; padding: 0 36px 0 12px; border-radius: var(--r-8);
-    border: 1px solid var(--line-strong); background: var(--surface); color: var(--fg); font: inherit; font-size: var(--t-16);
-    appearance: none; -webkit-appearance: none; width: 100%;
-    background-image: linear-gradient(45deg, transparent 50%, var(--fg-3) 50%), linear-gradient(135deg, var(--fg-3) 50%, transparent 50%);
-    background-position: calc(100% - 18px) 21px, calc(100% - 13px) 21px; background-size: 5px 5px; background-repeat: no-repeat;
-  }
-  select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-  .quick { display: flex; flex-wrap: wrap; gap: 8px; }
-  .quick a { color: var(--fg-2); }
+  .hero { position: relative; min-height: calc(100svh - var(--header-h) - var(--mobile-bar)); max-height: 960px; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
+  .hero :global(.hero-bg) { position: absolute; inset: 0; z-index: -2; animation: zoom 18s var(--ease-out) both; }
+  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--hero-scrim), linear-gradient(0deg, rgb(0 0 0 / .65), transparent 50%); }
+  @keyframes zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+  .hero-in { padding-block: 96px 56px; color: #fff; }
+  @media (min-width: 900px) { .hero-in { padding-block: 120px 88px; } }
+  .hero-in > * + * { margin-top: 22px; }
+  .hero .eyebrow { color: rgb(255 255 255 / .75); }
+  .hero-h { font-size: clamp(4rem, 13vw, 10rem); line-height: .82; letter-spacing: -0.02em; animation: rise 700ms var(--ease-out) both 80ms; }
+  .hero-h .accent { color: #ff2847; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+  .hero .lede { color: rgb(255 255 255 / .86); max-width: 34ch; }
+  .hero .lede b { color: #fff; font-weight: 500; }
+  .hero :global(.btn-secondary) { --fgc: #fff; --bdc: rgb(255 255 255 / .4); }
+  .hero :global(.btn-secondary:hover) { --bgc: rgb(255 255 255 / .1); }
+  .proof { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: var(--t-14); color: rgb(255 255 255 / .8); }
+  .proof li { display: inline-flex; align-items: center; gap: 6px; }
+  .proof :global(.icon) { color: #ff5468; }
 
-  .hero-media { position: relative; padding-bottom: 32px; }
-  .hm-main { border-radius: var(--r-18); overflow: hidden; aspect-ratio: 4 / 3; }
-  @media (min-width: 960px) { .hm-main { aspect-ratio: 4 / 5; } }
-  .hm-inset {
-    position: absolute; left: 12px; bottom: 0; width: 42%; aspect-ratio: 4 / 3;
-    border-radius: var(--r-12); overflow: hidden; border: 4px solid var(--bg); box-shadow: var(--shadow-2);
-  }
-  @media (min-width: 960px) { .hm-inset { left: -40px; } }
-  .hm-cap {
-    position: absolute; right: 12px; top: 12px; margin: 0;
-    font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase;
-    background: rgb(12 12 12 / .72); color: #fff; padding: 6px 10px; border-radius: var(--r-full);
-    backdrop-filter: blur(6px);
-  }
+  .alt { margin-top: 24px; }
+  .ages { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -12px 0 28px; }
+  .ages span { margin-right: 6px; }
+  .ages a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--r-full); border: 1px solid var(--line-strong); text-decoration: none; font-size: var(--t-14); font-weight: 500; transition: all var(--d-micro) var(--ease); }
+  .ages a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
-  /* Sports tiles */
-  .sports { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  @media (min-width: 720px) { .sports { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (min-width: 1024px) { .sports { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
-  .sport { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: var(--r-12); overflow: hidden; text-decoration: none; isolation: isolate; }
-  .sport :global(img) { transition: transform var(--d-enter) var(--ease-out); }
-  .sport:hover :global(img) { transform: scale(1.04); }
-  .sport::after { content: ''; position: absolute; inset: 0; background: var(--scrim); z-index: 1; }
-  .sport span { position: absolute; left: 14px; bottom: 10px; z-index: 2; color: #fff; font-size: var(--t-25); line-height: 1; }
+  .split { display: grid; }
+  @media (min-width: 900px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split-card { position: relative; display: grid; align-items: end; min-height: 420px; overflow: hidden; isolation: isolate; text-decoration: none; color: #fff; }
+  .split-card :global(img) { position: absolute; inset: 0; z-index: -2; transition: transform 800ms var(--ease-out); }
+  .split-card:hover :global(img) { transform: scale(1.05); }
+  .split-card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--scrim); }
+  .split-card > div { padding: 40px max(24px, 4vw); display: grid; gap: 12px; }
+  .split-card .eyebrow { color: rgb(255 255 255 / .75); }
+  .split-card .link-arrow { color: #fff; }
 
-  /* Story */
-  .story { background: var(--fg); color: var(--bg); padding-block: 72px; }
-  @media (min-width: 900px) { .story { padding-block: 96px; } }
-  .story .eyebrow { color: color-mix(in srgb, var(--bg) 60%, var(--fg)); }
-  .story .lede { color: color-mix(in srgb, var(--bg) 78%, var(--fg)); margin-top: 16px; }
-  .story-grid { display: grid; gap: 48px; align-items: center; }
-  @media (min-width: 960px) { .story-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 80px; } }
-  .story h2 { margin-top: 12px; }
-  .story .btn-row { margin-top: 28px; }
-  .story :global(.btn-secondary) { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--fg)); }
-  .story :global(.btn-ghost) { color: var(--bg); }
-  .story :global(.btn-ghost:hover), .story :global(.btn-secondary:hover) { background: color-mix(in srgb, var(--bg) 10%, var(--fg)); }
-  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; background: color-mix(in srgb, var(--bg) 18%, var(--fg)); border-radius: var(--r-12); overflow: hidden; }
-  .stats div { background: var(--fg); padding: 20px; display: flex; flex-direction: column-reverse; gap: 8px; }
-  .stats dt { font-size: var(--t-13); color: color-mix(in srgb, var(--bg) 65%, var(--fg)); }
+  .rent { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .rent { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; } }
+  .rent-copy > * + * { margin-top: 18px; }
+  .rent-copy .btn-row { margin-top: 32px; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 32px 0 0; }
+  .stats div { border-top: 2px solid var(--accent); padding-top: 12px; display: flex; flex-direction: column-reverse; gap: 4px; }
+  .stats dt { font-size: var(--t-12); color: var(--fg-3); }
   .stats dd { margin: 0; font-size: var(--t-64); line-height: .9; font-variant-numeric: tabular-nums; }
+  .rent-media { aspect-ratio: 4 / 3; border-radius: var(--r-18); overflow: hidden; }
 
-  /* Features */
-  .feature { display: flex; flex-direction: column; gap: 14px; padding: 28px; }
-  .feature > :global(.icon) { color: var(--accent-text); }
-  .price { display: flex; align-items: baseline; gap: 6px; }
-  .price .display { font-size: var(--t-52); line-height: 1; }
-  .feature .btn-row { margin-top: auto; padding-top: 8px; }
+  .story { padding-block: 120px; border-top: 1px solid var(--line); background:
+    radial-gradient(60% 80% at 85% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%), var(--bg-2); }
+  .story-in > * + * { margin-top: 28px; }
+  .story-grid { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 960px) { .story-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; } }
+  .story-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .story-photos > div { border-radius: var(--r-12); overflow: hidden; aspect-ratio: 3 / 4; }
+  .sp2 { margin-top: 48px; }
+  .quote { font-size: clamp(var(--t-40), 6vw, 5.5rem); line-height: .92; max-width: 16ch; }
 
-  /* Events */
-  .event { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 20px; align-items: start; }
-  .date { display: grid; justify-items: center; padding: 10px 0; border-radius: var(--r-10); background: var(--surface-2); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
-  .date b { font-size: var(--t-40); line-height: 1; color: var(--fg); }
-
-  /* Sponsors */
-  .center { display: flex; justify-content: center; }
-  .sponsors { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 24px 40px; margin-top: 28px; }
-  .sponsors li { width: 120px; height: 56px; display: grid; place-items: center; }
-  .sponsors :global(img) { max-height: 56px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1); opacity: .75; transition: filter var(--d-std) var(--ease), opacity var(--d-std) var(--ease); }
-  .sponsors li:hover :global(img) { filter: none; opacity: 1; }
-  :global(html[data-theme='dark']) .sponsors :global(img) { filter: grayscale(1) invert(1); }
-  @media (prefers-color-scheme: dark) { :global(html:not([data-theme='light'])) .sponsors :global(img) { filter: grayscale(1) invert(1); } }
-
-  /* Donate */
-  .donate { background: var(--accent-soft); border-top: 1px solid var(--line); padding-block: 56px; }
-  .donate-grid { display: grid; gap: 24px; align-items: end; }
-  @media (min-width: 900px) { .donate-grid { grid-template-columns: minmax(0, 1fr) auto; } }
-  .donate .lede { margin-top: 12px; }
+  .close { padding-block: 96px 120px; text-align: center; }
+  .close-in { display: grid; justify-items: center; gap: 28px; }
+  .close .btn-row { justify-content: center; }
 </style>

@@ -1,0 +1,142 @@
+---
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { spaces, locations, type LocationId } from '../data/site';
+interface Props { only?: LocationId[]; id?: string; deepLink?: boolean }
+const { only = ['dearborn-heights', 'wayne', 'belle-isle'], id = 'tour', deepLink = false } = Astro.props;
+const groups = only.map((loc) => ({ loc, name: locations[loc].name, items: spaces.filter((s) => s.location === loc) }));
+---
+<div class="tour" id={id} data-tour data-deeplink={deepLink ? '1' : ''}>
+  {groups.length > 1 && (
+    <div class="tabs" role="tablist" aria-label="Choose a location">
+      {groups.map((g, gi) => <button role="tab" type="button" aria-selected={gi === 0 ? 'true' : 'false'} data-tab={g.loc}>{g.name}<span class="mono">{g.items.length}</span></button>)}
+    </div>
+  )}
+  {groups.map((g, gi) => (
+    <div class="panel" data-panel={g.loc} hidden={gi !== 0}>
+      <div class="stage" tabindex="0" aria-roledescription="carousel" aria-label={`${g.name} facility tour. Use left and right arrow keys.`} data-stage>
+        {g.items.map((s, i) => (
+          <figure class:list={['slide', { on: i === 0 }]} data-slide={s.id} aria-hidden={i === 0 ? 'false' : 'true'}>
+            {s.photo ? (
+              <Photo src={s.photo} alt={s.alt ?? s.name} sizes="(min-width: 1100px) 860px, 100vw" widths={[640, 960, 1400]} eager={gi === 0 && i === 0} />
+            ) : (
+              <div class="nophoto"><Icon name={s.icon as any} size={56} /><span class="mono small">Photo coming soon</span></div>
+            )}
+            <figcaption>
+              <div class="cap-top">
+                <span class="mono count">{String(i + 1).padStart(2, '0')} / {String(g.items.length).padStart(2, '0')}</span>
+                {s.stat && <span class="stat">{s.stat}</span>}
+              </div>
+              <h3 class="display">{s.name}</h3>
+              <p>{s.text}</p>
+              <ul class="access">{s.access.map((a) => <li>{a}</li>)}</ul>
+            </figcaption>
+          </figure>
+        ))}
+        <div class="nav">
+          <button type="button" class="arrow" data-prev aria-label="Previous space"><Icon name="ArrowLeft" size={20} /></button>
+          <button type="button" class="arrow" data-next aria-label="Next space"><Icon name="ArrowRight" size={20} /></button>
+        </div>
+      </div>
+      <ol class="list">
+        {g.items.map((s, i) => (
+          <li><button type="button" data-go={i} aria-current={i === 0 ? 'true' : undefined}><Icon name={s.icon as any} size={16} /><span>{s.name}</span></button></li>
+        ))}
+      </ol>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tour]').forEach((tour) => {
+    const panels = [...tour.querySelectorAll<HTMLElement>('[data-panel]')];
+    const tabs = [...tour.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const track = (name: string, p: object) => (window as any).hypeTrack?.(name, { ...p, page: location.pathname });
+    const ctl = panels.map((panel) => {
+      const slides = [...panel.querySelectorAll<HTMLElement>('[data-slide]')];
+      const items = [...panel.querySelectorAll<HTMLButtonElement>('[data-go]')];
+      const stage = panel.querySelector<HTMLElement>('[data-stage]')!;
+      let i = 0;
+      const show = (n: number, user = false) => {
+        i = (n + slides.length) % slides.length;
+        slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); });
+        items.forEach((b, k) => b.toggleAttribute('aria-current', k === i));
+        items[i].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+        if (user) {
+          track('tour_view', { space: slides[i].dataset.slide, location: panel.dataset.panel });
+          if (tour.dataset.deeplink) history.replaceState(null, '', `#${slides[i].dataset.slide}`);
+        }
+      };
+      panel.querySelector('[data-prev]')!.addEventListener('click', () => show(i - 1, true));
+      panel.querySelector('[data-next]')!.addEventListener('click', () => show(i + 1, true));
+      items.forEach((b, k) => b.addEventListener('click', () => show(k, true)));
+      stage.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); show(i - 1, true); }
+      });
+      let x0: number | null = null;
+      stage.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+      stage.addEventListener('pointerup', (e) => { if (x0 !== null) { const dx = e.clientX - x0; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1), true); x0 = null; } });
+      return { panel, show, ids: slides.map((s) => s.dataset.slide) };
+    });
+    const select = (loc: string) => {
+      tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === loc)));
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== loc));
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => { select(t.dataset.tab!); track('tour_location', { location: t.dataset.tab }); }));
+    if (tour.dataset.deeplink && location.hash) {
+      const id = location.hash.slice(1);
+      const c = ctl.find((c) => c.ids.includes(id));
+      if (c) { select(c.panel.dataset.panel!); c.show(c.ids.indexOf(id)); }
+    }
+  });
+</script>
+
+<style>
+  .tour { display: grid; gap: 20px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tabs button {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border-radius: var(--r-full);
+    border: 1px solid var(--line-strong); background: transparent; color: var(--fg-2); font-weight: 500; font-size: var(--t-14); cursor: pointer;
+    transition: all var(--d-micro) var(--ease);
+  }
+  .tabs button .mono { font-size: var(--t-12); color: var(--fg-3); }
+  .tabs button[aria-selected='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .tabs button[aria-selected='true'] .mono { color: var(--bg); opacity: .6; }
+  .panel { display: grid; gap: 16px; }
+  @media (min-width: 1100px) { .panel { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; } }
+  .stage { position: relative; aspect-ratio: 4 / 5; border-radius: var(--r-18); overflow: hidden; background: var(--surface); isolation: isolate; touch-action: pan-y; }
+  @media (min-width: 640px) { .stage { aspect-ratio: 16 / 10; } }
+  .stage:focus-visible { outline-offset: 4px; }
+  .slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity var(--d-enter) var(--ease); pointer-events: none; }
+  .slide.on { opacity: 1; pointer-events: auto; }
+  .slide :global(img) { transform: scale(1.04); transition: transform 6s var(--ease-out); }
+  .slide.on :global(img) { transform: scale(1); }
+  .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / 0) 35%, rgb(0 0 0 / .85) 100%); }
+  .nophoto { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; color: var(--fg-3);
+    background: repeating-linear-gradient(-55deg, var(--surface) 0 18px, var(--surface-2) 18px 36px); }
+  figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 24px; color: #fff; display: grid; gap: 10px; max-width: 640px; }
+  @media (min-width: 640px) { figcaption { padding: 32px 36px; } }
+  .cap-top { display: flex; align-items: center; gap: 12px; }
+  .count { font-size: var(--t-12); letter-spacing: .08em; opacity: .7; }
+  .stat { font-size: var(--t-12); font-weight: 600; background: var(--accent); color: #fff; padding: 3px 10px; border-radius: var(--r-full); }
+  figcaption h3 { font-size: clamp(var(--t-40), 5vw, var(--t-64)); }
+  figcaption p { color: rgb(255 255 255 / .85); max-width: 52ch; }
+  .access { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .access li { font-size: var(--t-12); padding: 3px 10px; border-radius: var(--r-full); border: 1px solid rgb(255 255 255 / .35); color: rgb(255 255 255 / .9); }
+  .nav { position: absolute; right: 16px; top: 16px; z-index: 2; display: flex; gap: 8px; }
+  .arrow { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgb(255 255 255 / .3); background: rgb(0 0 0 / .45); color: #fff; cursor: pointer; backdrop-filter: blur(8px); transition: background-color var(--d-micro) var(--ease); }
+  .arrow:hover { background: var(--accent); border-color: var(--accent); }
+  .list { list-style: none; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .list::-webkit-scrollbar { display: none; }
+  @media (min-width: 1100px) { .list { flex-direction: column; overflow: visible; } }
+  .list button {
+    display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 0 14px; white-space: nowrap;
+    border-radius: var(--r-8); border: 1px solid var(--line); background: var(--surface); color: var(--fg-2); font-size: var(--t-14); cursor: pointer; text-align: left;
+    transition: all var(--d-micro) var(--ease);
+  }
+  .list button:hover { color: var(--fg); border-color: var(--line-strong); }
+  .list button[aria-current] { color: var(--fg); border-color: var(--accent); background: var(--accent-soft); }
+  .list button :global(.icon) { color: var(--fg-3); }
+  .list button[aria-current] :global(.icon) { color: var(--accent-text); }
+</style>
