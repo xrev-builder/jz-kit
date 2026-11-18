@@ -26,6 +26,7 @@ const fullTitle = bare ? title : `${title} | HYPE Athletics`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = await getImage({ src: photo(ogPhoto), width: 1200, height: 630, format: 'jpg', quality: 78, fit: 'cover' });
 const ogUrl = new URL(og.src, Astro.site).href;
+const preview = Boolean(import.meta.env.PUBLIC_PREVIEW);
 const from = Math.min(...membership.locations.map((l) => l.tiers.find((t) => t.name === 'Individual')!.eft));
 
 const orgLd = {
@@ -66,6 +67,7 @@ const ld = [orgLd, ...(crumbLd ? [crumbLd] : []), ...(jsonLd ? (Array.isArray(js
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="geo.region" content="US-MI" />
     <meta name="geo.placename" content="Dearborn Heights" />
+    {preview && <meta name="robots" content="noindex, nofollow" />}
     <link rel="alternate" type="text/plain" href="/llms.txt" title="HYPE Athletics facts for AI assistants" />
     <script is:inline>
       try { if (localStorage.getItem('hype-theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
@@ -75,6 +77,12 @@ const ld = [orgLd, ...(crumbLd ? [crumbLd] : []), ...(jsonLd ? (Array.isArray(js
   </head>
   <body>
     <a href="#main" class="skip">Skip to content</a>
+    {preview && (
+      <div class="preview-bar" role="note">
+        <span><b>Preview</b> of the new HYPE Athletics website. Not live yet.</span>
+        <a href="https://hypeathletics.org/" rel="noopener">Current site</a>
+      </div>
+    )}
     <Header />
     <main id="main">
       <slot />
@@ -83,3 +91,9 @@ const ld = [orgLd, ...(crumbLd ? [crumbLd] : []), ...(jsonLd ? (Array.isArray(js
     <MobileBar from={from} variant={bar} />
   </body>
 </html>
+
+<style is:global>
+  .preview-bar { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 8px 16px; background: var(--accent); color: #fff; font-size: var(--t-13); text-align: center; }
+  .preview-bar a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+</style>
