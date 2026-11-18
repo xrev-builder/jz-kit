@@ -6,6 +6,7 @@ import LeadForm from '../components/LeadForm.astro';
 import { rentals, locations } from '../data/site';
 const spaces = [
   { id: 'dearborn-heights' as const, photo: 'dh-courts', alt: 'Hardwood courts at HYPE Dearborn Heights', title: 'Courts & gym', stat: '5 courts', blurb: 'Tournaments, leagues, camps, practices, futsal, expos and parties.' },
+  { id: 'dearborn-heights' as const, photo: 'dh-turf', alt: 'The indoor turf field at HYPE Dearborn Heights', title: 'Indoor turf field', stat: 'Full field', blurb: 'Soccer and futsal practices, clinics, camps, tournaments and team training, all year round.' },
   { id: 'wayne' as const, photo: 'wayne-hall', alt: 'The Wayne event hall set for a banquet', title: 'Event hall', stat: '50–400 guests', blurb: 'Banquets, weddings, showers and meetings. Table setup included, catering and kitchen available.' },
   { id: 'belle-isle' as const, photo: 'belle-isle', alt: 'Ball diamonds at Belle Isle', title: 'Fields & courts', stat: '38 acres', blurb: 'Ball diamonds, soccer and football fields, tennis and basketball. Season, practice and one-time permits.' },
 ];
@@ -22,12 +23,12 @@ const spaces = [
   </section>
 
   <section class="spaces">
-    <div class="wrap grid grid-3">
+    <div class="wrap grid grid-2 spaces-grid">
       {spaces.map((s) => {
         const r = rentals[s.id];
         return (
           <article class="space reveal">
-            <div class="img"><Photo src={s.photo} alt={s.alt} sizes="(min-width: 960px) 400px, 100vw" widths={[400, 800]} /><span class="stat">{s.stat}</span></div>
+            <div class="img"><Photo src={s.photo} alt={s.alt} sizes="(min-width: 960px) 600px, 100vw" widths={s.photo === 'dh-turf' ? [640, 960] : [400, 800]} /><span class="stat">{s.stat}</span></div>
             <p class="eyebrow">{locations[s.id].name}</p>
             <h2 class="display h3">{s.title}</h2>
             <p class="small muted">{s.blurb}</p>
