@@ -14,14 +14,14 @@ const sport = sportById[p.sport];
 const loc = locations[p.location];
 const st = status(p);
 const related = currentPrograms.filter((x) => x.slug !== p.slug && (x.sport === p.sport || x.location === p.location)).sort((a, b) => Number(b.sport === p.sport) - Number(a.sport === p.sport)).slice(0, 3);
-const tbd = 'To be announced';
+const tbd = 'Call for details';
 const facts = [
   ['Who', p.ages ?? tbd],
   ['Days', p.days ?? (p.ongoing ? 'Ask the front desk' : tbd)],
   ['Time', p.time ?? tbd],
   ['Dates', p.dates ?? (p.ongoing ? 'Ongoing · join anytime' : tbd)],
   ['Where', `HYPE ${loc.name}, ${loc.street}`],
-  ['Fee', p.fee ? `${p.fee}${p.feeNote ? ` · ${p.feeNote}` : ''}` : tbd],
+  ['Fee', p.fee ? `${p.fee}${p.feeNote ? (p.feeNote.startsWith('/') ? p.feeNote : ` · ${p.feeNote}`) : ''}` : tbd],
 ];
 const name = `${p.title}${p.ages ? ` (${p.ages})` : ''}`;
 const desc = `${p.title} at HYPE Athletics ${loc.name}. ${[p.ages, p.days, p.time, p.dates, p.fee && `${p.fee}${p.feeNote ? ' ' + p.feeNote : ''}`].filter(Boolean).join(' · ')}. ${p.blurb}`.slice(0, 160);
@@ -66,7 +66,7 @@ const ld = p.start ? {
       <dl class="board">
         {facts.map(([k, v]) => <div><dt>{k}</dt><dd class={v === tbd ? 'tbd' : undefined}>{v}</dd></div>)}
       </dl>
-      {p.todo?.length ? <p class="small muted note">Some details are still being finalized. Call <a href={`tel:${loc.phoneHref}`}>{loc.phone}</a> for the latest.</p> : null}
+      {p.todo?.length ? <p class="small muted note">For the details not listed here, call <a href={`tel:${loc.phoneHref}`}>{loc.phone}</a> and we’ll help.</p> : null}
     </div>
   </section>
 

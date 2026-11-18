@@ -177,7 +177,7 @@ button { font: inherit; color: inherit; }
 .btn-ghost:hover { color: var(--accent-text); }
 .btn-ghost::before { display: none; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
-.link-arrow { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: var(--t-14); text-decoration: none; color: var(--fg); }
+.link-arrow { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; font-size: var(--t-14); text-decoration: none; color: var(--fg); }
 .link-arrow .icon { transition: transform var(--d-std) var(--ease-out); color: var(--accent-text); }
 .link-arrow:hover .icon { transform: translateX(4px); }
 

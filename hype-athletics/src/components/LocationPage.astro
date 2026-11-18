@@ -34,7 +34,7 @@ const jsonLd = {
     <dl class="facts info">
       <div><dt>Address</dt><dd><a href={l.mapsUrl} rel="noopener" target="_blank">{l.street}, {l.city}, {l.region} {l.zip}</a></dd></div>
       <div><dt>Phone</dt><dd class="mono"><a href={`tel:${l.phoneHref}`}>{l.phone}</a></dd></div>
-      {l.hours && <div><dt>Hours</dt><dd class="mono">{l.hours.map((h) => <span class="hrow">{h.days}: {h.time}</span>)}</dd></div>}
+      {l.hours && <div><dt>Hours</dt><dd class="mono">{l.hours.map((h) => <span class="hrow">{h.days.replace('Monday', 'Mon').replace('Friday', 'Fri').replace('Saturday', 'Sat').replace('Sunday', 'Sun').replace(/ – /g, '–')}: {h.time.replace(/:00/g, '').replace(/ – /g, '–')}</span>)}</dd></div>}
     </dl>
     <div class="btn-row" style="margin-top:24px">
       <a href={l.mapsUrl} class="btn btn-primary" rel="noopener" target="_blank"><Icon name="Navigation" size={16} />Get directions</a>

@@ -41,6 +41,7 @@ const ld = events.filter((e) => e.location).map((e) => ({
 </Page>
 <style>
   .ev { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 24px; padding: 24px; }
+  @media (max-width: 599px) { .ev { grid-template-columns: 1fr; gap: 16px; padding: 20px; } .date { display: inline-flex !important; justify-self: start; align-items: baseline; gap: 8px; padding: 8px 14px !important; } .date b { font-size: var(--t-25) !important; } }
   .date { display: grid; justify-items: center; align-self: start; padding: 12px 0; border-radius: var(--r-10); background: var(--surface-2); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
   .date b { font-size: var(--t-40); line-height: 1; color: var(--fg); }
   .h4 { font-size: var(--t-21); }

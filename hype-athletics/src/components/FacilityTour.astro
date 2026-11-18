@@ -97,6 +97,7 @@ const groups = only.map((loc) => ({ loc, name: locations[loc].name, items: space
 <style>
   .tour { display: grid; gap: 20px; }
   .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  @media (max-width: 599px) { .tabs { flex-wrap: nowrap; gap: 6px; } .tabs button { padding: 0 14px !important; font-size: var(--t-13) !important; white-space: nowrap; } .tabs button .mono { display: none; } }
   .tabs button {
     display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border-radius: var(--r-full);
     border: 1px solid var(--line-strong); background: transparent; color: var(--fg-2); font-weight: 500; font-size: var(--t-14); cursor: pointer;

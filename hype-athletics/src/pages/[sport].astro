@@ -73,12 +73,12 @@ const others = sports.filter((x) => x.id !== s.id && x.group !== 'training').sli
 <style>
   .hero { position: relative; min-height: min(72vh, 640px); display: grid; align-items: end; overflow: hidden; isolation: isolate; }
   .hero :global(.bg) { position: absolute; inset: 0; z-index: -2; animation: drift 24s var(--ease) both; }
-  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--scrim); }
+  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(0 0 0 / .35) 0%, rgb(0 0 0 / .55) 45%, rgb(0 0 0 / .92) 100%); }
   @keyframes drift { from { transform: scale(1.08); } to { transform: scale(1); } }
   .content { padding-block: 120px 56px; color: #fff; }
   .content > * + * { margin-top: 18px; }
   .content .lede { color: rgb(255 255 255 / .82); }
-  .content .eyebrow.red { color: #ff7a89; }
+  .content .eyebrow.red { color: #fff; }
   .loc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 20px; }
   .loc-head a { text-decoration: none; }
   .zero { display: grid; gap: 12px; max-width: 560px; }

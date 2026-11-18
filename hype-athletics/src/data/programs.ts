@@ -209,7 +209,7 @@ export function isCurrent(p: Program) {
 export type Status = { label: string; tone: 'open' | 'soon' | 'live' | 'info' };
 export function status(p: Program): Status {
   if (p.ongoing) return { label: p.frontDesk ? 'Monthly · front desk' : 'Join anytime', tone: 'open' };
-  if (!p.start) return { label: 'Details soon', tone: 'info' };
+  if (!p.start) return { label: 'Ask the front desk', tone: 'info' };
   if (p.start > today) {
     const d = new Date(p.start + 'T12:00:00');
     return { label: `Starts ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`, tone: 'soon' };

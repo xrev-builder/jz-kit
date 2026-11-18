@@ -17,7 +17,7 @@ import { org, locations, hours, rentals } from '../data/site';
           <dl class="facts">
             <div><dt>Address</dt><dd><a href={l.mapsUrl} rel="noopener" target="_blank">{l.street}<br />{l.city}, {l.region} {l.zip}</a></dd></div>
             <div><dt>Phone</dt><dd class="mono"><a href={`tel:${l.phoneHref}`}>{l.phone}</a></dd></div>
-            {l.hours && <div><dt>Hours</dt><dd class="mono small">{hours.map((h) => <span style="display:block">{h.days.replace(' – ', '–')}: {h.time}</span>)}</dd></div>}
+            {l.hours && <div><dt>Hours</dt><dd class="mono small">{hours.map((h) => <span style="display:block">{h.days.replace('Monday', 'Mon').replace('Friday', 'Fri').replace('Saturday', 'Sat').replace('Sunday', 'Sun').replace(/ – /g, '–')}: {h.time.replace(/:00/g, '').replace(/ – /g, '–')}</span>)}</dd></div>}
           </dl>
           <a href={`/${l.id}/`} class="link-arrow">Location details<Icon name="ArrowRight" size={14} /></a>
         </div>
