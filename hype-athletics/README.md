@@ -36,7 +36,20 @@ its location page, its own page at `/programs/<slug>/`, the sitemap and `/llms.t
 **Add a facility photo:** drop it in `src/assets/photos/` and set `photo` on the space in `spaces`
 (`src/data/site.ts`). Spaces without photos show a "Photo coming soon" panel.
 
-## Deploy on Cloudflare Pages
+## Shareable preview: https://hypeathletics.xrev.co
+
+A Cloudflare Worker serves the built site from Workers KV (`deploy/worker.js`). Preview builds show a
+"Preview" banner, send `noindex`, and block crawlers in robots.txt so they never compete with
+hypeathletics.org in search. Forms show call/email buttons on the preview.
+
+Redeploy after any change:
+
+```bash
+PUBLIC_PREVIEW=1 npm run build
+python3 deploy/deploy-preview.py
+```
+
+## Going live on hypeathletics.org (recommended: Cloudflare Pages)
 
 1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → `xrev-builder/jz-kit`
 2. Build settings: root directory `hype-athletics`, build command `npm run build`, output `dist`
@@ -44,7 +57,7 @@ its location page, its own page at `/programs/<slug>/`, the sitemap and `/llms.t
 4. Add the custom domain `hypeathletics.org` (DNS is already on Cloudflare)
 5. Optional: a daily deploy hook so finished programs drop off and "Starts …" labels stay current
 
-Every branch gets its own preview URL, so changes can be reviewed before they go live.
+The production build (no `PUBLIC_PREVIEW`) is indexable and runs the form function in `functions/api/lead.js`.
 
 ## Search & AI answers (SEO/GEO)
 
