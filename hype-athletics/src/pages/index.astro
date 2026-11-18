@@ -86,7 +86,14 @@ const ld = {
         </div>
       </div>
       <PlanPicker />
-      <p class="small muted alt">Have SilverSneakers, Silver&nbsp;&amp;&nbsp;Fit or Renew Active? <a href="/insurance/">Your membership may be free</a>.</p>
+      <a href="/insurance/" class="ins-band" data-track="insurance_click" data-placement="home_plans">
+        <span class="ins-copy">
+          <span class="eyebrow">Insurance &amp; employer benefits</span>
+          <span class="display ins-title">Your insurance may cover your membership</span>
+          <span class="ins-names">{membership.insurance.join(' · ')}</span>
+        </span>
+        <span class="btn btn-primary ins-cta">Check my coverage<Icon name="ArrowRight" size={16} /></span>
+      </a>
     </div>
   </section>
 
@@ -202,7 +209,19 @@ const ld = {
   @media (max-width: 420px) { .hide-xs { display: none !important; } }
   .proof :global(.icon) { color: #ff5468; }
 
-  .alt { margin-top: 24px; }
+  .ins-band {
+    margin-top: 32px; display: grid; gap: 20px; align-items: center; padding: 28px;
+    border-radius: var(--r-18); border: 1px solid var(--line); text-decoration: none; color: var(--fg);
+    background: radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%), var(--surface);
+    transition: border-color var(--d-std) var(--ease), transform var(--d-std) var(--ease-out);
+  }
+  .ins-band:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  @media (min-width: 900px) { .ins-band { grid-template-columns: minmax(0, 1fr) auto; padding: 32px 40px; } }
+  .ins-copy { display: grid; gap: 10px; }
+  .ins-title { font-size: clamp(var(--t-32), 4vw, var(--t-40)); line-height: .95; }
+  .ins-names { font-size: var(--t-14); color: var(--fg-3); }
+  .ins-cta { justify-self: start; }
+  @media (max-width: 599px) { .ins-band { padding: 22px 20px; } .ins-cta { justify-self: stretch; } }
   .ages { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -12px 0 28px; }
   .ages span { margin-right: 6px; }
   @media (max-width: 599px) {
