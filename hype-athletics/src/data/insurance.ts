@@ -84,7 +84,7 @@ export const insurancePrograms: InsuranceProgram[] = [
 export type Pick = { id: string; label: string; sub?: string; programs: ProgramId[]; answer: string; known?: boolean };
 export const picks: Pick[] = [
   { id: 'humana', label: 'Humana', sub: 'Medicare', programs: ['silversneakers'], answer: 'Many Humana Medicare plans include SilverSneakers, which HYPE accepts.' },
-  { id: 'uhc', label: 'UnitedHealthcare', sub: 'incl. AARP Medicare', programs: ['renewactive'], answer: 'UnitedHealthcare Medicare Advantage plans usually include Renew Active, which HYPE accepts.' },
+  { id: 'uhc', label: 'United\u00ADHealthcare', sub: 'incl. AARP Medicare', programs: ['renewactive'], answer: 'UnitedHealthcare Medicare Advantage plans usually include Renew Active, which HYPE accepts.' },
   { id: 'aetna', label: 'Aetna', sub: 'Medicare', programs: ['silversneakers'], answer: 'Many Aetna Medicare plans include SilverSneakers, which HYPE accepts.' },
   { id: 'bcbs', label: 'Blue Cross', sub: 'Blue Shield of Michigan', programs: ['silversneakers'], answer: 'Many Blue Cross Medicare plans include a fitness benefit like SilverSneakers, which HYPE accepts.' },
   { id: 'silversneakers', label: 'SilverSneakers', sub: 'I have it', programs: ['silversneakers'], answer: 'HYPE accepts SilverSneakers.', known: true },
