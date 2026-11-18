@@ -40,22 +40,62 @@ def api(method, url, *args):
     return data.get('result')
 
 
-def upload_files():
-    items, size, batches = [], 0, []
+TEXT_EXT = {'html', 'css', 'js', 'txt', 'xml', 'svg', 'json'}
+
+
+def dist_files():
     for dp, _, fs in os.walk(DIST):
         for f in fs:
             path = os.path.join(dp, f)
             key = os.path.relpath(path, DIST).replace(os.sep, '/')
-            if key == '_redirects':
-                continue
-            raw = open(path, 'rb').read()
-            if len(raw) > 25 * 1024 * 1024:
-                raise SystemExit(f'{key} is over the 25 MB KV limit')
-            enc = base64.b64encode(raw).decode()
-            if size + len(enc) > BATCH_BYTES and items:
-                batches.append(items); items, size = [], 0
-            items.append({'key': key, 'value': enc, 'base64': True})
-            size += len(enc)
+            if key != '_redirects':
+                yield key, path
+
+
+def build_text_module(td):
+    """Pages, CSS, JS and other text files ship inside the Worker itself (no KV writes)."""
+    site = {}
+    for key, path in dist_files():
+        if key.rsplit('.', 1)[-1].lower() in TEXT_EXT:
+            site[key] = open(path, encoding='utf-8').read()
+    mpath = os.path.join(td, 'site.js')
+    open(mpath, 'w', encoding='utf-8').write('export default ' + json.dumps(site, ensure_ascii=False) + ';\n')
+    return mpath, len(site)
+
+
+def existing_keys():
+    keys, cursor = set(), ''
+    while True:
+        url = f'{API}/storage/kv/namespaces/{NAMESPACE}/keys?limit=1000' + (f'&cursor={cursor}' if cursor else '')
+        cmd = ['curl', '-sS', url]
+        token = os.environ.get('CLOUDFLARE_API_TOKEN')
+        if token:
+            cmd += ['-H', f'authorization: Bearer {token}']
+        data = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+        if not data.get('success'):
+            raise SystemExit(f'listing KV keys failed: {data.get("errors")}')
+        keys.update(k['name'] for k in data['result'])
+        cursor = (data.get('result_info') or {}).get('cursor') or ''
+        if not cursor:
+            return keys
+
+
+def upload_files():
+    """Images and fonts go to KV. Their names are content-hashed, so only new files are uploaded
+    (keeps each deploy far under the free plan's 1,000 KV writes/day)."""
+    have = existing_keys()
+    items, size, batches = [], 0, []
+    for key, path in dist_files():
+        if key.rsplit('.', 1)[-1].lower() in TEXT_EXT or key in have:
+            continue
+        raw = open(path, 'rb').read()
+        if len(raw) > 25 * 1024 * 1024:
+            raise SystemExit(f'{key} is over the 25 MB KV limit')
+        enc = base64.b64encode(raw).decode()
+        if size + len(enc) > BATCH_BYTES and items:
+            batches.append(items); items, size = [], 0
+        items.append({'key': key, 'value': enc, 'base64': True})
+        size += len(enc)
     if items:
         batches.append(items)
     total = sum(len(b) for b in batches)
@@ -101,18 +141,21 @@ def upload_worker():
         mpath = os.path.join(td, 'metadata.json')
         open(mpath, 'w').write(json.dumps(meta))
         dpath = os.path.join(ROOT, 'server', 'daypass.js')
+        spath, n = build_text_module(td)
+        print(f'  bundling {n} pages and text files into the worker')
         api('PUT', f'{API}/workers/scripts/{SCRIPT}',
             '-F', f'metadata=@{mpath};type=application/json',
             '-F', f'worker.js=@{wpath};filename=worker.js;type=application/javascript+module',
-            '-F', f'daypass.js=@{dpath};filename=daypass.js;type=application/javascript+module')
+            '-F', f'daypass.js=@{dpath};filename=daypass.js;type=application/javascript+module',
+            '-F', f'site.js=@{spath};filename=site.js;type=application/javascript+module')
 
 
 def main():
     if not os.path.exists(os.path.join(DIST, 'index.html')):
         raise SystemExit('dist/ is empty. Run: PUBLIC_PREVIEW=1 npm run build')
-    print('Uploading files to KV…')
+    print('Uploading new images and fonts to KV…')
     n = upload_files()
-    print(f'  {n} files')
+    print(f'  {n} new files')
     print('Uploading worker…')
     upload_worker()
     api('POST', f'{API}/workers/scripts/{SCRIPT}/subdomain', '-H', 'content-type: application/json', '--data', '{"enabled": true}')

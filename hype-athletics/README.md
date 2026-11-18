@@ -38,7 +38,7 @@ its location page, its own page at `/programs/<slug>/`, the sitemap and `/llms.t
 
 ## Shareable preview: https://hypeathletics.xrev.co
 
-A Cloudflare Worker serves the built site from Workers KV (`deploy/worker.js`). Preview builds show a
+A Cloudflare Worker serves the built site (`deploy/worker.js`): pages, CSS and JS are bundled into the Worker at deploy time, and images and fonts live in Workers KV. Only new image files are uploaded, which keeps deploys well under the free plan’s 1,000 KV writes per day. Preview builds show a
 "Preview" banner, send `noindex`, and block crawlers in robots.txt so they never compete with
 hypeathletics.org in search. Forms show call/email buttons on the preview.
 

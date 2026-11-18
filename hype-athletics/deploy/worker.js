@@ -2,6 +2,7 @@
 // Used for the shareable preview at hypeathletics.xrev.co. Deployed by deploy/deploy-preview.py.
 // REDIRECTS and PREVIEW are injected by the deploy script.
 import { handleDayPass } from './daypass.js';
+import SITE_TEXT from './site.js';   // pages, CSS, JS (bundled at deploy time)
 
 const REDIRECTS = __REDIRECTS__;
 const PREVIEW = __PREVIEW__;
@@ -47,12 +48,12 @@ export default {
 
     let key = (path.endsWith('/') ? path + 'index.html' : path).replace(/^\/+/, '');
     let status = 200;
-    let body = await env.SITE.get(key, { type: 'arrayBuffer', cacheTtl: 300 });
-    if (body === null) {
+    let body = SITE_TEXT[key] ?? await env.SITE.get(key, { type: 'arrayBuffer', cacheTtl: 300 });
+    if (body === null || body === undefined) {
       key = '404.html';
       status = 404;
-      body = await env.SITE.get(key, { type: 'arrayBuffer', cacheTtl: 300 });
-      if (body === null) return new Response('Not found', { status: 404 });
+      body = SITE_TEXT[key];
+      if (body === undefined) return new Response('Not found', { status: 404 });
     }
 
     const ext = key.split('.').pop().toLowerCase();
