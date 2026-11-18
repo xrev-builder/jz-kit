@@ -3,13 +3,14 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import BrandLogo from '../components/BrandLogo.astro';
 import { membership, locations } from '../data/site';
-import { insurancePrograms, picks } from '../data/insurance';
+import { insurancePrograms, picks, pickGroups } from '../data/insurance';
 
 const centers = (['dearborn-heights', 'wayne'] as const).map((id) => locations[id]);
 const seniors = membership.locations.map((m) => ({ name: locations[m.id].name, price: m.tiers.find((t) => t.name === 'Senior (59+)')!.eft }));
+const help = picks.find((p) => p.group === 'help')!;
 const data = JSON.stringify({
   picks,
-  programs: Object.fromEntries(insurancePrograms.map((p) => [p.id, { name: p.name, url: p.url ?? '' }])),
+  programs: Object.fromEntries(insurancePrograms.map((p) => [p.id, { name: p.name, how: p.how, url: p.url ?? '' }])),
 });
 const faq = [
   ['Is it really free?', 'With many Medicare plans, yes: the fitness benefit covers your membership. Some employer programs charge a small monthly fee. Leave your number above and we’ll confirm yours.'],
@@ -27,37 +28,48 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
       <div class="copy">
         <p class="eyebrow red">Insurance &amp; employer benefits</p>
         <h1 class="display h1">Use your insurance at HYPE</h1>
-        <p class="lede">Many Medicare and employer plans cover your membership. Tap your plan to see what’s next.</p>
+        <p class="lede">Many Medicare and employer plans cover your membership. Choose yours to see what’s next.</p>
+        <ul class="points">
+          <li><Icon name="Check" size={16} />Often no cost to you</li>
+          <li><Icon name="Check" size={16} />Dearborn Heights and Wayne</li>
+          <li><Icon name="Check" size={16} />No member ID needed to ask</li>
+        </ul>
       </div>
 
       <div class="picker card" data-picker data-json={data}>
-        <!-- 1 · Pick -->
-        <div data-view="pick">
-          <p class="q">Who’s your insurance or fitness program?</p>
-          <div class="tiles">
-            {picks.map((p) => (
-              <button type="button" class="tile" data-pick={p.id}>
-                <span class="t-head">
-                  {p.logo && <BrandLogo id={p.logo} name={p.label} size={24} />}
-                  {p.id === 'employer' && (
-                    <span class="stack" aria-hidden="true">
-                      <BrandLogo id="activefit" name="Active&Fit" size={20} />
-                      <BrandLogo id="wellhub" name="Wellhub" size={20} />
-                      <BrandLogo id="peerfit" name="Peerfit" size={20} />
-                    </span>
-                  )}
-                  <b>{p.label}</b>
-                </span>
-                {p.sub && <small>{p.sub}</small>}
-              </button>
-            ))}
-          </div>
+        <!-- 1 · Choose -->
+        <div class="choose" data-view="pick">
+          {pickGroups.map((g) => (
+            <div class="group">
+              <p class="g-title">{g.title}</p>
+              <div class="rows">
+                {picks.filter((p) => p.group === g.id).map((p) => (
+                  <button type="button" class="row" data-pick={p.id}>
+                    <BrandLogo id={p.logo ?? p.id} name={p.label} size={28} fallback />
+                    <span class="r-name">{p.label}</span>
+                    <Icon name="ChevronRight" size={16} />
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          <button type="button" class="row help" data-pick={help.id}>
+            <span class="q-ico"><Icon name="CircleHelp" size={18} /></span>
+            <span class="r-name">{help.label}<small>{help.sub}</small></span>
+            <Icon name="ChevronRight" size={16} />
+          </button>
         </div>
 
         <!-- 2 · Answer + one action -->
-        <div data-view="answer" hidden>
-          <button type="button" class="back" data-back><Icon name="ArrowLeft" size={14} />Change</button>
-          <p class="answer" data-answer></p>
+        <div class="result" data-view="answer" hidden>
+          <div class="picked">
+            <span class="picked-id" data-picked></span>
+            <button type="button" class="change" data-back>Change</button>
+          </div>
+          <div>
+            <p class="answer" data-answer></p>
+            <p class="how" data-how hidden></p>
+          </div>
 
           <form class="call" data-call novalidate>
             <p class="call-title">Want us to confirm it for you?</p>
@@ -80,88 +92,69 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
           </div>
 
           <div class="walkin">
-            <p class="walk-title"><Icon name="IdCard" size={16} />Have your member ID? Just come in.</p>
-            <p class="small muted">Bring it and a photo ID to the front desk:</p>
+            <p class="walk-title">Already have your member ID?</p>
+            <p class="small muted">Bring it and a photo ID to either front desk.</p>
             <ul>
-              {centers.map((l) => <li><a href={l.mapsUrl} rel="noopener" target="_blank" data-track="directions_click" data-location={l.id}><b>{l.name}</b> · {l.street}</a></li>)}
+              {centers.map((l) => <li><a href={l.mapsUrl} rel="noopener" target="_blank" data-track="directions_click" data-location={l.id}><Icon name="MapPin" size={14} /><span><b>{l.name}</b> · {l.street}</span></a></li>)}
             </ul>
           </div>
-          <p class="self small" data-self hidden></p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="section tint">
-    <div class="wrap two">
+    <div class="wrap lower">
+      <div class="nocover">
+        <p class="eyebrow">Not covered?</p>
+        <h2 class="display h3">Senior plans, 59+</h2>
+        <ul class="prices">{seniors.map((s) => <li><span>{s.name}</span><b class="mono">${s.price}<small>/mo</small></b></li>)}</ul>
+        <div class="links"><a href="/membership/#plans" class="link-arrow">All plans<Icon name="ArrowRight" size={14} /></a><a href="/day-pass/" class="link-arrow" data-track="daypass_click" data-placement="insurance">Free day pass<Icon name="ArrowRight" size={14} /></a></div>
+      </div>
       <div>
-        <p class="eyebrow">Accepted at HYPE</p>
-        <h2 class="display h3 sub-h">Programs we take</h2>
+        <p class="eyebrow">Questions</p>
+        <div class="qs">{faq.map(([q, a]) => <details><summary><span class="h4">{q}</span><span class="plus" aria-hidden="true"></span></summary><p class="muted">{a}</p></details>)}</div>
       </div>
-      <div class="progs">
-        {insurancePrograms.map((p) => (
-          <details id={p.id}>
-            <summary><BrandLogo id={p.id} name={p.name} size={28} fallback /><span class="p-name">{p.name}</span><span class="chip">{p.audience.includes('medicare') ? 'Medicare' : 'Employer'}</span><Icon name="ChevronDown" size={16} /></summary>
-            <div class="p-body">
-              <p class="small muted">{p.who}</p>
-              <p class="small">{p.how}</p>
-              {(p.hype.centers || p.hype.covers || p.hype.cost) && (
-                <p class="small">{[p.hype.centers, p.hype.covers, p.hype.cost].filter(Boolean).join(' · ')}</p>
-              )}
-              {p.url && <a href={p.url} class="link-arrow" rel="noopener" target="_blank" data-track="insurance_eligibility_click" data-program={p.id}>Check eligibility<Icon name="ArrowUpRight" size={14} /></a>}
-            </div>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section tight">
-    <div class="wrap nocover">
-      <p><b>Not covered?</b> Senior plans (59+): {seniors.map((s) => `${s.name} $${s.price}/mo`).join(' · ')}.</p>
-      <div class="links"><a href="/membership/#plans" class="link-arrow">All plans<Icon name="ArrowRight" size={14} /></a><a href="/day-pass/" class="link-arrow" data-track="daypass_click" data-placement="insurance">Free day pass<Icon name="ArrowRight" size={14} /></a></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap two">
-      <h2 class="display h3 sub-h">Questions</h2>
-      <div class="qs">{faq.map(([q, a]) => <details><summary><span class="h4">{q}</span><span class="plus" aria-hidden="true"></span></summary><p class="muted">{a}</p></details>)}</div>
     </div>
   </section>
 </Base>
 
 <script>
-  type Pick = { id: string; label: string; programs: string[]; answer: string; known?: boolean };
+  type Pick = { id: string; group: string; label: string; programs: string[]; answer: string };
   const root = document.querySelector<HTMLElement>('[data-picker]')!;
-  const { picks, programs } = JSON.parse(root.dataset.json!) as { picks: Pick[]; programs: Record<string, { name: string; url: string }> };
+  const { picks, programs } = JSON.parse(root.dataset.json!) as { picks: Pick[]; programs: Record<string, { name: string; how: string; url: string }> };
   const vPick = root.querySelector<HTMLElement>('[data-view="pick"]')!;
   const vAns = root.querySelector<HTMLElement>('[data-view="answer"]')!;
   const form = root.querySelector<HTMLFormElement>('[data-call]')!;
   const done = root.querySelector<HTMLElement>('[data-done]')!;
   const err = root.querySelector<HTMLElement>('[data-err]')!;
   const go = root.querySelector<HTMLButtonElement>('[data-go]')!;
-  const self = root.querySelector<HTMLElement>('[data-self]')!;
+  const how = root.querySelector<HTMLElement>('[data-how]')!;
+  const picked = root.querySelector<HTMLElement>('[data-picked]')!;
   const track = (n: string, p: object = {}) => (window as any).hypeTrack?.(n, { ...p, page: location.pathname });
   let current: Pick | null = null;
 
-  const choose = (id: string) => {
-    current = picks.find((p) => p.id === id)!;
+  const choose = (btn: HTMLButtonElement) => {
+    current = picks.find((p) => p.id === btn.dataset.pick)!;
+    // Header: the same mark and name they tapped
+    picked.replaceChildren();
+    const mark = btn.querySelector('.mark, .q-ico'); if (mark) picked.append(mark.cloneNode(true));
+    picked.append(Object.assign(document.createElement('b'), { textContent: current.label }));
     root.querySelector('[data-answer]')!.textContent = current.answer;
     (root.querySelector('[data-insurer]') as HTMLInputElement).value = current.label;
-    const withUrl = current.known ? [] : current.programs.filter((pid) => programs[pid]?.url);
-    if (withUrl.length === 1) {
-      const p = programs[withUrl[0]];
-      self.innerHTML = `Or check it yourself on the <a href="${p.url}" target="_blank" rel="noopener">${p.name} site</a>.`;
-      self.hidden = false;
-    } else self.hidden = true;
+    const prog = current.programs.length === 1 ? programs[current.programs[0]] : null;
+    if (prog) {
+      how.replaceChildren(document.createTextNode(prog.how + ' '));
+      if (prog.url) how.append(Object.assign(document.createElement('a'), { href: prog.url, target: '_blank', rel: 'noopener', textContent: `${prog.name} site ↗` }));
+      how.hidden = false;
+    } else how.hidden = true;
     form.hidden = false; done.hidden = true; err.hidden = true;
     vPick.hidden = true; vAns.hidden = false;
     track('insurance_pick', { insurer: current.id });
     if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    (root.querySelector('#ins-name') as HTMLInputElement).focus({ preventScroll: true });
+    if (matchMedia('(min-width: 1000px)').matches) (root.querySelector('#ins-name') as HTMLInputElement).focus({ preventScroll: true });
   };
-  vPick.addEventListener('click', (e) => { const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-pick]'); if (b) choose(b.dataset.pick!); });
+  vPick.addEventListener('click', (e) => { const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-pick]'); if (b) choose(b); });
   root.querySelector('[data-back]')!.addEventListener('click', () => { vAns.hidden = true; vPick.hidden = false; });
   form.addEventListener('input', () => { err.hidden = true; });
 
@@ -178,14 +171,11 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
     go.disabled = true;
     const payload = { kind: 'insurance', name, phone, insurer: fd.get('insurer'), company: fd.get('company'), page: location.pathname };
     let ok = false;
-    try {
-      const r = await fetch('/api/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
-      ok = r.ok;
-    } catch {}
+    try { ok = (await fetch('/api/lead', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) })).ok; } catch {}
     go.disabled = false;
     const doneText = root.querySelector('[data-done-text]')!;
     if (ok) {
-      doneText.textContent = `Got it, ${name}. We’ll call you soon to confirm your ${current?.label ?? 'plan'} coverage.`;
+      doneText.textContent = `Got it, ${name}. We’ll call you soon to confirm your coverage.`;
       track('insurance_submit', { insurer: current?.id });
     } else {
       doneText.innerHTML = `We couldn’t send that online. Call us at <a href="tel:+13134360043">(313) 436-0043</a> and we’ll check your coverage on the spot.`;
@@ -197,37 +187,45 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
 </script>
 
 <style>
-  .top { padding-block: 40px 64px; }
-  @media (min-width: 960px) { .top { padding-block: 88px 104px; } }
-  .top-grid { display: grid; gap: 28px; align-items: start; }
-  @media (min-width: 1000px) { .top-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; } }
+  .top { padding-block: 40px 72px; }
+  @media (min-width: 960px) { .top { padding-block: 88px 112px; } }
+  .top-grid { display: grid; gap: 32px; align-items: start; }
+  @media (min-width: 1000px) { .top-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 72px; } .copy { position: sticky; top: calc(var(--header-h) + 40px); } }
   .copy > * + * { margin-top: 16px; }
   .copy .h1 { font-size: clamp(var(--t-40), 6vw, var(--t-80)); margin-top: 12px; }
-  @media (min-width: 1000px) { .copy { position: sticky; top: calc(var(--header-h) + 40px); } }
+  .points { list-style: none; display: grid; gap: 10px; margin-top: 28px; color: var(--fg-2); }
+  .points li { display: flex; align-items: center; gap: 10px; }
+  .points :global(.icon) { color: var(--accent-text); }
+  @media (max-width: 999px) { .points { display: none; } }
 
-  .picker { padding: 22px; scroll-margin-top: calc(var(--header-h) + 16px); }
+  .picker { padding: 20px; scroll-margin-top: calc(var(--header-h) + 16px); border-radius: var(--r-18); }
   @media (min-width: 640px) { .picker { padding: 32px; } }
-  .q { font-weight: 600; font-size: var(--t-18); margin-bottom: 16px; }
-  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  @media (min-width: 640px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .tile {
-    display: grid; align-content: center; gap: 3px; min-height: 76px; padding: 14px 16px; text-align: left; cursor: pointer;
-    border-radius: var(--r-10); border: 1px solid var(--line-strong); background: var(--bg-2); color: var(--fg);
+  .choose { display: grid; gap: 28px; }
+  .g-title { font-family: var(--font-mono); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 12px; }
+  .rows { display: grid; gap: 8px; }
+  @media (min-width: 560px) { .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .row {
+    display: flex; align-items: center; gap: 14px; width: 100%; min-height: 60px; padding: 12px 14px 12px 16px; text-align: left; cursor: pointer;
+    border-radius: var(--r-10); border: 1px solid var(--line); background: var(--bg-2); color: var(--fg);
     transition: border-color var(--d-micro) var(--ease), background-color var(--d-micro) var(--ease), transform var(--d-micro) var(--ease);
   }
-  .tile:hover { border-color: var(--accent); }
-  .tile:active { transform: scale(.98); }
-  .tile b { font-weight: 600; font-size: var(--t-16); line-height: 1.25; min-width: 0; }
-  .tile small { font-size: var(--t-12); color: var(--fg-3); }
-  .t-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
-  .stack { display: inline-flex; flex-shrink: 0; }
-  .stack :global(.badge) + :global(.badge) { margin-left: -6px; }
-  .stack :global(.badge) { box-shadow: 0 0 0 2px var(--bg-2); }
+  .row:hover { border-color: var(--line-strong); background: var(--surface-2); }
+  .row:active { transform: scale(.985); }
+  .r-name { flex: 1; min-width: 0; font-weight: 600; font-size: var(--t-16); line-height: 1.25; display: grid; gap: 2px; }
+  .r-name small { font-weight: 400; font-size: var(--t-13); color: var(--fg-3); }
+  .row > :global(.icon) { color: var(--fg-3); transition: transform var(--d-std) var(--ease-out), color var(--d-micro) var(--ease); }
+  .row:hover > :global(.icon) { color: var(--accent-text); transform: translateX(2px); }
+  .help { border-style: dashed; border-color: var(--line-strong); background: transparent; }
+  .q-ico { width: 28px; height: 28px; flex-shrink: 0; display: inline-grid; place-items: center; color: var(--fg-2); }
 
-  [data-view='answer'] { display: grid; gap: 20px; }
-  .back { justify-self: start; display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 6px 0; color: var(--fg-3); font-size: var(--t-13); cursor: pointer; }
-  .back:hover { color: var(--fg); }
+  .result { display: grid; gap: 24px; }
+  .picked { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .picked-id { display: inline-flex; align-items: center; gap: 12px; min-width: 0; font-size: var(--t-16); }
+  .change { background: none; border: 0; padding: 8px 0; color: var(--fg-3); font-size: var(--t-13); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .change:hover { color: var(--fg); }
   .answer { font-size: var(--t-21); line-height: 1.4; font-weight: 500; }
+  .how { margin-top: 8px; font-size: var(--t-14); color: var(--fg-3); }
+  .how :global(a) { color: var(--fg-2); }
   .call { display: grid; gap: 12px; padding: 20px; border-radius: var(--r-12); background: var(--bg-2); border: 1px solid var(--line); }
   .call-title { font-weight: 600; }
   .call-row { display: grid; gap: 10px; }
@@ -244,35 +242,23 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
   .done[data-state='fail'] .i-ok { display: none; }
   .done[data-state='fail'] .i-fail { display: inline; }
   .done :global(a) { color: var(--fg); }
-  @media (max-width: 639px) { .tile { padding: 12px 14px; } .tile b { font-size: var(--t-14); } .tile:last-child { grid-column: 1 / -1; } }
-  @media (max-width: 379px) { .t-head { flex-wrap: wrap; row-gap: 6px; } .tiles { gap: 8px; } .tile { padding: 12px 10px; } .tile b { font-size: var(--t-13); } .tile small { font-size: var(--t-11); } .picker { padding: 18px 16px; } }
-  .walkin { display: grid; gap: 6px; }
-  .walk-title { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-  .walk-title :global(.icon) { color: var(--accent-text); }
-  .walkin ul { list-style: none; display: grid; gap: 4px; margin-top: 4px; }
-  .walkin a { color: var(--fg-2); text-decoration: none; font-size: var(--t-14); }
-  .walkin a:hover { color: var(--fg); text-decoration: underline; }
+  .walkin { display: grid; gap: 4px; }
+  .walk-title { font-weight: 600; }
+  .walkin ul { list-style: none; display: grid; gap: 8px; margin-top: 8px; }
+  .walkin a { display: flex; gap: 8px; align-items: flex-start; color: var(--fg-2); text-decoration: none; font-size: var(--t-14); }
+  .walkin a :global(.icon) { margin-top: 4px; color: var(--fg-3); }
+  .walkin a:hover { color: var(--fg); }
   .walkin b { color: var(--fg); font-weight: 500; }
-  .self { color: var(--fg-3); }
 
-  .two { display: grid; gap: 24px; }
-  @media (min-width: 960px) { .two { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; } }
-  .sub-h { margin-top: 12px; }
-  .progs { border-top: 1px solid var(--line); }
-  .progs details { border-bottom: 1px solid var(--line); }
-  .progs summary { list-style: none; display: flex; align-items: center; gap: 12px; min-height: 56px; cursor: pointer; }
-  .progs summary::-webkit-details-marker { display: none; }
-  .p-name { font-weight: 600; flex: 1; }
-  .progs summary :global(.icon) { color: var(--fg-3); transition: transform var(--d-std) var(--ease-out); }
-  .progs details[open] summary :global(.icon) { transform: rotate(180deg); }
-  .p-body { display: grid; gap: 8px; padding: 0 0 18px; max-width: 60ch; }
-
-  .nocover { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--r-12); }
-  .nocover p { color: var(--fg-2); }
-  .nocover b { color: var(--fg); }
-  .links { display: flex; gap: 20px; }
-
-  .qs { border-top: 1px solid var(--line); }
+  .lower { display: grid; gap: 56px; }
+  @media (min-width: 960px) { .lower { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 72px; } }
+  .nocover .h3 { margin-top: 12px; }
+  .prices { list-style: none; margin-top: 20px; border-top: 1px solid var(--line); max-width: 360px; }
+  .prices li { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--fg-2); }
+  .prices b { font-size: var(--t-21); font-weight: 500; color: var(--fg); }
+  .prices small { font-size: var(--t-12); color: var(--fg-3); }
+  .links { display: flex; gap: 24px; margin-top: 20px; }
+  .qs { border-top: 1px solid var(--line); margin-top: 16px; }
   .qs details { border-bottom: 1px solid var(--line); }
   .qs summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; cursor: pointer; }
   .qs summary::-webkit-details-marker { display: none; }

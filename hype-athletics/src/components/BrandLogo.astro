@@ -1,26 +1,24 @@
 ---
-// Small brand badge next to an insurance / fitness-program name.
-// Source: each brand's own official site icon, stored in src/assets/insurance/<id>.png (64×64).
-// Inlined as a data URI (a few KB each), so no extra requests. Renders nothing if there's no file.
+// Small transparent brand mark next to an insurance / fitness-program name.
+// Files: src/assets/insurance/<id>.png (64×64, transparent; each brand's own official site icon).
+// Inlined as data URIs (a few KB each). With `fallback`, a neutral initials chip stands in for a missing file.
 interface Props { id: string; name: string; size?: number; fallback?: boolean }
 const { id, name, size = 28, fallback = false } = Astro.props;
-const initials = name.replace(/­/g, '').split(/[\s&]+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 const files = import.meta.glob<string>('../assets/insurance/*.png', { eager: true, query: '?inline', import: 'default' });
-const entry = Object.entries(files).find(([p]) => p.split('/').pop() === `${id}.png`);
-const src = entry?.[1];
+const src = Object.entries(files).find(([p]) => p.split('/').pop() === `${id}.png`)?.[1];
+const clean = name.replace(/­/g, '');
+const initials = clean.split(/[\s&]+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+// Dark single-color marks that vanish on a dark page: shown reversed (white) in dark mode.
+const reverse = ['uhc', 'renewactive'].includes(id);
 ---
 {src ? (
-  <span class="badge" style={`--s:${size}px`}>
-    <img src={src} alt={`${name.replace(/­/g, '')} logo`} width={size} height={size} />
-  </span>
+  <img class:list={['mark', { reverse }]} src={src} alt="" width={size} height={size} style={`width:${size}px;height:${size}px`} />
 ) : fallback ? (
-  <span class="badge empty" style={`--s:${size}px`} aria-hidden="true">{initials}</span>
+  <span class="mark chip" style={`width:${size}px;height:${size}px`} aria-hidden="true">{initials}</span>
 ) : null}
 <style>
-  .badge {
-    width: var(--s); height: var(--s); flex-shrink: 0; display: inline-grid; place-items: center;
-    border-radius: 7px; background: #fff; overflow: hidden; box-shadow: 0 0 0 1px rgb(0 0 0 / .08);
-  }
-  .badge img { width: 100%; height: 100%; object-fit: contain; }
-  .empty { background: var(--surface-3); color: var(--fg-3); font-size: 10px; font-weight: 600; letter-spacing: .04em; box-shadow: none; }
+  .mark { flex-shrink: 0; display: block; object-fit: contain; }
+  .reverse { filter: brightness(0) invert(1); }
+  :global(:root[data-theme='light']) .reverse { filter: none; }
+  .chip { display: inline-grid; place-items: center; border-radius: 7px; background: var(--surface-3); color: var(--fg-2); font-size: 10px; font-weight: 600; letter-spacing: .04em; }
 </style>
