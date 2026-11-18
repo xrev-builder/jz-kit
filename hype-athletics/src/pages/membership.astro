@@ -38,7 +38,7 @@ const ld = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
 ];
 ---
-<Base title="Gym Membership · From $25/month · First Visit Free" description={`HYPE Athletics memberships in Dearborn Heights and Wayne, MI from $${from}/month: full gym, group classes, free child care and Homework Club. Family and senior plans. First visit free with a day pass.`}
+<Base title="Gym Membership in Dearborn Heights & Wayne · First Visit Free" description={`HYPE Athletics memberships in Dearborn Heights and Wayne, MI: full gym, group classes, free child care and Homework Club. Family and senior plans. First visit free with a day pass.`}
   ogPhoto="dh-fitness" jsonLd={ld} crumbs={[{ name: 'Membership', href: '/membership/' }]}>
 
   <section class="hero">
@@ -47,7 +47,7 @@ const ld = [
         <p class="eyebrow red">Membership</p>
         <h1 class="display h1">Join HYPE</h1>
       </div>
-      <p class="lede">A full gym, group classes, free child care and a community that shows up. Plans from <b class="mono">${from}</b>/month.</p>
+      <p class="lede">A full gym, group classes, free child care and a community that shows up.</p>
     </div>
   </section>
 

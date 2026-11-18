@@ -188,7 +188,7 @@ const preview = Boolean(import.meta.env.PUBLIC_PREVIEW);
         } else if (status === 422 && data.fields) {
           for (const [k, v] of Object.entries(data.fields)) { const el = root.querySelector(`[data-ferr="${k}"]`); if (el) el.textContent = v as string; }
         } else if (status === 409) {
-          setErr(s1, 'You’ve already used a free day pass. Ready to make it official? <a href="/membership/#plans">Memberships start at $25/month</a>.', true);
+          setErr(s1, 'You’ve already used a free day pass. Ready to make it official? <a href="/membership/#plans">See membership plans</a>.', true);
           track('daypass_repeat');
         } else if (status === 429) {
           setErr(s1, 'Too many requests. Please wait a bit and try again.');
