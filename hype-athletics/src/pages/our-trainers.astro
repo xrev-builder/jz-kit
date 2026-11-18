@@ -1,0 +1,39 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { trainers } from '../data/site';
+const initials = (n: string) => n.split(' ').map((x) => x[0]).slice(0, 2).join('');
+const groups = [
+  { title: 'Fitness trainers', list: trainers.fitness, cta: { href: '/personal-group-fitness/', label: 'Book personal training' } },
+  { title: 'Basketball trainers', list: trainers.basketball, cta: { href: '/basketball-training/', label: 'See basketball training' } },
+];
+---
+<Page title="Trainers & coaches" seoTitle="Personal Trainers & Basketball Coaches" description="Meet HYPE Athletics' certified personal trainers and basketball trainers in Dearborn Heights and Wayne, including Anthony Frezzell and Jamey Petree."
+  eyebrow="About · Trainers" lede="Certified personal trainers and experienced basketball coaches. Every new member gets a free fitness assessment.">
+  {groups.map((g, i) => (
+    <section class:list={['section', { tint: i === 1 }]}>
+      <div class="wrap">
+        <div class="sec-head"><div><h2 class="display h2">{g.title}</h2></div><a href={g.cta.href} class="btn btn-secondary">{g.cta.label}<Icon name="ArrowRight" size={16} /></a></div>
+        <ul class="grid grid-3 list">
+          {g.list.map((t) => (
+            <li class="card card-pad person">
+              <span class="avatar mono" aria-hidden="true">{initials(t.name)}</span>
+              <div>
+                <h3 class="h4">{t.name}</h3>
+                <p class="small role">{t.role}</p>
+              </div>
+              {t.bio && <p class="small muted bio">{t.bio}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+</Page>
+<style>
+  .list { list-style: none; }
+  .person { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px 14px; align-content: start; }
+  .avatar { width: 44px; height: 44px; border-radius: var(--r-full); background: var(--surface-2); border: 1px solid var(--line); display: grid; place-items: center; font-size: var(--t-13); font-weight: 500; color: var(--fg-2); }
+  .role { color: var(--fg-2); margin-top: 2px; }
+  .bio { grid-column: 1 / -1; }
+</style>

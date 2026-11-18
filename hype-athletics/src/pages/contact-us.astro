@@ -1,0 +1,35 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { org, locations, hours, rentals } from '../data/site';
+---
+<Page title="Contact us" seoTitle="Contact HYPE Athletics" description="Contact HYPE Athletics: call (313) 436-0043, email info@hypeathletics.org, or visit us in Dearborn Heights, Wayne or Belle Isle."
+  eyebrow="Contact" lede="Call, email or stop by the front desk. For the fastest answer about a program, call the center where it runs.">
+  <div slot="hero" class="btn-row">
+    <a href={`tel:${org.phoneHref}`} class="btn btn-primary btn-lg"><Icon name="Phone" size={16} />{org.phone}</a>
+    <a href={`mailto:${org.email}`} class="btn btn-secondary btn-lg"><Icon name="Mail" size={16} />{org.email}</a>
+  </div>
+  <section class="section">
+    <div class="wrap grid grid-3">
+      {Object.values(locations).map((l) => (
+        <div class="card card-pad stack-16">
+          <div><p class="eyebrow">{l.city}, {l.region}</p><h2 class="display h3" style="margin-top:6px">{l.name}</h2></div>
+          <dl class="facts">
+            <div><dt>Address</dt><dd><a href={l.mapsUrl} rel="noopener" target="_blank">{l.street}<br />{l.city}, {l.region} {l.zip}</a></dd></div>
+            <div><dt>Phone</dt><dd class="mono"><a href={`tel:${l.phoneHref}`}>{l.phone}</a></dd></div>
+            {l.hours && <div><dt>Hours</dt><dd class="mono small">{hours.map((h) => <span style="display:block">{h.days.replace(' – ', '–')}: {h.time}</span>)}</dd></div>}
+          </dl>
+          <a href={`/${l.id}/`} class="link-arrow">Location details<Icon name="ArrowRight" size={14} /></a>
+        </div>
+      ))}
+    </div>
+  </section>
+  <section class="section tint">
+    <div class="wrap grid grid-3">
+      <div class="stack-8"><p class="eyebrow">General questions</p><p class="h4">Contact form</p><p class="small muted">Send us a message and the right person will reply.</p><a href={org.contactFormUrl} class="link-arrow" rel="noopener" target="_blank">Open the form<Icon name="ArrowUpRight" size={14} /></a></div>
+      <div class="stack-8"><p class="eyebrow">Rentals</p><p class="h4">Dearborn Heights: {rentals['dearborn-heights'].contact.name}</p><p class="small"><a href={`mailto:${rentals['dearborn-heights'].contact.email}`}>{rentals['dearborn-heights'].contact.email}</a></p><p class="h4">Wayne &amp; Belle Isle: {rentals.wayne.contact.name}</p><p class="small"><a href={`mailto:${rentals.wayne.contact.email}`}>{rentals.wayne.contact.email}</a> · <span class="mono">{rentals.wayne.contact.phone}</span></p></div>
+      <div class="stack-8"><p class="eyebrow">Camp HYPE</p><p class="h4">(313) 436-0043 ext. 125</p><p class="small muted">Questions about summer camp attendance, pickup or field trips.</p><p class="small"><a href="/incident-report/">Report an incident</a></p></div>
+    </div>
+  </section>
+</Page>
+<style>.facts a { color: var(--fg); }</style>

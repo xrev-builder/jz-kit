@@ -1,0 +1,23 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { org } from '../data/site';
+---
+<Page title="Volunteer" seoTitle="Volunteer with HYPE Athletics" description="Volunteer with HYPE Athletics: coaching, event support, mentoring and admin help. Students can earn service hours."
+  eyebrow="Get involved" lede="Coaching, event support, mentoring and office help. Students earning service hours and community members giving back are both welcome."
+  photo="summer-camp" photoAlt="Kids playing outdoor games at Summer Discovery camp">
+  <div slot="hero" class="btn-row"><a href={org.volunteerFormUrl} class="btn btn-primary btn-lg" rel="noopener" target="_blank">Volunteer sign-up form<Icon name="ArrowUpRight" size={16} /></a></div>
+  <section class="section">
+    <div class="wrap grid grid-4">
+      {[
+        ['Megaphone', 'Coaching', 'Assist coaches at clinics, camps and youth leagues.'],
+        ['CalendarDays', 'Events', 'Help run tournaments, Trunk or Treat and the annual gala.'],
+        ['HeartHandshake', 'Mentoring', 'Support students through homework help and life skills.'],
+        ['ClipboardList', 'Admin', 'Front desk and office support at either center.'],
+      ].map(([icon, t, d]) => (
+        <div class="card card-pad stack-8"><Icon name={icon as any} size={20} /><h2 class="h4">{t}</h2><p class="small muted">{d}</p></div>
+      ))}
+    </div>
+  </section>
+</Page>
+<style>.grid :global(.icon) { color: var(--accent-text); }</style>

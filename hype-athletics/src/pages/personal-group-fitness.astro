@@ -1,0 +1,46 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="Personal & group training" seoTitle="Personal Training in Dearborn Heights & Wayne" description="Personal training at HYPE Athletics from $35 per session with certified trainers, plus group training and sports performance. Free fitness assessment."
+  eyebrow="Fitness" lede="Train with certified personal trainers who build a plan around your goals: exercise selection, nutrition and regular check-ins on your progress."
+  photo="dh-training" photoAlt="A trainer working with a member on a cable machine">
+  <div slot="hero" class="btn-row">
+    <a href="tel:+13134360043" class="btn btn-primary btn-lg"><Icon name="Phone" size={16} />Book a free assessment</a>
+    <a href="/our-trainers/" class="btn btn-secondary btn-lg">Meet the trainers</a>
+  </div>
+  <section class="section">
+    <div class="wrap grid grid-3">
+      <div class="card card-pad stack-16 price-card">
+        <p class="eyebrow red">Personal training</p>
+        <p><span class="display big">$35</span><span class="muted small"> / session and up</span></p>
+        <p class="small muted">Each session is at least one hour. Rates vary by trainer.</p>
+      </div>
+      <div class="card card-pad stack-16">
+        <p class="eyebrow">Free fitness assessment</p>
+        <ul class="checks small">{['Goal setting', 'Nutrition guidance', 'Cardiovascular endurance', 'Body composition', 'Flexibility', 'Muscular strength & endurance'].map((x) => <li><Icon name="Check" size={14} />{x}</li>)}</ul>
+        <p class="small muted">Includes an orientation to the equipment and exercises to start with.</p>
+      </div>
+      <div class="card card-pad stack-16">
+        <p class="eyebrow">Group training</p>
+        <p class="small muted">Stay motivated with others, get expert-led workouts at a lower cost, and mix it up with HIIT and endurance training. Call for current group times.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section tint">
+    <div class="wrap two">
+      <div class="stack-16">
+        <p class="eyebrow">Sports Performance Division</p>
+        <h2 class="display h2">Train like an athlete</h2>
+        <p class="muted">Science-based training that gives athletes the tools to improve on the field, court, ice or in the pool.</p>
+        <a href="/speed-strength/" class="btn btn-secondary">Speed &amp; strength programs</a>
+      </div>
+      <ul class="checks">{['Periodized strength training', 'Speed & agility development', 'Plyometrics & dynamic flexibility', 'Core development', 'Injury prevention'].map((x) => <li><Icon name="Check" size={16} />{x}</li>)}</ul>
+    </div>
+  </section>
+</Page>
+<style>
+  .big { font-size: var(--t-64); line-height: 1; }
+  .two { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 900px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } }
+</style>

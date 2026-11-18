@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import CtaBand from './CtaBand.astro';
+import { locations, programs, sports, rentals, membership, type LocationId } from '../data/site';
+
+interface Props { id: LocationId; hero: string; heroAlt: string; gallery: { src: string; alt: string }[] }
+const { id, hero, heroAlt, gallery } = Astro.props;
+const l = locations[id];
+const here = programs.filter((p) => p.location === id);
+const sportList = sports.filter((s) => here.some((p) => p.sport === s.id));
+const plans = membership.locations.find((m) => m.id === id);
+const rent = rentals[id];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': id === 'belle-isle' ? 'SportsActivityLocation' : ['SportsActivityLocation', 'ExerciseGym'],
+  name: l.fullName,
+  parentOrganization: { '@type': 'NGO', name: 'HYPE Athletics' },
+  telephone: l.phone,
+  url: new URL(`/${id}/`, Astro.site).href,
+  address: { '@type': 'PostalAddress', streetAddress: l.street, addressLocality: l.city, addressRegion: l.region, postalCode: l.zip, addressCountry: 'US' },
+  ...(l.hours ? { openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '06:00', closes: '23:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday', 'Sunday'], opens: '08:00', closes: '20:00' },
+  ] } : {}),
+};
+---
+<Base title={`${l.fullName}, ${l.city} ${l.region}`} description={`${l.fullName} at ${l.street}, ${l.city}, ${l.region} ${l.zip}. ${l.summary}`.slice(0, 158)} ogPhoto={hero} jsonLd={jsonLd}>
+  <PageHero eyebrow={`Location · ${l.city}, ${l.region}`} title={l.name} lede={l.summary} photo={hero} photoAlt={heroAlt}>
+    <dl class="facts info">
+      <div><dt>Address</dt><dd><a href={l.mapsUrl} rel="noopener" target="_blank">{l.street}, {l.city}, {l.region} {l.zip}</a></dd></div>
+      <div><dt>Phone</dt><dd class="mono"><a href={`tel:${l.phoneHref}`}>{l.phone}</a></dd></div>
+      {l.hours && <div><dt>Hours</dt><dd class="mono">{l.hours.map((h) => <span class="hrow">{h.days}: {h.time}</span>)}</dd></div>}
+    </dl>
+    <div class="btn-row" style="margin-top:24px">
+      <a href={l.mapsUrl} class="btn btn-primary" rel="noopener" target="_blank"><Icon name="Navigation" size={16} />Get directions</a>
+      <a href={`tel:${l.phoneHref}`} class="btn btn-secondary"><Icon name="Phone" size={16} />Call</a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class:list={['wrap', { two: gallery.length > 0 }]}>
+      <div>
+        <p class="eyebrow">Facilities</p>
+        <h2 class="display h2">What’s here</h2>
+        <ul class="checks" style="margin-top:24px">{l.highlights.map((h) => <li><Icon name="Check" size={16} />{h}</li>)}</ul>
+      </div>
+      {gallery.length > 0 && <div class="gallery">
+        {gallery.map((g, i) => <div class:list={['g', `g${i}`]}><Photo src={g.src} alt={g.alt} sizes="(min-width: 960px) 320px, 50vw" widths={[360, 640]} /></div>)}
+      </div>}
+    </div>
+  </section>
+
+  {sportList.length > 0 && (
+    <section class="section tint">
+      <div class="wrap">
+        <div class="sec-head">
+          <div><p class="eyebrow">Programs at {l.name}</p><h2 class="display h2">{here.length} programs open</h2></div>
+          <a href={`/programs/?loc=${id}`} class="btn btn-secondary">See them all<Icon name="ArrowRight" size={16} /></a>
+        </div>
+        <ul class="sport-links">
+          {sportList.map((s) => {
+            const n = here.filter((p) => p.sport === s.id).length;
+            return <li><a href={`/${s.id}/`} class="card"><span class="h4">{s.name}</span><span class="mono small muted">{n}</span><Icon name="ArrowRight" size={16} /></a></li>;
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {plans && (
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <div><p class="eyebrow">Membership</p><h2 class="display h2">Join {l.name}</h2><p class="lede">{plans.access}. Includes free group fitness classes and child care.</p></div>
+          <a href="/membership/" class="btn btn-primary">Compare plans</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Plan</th><th class="num">Bank draft (EFT)</th><th class="num">Credit card</th></tr></thead>
+            <tbody>{plans.tiers.map((t) => <tr><td>{t.name}</td><td class="num">${t.eft}/mo</td><td class="num">${t.card}/mo</td></tr>)}</tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {id === 'belle-isle' && 'rates' in rent && (
+    <section class="section">
+      <div class="wrap grid grid-2">
+        <div>
+          <p class="eyebrow">Field &amp; court rentals</p>
+          <h2 class="display h2">Rates</h2>
+          <div class="table-wrap" style="margin-top:24px">
+            <table>
+              <thead><tr><th>Field / court</th><th class="num">Per hour</th><th class="num">Daily (12 h)</th></tr></thead>
+              <tbody>{rent.rates.map((r) => <tr><td>{r.item}</td><td class="num">{r.hourly}</td><td class="num">{r.daily || '—'}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <div class="table-wrap" style="margin-top:16px">
+            <table>
+              <thead><tr><th>Add-on</th><th class="num">Price</th></tr></thead>
+              <tbody>{rent.extras.map((r) => <tr><td>{r.item}</td><td class="num">{r.price}</td></tr>)}</tbody>
+            </table>
+          </div>
+        </div>
+        <div class="stack-16">
+          <p class="eyebrow">Permits</p>
+          <h2 class="display h2">How booking works</h2>
+          <p class="muted">{rent.blurb}</p>
+          <ul class="checks small">{rent.rules.map((r) => <li><Icon name="Check" size={14} />{r}</li>)}</ul>
+          <div class="card card-pad contact">
+            <p class="eyebrow">Rental contact</p>
+            <p class="h4">{rent.contact.name}</p>
+            <p class="small"><a href={`mailto:${rent.contact.email}`}>{rent.contact.email}</a><br /><a href={`tel:${rent.contact.phoneHref}`} class="mono">{rent.contact.phone}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaBand title={id === 'belle-isle' ? 'Book a field' : `Host your event at ${l.name}`} text={rent.blurb}>
+    <a href="/rentals/" class="btn btn-primary btn-lg">Rental details</a>
+    <a href={`mailto:${rent.contact.email}`} class="btn btn-secondary btn-lg">Email {rent.contact.name.split(' ')[0]}</a>
+  </CtaBand>
+</Base>
+
+<style>
+  .info { margin-top: 24px; }
+  .info div { grid-template-columns: 72px minmax(0, 1fr); }
+  .info a { color: var(--fg); }
+  .hrow { display: block; }
+  .two { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .two { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 64px; align-items: start; } }
+  .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .g { border-radius: var(--r-12); overflow: hidden; aspect-ratio: 4 / 3; }
+  .g0 { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+  .sport-links { list-style: none; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .sport-links a { display: flex; align-items: center; gap: 12px; padding: 16px 20px; color: var(--fg); }
+  .sport-links .h4 { font-size: var(--t-16); flex: 1; }
+  .sport-links :global(.icon) { color: var(--fg-3); }
+  .contact .h4 { margin-top: 6px; }
+  .contact .small { margin-top: 6px; line-height: 1.7; }
+</style>

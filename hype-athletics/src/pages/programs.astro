@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import Icon from '../components/Icon.astro';
+import { programs, sports } from '../data/site';
+const order = sports.map((s) => s.id);
+const sorted = [...programs].sort((a, b) => order.indexOf(a.sport) - order.indexOf(b.sport));
+const special = [
+  { title: 'Travel Basketball (AAU)', href: '/travel-basketball-aau/', text: 'Competitive travel teams. Join the interest list for tryouts.' },
+  { title: 'HYPE Wolves Soccer', href: '/hype-wolves-soccer/', text: 'Travel soccer with Michigan Wolves. Tryouts and interest form.' },
+  { title: 'Summer Discovery', href: '/summer-discovery/', text: 'Free 5-week summer program for grades 1–10 at 10 sites.' },
+  { title: 'Personal & Group Training', href: '/personal-group-fitness/', text: 'Certified trainers from $35 a session. Free fitness assessment.' },
+];
+---
+<Base title="Programs & Registration" description="Find HYPE Athletics youth and adult programs by sport and location: basketball, soccer, volleyball, martial arts, boxing, wrestling, football, pickleball, gymnastics and more.">
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow red">Programs</p>
+      <h1 class="display h1">Find a program</h1>
+      <p class="lede">Every program open for registration at HYPE Dearborn Heights and HYPE Wayne. Filter by sport or location, then register online. You can also register in person at the front desk.</p>
+
+      <form class="filters card" data-filters onsubmit="return false">
+        <div class="field">
+          <label for="q">Search</label>
+          <div class="search"><Icon name="Search" size={16} /><input id="q" name="q" type="search" placeholder="e.g. futsal, ages 7, league" autocomplete="off" /></div>
+        </div>
+        <div class="field">
+          <label for="sport">Sport</label>
+          <select id="sport" name="sport">
+            <option value="">All sports</option>
+            {sports.map((s) => <option value={s.id}>{s.name}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="loc">Location</label>
+          <select id="loc" name="loc">
+            <option value="">All locations</option>
+            <option value="dearborn-heights">Dearborn Heights</option>
+            <option value="wayne">Wayne</option>
+          </select>
+        </div>
+      </form>
+      <p class="count small muted" aria-live="polite" data-count>{programs.length} programs</p>
+    </div>
+  </section>
+
+  <section class="section results">
+    <div class="wrap">
+      <div class="grid grid-3" data-list>
+        {sorted.map((p) => <ProgramCard p={p} />)}
+      </div>
+      <div class="empty card card-pad" data-empty hidden>
+        <Icon name="SearchX" size={22} />
+        <p class="h4">No programs match those filters</p>
+        <p class="small muted">Try another sport or location, or call us at <a href="tel:+13134360043">(313) 436-0043</a> and we’ll help you find the right fit.</p>
+        <button class="btn btn-secondary btn-sm" type="button" data-reset>Clear filters</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Also at HYPE</p><h2 class="display h2">Teams, camps &amp; training</h2></div></div>
+      <div class="grid grid-4">
+        {special.map((s) => (
+          <a href={s.href} class="card card-pad sp">
+            <h3 class="h4">{s.title}</h3>
+            <p class="small muted">{s.text}</p>
+            <span class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-filters]')!;
+  const q = form.querySelector<HTMLInputElement>('#q')!;
+  const sport = form.querySelector<HTMLSelectElement>('#sport')!;
+  const loc = form.querySelector<HTMLSelectElement>('#loc')!;
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-list] > article')];
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  const params = new URLSearchParams(location.search);
+  sport.value = params.get('sport') ?? '';
+  loc.value = params.get('loc') ?? '';
+  q.value = params.get('q') ?? '';
+  const run = () => {
+    const terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let n = 0;
+    for (const c of cards) {
+      const ok = (!sport.value || c.dataset.sport === sport.value)
+        && (!loc.value || c.dataset.loc === loc.value)
+        && terms.every((t) => c.dataset.text!.includes(t));
+      c.hidden = !ok; if (ok) n++;
+    }
+    count.textContent = `${n} program${n === 1 ? '' : 's'}`;
+    empty.hidden = n > 0;
+    const u = new URL(location.href);
+    for (const [k, v] of [['sport', sport.value], ['loc', loc.value], ['q', q.value.trim()]]) v ? u.searchParams.set(k, v) : u.searchParams.delete(k);
+    history.replaceState(null, '', u);
+  };
+  form.addEventListener('input', run);
+  document.querySelector('[data-reset]')!.addEventListener('click', () => { sport.value = ''; loc.value = ''; q.value = ''; run(); });
+  run();
+</script>
+
+<style>
+  .head { padding-block: 40px 24px; }
+  @media (min-width: 960px) { .head { padding-block: 64px 32px; } }
+  .head .h1 { margin-top: 12px; }
+  .head .lede { margin-top: 16px; }
+  .filters { display: grid; gap: 12px; padding: 16px; margin-top: 28px; }
+  @media (min-width: 720px) { .filters { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); } }
+  .field { display: grid; gap: 6px; min-width: 0; }
+  .field label { font-size: var(--t-12); font-weight: 500; color: var(--fg-2); }
+  .search { position: relative; }
+  .search :global(.icon) { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--fg-3); }
+  input, select {
+    height: 44px; width: 100%; border-radius: var(--r-8); border: 1px solid var(--line-strong);
+    background: var(--surface); color: var(--fg); font: inherit; font-size: var(--t-16); padding: 0 12px;
+  }
+  input { padding-left: 36px; }
+  select { appearance: none; -webkit-appearance: none; padding-right: 36px;
+    background-image: linear-gradient(45deg, transparent 50%, var(--fg-3) 50%), linear-gradient(135deg, var(--fg-3) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 19px, calc(100% - 13px) 19px; background-size: 5px 5px; background-repeat: no-repeat; }
+  input:focus-visible, select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .count { margin-top: 16px; }
+  .results { padding-top: 8px; }
+  .empty { display: grid; justify-items: start; gap: 10px; max-width: 520px; }
+  .empty > :global(.icon) { color: var(--fg-3); }
+  .sp { display: flex; flex-direction: column; gap: 8px; color: var(--fg); }
+  .sp .link-arrow { margin-top: auto; padding-top: 8px; }
+</style>

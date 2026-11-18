@@ -1,0 +1,86 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { membership, locations } from '../data/site';
+---
+<Page title="Membership" seoTitle="Gym Membership Prices in Dearborn Heights & Wayne"
+  description="HYPE Athletics membership plans from $25/month: individual, couple, family and senior (59+). Includes group fitness classes and child care. SilverSneakers and other insurance plans accepted."
+  eyebrow="Membership" lede="Gym, courts, group fitness classes and child care at prices built for families. Pick a home center and a plan."
+  photo="dh-fitness" photoAlt="Treadmills and training turf at HYPE Dearborn Heights">
+  <div slot="hero" class="btn-row">
+    <a href={membership.signupUrl} class="btn btn-primary btn-lg" rel="noopener" target="_blank">Join online · {membership.trial}<Icon name="ArrowUpRight" size={16} /></a>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="plans">
+        {membership.locations.map((m) => (
+          <div class="plan card">
+            <div class="plan-head">
+              <p class="eyebrow">{locations[m.id].fullName}</p>
+              <h2 class="display h2">{locations[m.id].name}</h2>
+              <p class="small muted">{m.access}</p>
+            </div>
+            <ul class="tiers">
+              {m.tiers.map((t) => (
+                <li>
+                  <span class="name">{t.name}</span>
+                  <span class="price"><b class="display">${t.eft}</b><span class="small muted">/mo</span></span>
+                  <span class="card-price mono small muted">${t.card}/mo by credit card</span>
+                </li>
+              ))}
+            </ul>
+            <a href={membership.signupUrl} class="btn btn-primary" rel="noopener" target="_blank">Join {locations[m.id].name}<Icon name="ArrowUpRight" size={16} /></a>
+          </div>
+        ))}
+      </div>
+      <p class="small muted note">Prices shown are for monthly bank draft (EFT). Credit card autopay adds $3/month. Senior plans are for members 59 and older.</p>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap grid grid-3">
+      <div class="stack-16">
+        <Icon name="BadgeCheck" size={22} />
+        <h2 class="display h3">Every plan includes</h2>
+        <ul class="checks small">{membership.included.map((i) => <li><Icon name="Check" size={14} />{i}</li>)}</ul>
+      </div>
+      <div class="stack-16">
+        <Icon name="ShieldPlus" size={22} />
+        <h2 class="display h3">Insurance may cover it</h2>
+        <p class="small muted">HYPE accepts these fitness benefit programs, often at no cost to you:</p>
+        <ul class="ins">{membership.insurance.map((i) => <li class="chip">{i}</li>)}</ul>
+        <a href="/silver-fitness-training/" class="link-arrow">How it works<Icon name="ArrowRight" size={14} /></a>
+      </div>
+      <div class="stack-16">
+        <Icon name="Ticket" size={22} />
+        <h2 class="display h3">Guest passes</h2>
+        <p class="small muted">{membership.guestPass} Guests sign a liability waiver at the front desk.</p>
+        <a href="/policies-2/" class="link-arrow">Read our policies<Icon name="ArrowRight" size={14} /></a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Questions before you join?" text="Stop by the front desk for a tour, or call and we’ll walk you through the plans.">
+    <a href="tel:+13134360043" class="btn btn-primary btn-lg"><Icon name="Phone" size={16} />Dearborn Heights</a>
+    <a href="tel:+17347217400" class="btn btn-secondary btn-lg"><Icon name="Phone" size={16} />Wayne</a>
+  </CtaBand>
+</Page>
+<style>
+  .plans { display: grid; gap: 24px; }
+  @media (min-width: 900px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .plan { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+  .plan-head .h2 { margin-top: 8px; }
+  .plan-head .small { margin-top: 8px; }
+  .tiers { list-style: none; border-top: 1px solid var(--line); }
+  .tiers li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .name { font-weight: 500; }
+  .price { text-align: right; }
+  .price b { font-size: var(--t-32); line-height: 1; font-weight: 600; }
+  .card-price { grid-column: 1 / -1; font-size: var(--t-12); }
+  .plan .btn { align-self: flex-start; }
+  .note { margin-top: 16px; }
+  .ins { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .grid > div > :global(.icon) { color: var(--accent-text); }
+</style>

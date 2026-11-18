@@ -1,0 +1,68 @@
+---
+import Page from '../components/Page.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { org } from '../data/site';
+---
+<Page title="Our story" seoTitle="About HYPE Athletics" description="HYPE Athletics is a Wayne County nonprofit founded in 2001 by Ali Sayed to provide drug-free, violence-free sports and community programs for kids and adults."
+  eyebrow="About HYPE · Since 2001" lede="HYPE stands for Helping Youth Progress & Excel. We are a nonprofit that uses sports, education and mentoring to build healthier, safer communities across Wayne County."
+  photo="team-girls" photoAlt="A HYPE girls basketball team holding trophies with their coach" position="center 35%">
+  <section class="section">
+    <div class="wrap two">
+      <div class="prose">
+        <h2 class="display h2">How it started</h2>
+        <p>In 2001, {org.founder} brought together young leaders, business professionals and officials to start a movement for tolerance, unity and inclusion through drug-free and violence-free programs. HYPE was built to reflect Metro Detroit’s diverse cultural heritage, with a model that puts community needs first and keeps spending lean.</p>
+        <p>As recreation centers across the country closed, including more than 30 in Detroit alone, HYPE stayed committed to accessible, low-cost programs. Strong partnerships with local governments, schools and community organizations keep that work going today.</p>
+        <h2 class="display h2">What we do</h2>
+        <p>HYPE works with federal, state and local partners to deliver community programs: youth and adult athletics, health services, educational support, ACT/SAT prep, career development, mentoring, life skills and drug prevention. Projects like Feed Detroit, Tutor Challenge and the Teach and Feed Greenhouse extend that work beyond the court.</p>
+      </div>
+      <aside class="mission card card-pad">
+        <p class="eyebrow red">Our mission</p>
+        <p class="m-text">{org.mission}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Today</p><h2 class="display h2">HYPE by the numbers</h2></div></div>
+      <dl class="nums">
+        <div><dt>Founded</dt><dd class="display">2001</dd></div>
+        <div><dt>Recreation centers</dt><dd class="display">2</dd></div>
+        <div><dt>Acres managed on Belle Isle</dt><dd class="display">38</dd></div>
+        <div><dt>Basketball courts in Dearborn Heights</dt><dd class="display">5</dd></div>
+        <div><dt>Free Summer Discovery sites</dt><dd class="display">10</dd></div>
+        <div><dt>Sports and training programs</dt><dd class="display">12</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-3">
+      <a href="/meet-the-team/" class="card card-pad link-card"><Icon name="Users" size={20} /><h2 class="h4">Leadership</h2><p class="small muted">The team that runs HYPE day to day.</p></a>
+      <a href="/our-trainers/" class="card card-pad link-card"><Icon name="Megaphone" size={20} /><h2 class="h4">Trainers &amp; coaches</h2><p class="small muted">Certified personal trainers and basketball coaches.</p></a>
+      <a href="/careers/" class="card card-pad link-card"><Icon name="Briefcase" size={20} /><h2 class="h4">Careers</h2><p class="small muted">Coach, mentor or work the front desk with us.</p></a>
+    </div>
+  </section>
+
+  <CtaBand title="Support the mission" text="Donations fund scholarships, free summer camp and low-cost leagues.">
+    <a href="/donate/" class="btn btn-primary btn-lg"><Icon name="Heart" size={16} />Donate</a>
+    <a href="/volunteer/" class="btn btn-secondary btn-lg">Volunteer</a>
+  </CtaBand>
+</Page>
+<style>
+  .two { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .two { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 64px; align-items: start; } }
+  .prose h2 { margin-top: 40px; }
+  .prose h2:first-child { margin-top: 0; }
+  .mission { position: sticky; top: calc(var(--header-h) + 24px); padding: 28px; border-left: 3px solid var(--accent); }
+  .m-text { margin-top: 12px; font-size: var(--t-18); line-height: 1.55; }
+  .nums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-12); overflow: hidden; margin: 0; }
+  @media (min-width: 900px) { .nums { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .nums div { background: var(--surface); padding: 24px; display: flex; flex-direction: column-reverse; gap: 8px; }
+  .nums dt { font-size: var(--t-13); color: var(--fg-3); }
+  .nums dd { margin: 0; font-size: var(--t-52); line-height: .9; font-variant-numeric: tabular-nums; }
+  .link-card { display: flex; flex-direction: column; gap: 8px; color: var(--fg); }
+  .link-card > :global(.icon) { color: var(--accent-text); }
+</style>

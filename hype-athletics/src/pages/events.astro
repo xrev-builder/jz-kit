@@ -1,0 +1,50 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { events, locations } from '../data/site';
+const ld = events.filter((e) => e.location).map((e) => ({
+  '@context': 'https://schema.org', '@type': 'Event', name: e.title, startDate: e.date,
+  eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@type': 'Place', name: locations[e.location!].fullName, address: `${locations[e.location!].street}, ${locations[e.location!].city}, MI ${locations[e.location!].zip}` },
+  organizer: { '@type': 'NGO', name: 'HYPE Athletics', url: 'https://hypeathletics.org/' },
+}));
+---
+<Page title="Events" seoTitle="Events at HYPE Athletics" description="Upcoming HYPE Athletics events: the 26th Anniversary Gala, Summer Discovery enrollment, tournaments and community events in Dearborn Heights and Wayne."
+  eyebrow="Events" lede="Galas, tournaments, community nights and enrollment dates. Court closures for tournaments are listed on Facility Updates." jsonLd={ld as any}>
+  <section class="section">
+    <div class="wrap stack-16">
+      {events.map((e) => {
+        const d = new Date(e.date + 'T12:00:00');
+        return (
+          <article class="ev card">
+            <div class="date mono" aria-hidden="true"><span>{d.toLocaleString('en-US', { month: 'short' })}</span><b class="display">{d.getDate()}</b><span>{d.getFullYear()}</span></div>
+            <div class="stack-8">
+              <h2 class="h4">{e.title}</h2>
+              <p class="small mono muted">{e.dateLabel}{e.location ? ` · HYPE ${locations[e.location].name}` : ''}</p>
+              <p class="muted">{e.blurb}</p>
+              {e.contact && <p class="small">{e.contact}</p>}
+              {e.href && <a href={e.href} class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></a>}
+            </div>
+          </article>
+        );
+      })}
+      <div class="card card-pad more">
+        <Icon name="Instagram" size={20} />
+        <div>
+          <p class="h4">Tournaments, clinics and community nights</p>
+          <p class="small muted">We announce events first on Instagram. Follow <a href="https://www.instagram.com/hypeathletics/" rel="noopener" target="_blank">@hypeathletics</a> so you don’t miss registration windows.</p>
+        </div>
+      </div>
+      <p class="small muted">Planning your own event? See <a href="/rentals/">rentals</a> for courts, fields and our event hall.</p>
+    </div>
+  </section>
+</Page>
+<style>
+  .ev { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 24px; padding: 24px; }
+  .date { display: grid; justify-items: center; align-self: start; padding: 12px 0; border-radius: var(--r-10); background: var(--surface-2); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
+  .date b { font-size: var(--t-40); line-height: 1; color: var(--fg); }
+  .h4 { font-size: var(--t-21); }
+  .more { display: flex; gap: 14px; align-items: flex-start; }
+  .more > :global(.icon) { color: var(--fg-3); margin-top: 2px; }
+  .more .small { margin-top: 4px; }
+</style>

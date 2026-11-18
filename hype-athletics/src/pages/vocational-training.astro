@@ -1,0 +1,21 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+const items = [
+  ['GraduationCap', 'Post-secondary counseling', 'Help planning prerequisite coursework, financial aid, scholarship resources and an introduction to disability support services in college.'],
+  ['Compass', 'Job exploration', 'Explore different jobs, find what interests you and learn the abilities you need to succeed.'],
+  ['Megaphone', 'Self-advocacy', 'Know yourself and your rights, disclose a disability, request accommodations, make decisions, set goals and grow as a leader.'],
+  ['Briefcase', 'Workplace readiness', 'Social and independent-living skills to prepare for, apply for, get and keep a job.'],
+  ['Hammer', 'Work-based learning', 'Hands-on learning in real workplaces: after-school work, summer jobs, internships and volunteering.'],
+];
+---
+<Page title="Vocational training" seoTitle="Vocational Training & Job Readiness" description="HYPE Athletics vocational training: post-secondary counseling, job exploration, self-advocacy, workplace readiness and work-based learning."
+  eyebrow="Community · Career" lede="Pre-employment services that help young people plan their next step after school and build the skills to get and keep a job.">
+  <section class="section">
+    <div class="wrap grid grid-3">
+      {items.map(([i, t, d]) => <div class="card card-pad stack-8"><Icon name={i as any} size={20} /><h2 class="h4">{t}</h2><p class="small muted">{d}</p></div>)}
+      <div class="card card-pad stack-8 cta"><h2 class="h4">Get started</h2><p class="small muted">Call to learn about eligibility and enrollment.</p><a href="tel:+13134360043" class="btn btn-primary btn-sm"><Icon name="Phone" size={14} />(313) 436-0043</a></div>
+    </div>
+  </section>
+</Page>
+<style>.grid :global(.icon) { color: var(--accent-text); } .cta .btn { align-self: start; justify-self: start; }</style>

@@ -1,0 +1,28 @@
+---
+import Page from '../components/Page.astro';
+import Photo from '../components/Photo.astro';
+import { leadership } from '../data/site';
+---
+<Page title="Leadership" seoTitle="Leadership Team" description="Meet the HYPE Athletics leadership team: Founder and CEO Ali Sayed, COO Bilal Amen, CFO Maha Sabbagh and CAO Ali Faraj."
+  eyebrow="About · Leadership" lede="The people responsible for HYPE’s centers, programs and partnerships.">
+  <section class="section">
+    <div class="wrap">
+      <ul class="people">
+        {leadership.map((p) => (
+          <li class="card">
+            <div class="ph"><Photo src={p.photo} alt={`Portrait of ${p.name}`} sizes="(min-width: 960px) 280px, 50vw" widths={[300, 450]} position="center 20%" /></div>
+            <div class="body"><h2 class="h4">{p.name}</h2><p class="small muted">{p.role}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Page>
+<style>
+  .people { list-style: none; display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 960px) { .people { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } }
+  .people li { overflow: hidden; }
+  .ph { aspect-ratio: 1; background: var(--surface-2); }
+  .body { padding: 16px; }
+  .body .small { margin-top: 4px; }
+</style>

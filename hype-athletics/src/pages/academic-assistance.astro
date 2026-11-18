@@ -1,0 +1,28 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="Academic assistance" seoTitle="Free After-School Homework Club" description="Free after-school Homework Club and tutoring at HYPE Dearborn Heights for kids on a HYPE membership: homework help, STEM, robotics, art and LEGO."
+  eyebrow="Community · Education" lede="Work out while your kids learn. Our after-school Enrichment & Homework Club is free for children listed on a HYPE membership.">
+  <section class="section">
+    <div class="wrap grid grid-2">
+      <div class="card card-pad">
+        <p class="eyebrow red">Enrichment &amp; Homework Club</p>
+        <dl class="facts" style="margin-top:16px">
+          <div><dt>Who</dt><dd>Kids ages 6–12 listed on a HYPE membership</dd></div>
+          <div><dt>When</dt><dd>Monday – Thursday, 5–8 PM</dd></div>
+          <div><dt>Where</dt><dd>HYPE Dearborn Heights classroom</dd></div>
+          <div><dt>Cost</dt><dd>Free for members</dd></div>
+          <div><dt>Calendar</dt><dd>Follows the Dearborn Public Schools calendar</dd></div>
+        </dl>
+      </div>
+      <div class="stack-16">
+        <h2 class="display h3">What kids do</h2>
+        <ul class="checks">
+          {['Homework support from tutors', 'STEM activities', 'Robotics', 'Art projects', 'LEGO building'].map((x) => <li><Icon name="Check" size={16} />{x}</li>)}
+        </ul>
+        <a href="/membership/" class="btn btn-primary">Become a member</a>
+      </div>
+    </div>
+  </section>
+</Page>

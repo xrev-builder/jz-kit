@@ -1,0 +1,36 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+const items = [
+  ['Dumbbell', 'Co-ed gym', 'Dearborn Heights'],
+  ['Users', 'Women-only gym', 'Dearborn Heights'],
+  ['Music', 'Women-only group fitness', 'Dearborn Heights'],
+  ['Trophy', 'Five basketball courts & indoor track', 'Dearborn Heights'],
+  ['Goal', 'Indoor turf soccer complex', 'Dearborn Heights'],
+  ['Salad', 'Personal training & nutrition', 'Dearborn Heights'],
+  ['Coffee', 'HYPE Hoops Café', 'Dearborn Heights'],
+  ['Flame', 'Steam rooms & saunas', 'Men’s and women’s'],
+  ['Swords', 'Martial arts studio', 'Open to non-members'],
+  ['Zap', 'Speed & strength training', 'Both centers'],
+  ['Baby', 'Child care', 'Free for members'],
+  ['BookOpen', 'Homework Club & education', 'Free for members'],
+  ['Tent', 'Camp HYPE & sports camps', 'Seasonal'],
+  ['PartyPopper', 'Event hall (50–400 guests)', 'Wayne'],
+];
+---
+<Page title="Amenities" seoTitle="Gym Amenities & Facilities" description="HYPE Athletics amenities: basketball courts, indoor track, indoor soccer turf, co-ed and women-only gyms, saunas, child care, café and more."
+  eyebrow="Visiting" lede="What you get access to at our recreation centers." photo="dh-gym" photoAlt="Fitness floor with turf lane at HYPE Dearborn Heights">
+  <section class="section">
+    <div class="wrap">
+      <ul class="am">
+        {items.map(([i, t, d]) => <li class="card"><Icon name={i as any} size={20} /><div><p class="h4">{t}</p><p class="small muted">{d}</p></div></li>)}
+      </ul>
+    </div>
+  </section>
+</Page>
+<style>
+  .am { list-style: none; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .am li { display: flex; gap: 14px; align-items: flex-start; padding: 18px; }
+  .am :global(.icon) { color: var(--accent-text); margin-top: 2px; }
+  .h4 { font-size: var(--t-16); }
+</style>

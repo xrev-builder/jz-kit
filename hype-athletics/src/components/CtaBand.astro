@@ -1,0 +1,21 @@
+---
+interface Props { title: string; text?: string }
+const { title, text } = Astro.props;
+---
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <h2 class="display h2">{title}</h2>
+      {text && <p class="lede">{text}</p>}
+    </div>
+    <div class="btn-row"><slot /></div>
+  </div>
+</section>
+<style>
+  .cta-band { background: var(--fg); color: var(--bg); padding-block: 56px; }
+  .inner { display: grid; gap: 24px; align-items: end; }
+  @media (min-width: 900px) { .inner { grid-template-columns: minmax(0, 1fr) auto; } }
+  .lede { color: color-mix(in srgb, var(--bg) 72%, var(--fg)); margin-top: 12px; }
+  .cta-band :global(.btn-secondary) { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--fg)); }
+  .cta-band :global(.btn-secondary:hover) { background: color-mix(in srgb, var(--bg) 10%, var(--fg)); }
+</style>

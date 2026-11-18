@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { sports, programs, locations, gymnastics, type Sport, type LocationId } from '../data/site';
+
+export function getStaticPaths() {
+  return sports.map((s) => ({ params: { sport: s.id }, props: { s } }));
+}
+const { s } = Astro.props as { s: Sport };
+const list = programs.filter((p) => p.sport === s.id);
+const locs = (['dearborn-heights', 'wayne'] as LocationId[]).map((id) => ({ id, items: list.filter((p) => p.location === id) }));
+const where = [...new Set(list.map((p) => locations[p.location].name))].join(' and ');
+const description = `${s.name} at HYPE Athletics${where ? ` in ${where}` : ''}: ${s.intro}`.slice(0, 158);
+const others = sports.filter((x) => x.group === s.group && x.id !== s.id).slice(0, 6);
+---
+<Base title={`${s.name}${where ? ` in ${where}` : ''}`} description={description} ogPhoto={s.photo}>
+  <PageHero eyebrow={s.group === 'adults' ? 'Adult programs' : s.group === 'training' ? 'Training' : 'Youth sports'} title={s.headline} lede={s.intro} photo={s.photo} photoAlt="">
+    <div class="btn-row">
+      <a href="#programs" class="btn btn-primary btn-lg">See {list.length} program{list.length === 1 ? '' : 's'}</a>
+      <a href="/contact-us/" class="btn btn-secondary btn-lg">Ask a question</a>
+    </div>
+  </PageHero>
+
+  <section class="section" id="programs">
+    <div class="wrap stack-24">
+      {locs.map(({ id, items }) => (
+        <div class="loc-block">
+          <div class="loc-head">
+            <h2 class="display h3">{locations[id].name}</h2>
+            <a href={`/${id}/`} class="small muted">{locations[id].street}</a>
+          </div>
+          {items.length ? (
+            <div class="grid grid-3">{items.map((p) => <ProgramCard p={p} showSport={false} showLoc={false} />)}</div>
+          ) : (
+            <div class="zero card card-pad">
+              <Icon name="CalendarClock" size={20} />
+              <div>
+                <p class="h4">No {s.name.toLowerCase()} programs open at {locations[id].name} right now</p>
+                <p class="small muted">New sessions open each season. Follow <a href="https://www.instagram.com/hypeathletics/" rel="noopener" target="_blank">@hypeathletics</a> or call <a href={`tel:${locations[id].phoneHref}`}>{locations[id].phone}</a> to hear first.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+      <p class="small muted">Prefer to sign up in person? Register at the front desk of either center, or call <a href="tel:+13134360043">(313) 436-0043</a>.</p>
+    </div>
+  </section>
+
+  {s.extra === 'gymnastics' && (
+    <section class="section tint">
+      <div class="wrap grid grid-2">
+        <div>
+          <p class="eyebrow">Fridays at HYPE Wayne</p>
+          <h2 class="display h2">Class schedule</h2>
+          <div class="table-wrap" style="margin-top:24px">
+            <table>
+              <thead><tr><th>Time</th><th>Class</th><th>Ages</th></tr></thead>
+              <tbody>{gymnastics.schedule.map((r) => <tr><td class="mono">{r.time}</td><td>{r.name}</td><td>{r.ages || '—'}</td></tr>)}</tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">Monthly rates</p>
+          <h2 class="display h2">Pricing</h2>
+          <div class="table-wrap" style="margin-top:24px">
+            <table>
+              <thead><tr><th>Class</th><th class="num">Price</th></tr></thead>
+              <tbody>{gymnastics.pricing.map((r) => <tr><td>{r.name}</td><td class="num">{r.price}<span class="muted">/{r.per}</span></td></tr>)}</tbody>
+            </table>
+          </div>
+          <p class="small muted" style="margin-top:12px">{gymnastics.fee} Classes are run by the coaches of Michigan Academy of Gymnastics.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {s.extra === 'skillz' && (
+    <section class="section tint">
+      <div class="wrap grid grid-2">
+        <div class="stack-16">
+          <p class="eyebrow">HYPE Skillz · Dearborn Heights</p>
+          <h2 class="display h2">Train with Jamey Petree</h2>
+          <p class="muted">Small-group sessions with a professional trainer who has worked with athletes from youth to the pros. Groups are set by age and skill level. Your first session is free.</p>
+          <ul class="checks small">
+            {['3rd–5th grade boys', '3rd–5th grade girls', 'Middle school boys', 'Middle school girls', 'High school boys', 'High school girls'].map((g) => <li><Icon name="Check" size={14} />{g}</li>)}
+          </ul>
+          <p class="small muted">Call <a href="tel:+13134360043">(313) 436-0043</a> or email <a href="mailto:zsaab@hypeathletics.org">zsaab@hypeathletics.org</a> to book. Session times may change.</p>
+        </div>
+        <div class="stack-16">
+          <p class="eyebrow">Fearless Training · Wayne</p>
+          <h2 class="display h2">Group packages</h2>
+          <p class="muted">Walk-in sessions, 8- and 16-session big-group packages, and small-group training for 2–5 athletes with Joshua Dudley. All options are listed above.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {others.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">Explore more</p>
+        <ul class="others">
+          {others.map((o) => <li><a href={`/${o.id}/`} class="btn btn-secondary">{o.name}</a></li>)}
+          <li><a href="/programs/" class="btn btn-ghost">All programs<Icon name="ArrowRight" size={16} /></a></li>
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <CtaBand title="Not sure where to start?" text="Tell us your child’s age and interests and we’ll point you to the right program.">
+    <a href="tel:+13134360043" class="btn btn-primary btn-lg"><Icon name="Phone" size={16} />(313) 436-0043</a>
+    <a href="/contact-us/" class="btn btn-secondary btn-lg">Contact us</a>
+  </CtaBand>
+</Base>
+
+<style>
+  .loc-block + .loc-block { margin-top: 48px; }
+  .loc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .loc-head a { text-decoration: none; }
+  .zero { display: flex; gap: 14px; align-items: flex-start; }
+  .zero > :global(.icon) { color: var(--fg-3); margin-top: 2px; }
+  .zero .small { margin-top: 4px; }
+  .others { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+</style>

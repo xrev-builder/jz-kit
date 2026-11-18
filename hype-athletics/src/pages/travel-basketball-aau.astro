@@ -1,0 +1,29 @@
+---
+import Page from '../components/Page.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="Travel basketball (AAU)" seoTitle="AAU Travel Basketball" description="HYPE AAU travel basketball: high-level training, skill development and regional and national tournament play for competitive players."
+  eyebrow="Teams · Basketball" lede="Competitive players elevate their game through high-level training, skill development and regional and national AAU tournament play."
+  photo="team-elite" photoAlt="HYPE Elite AAU players in pinstripe jerseys with their coach">
+  <div slot="hero" class="btn-row"><a href="https://docs.google.com/forms/d/e/1FAIpQLSe13dk26CW5EcuuLU-H_dUXloaev1ieKHS9LyrfsCinle_7HA/viewform" class="btn btn-primary btn-lg" rel="noopener" target="_blank">Join the interest list<Icon name="ArrowUpRight" size={16} /></a></div>
+  <section class="section">
+    <div class="wrap two">
+      <div class="stack-16">
+        <h2 class="display h2">What to expect</h2>
+        <p class="muted">Experienced coaches emphasize fundamentals, teamwork and game IQ. Teams compete on regional and national AAU circuits, giving serious players exposure and room to grow. The program builds discipline, resilience and leadership on and off the court.</p>
+        <a href="/basketball-training/" class="link-arrow">Also see small-group basketball training<Icon name="ArrowRight" size={14} /></a>
+      </div>
+      <div class="photos">
+        <div><Photo src="team-aau" alt="A HYPE AAU boys team on the court" sizes="(min-width: 900px) 280px, 50vw" widths={[320, 640]} /></div>
+        <div><Photo src="team-girls" alt="A HYPE girls team holding tournament trophies" sizes="(min-width: 900px) 280px, 50vw" widths={[320, 640]} /></div>
+      </div>
+    </div>
+  </section>
+</Page>
+<style>
+  .two { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 900px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } }
+  .photos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .photos > div { aspect-ratio: 4 / 5; border-radius: var(--r-12); overflow: hidden; }
+</style>

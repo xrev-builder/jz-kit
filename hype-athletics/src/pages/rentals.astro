@@ -1,0 +1,56 @@
+---
+import Page from '../components/Page.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import { rentals, locations } from '../data/site';
+const spaces = [
+  { id: 'dearborn-heights' as const, photo: 'dh-courts', alt: 'Hardwood courts at HYPE Dearborn Heights', title: 'Courts & gym', form: rentals['dearborn-heights'].formUrl },
+  { id: 'wayne' as const, photo: 'wayne-hall', alt: 'The Wayne event hall set for a banquet', title: 'Event hall' },
+  { id: 'belle-isle' as const, photo: 'belle-isle', alt: 'Ball diamonds at Belle Isle', title: 'Fields & courts' },
+];
+---
+<Page title="Rentals" seoTitle="Court, Field & Event Hall Rentals" description="Rent basketball courts in Dearborn Heights, an event hall for 50–400 guests in Wayne, or fields and courts at the Belle Isle Athletic Complex."
+  eyebrow="Rentals" lede="Tournaments, practices, parties, banquets and league play. Choose a location and send an inquiry. Our rental coordinators reply directly.">
+  <section class="section">
+    <div class="wrap stack-24">
+      {spaces.map((s) => {
+        const r = rentals[s.id];
+        return (
+          <article class="space card">
+            <div class="img"><Photo src={s.photo} alt={s.alt} sizes="(min-width: 960px) 460px, 100vw" widths={[480, 920]} /></div>
+            <div class="body">
+              <p class="eyebrow">{locations[s.id].name} · {s.title}</p>
+              <h2 class="display h3">{locations[s.id].fullName}</h2>
+              <p class="muted">{r.blurb}</p>
+              {'idealFor' in r && <ul class="tags">{r.idealFor.map((t) => <li class="chip">{t}</li>)}</ul>}
+              <div class="contact small">
+                <span><Icon name="User" size={14} />{r.contact.name}</span>
+                <a href={`mailto:${r.contact.email}`}><Icon name="Mail" size={14} />{r.contact.email}</a>
+                <a href={`tel:${r.contact.phoneHref}`} class="mono"><Icon name="Phone" size={14} />{r.contact.phone}</a>
+              </div>
+              <div class="btn-row">
+                {s.form
+                  ? <a href={s.form} class="btn btn-primary" rel="noopener" target="_blank">Send an inquiry<Icon name="ArrowUpRight" size={16} /></a>
+                  : <a href={`mailto:${r.contact.email}?subject=${encodeURIComponent(`Rental inquiry: ${locations[s.id].name}`)}`} class="btn btn-primary">Email an inquiry</a>}
+                {s.id === 'belle-isle' && <a href="/belle-isle/" class="btn btn-secondary">Rates &amp; permits</a>}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+      <p class="small muted">For Wayne inquiries, include your preferred and alternate dates, start and end times, guest count, event type and whether you’d like catering.</p>
+    </div>
+  </section>
+</Page>
+<style>
+  .space { display: grid; overflow: hidden; }
+  @media (min-width: 900px) { .space { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+  .img { aspect-ratio: 16 / 10; }
+  @media (min-width: 900px) { .img { aspect-ratio: auto; min-height: 100%; } }
+  .body { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .contact { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--fg-2); }
+  .contact > * { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+  .btn-row { margin-top: 4px; }
+</style>

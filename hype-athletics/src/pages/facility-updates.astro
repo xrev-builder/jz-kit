@@ -1,0 +1,46 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { closures2026 } from '../data/site';
+---
+<Page title="Facility updates" seoTitle="Facility Updates & Closures" description="HYPE Athletics holiday closures, court closures for tournaments and facility updates for Dearborn Heights and Wayne."
+  eyebrow="Visiting" lede="Holiday closures and court closures for tournaments. Check here before you head over.">
+  <section class="section">
+    <div class="wrap stack-24 narrow">
+      <div>
+        <p class="eyebrow">Upcoming closures</p>
+        <ul class="list" data-closures>
+          {closures2026.facility.map((c) => {
+            const d = new Date(c.date + 'T12:00:00');
+            return (
+              <li class="card" data-date={c.date}>
+                <span class="mono when">{d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                <span class="h4">{c.label}</span>
+                <span class="chip">All centers closed</span>
+              </li>
+            );
+          })}
+        </ul>
+        <p class="small muted none" data-none hidden>No closures scheduled right now.</p>
+      </div>
+      <div class="card card-pad note">
+        <Icon name="Info" size={20} />
+        <p class="small muted">Courts in Dearborn Heights close on some weekends for tournaments. We post court closures on <a href="https://www.instagram.com/hypeathletics/" rel="noopener" target="_blank">Instagram</a> and at the front desk. When in doubt, call <a href="tel:+13134360043">(313) 436-0043</a>.</p>
+      </div>
+    </div>
+  </section>
+</Page>
+<script>
+  const today = new Date().toISOString().slice(0, 10);
+  const items = [...document.querySelectorAll<HTMLElement>('[data-closures] li')];
+  items.forEach((li) => { if (li.dataset.date! < today) li.hidden = true; });
+  (document.querySelector('[data-none]') as HTMLElement).hidden = items.some((li) => !li.hidden);
+</script>
+<style>
+  .list { list-style: none; display: grid; gap: 8px; margin-top: 12px; }
+  .list li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 20px; }
+  .when { font-size: var(--t-13); color: var(--fg-3); min-width: 140px; }
+  .list .h4 { font-size: var(--t-16); flex: 1; }
+  .note { display: flex; gap: 14px; }
+  .note > :global(.icon) { color: var(--fg-3); }
+</style>

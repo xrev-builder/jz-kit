@@ -1,0 +1,342 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import LocationCard from '../components/LocationCard.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { programs, sports, sponsors, events, membership, org } from '../data/site';
+
+const featuredTitles = [
+  'Little Shooters Winter 2027',
+  'Premier Winter Basketball League 2026/27',
+  'Winter Indoor Soccer Clinic 2026/27',
+  'Winter Break Volleyball Clinic',
+  'HYPE Basketball League · Winter 2027',
+  'HYPE Skillz Training with Jamey Petree',
+];
+const featured = featuredTitles.map((t) => programs.find((p) => p.title === t)!).filter(Boolean);
+const sponsorLogos = import.meta.glob<{ default: ImageMetadata }>('../assets/sponsors/*.png', { eager: true });
+const sportTiles = sports.filter((s) => s.group === 'sports');
+const minPrice = Math.min(...membership.locations.map((l) => l.tiers.find((t) => t.name === 'Individual')!.eft));
+---
+<Base
+  bare
+  title="HYPE Athletics | Youth Sports, Fitness & Community in Dearborn Heights and Wayne"
+  description="HYPE Athletics is a Wayne County nonprofit offering youth sports leagues, camps, fitness memberships and community programs in Dearborn Heights, Wayne and on Belle Isle since 2001."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow red">Nonprofit · Wayne County · Since {org.founded}</p>
+        <h1 class="display hype" aria-label="HYPE: Helping Youth Progress and Excel">
+          <span><b>H</b>elping</span>
+          <span><b>Y</b>outh</span>
+          <span><b>P</b>rogress</span>
+          <span>&amp; <b>E</b>xcel</span>
+        </h1>
+        <p class="lede">Sports leagues, camps, fitness and community programs for kids, families and adults in Dearborn Heights, Wayne and on Belle Isle.</p>
+
+        <form class="finder card" action="/programs/" method="get">
+          <div class="field">
+            <label for="f-sport">Sport</label>
+            <select id="f-sport" name="sport">
+              <option value="">All sports</option>
+              {sports.map((s) => <option value={s.id}>{s.name}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-loc">Location</label>
+            <select id="f-loc" name="loc">
+              <option value="">All locations</option>
+              <option value="dearborn-heights">Dearborn Heights</option>
+              <option value="wayne">Wayne</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit"><Icon name="Search" size={16} />Find programs</button>
+        </form>
+        <p class="small muted quick">
+          <a href="/membership/">Memberships from ${minPrice}/month</a>
+          <span aria-hidden="true">·</span>
+          <a href="/summer-discovery/">Free Summer Discovery camp</a>
+        </p>
+      </div>
+
+      <div class="hero-media">
+        <div class="hm-main">
+          <Photo src="dh-courts" alt="The HYPE Athletics gym in Dearborn Heights: hardwood basketball courts with the HYPE logo at center court" eager sizes="(min-width: 960px) 600px, 100vw" widths={[480, 800, 1200]} />
+        </div>
+        <div class="hm-inset">
+          <Photo src="team-aau" alt="A HYPE youth basketball team posing together on the court in matching uniforms" sizes="240px" widths={[240, 480]} position="center 40%" />
+        </div>
+        <p class="hm-cap mono">Dearborn Heights · 5 courts</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open for registration -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Now registering</p>
+          <h2 class="display h2">Winter 2026–27 season</h2>
+          <p class="lede">Leagues, clinics and break camps open now. Registration takes a few minutes online.</p>
+        </div>
+        <a href="/programs/" class="btn btn-secondary">All {programs.length} programs<Icon name="ArrowRight" size={16} /></a>
+      </div>
+      <div class="grid grid-3">
+        {featured.map((p) => <ProgramCard p={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sports -->
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Programs</p>
+          <h2 class="display h2">Pick a sport</h2>
+        </div>
+        <a href="/programs/" class="link-arrow">Browse everything<Icon name="ArrowRight" size={14} /></a>
+      </div>
+      <ul class="sports">
+        {sportTiles.map((s) => (
+          <li>
+            <a href={`/${s.id}/`} class="sport">
+              <Photo src={s.photo} alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
+              <span class="display">{s.name}</span>
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href="/travel-basketball-aau/" class="sport">
+            <Photo src="team-elite" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
+            <span class="display">Travel AAU</span>
+          </a>
+        </li>
+        <li>
+          <a href="/adult-leagues/" class="sport">
+            <Photo src="team-huddle" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
+            <span class="display">Adult Leagues</span>
+          </a>
+        </li>
+        <li>
+          <a href="/summer-discovery/" class="sport">
+            <Photo src="summer-camp" alt="" sizes="(min-width: 960px) 240px, 50vw" widths={[320, 640]} />
+            <span class="display">Summer Camp</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Locations</p>
+          <h2 class="display h2">Three places to play</h2>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <LocationCard id="dearborn-heights" photo="dh-exterior" alt="The HYPE Recreation Center building in Dearborn Heights" />
+        <LocationCard id="wayne" photo="wayne-courts" alt="Basketball courts under red roof trusses at HYPE Wayne" />
+        <LocationCard id="belle-isle" photo="belle-isle" alt="Athletic Field sign and ball diamonds at the Belle Isle Athletic Complex" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Story / numbers -->
+  <section class="story">
+    <div class="wrap story-grid">
+      <div>
+        <p class="eyebrow">Since {org.founded}</p>
+        <h2 class="display h2">More than a gym</h2>
+        <p class="lede">In 2001, {org.founder} brought together young leaders, business owners and officials to build drug-free, violence-free programs for Metro Detroit’s kids. As more than 30 recreation centers closed in Detroit alone, HYPE kept its doors open with low-cost programs built on partnerships with local governments, schools and community groups.</p>
+        <div class="btn-row"><a href="/about-us/" class="btn btn-secondary">Our story</a><a href="/social-services/" class="btn btn-ghost">Community services<Icon name="ArrowRight" size={16} /></a></div>
+      </div>
+      <dl class="stats">
+        <div><dt>Years serving Wayne County</dt><dd class="display">{new Date().getFullYear() - org.founded}</dd></div>
+        <div><dt>Locations</dt><dd class="display">3</dd></div>
+        <div><dt>Acres at Belle Isle</dt><dd class="display">38</dd></div>
+        <div><dt>Free summer camp sites</dt><dd class="display">10</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Membership + community -->
+  <section class="section">
+    <div class="wrap grid grid-2">
+      <div class="card card-pad feature">
+        <Icon name="Dumbbell" size={22} />
+        <h2 class="display h3">Membership</h2>
+        <p class="muted">Gym, group fitness classes and child care. Senior and family plans, and most insurance fitness programs accepted, including SilverSneakers.</p>
+        <p class="price"><span class="display">${minPrice}</span><span class="muted small">/month and up</span></p>
+        <div class="btn-row"><a href="/membership/" class="btn btn-primary">See plans</a><a href="/silver-fitness-training/" class="btn btn-ghost">Insurance-paid memberships</a></div>
+      </div>
+      <div class="card card-pad feature">
+        <Icon name="HandHeart" size={22} />
+        <h2 class="display h3">Community services</h2>
+        <ul class="checks small">
+          <li><Icon name="Check" size={14} />Free after-school Homework Club for members</li>
+          <li><Icon name="Check" size={14} />S.A.F.E. substance abuse prevention and recovery support</li>
+          <li><Icon name="Check" size={14} />Vocational training and job readiness</li>
+          <li><Icon name="Check" size={14} />Annual scholarship for students</li>
+        </ul>
+        <div class="btn-row"><a href="/social-services/" class="btn btn-secondary">Explore services</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events -->
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Coming up</p><h2 class="display h2">Events</h2></div>
+        <a href="/events/" class="link-arrow">All events<Icon name="ArrowRight" size={14} /></a>
+      </div>
+      <div class="grid grid-2">
+        {events.map((e) => {
+          const d = new Date(e.date + 'T12:00:00');
+          return (
+            <article class="event card card-pad">
+              <div class="date mono" aria-hidden="true"><span>{d.toLocaleString('en-US', { month: 'short' })}</span><b class="display">{d.getDate()}</b><span>{d.getFullYear()}</span></div>
+              <div class="stack-8">
+                <h3 class="h4">{e.title}</h3>
+                <p class="small mono muted">{e.dateLabel}</p>
+                <p class="small muted">{e.blurb}</p>
+                {e.href && <a href={e.href} class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></a>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors + donate -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow center">Thank you to our sponsors and donors</p>
+      <ul class="sponsors">
+        {Object.entries(sponsorLogos).map(([path, mod]) => {
+          const file = path.split('/').pop();
+          const s = sponsors.find((x) => x.file === file);
+          return <li><Image src={mod.default} alt={s?.name ?? ''} width={180} densities={[1, 2]} loading="lazy" /></li>;
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="donate">
+    <div class="wrap donate-grid">
+      <div>
+        <h2 class="display h2">Keep the doors open</h2>
+        <p class="lede">Your gift funds scholarships, free summer camp and low-cost youth leagues across Wayne County.</p>
+      </div>
+      <div class="btn-row">
+        <a href="/donate/" class="btn btn-primary btn-lg"><Icon name="Heart" size={16} />Donate</a>
+        <a href="/volunteer/" class="btn btn-secondary btn-lg">Volunteer</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero { padding-block: 32px 56px; overflow: hidden; }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .hero { padding-block: 56px 80px; } .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; } }
+  .hero-copy > * + * { margin-top: 20px; }
+  .hype { font-size: clamp(var(--t-52), 9vw, 6.5rem); line-height: .86; letter-spacing: -0.015em; display: grid; margin-top: 16px; }
+  .hype span { display: block; }
+  .hype b { color: var(--accent-text); font-weight: 600; }
+  .finder { display: grid; gap: 12px; padding: 16px; margin-top: 28px; }
+  @media (min-width: 560px) { .finder { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; align-items: end; } }
+  .field { display: grid; gap: 6px; min-width: 0; }
+  .field label { font-size: var(--t-12); font-weight: 500; color: var(--fg-2); }
+  select {
+    height: 48px; padding: 0 36px 0 12px; border-radius: var(--r-8);
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--fg); font: inherit; font-size: var(--t-16);
+    appearance: none; -webkit-appearance: none; width: 100%;
+    background-image: linear-gradient(45deg, transparent 50%, var(--fg-3) 50%), linear-gradient(135deg, var(--fg-3) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 21px, calc(100% - 13px) 21px; background-size: 5px 5px; background-repeat: no-repeat;
+  }
+  select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quick a { color: var(--fg-2); }
+
+  .hero-media { position: relative; padding-bottom: 32px; }
+  .hm-main { border-radius: var(--r-18); overflow: hidden; aspect-ratio: 4 / 3; }
+  @media (min-width: 960px) { .hm-main { aspect-ratio: 4 / 5; } }
+  .hm-inset {
+    position: absolute; left: 12px; bottom: 0; width: 42%; aspect-ratio: 4 / 3;
+    border-radius: var(--r-12); overflow: hidden; border: 4px solid var(--bg); box-shadow: var(--shadow-2);
+  }
+  @media (min-width: 960px) { .hm-inset { left: -40px; } }
+  .hm-cap {
+    position: absolute; right: 12px; top: 12px; margin: 0;
+    font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase;
+    background: rgb(12 12 12 / .72); color: #fff; padding: 6px 10px; border-radius: var(--r-full);
+    backdrop-filter: blur(6px);
+  }
+
+  /* Sports tiles */
+  .sports { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (min-width: 720px) { .sports { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .sports { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+  .sport { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: var(--r-12); overflow: hidden; text-decoration: none; isolation: isolate; }
+  .sport :global(img) { transition: transform var(--d-enter) var(--ease-out); }
+  .sport:hover :global(img) { transform: scale(1.04); }
+  .sport::after { content: ''; position: absolute; inset: 0; background: var(--scrim); z-index: 1; }
+  .sport span { position: absolute; left: 14px; bottom: 10px; z-index: 2; color: #fff; font-size: var(--t-25); line-height: 1; }
+
+  /* Story */
+  .story { background: var(--fg); color: var(--bg); padding-block: 72px; }
+  @media (min-width: 900px) { .story { padding-block: 96px; } }
+  .story .eyebrow { color: color-mix(in srgb, var(--bg) 60%, var(--fg)); }
+  .story .lede { color: color-mix(in srgb, var(--bg) 78%, var(--fg)); margin-top: 16px; }
+  .story-grid { display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 960px) { .story-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 80px; } }
+  .story h2 { margin-top: 12px; }
+  .story .btn-row { margin-top: 28px; }
+  .story :global(.btn-secondary) { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--fg)); }
+  .story :global(.btn-ghost) { color: var(--bg); }
+  .story :global(.btn-ghost:hover), .story :global(.btn-secondary:hover) { background: color-mix(in srgb, var(--bg) 10%, var(--fg)); }
+  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; background: color-mix(in srgb, var(--bg) 18%, var(--fg)); border-radius: var(--r-12); overflow: hidden; }
+  .stats div { background: var(--fg); padding: 20px; display: flex; flex-direction: column-reverse; gap: 8px; }
+  .stats dt { font-size: var(--t-13); color: color-mix(in srgb, var(--bg) 65%, var(--fg)); }
+  .stats dd { margin: 0; font-size: var(--t-64); line-height: .9; font-variant-numeric: tabular-nums; }
+
+  /* Features */
+  .feature { display: flex; flex-direction: column; gap: 14px; padding: 28px; }
+  .feature > :global(.icon) { color: var(--accent-text); }
+  .price { display: flex; align-items: baseline; gap: 6px; }
+  .price .display { font-size: var(--t-52); line-height: 1; }
+  .feature .btn-row { margin-top: auto; padding-top: 8px; }
+
+  /* Events */
+  .event { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 20px; align-items: start; }
+  .date { display: grid; justify-items: center; padding: 10px 0; border-radius: var(--r-10); background: var(--surface-2); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
+  .date b { font-size: var(--t-40); line-height: 1; color: var(--fg); }
+
+  /* Sponsors */
+  .center { display: flex; justify-content: center; }
+  .sponsors { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 24px 40px; margin-top: 28px; }
+  .sponsors li { width: 120px; height: 56px; display: grid; place-items: center; }
+  .sponsors :global(img) { max-height: 56px; width: auto; max-width: 120px; object-fit: contain; filter: grayscale(1); opacity: .75; transition: filter var(--d-std) var(--ease), opacity var(--d-std) var(--ease); }
+  .sponsors li:hover :global(img) { filter: none; opacity: 1; }
+  :global(html[data-theme='dark']) .sponsors :global(img) { filter: grayscale(1) invert(1); }
+  @media (prefers-color-scheme: dark) { :global(html:not([data-theme='light'])) .sponsors :global(img) { filter: grayscale(1) invert(1); } }
+
+  /* Donate */
+  .donate { background: var(--accent-soft); border-top: 1px solid var(--line); padding-block: 56px; }
+  .donate-grid { display: grid; gap: 24px; align-items: end; }
+  @media (min-width: 900px) { .donate-grid { grid-template-columns: minmax(0, 1fr) auto; } }
+  .donate .lede { margin-top: 12px; }
+</style>

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Page not found" description="The page you’re looking for doesn’t exist.">
+  <section class="section">
+    <div class="wrap nf">
+      <p class="eyebrow red">404</p>
+      <h1 class="display h1">Out of bounds</h1>
+      <p class="lede">That page moved or no longer exists. Try one of these instead.</p>
+      <div class="btn-row">
+        <a href="/programs/" class="btn btn-primary btn-lg">Find a program</a>
+        <a href="/membership/" class="btn btn-secondary btn-lg">Membership</a>
+        <a href="/contact-us/" class="btn btn-ghost btn-lg">Contact us<Icon name="ArrowRight" size={16} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>.nf > * + * { margin-top: 20px; } .nf { min-height: 50vh; }</style>

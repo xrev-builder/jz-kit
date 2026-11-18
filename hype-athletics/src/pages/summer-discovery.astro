@@ -1,0 +1,46 @@
+---
+import Page from '../components/Page.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import { summerDiscovery as sd } from '../data/site';
+---
+<Page title="Summer Discovery" seoTitle="Free Summer Discovery Camp for Grades 1–10" description="HYPE Summer Discovery: a free five-week summer program for incoming grades 1–10 with academics, enrichment and daily meals at 10 Wayne County sites. Enrollment opens March 1, 2027."
+  eyebrow="Free summer program" lede="Five weeks of learning, adventure and friendship, free for families. Three hours of academics every day plus enrichment, sports and meals."
+  photo="summer-camp" photoAlt="Kids playing outdoor games on a grass field at Summer Discovery">
+  <div slot="hero" class="stack-16">
+    <p class="status"><Icon name="CalendarClock" size={16} />{sd.status}</p>
+    <div class="btn-row"><a href="#sites" class="btn btn-primary btn-lg">See the 10 sites</a><a href={sd.hiringUrl} class="btn btn-secondary btn-lg" rel="noopener" target="_blank">We’re hiring counselors</a></div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <dl class="hl">
+        {sd.highlights.map((h) => <div class="card"><dt>{h.label}</dt><dd>{h.value}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section tint" id="sites">
+    <div class="wrap two">
+      <div class="stack-16">
+        <p class="eyebrow">Program locations</p>
+        <h2 class="display h2">10 sites across Wayne County</h2>
+        <p class="muted">Space is limited at every site. Registration links for each site go live when enrollment opens on March 1, 2027. Check back then and register early.</p>
+        <p class="small muted">Questions? Call Camp HYPE at <a href="tel:+13134360043,125">{sd.campPhoneExt}</a>.</p>
+      </div>
+      <ol class="sites">{sd.sites.map((s, i) => <li><span class="mono n">{String(i + 1).padStart(2, '0')}</span>{s}</li>)}</ol>
+    </div>
+  </section>
+</Page>
+<style>
+  .status { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: var(--r-8); background: var(--accent-soft); color: var(--accent-text); font-size: var(--t-14); font-weight: 500; }
+  .hl { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); margin: 0; }
+  .hl div { padding: 20px; display: grid; gap: 6px; }
+  .hl dt { font-family: var(--font-mono); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
+  .hl dd { margin: 0; font-weight: 600; font-size: var(--t-18); }
+  .two { display: grid; gap: 32px; }
+  @media (min-width: 900px) { .two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; } }
+  .sites { list-style: none; border-top: 1px solid var(--line); }
+  .sites li { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .n { color: var(--fg-3); font-size: var(--t-13); padding-top: 2px; }
+</style>

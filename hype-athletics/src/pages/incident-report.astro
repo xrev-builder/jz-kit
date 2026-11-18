@@ -1,0 +1,14 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { org } from '../data/site';
+---
+<Page title="Report an incident" seoTitle="Incident Report" description="Report an injury, safety concern or incident at a HYPE Athletics facility or program."
+  eyebrow="Safety" lede="Use this form to report an injury, safety concern or incident at a HYPE facility or program. For emergencies, call 911 first.">
+  <section class="section">
+    <div class="wrap narrow stack-16">
+      <a href={org.incidentFormUrl} class="btn btn-primary btn-lg" rel="noopener" target="_blank">Open the incident report form<Icon name="ArrowUpRight" size={16} /></a>
+      <p class="small muted">The form opens in Google Forms. Reports go directly to HYPE staff. Questions? Call <a href="tel:+13134360043">(313) 436-0043</a>.</p>
+    </div>
+  </section>
+</Page>

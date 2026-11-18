@@ -1,0 +1,69 @@
+---
+import Page from '../components/Page.astro';
+const sections = [
+  { t: 'Guest passes', items: [
+    'Guest passes are $10 and are only granted to a guest accompanied by a current member.',
+    'Members may use three guest passes per year. Each guest must become a member for future entry.',
+    'Member and guest must both be over 18 with a valid ID. A guest pass can be used once per guest.',
+    'All guests complete a liability waiver at the front desk. HYPE may deny a guest pass.',
+  ]},
+  { t: 'Program registration', items: [
+    'You receive a confirmation only when you register online.',
+    'For outdoor classes in bad weather, check hypeathletics.org for cancellations.',
+    'All program registration happens through HYPE unless otherwise noted.',
+    'A $3 processing fee applies to credit card transactions. A $25 fee applies to returned checks.',
+    'Discounts can’t be combined.',
+    'Free programs still require registration. Treat them like paid programs: seats of frequently absent participants are given to others.',
+  ]},
+  { t: 'Program refunds', items: [
+    'If HYPE cancels a class, fees are refunded in full, or you can choose account credit toward a future program or membership.',
+    'Before a program begins, you can get a refund if you choose not to participate, except for uniforms, materials or supplies. An administration fee may apply.',
+    'No refunds are issued once a program begins.',
+    'Dropping for a medical reason earns pro-rated account credit with a doctor’s note, requested within 7 days.',
+    'Refunds aren’t issued for schedule conflicts, sick days, vacations or similar absences.',
+    'All requests require a Refund Request Form. Allow 2 weeks for processing. Refunds are issued by check or credit card.',
+  ]},
+  { t: 'Gym rules', items: [
+    'No food, drinks or gum in the gym. Noncompliance will result in removal.',
+    'No phones, bags or belongings on the courts or bleachers. Lock belongings in a locker.',
+    'Only tennis, basketball and indoor futsal shoes on the courts. No boots, cleats or heels.',
+    'Ball rentals are your responsibility and must stay in the building. Lost or damaged balls are charged at full retail value.',
+  ]},
+  { t: 'Co-ed and women-only fitness rooms', items: [
+    'No one under 14 is allowed in the fitness rooms.',
+    'Respect all members and equipment. Don’t slam or drop weights, and return plates and dumbbells after use.',
+    'No horseplay, cursing or foul language.',
+    'Wear clean clothes and dry, closed-toe athletic shoes. No dress shoes, boots or sandals.',
+    'Wipe down machines after each use. No food in the gyms.',
+    'Take your free orientation with a trainer before you start. Don’t take weights outside the gym.',
+    'Misusing equipment can cause injury. Noncompliance may result in membership review or removal.',
+  ]},
+];
+---
+<Page title="Policies" seoTitle="Member & Program Policies" description="HYPE Athletics guest pass, program registration, refund, gym and fitness room policies." eyebrow="Visiting" lede="The rules that keep our centers safe, fair and members-only.">
+  <section class="section">
+    <div class="wrap layout">
+      <nav class="toc" aria-label="On this page">
+        <p class="eyebrow">On this page</p>
+        <ul>{sections.map((s, i) => <li><a href={`#p${i}`}>{s.t}</a></li>)}</ul>
+      </nav>
+      <div class="stack-24">
+        {sections.map((s, i) => (
+          <section id={`p${i}`} class="pol">
+            <h2 class="display h3">{s.t}</h2>
+            <ul>{s.items.map((it) => <li>{it}</li>)}</ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+</Page>
+<style>
+  .layout { display: grid; gap: 32px; }
+  @media (min-width: 960px) { .layout { grid-template-columns: 220px minmax(0, 720px); gap: 64px; } .toc { position: sticky; top: calc(var(--header-h) + 24px); align-self: start; } }
+  .toc ul { list-style: none; display: grid; gap: 6px; margin-top: 10px; }
+  .toc a { color: var(--fg-2); text-decoration: none; font-size: var(--t-14); }
+  .toc a:hover { color: var(--fg); text-decoration: underline; }
+  .pol { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .pol ul { margin-top: 16px; padding-left: 20px; color: var(--fg-2); display: grid; gap: 8px; }
+</style>

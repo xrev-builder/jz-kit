@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+interface Props { title: string; seoTitle?: string; description: string; eyebrow?: string; lede?: string; photo?: string; photoAlt?: string; position?: string; jsonLd?: object }
+const { title, seoTitle, description, eyebrow, lede, photo, photoAlt, position, jsonLd } = Astro.props;
+---
+<Base title={seoTitle ?? title} description={description} ogPhoto={photo} jsonLd={jsonLd}>
+  <PageHero eyebrow={eyebrow} title={title} lede={lede} photo={photo} photoAlt={photoAlt} position={position}>
+    <slot name="hero" />
+  </PageHero>
+  <slot />
+</Base>

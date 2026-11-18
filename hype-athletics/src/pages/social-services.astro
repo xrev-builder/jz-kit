@@ -1,0 +1,32 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+const services = [
+  { href: '/s-a-f-e/', icon: 'ShieldCheck', t: 'S.A.F.E. Wellness', d: 'Substance Abuse Free Environment: group therapy, drug screening, school prevention programs, intervention, Second Chance and the SAFE House.' },
+  { href: '/academic-assistance/', icon: 'BookOpen', t: 'Academic Assistance', d: 'Free after-school Homework Club with tutoring, STEM, robotics and art for kids on a HYPE membership.' },
+  { href: '/vocational-training/', icon: 'Briefcase', t: 'Vocational Training', d: 'Post-secondary counseling, job exploration, self-advocacy, workplace readiness and work-based learning.' },
+  { href: '/scholarship/', icon: 'GraduationCap', t: 'Scholarship', d: 'An annual scholarship for local students. Applications open each spring.' },
+  { href: '/summer-discovery/', icon: 'Sun', t: 'Summer Discovery', d: 'A free five-week summer program with academics, enrichment and daily meals at 10 sites.' },
+];
+---
+<Page title="Community services" seoTitle="Community & Social Services" description="HYPE Athletics community services for Southeast Michigan: substance abuse prevention, academic help, vocational training, scholarships and free summer programs."
+  eyebrow="Community" lede="Strong communities are built by giving people support, education and opportunity. Our services reach youth, adults and families across Southeast Michigan."
+  photo="safe" photoAlt="A counselor meeting with a young person">
+  <section class="section">
+    <div class="wrap grid grid-3">
+      {services.map((s) => (
+        <a href={s.href} class="card card-pad svc">
+          <Icon name={s.icon as any} size={22} />
+          <h2 class="h4">{s.t}</h2>
+          <p class="small muted">{s.d}</p>
+          <span class="link-arrow">Learn more<Icon name="ArrowRight" size={14} /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Page>
+<style>
+  .svc { display: flex; flex-direction: column; gap: 10px; color: var(--fg); }
+  .svc > :global(.icon) { color: var(--accent-text); }
+  .svc .link-arrow { margin-top: auto; padding-top: 6px; }
+</style>

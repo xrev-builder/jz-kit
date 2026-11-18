@@ -1,0 +1,34 @@
+---
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { locations, type LocationId } from '../data/site';
+interface Props { id: LocationId; photo: string; alt: string }
+const { id, photo, alt } = Astro.props;
+const l = locations[id];
+---
+<a href={`/${id}/`} class="lcard card">
+  <div class="img"><Photo src={photo} alt={alt} sizes="(min-width: 960px) 380px, (min-width: 640px) 50vw, 100vw" widths={[400, 760]} /></div>
+  <div class="body">
+    <p class="eyebrow">{l.city}, {l.region}</p>
+    <h3 class="display h3">{l.name}</h3>
+    <p class="small muted">{l.summary}</p>
+    <ul class="small rows">
+      <li><Icon name="MapPin" size={14} />{l.street}</li>
+      <li class="mono"><Icon name="Phone" size={14} />{l.phone}</li>
+      {l.hours && <li class="mono"><Icon name="Clock" size={14} />Mon–Fri 6a–11p · Sat–Sun 8a–8p</li>}
+    </ul>
+    <span class="link-arrow">Visit {l.name}<Icon name="ArrowRight" size={14} /></span>
+  </div>
+</a>
+<style>
+  .lcard { display: flex; flex-direction: column; overflow: hidden; color: var(--fg); }
+  .img { aspect-ratio: 16 / 10; overflow: hidden; }
+  .img :global(img) { transition: transform var(--d-enter) var(--ease-out); }
+  .lcard:hover .img :global(img) { transform: scale(1.03); }
+  .body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .rows { list-style: none; display: grid; gap: 6px; color: var(--fg-2); margin-top: 4px; }
+  .rows li { display: flex; gap: 8px; align-items: center; }
+  .rows li.mono { font-size: var(--t-13); }
+  .rows :global(.icon) { color: var(--fg-3); }
+  .link-arrow { margin-top: auto; padding-top: 8px; }
+</style>

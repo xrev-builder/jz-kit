@@ -1,0 +1,249 @@
+---
+import { nav } from '../data/nav';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+const path = Astro.url.pathname;
+const isActive = (item: (typeof nav)[number]) =>
+  path === item.href || (item.groups ?? []).some((g) => g.links.some((l) => l.href === path));
+---
+<header class="site-header" data-header>
+  <div class="wrap bar">
+    <a href="/" class="brand" aria-label="HYPE Athletics home"><Logo /></a>
+
+    <nav class="primary" aria-label="Main">
+      <ul>
+        {nav.map((item, i) => (
+          <li class={item.groups ? 'has-menu' : ''}>
+            {item.groups ? (
+              <>
+                <button class:list={['nav-link', { active: isActive(item) }]} aria-expanded="false" aria-controls={`menu-${i}`} data-menu-btn>
+                  {item.label}<Icon name="ChevronDown" size={14} />
+                </button>
+                <div class="menu" id={`menu-${i}`} data-menu hidden>
+                  <div class:list={['menu-inner', `cols-${item.groups.length}`]}>
+                    {item.groups.map((g) => (
+                      <div>
+                        <p class="eyebrow">{g.title}</p>
+                        <ul>
+                          {g.links.map((l) => (
+                            <li>
+                              <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+                                <span>{l.label}</span>
+                                {l.desc && <span class="desc">{l.desc}</span>}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a href={item.href} class:list={['nav-link', { active: isActive(item) }]} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Color theme: system">
+        <span class="t-system"><Icon name="Monitor" size={18} /></span>
+        <span class="t-light"><Icon name="Sun" size={18} /></span>
+        <span class="t-dark"><Icon name="Moon" size={18} /></span>
+      </button>
+      <a href="/donate/" class="btn btn-secondary btn-sm hide-sm">Donate</a>
+      <a href="/programs/" class="btn btn-primary btn-sm">Register</a>
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-mobile-btn>
+        <span class="sr-only">Menu</span>
+        <span class="i-open"><Icon name="Menu" size={20} /></span>
+        <span class="i-close"><Icon name="X" size={20} /></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile hidden>
+    <div class="wrap">
+      <ul class="m-list">
+        {nav.map((item) => (
+          <li>
+            {item.groups ? (
+              <details>
+                <summary>{item.label}<Icon name="ChevronDown" size={18} /></summary>
+                {item.groups.map((g) => (
+                  <div class="m-group">
+                    <p class="eyebrow">{g.title}</p>
+                    <ul>{g.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+                  </div>
+                ))}
+              </details>
+            ) : (
+              <a href={item.href} class="m-top">{item.label}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div class="m-cta">
+        <a href="/programs/" class="btn btn-primary btn-lg">Find a program</a>
+        <a href="/donate/" class="btn btn-secondary btn-lg">Donate</a>
+      </div>
+      <p class="m-contact small muted">Call <a href="tel:+13134360043">(313) 436-0043</a> · <a href="mailto:info@hypeathletics.org">info@hypeathletics.org</a></p>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]')!;
+  const btns = [...header.querySelectorAll<HTMLButtonElement>('[data-menu-btn]')];
+  const closeAll = (except?: HTMLButtonElement) => btns.forEach((b) => {
+    if (b === except) return;
+    b.setAttribute('aria-expanded', 'false');
+    (document.getElementById(b.getAttribute('aria-controls')!) as HTMLElement).hidden = true;
+  });
+  btns.forEach((b) => {
+    const menu = document.getElementById(b.getAttribute('aria-controls')!) as HTMLElement;
+    const li = b.parentElement!;
+    const open = () => { closeAll(b); b.setAttribute('aria-expanded', 'true'); menu.hidden = false; };
+    const close = () => { b.setAttribute('aria-expanded', 'false'); menu.hidden = true; };
+    b.addEventListener('click', () => (b.getAttribute('aria-expanded') === 'true' ? close() : open()));
+    let t: number | undefined;
+    li.addEventListener('pointerenter', (e) => { if ((e as PointerEvent).pointerType === 'mouse') { clearTimeout(t); open(); } });
+    li.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') { t = window.setTimeout(close, 140); } });
+    li.addEventListener('focusout', (e) => { if (!li.contains((e as FocusEvent).relatedTarget as Node)) close(); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const openBtn = btns.find((b) => b.getAttribute('aria-expanded') === 'true');
+    closeAll(); openBtn?.focus();
+  });
+  document.addEventListener('click', (e) => { if (!header.contains(e.target as Node)) closeAll(); });
+
+  // Mobile
+  const mBtn = header.querySelector<HTMLButtonElement>('[data-mobile-btn]')!;
+  const mNav = header.querySelector<HTMLElement>('[data-mobile]')!;
+  mBtn.addEventListener('click', () => {
+    const open = mBtn.getAttribute('aria-expanded') !== 'true';
+    mBtn.setAttribute('aria-expanded', String(open));
+    mNav.hidden = !open;
+    document.documentElement.classList.toggle('nav-open', open);
+  });
+
+  // Theme: system → light → dark
+  const tBtn = header.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
+  const order = ['system', 'light', 'dark'] as const;
+  const read = () => { try { return (localStorage.getItem('hype-theme') as (typeof order)[number]) || 'system'; } catch { return 'system'; } };
+  const apply = (m: (typeof order)[number]) => {
+    if (m === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', m);
+    document.documentElement.dataset.themePref = m;
+    tBtn.setAttribute('aria-label', `Color theme: ${m}`);
+    try { localStorage.setItem('hype-theme', m); } catch {}
+  };
+  apply(read());
+  tBtn.addEventListener('click', () => apply(order[(order.indexOf(read()) + 1) % 3]));
+</script>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid var(--line);
+  }
+  /* Blur lives on a pseudo-element: backdrop-filter on the header itself would
+     become the containing block for the fixed mobile menu. */
+  .site-header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  }
+  :global(html.nav-open) .site-header::before { background: var(--bg); }
+  .bar { height: var(--header-h); display: flex; align-items: center; gap: 24px; }
+  .brand { width: 150px; flex-shrink: 0; display: block; padding: 8px 0; }
+  .primary { display: none; flex: 1; min-width: 0; }
+  .primary > ul { list-style: none; display: flex; align-items: center; gap: 2px; }
+  .primary li { position: relative; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    height: 36px; padding: 0 10px; border-radius: var(--r-8);
+    font-size: var(--t-14); font-weight: 500; color: var(--fg-2);
+    text-decoration: none; background: none; border: 0; cursor: pointer;
+    transition: background-color var(--d-micro) var(--ease), color var(--d-micro) var(--ease);
+  }
+  .nav-link:hover, .nav-link[aria-expanded='true'] { background: var(--surface-2); color: var(--fg); }
+  .nav-link.active { color: var(--fg); }
+  .nav-link.active::after {
+    content: ''; position: absolute; left: 10px; right: 10px; bottom: -14px; height: 2px; background: var(--accent);
+  }
+  .nav-link :global(.icon) { transition: transform var(--d-std) var(--ease-out); color: var(--fg-3); }
+  .nav-link[aria-expanded='true'] :global(.icon) { transform: rotate(180deg); }
+
+  .menu { position: absolute; top: calc(100% + 14px); left: -12px; z-index: 60; }
+  .menu::before { content: ''; position: absolute; inset: -14px 0 auto 0; height: 14px; }
+  .menu-inner {
+    display: grid; gap: 24px; padding: 20px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-12);
+    box-shadow: var(--shadow-2);
+    animation: menu-in var(--d-std) var(--ease-out);
+  }
+  .cols-1 { grid-template-columns: 260px; }
+  .cols-2 { grid-template-columns: 220px 220px; }
+  .cols-3 { grid-template-columns: 180px 220px 220px; }
+  @keyframes menu-in { from { opacity: 0; transform: translateY(-4px); } }
+  .menu .eyebrow { margin-bottom: 8px; }
+  .menu ul { list-style: none; display: grid; gap: 2px; }
+  .menu a {
+    display: grid; padding: 6px 8px; margin-inline: -8px; border-radius: var(--r-6);
+    font-size: var(--t-14); color: var(--fg); text-decoration: none;
+  }
+  .menu a:hover, .menu a[aria-current='page'] { background: var(--surface-2); }
+  .menu .desc { font-size: var(--t-12); color: var(--fg-3); }
+
+  .actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    width: 40px; height: 40px; display: inline-grid; place-items: center;
+    border: 0; background: transparent; border-radius: var(--r-8); cursor: pointer; color: var(--fg-2);
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--fg); }
+  .t-light, .t-dark { display: none; }
+  :global(html[data-theme-pref='light']) .t-system, :global(html[data-theme-pref='dark']) .t-system { display: none; }
+  :global(html[data-theme-pref='light']) .t-light { display: inline; }
+  :global(html[data-theme-pref='dark']) .t-dark { display: inline; }
+  .i-close { display: none; }
+  .menu-toggle[aria-expanded='true'] .i-open { display: none; }
+  .menu-toggle[aria-expanded='true'] .i-close { display: inline; }
+  .hide-sm { display: none; }
+  @media (min-width: 560px) { .hide-sm { display: inline-flex; } }
+
+  .mobile-nav {
+    position: fixed; inset: var(--header-h) 0 0 0; overflow-y: auto; overscroll-behavior: contain;
+    background: var(--bg); padding-block: 8px 32px;
+    padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+  }
+  :global(html.nav-open) { overflow: hidden; }
+  .m-list { list-style: none; }
+  .m-list > li { border-bottom: 1px solid var(--line); }
+  .m-top, .m-list summary {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 56px; font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+    font-size: var(--t-25); text-decoration: none; cursor: pointer; list-style: none; color: var(--fg);
+  }
+  .m-list summary::-webkit-details-marker { display: none; }
+  .m-list details[open] summary :global(.icon) { transform: rotate(180deg); }
+  .m-group { padding-bottom: 16px; }
+  .m-group .eyebrow { margin-bottom: 4px; }
+  .m-group ul { list-style: none; }
+  .m-group a { display: block; padding: 10px 0; text-decoration: none; color: var(--fg-2); }
+  .m-cta { display: grid; gap: 12px; margin-top: 24px; }
+  .m-contact { margin-top: 20px; text-align: center; }
+
+  @media (min-width: 1100px) {
+    .primary { display: block; }
+    .menu-toggle, .mobile-nav { display: none !important; }
+  }
+  @media (min-width: 1100px) and (max-width: 1240px) {
+    .brand { width: 128px; }
+    .nav-link { padding: 0 8px; }
+    .bar { gap: 16px; }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import Page from '../components/Page.astro';
+import { hours } from '../data/site';
+const faqs = [
+  { g: 'General', items: [
+    ['What is HYPE Athletics?', 'HYPE Athletics is a community-focused nonprofit offering sports leagues, fitness programs, educational enrichment and facility rentals for youth and adults. Our centers include a full gym and men’s and women’s steam rooms and saunas.'],
+    ['Where are you located?', 'Dearborn Heights: 23302 W. Warren Ave., Dearborn Heights, MI 48127. Wayne: 4635 Howe Rd., Wayne, MI 48184. We also manage the Belle Isle Athletic Complex at 2402 Vista Dr., Detroit, MI 48207.'],
+    ['What are your hours?', `${hours.map((h) => `${h.days}: ${h.time}`).join('. ')}. Hours may vary for programs and special events. Holiday closures are posted on Facility Updates.`],
+  ]},
+  { g: 'Programs & registration', items: [
+    ['What programs do you offer?', 'Youth and adult sports leagues (basketball, soccer, volleyball, football and more), fitness and wellness classes, after-school programs, summer camps, tutoring and mentoring.'],
+    ['How do I register?', 'Find your program on the Programs page and register online, or register in person at the front desk of either center.'],
+    ['Are there age limits?', 'Programs are designed for specific age groups, from toddlers to adults. Each program lists its ages.'],
+  ]},
+  { g: 'Membership & pricing', items: [
+    ['Do I need a membership to join a program?', 'No. Membership isn’t required for most programs. Members get benefits like free group fitness classes, child care and the after-school Homework Club.'],
+    ['How much does it cost?', 'Memberships start at $25/month in Wayne and $40/month in Dearborn Heights, with senior, couple and family plans. Program prices vary. See each program for details or call (313) 436-0043.'],
+  ]},
+  { g: 'Rentals', items: [
+    ['Can I rent space for an event or practice?', 'Yes. We rent basketball courts, an event hall, meeting rooms and outdoor fields. See Rentals for contacts and pricing.'],
+  ]},
+  { g: 'Policies', items: [
+    ['What is your refund policy?', 'Program fees are refunded in full if HYPE cancels a class. Before a program begins, you can get a refund (minus uniforms, materials or supplies). There are no refunds once a program begins. Medical withdrawals with a doctor’s note get pro-rated account credit. Full details are on the Policies page.'],
+  ]},
+];
+const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.flatMap((g) => g.items.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))) };
+---
+<Page title="FAQ" seoTitle="Frequently Asked Questions" description="Answers about HYPE Athletics hours, locations, program registration, membership prices, rentals and refunds." eyebrow="Help" lede="Quick answers about hours, registration, membership and rentals." jsonLd={ld}>
+  <section class="section">
+    <div class="wrap stack-24 narrow">
+      {faqs.map((g) => (
+        <div>
+          <p class="eyebrow">{g.g}</p>
+          <div class="qs">
+            {g.items.map(([q, a]) => (
+              <details class="q">
+                <summary><span class="h4">{q}</span><span class="plus" aria-hidden="true"></span></summary>
+                <p class="muted">{a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+      <p class="small muted">Still have a question? Call <a href="tel:+13134360043">(313) 436-0043</a> or <a href="/contact-us/">contact us</a>.</p>
+    </div>
+  </section>
+</Page>
+<style>
+  .qs { margin-top: 12px; border-top: 1px solid var(--line); }
+  .q { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; cursor: pointer; min-height: 44px; }
+  summary::-webkit-details-marker { display: none; }
+  .h4 { font-size: var(--t-16); }
+  .plus { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+  .plus::before, .plus::after { content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: var(--fg-3); transition: transform var(--d-std) var(--ease-out); }
+  .plus::after { transform: rotate(90deg); }
+  .q[open] .plus::after { transform: rotate(0); }
+  .q p { padding-bottom: 20px; max-width: 64ch; }
+</style>

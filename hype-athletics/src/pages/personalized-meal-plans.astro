@@ -1,0 +1,18 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="Personalized meal plans" seoTitle="Personalized Meal Plans by Chef Ali Fawaz" description="Personalized meal plans from Chef Ali Fawaz at HYPE Athletics, built around your goals, tastes and schedule. Fresh meals daily at the HYPE café."
+  eyebrow="Fitness · Nutrition" lede="Meals built around your goals, tastes and schedule, prepared by HYPE’s own Chef Ali Fawaz."
+  photo="meals" photoAlt="Prepared meal containers with salads, grains and fruit">
+  <div slot="hero" class="btn-row"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdmmPYJVcORMS9LPnxaM2U5RjP2k-NYzHlkxFjbi_XBNfGCbQ/viewform" class="btn btn-primary btn-lg" rel="noopener" target="_blank">Start your meal plan<Icon name="ArrowUpRight" size={16} /></a></div>
+  <section class="section">
+    <div class="wrap two">
+      <ul class="checks">
+        {['Meals tailored to your goals and dietary needs', 'Flavors you love while staying on track', 'Save time with ready-to-eat dishes', 'Guidance built around your lifestyle and routine'].map((x) => <li><Icon name="Check" size={16} />{x}</li>)}
+      </ul>
+      <div class="card card-pad stack-8"><p class="h4">Can’t wait?</p><p class="small muted">Fresh meals are available daily at the HYPE café in Dearborn Heights, ready for pickup.</p></div>
+    </div>
+  </section>
+</Page>
+<style>.two { display: grid; gap: 32px; } @media (min-width: 900px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } }</style>

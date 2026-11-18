@@ -1,0 +1,41 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { org, sponsors } from '../data/site';
+const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/sponsors/*.png', { eager: true });
+---
+<Page title="Donate" seoTitle="Donate to HYPE Athletics" description="Support HYPE Athletics, a Wayne County nonprofit. Donations fund scholarships, free summer camp and low-cost youth sports programs."
+  eyebrow="Get involved · Donate" lede="HYPE is a nonprofit. Your gift keeps youth programs low-cost, funds scholarships and keeps Summer Discovery free for families."
+  photo="team-aau-2" photoAlt="Young HYPE basketball players posing with their trophies">
+  <div slot="hero" class="btn-row">
+    <a href={org.donateUrl} class="btn btn-primary btn-lg" rel="noopener" target="_blank"><Icon name="Heart" size={16} />Donate online</a>
+    <a href="mailto:afaraj@hypeathletics.org?subject=Sponsorship" class="btn btn-secondary btn-lg">Become a sponsor</a>
+  </div>
+  <section class="section">
+    <div class="wrap grid grid-3">
+      <div class="card card-pad stack-8"><Icon name="GraduationCap" size={20} /><h2 class="h4">Scholarships</h2><p class="small muted">Our annual scholarship helps local students continue their education.</p></div>
+      <div class="card card-pad stack-8"><Icon name="Sun" size={20} /><h2 class="h4">Free summer camp</h2><p class="small muted">Summer Discovery serves incoming grades 1–10 at 10 sites, with meals, at no cost to families.</p></div>
+      <div class="card card-pad stack-8"><Icon name="Trophy" size={20} /><h2 class="h4">Low-cost youth sports</h2><p class="small muted">Donations keep leagues, clinics and camps affordable for every family.</p></div>
+    </div>
+  </section>
+  <section class="section tint">
+    <div class="wrap">
+      <p class="eyebrow">Thank you to our donors and sponsors</p>
+      <ul class="logos">
+        {Object.entries(logos).map(([path, mod]) => {
+          const s = sponsors.find((x) => x.file === path.split('/').pop());
+          return <li class="card"><Image src={mod.default} alt={s?.name ?? ''} width={200} densities={[1, 2]} loading="lazy" /></li>;
+        })}
+      </ul>
+      <p class="small muted" style="margin-top:20px">Sponsorship questions: Ali Faraj, <a href="mailto:afaraj@hypeathletics.org">afaraj@hypeathletics.org</a></p>
+    </div>
+  </section>
+</Page>
+<style>
+  .grid :global(.icon) { color: var(--accent-text); }
+  .logos { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
+  .logos li { display: grid; place-items: center; height: 96px; padding: 16px; background: #fff; }
+  .logos :global(img) { max-height: 60px; width: auto; max-width: 100%; object-fit: contain; }
+</style>

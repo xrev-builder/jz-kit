@@ -1,0 +1,20 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="HYPE Wolves Soccer" seoTitle="HYPE Wolves Travel Soccer (Michigan Wolves)" description="HYPE Wolves travel soccer with Michigan Wolves: tryouts, licensed elite coaches, indoor and outdoor facilities and regional and statewide tournaments."
+  eyebrow="Teams · Soccer" lede="A competitive, supportive soccer family. Indoor and outdoor facilities, licensed elite coaches and high-level competition across Michigan."
+  photo="dh-turf" photoAlt="The indoor turf soccer field at HYPE Dearborn Heights">
+  <div slot="hero" class="btn-row">
+    <a href="https://hypedearborn.leagueapps.com/events/5018229-hype-wolves-soccer-tryouts" class="btn btn-primary btn-lg" rel="noopener" target="_blank">Tryout registration<Icon name="ArrowUpRight" size={16} /></a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdxjfFizz2Jbs3xYL7JAuOz6NF-RWH77OvjZnH87HiUFkloPA/viewform" class="btn btn-secondary btn-lg" rel="noopener" target="_blank">Interest form</a>
+  </div>
+  <section class="section">
+    <div class="wrap grid grid-3">
+      <div class="card card-pad stack-8"><Icon name="Target" size={20} /><h2 class="h4">Selected by tryout</h2><p class="small muted">Players are selected through tryouts and represent the club in regional and statewide tournaments.</p></div>
+      <div class="card card-pad stack-8"><Icon name="TrendingUp" size={20} /><h2 class="h4">Structured development</h2><p class="small muted">Plans that cover technical, tactical and physical growth with experienced, licensed coaches.</p></div>
+      <div class="card card-pad stack-8"><Icon name="Users" size={20} /><h2 class="h4">Real community</h2><p class="small muted">We know every player and support them through their soccer journey, with teamwork, sportsmanship and work ethic.</p></div>
+    </div>
+  </section>
+</Page>
+<style>.grid :global(.icon) { color: var(--accent-text); }</style>

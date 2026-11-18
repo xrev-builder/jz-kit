@@ -1,0 +1,38 @@
+---
+import Icon from './Icon.astro';
+import { locations, sportById, type Program } from '../data/site';
+interface Props { p: Program; showSport?: boolean; showLoc?: boolean }
+const { p, showSport = true, showLoc = true } = Astro.props;
+const loc = locations[p.location];
+const sport = sportById[p.sport];
+---
+<article class="pcard card" data-sport={p.sport} data-loc={p.location} data-text={`${p.title} ${sport.name} ${loc.name} ${p.ages ?? ''}`.toLowerCase()}>
+  {(showSport || showLoc) && (
+    <div class="meta">
+      {showSport && <span class="chip">{sport.name}</span>}
+      {showLoc && <span class="chip"><Icon name="MapPin" size={12} />{loc.short}</span>}
+    </div>
+  )}
+  <h3 class="h4">{p.title}</h3>
+  {(p.ages || p.days) && (
+    <dl class="facts">
+      {p.ages && <div><dt>Who</dt><dd>{p.ages}</dd></div>}
+      {p.days && <div><dt>When</dt><dd>{p.days}</dd></div>}
+    </dl>
+  )}
+  <div class="foot">
+    {p.url ? (
+      <a href={p.url} class="btn btn-secondary btn-sm" rel="noopener" target="_blank">
+        Details &amp; register<Icon name="ArrowUpRight" size={14} /><span class="sr-only">(opens registration site)</span>
+      </a>
+    ) : null}
+    {p.note && <p class="small muted note">{p.note}</p>}
+  </div>
+</article>
+<style>
+  .pcard { display: flex; flex-direction: column; gap: 12px; padding: 20px; min-width: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .h4 { font-size: var(--t-16); }
+  .foot { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .note { font-size: var(--t-13); }
+</style>

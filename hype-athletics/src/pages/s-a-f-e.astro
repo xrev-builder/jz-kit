@@ -1,0 +1,26 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+const items = [
+  ['Users', 'Group therapy', 'Safe, judgment-free sessions led by professional counselors, where people share experiences and build coping strategies together.'],
+  ['FlaskConical', 'Drug screening', 'Confidential, reliable screening that supports accountability for personal goals or recovery program requirements.'],
+  ['School', 'In-school prevention', 'Interactive workshops, awareness campaigns and mentoring that help students make healthy decisions.'],
+  ['HeartHandshake', 'Intervention services', 'Guidance and structure for families and professionals helping someone commit to treatment.'],
+  ['RefreshCw', 'Second Chance Program', 'Mentorship, job training, counseling and life skills for people rebuilding after legal, social or personal consequences of substance use.'],
+  ['House', 'SAFE House', 'A structured, drug-free living space with counseling, life skills and peer support for the transition to independence.'],
+];
+---
+<Page title="S.A.F.E. Wellness" seoTitle="S.A.F.E. Substance Abuse Prevention & Support" description="HYPE Athletics S.A.F.E. (Substance Abuse Free Environment): group therapy, drug screening, school prevention, intervention, Second Chance and SAFE House."
+  eyebrow="Community · Substance Abuse Free Environment" lede="Support, education and prevention for individuals and families facing substance abuse, with resources, guidance and a strong support network."
+  photo="safe" photoAlt="A counselor meeting with a young person">
+  <div slot="hero" class="btn-row"><a href="tel:+13134360043" class="btn btn-primary btn-lg"><Icon name="Phone" size={16} />Talk to us: (313) 436-0043</a></div>
+  <section class="section">
+    <div class="wrap grid grid-3">
+      {items.map(([i, t, d]) => <div class="card card-pad stack-8"><Icon name={i as any} size={20} /><h2 class="h4">{t}</h2><p class="small muted">{d}</p></div>)}
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap"><p class="small muted crisis">If you or someone you know is in crisis, call or text <b>988</b> (Suicide &amp; Crisis Lifeline) or call 911.</p></div>
+  </section>
+</Page>
+<style>.grid :global(.icon) { color: var(--accent-text); } .crisis { padding: 16px 20px; border: 1px solid var(--line); border-radius: var(--r-12); }</style>

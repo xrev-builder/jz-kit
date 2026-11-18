@@ -1,0 +1,36 @@
+---
+import Page from '../components/Page.astro';
+import Icon from '../components/Icon.astro';
+---
+<Page title="Careers" seoTitle="Careers at HYPE Athletics" description="Join the HYPE Athletics team as a coach, administrator, camp counselor or fitness professional in Dearborn Heights or Wayne."
+  eyebrow="About · Careers" lede="Coaches, counselors, administrators and fitness pros: help inspire the next generation of athletes and make a real difference in kids’ lives."
+  photo="team-huddle" photoAlt="A HYPE coach talking with players in a huddle on the court">
+  <section class="section">
+    <div class="wrap two">
+      <div class="stack-16">
+        <h2 class="display h2">A mission-driven workplace</h2>
+        <ul class="checks">
+          <li><Icon name="Check" size={16} />Competitive pay and flexible hours</li>
+          <li><Icon name="Check" size={16} />Professional development and training</li>
+          <li><Icon name="Check" size={16} />A supportive, community-focused team</li>
+          <li><Icon name="Check" size={16} />Opportunities for growth and leadership</li>
+        </ul>
+        <p class="small muted">Summer Discovery hires counselors every spring. <a href="https://docs.google.com/forms/d/e/1FAIpQLSfNKD7GLawM4FHvmb12PYb5XTc_VvY-rjjEsTY1CSW0UW3wVw/viewform" rel="noopener" target="_blank">Apply for camp roles</a>.</p>
+      </div>
+      <div class="stack-16">
+        <a class="card card-pad apply" href="https://docs.google.com/forms/d/e/1FAIpQLSdYfSwRYKlWTQihbCP3qBifeG8H8tfOs9MyfuQmNTa-awv3fQ/viewform" rel="noopener" target="_blank">
+          <span><span class="eyebrow">Apply</span><span class="h4">Dearborn Heights job application</span></span><Icon name="ArrowUpRight" size={18} />
+        </a>
+        <a class="card card-pad apply" href="https://docs.google.com/forms/d/e/1FAIpQLSewSEPiWwf6pe5bwJZMcquA6EWioYdTKN0OWaDdTnKZvFzEbg/viewform" rel="noopener" target="_blank">
+          <span><span class="eyebrow">Apply</span><span class="h4">Wayne job application</span></span><Icon name="ArrowUpRight" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Page>
+<style>
+  .two { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } }
+  .apply { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--fg); }
+  .apply > span { display: grid; gap: 4px; }
+</style>
