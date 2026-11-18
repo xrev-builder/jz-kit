@@ -36,14 +36,19 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
           <p class="q">Who’s your insurance or fitness program?</p>
           <div class="tiles">
             {picks.map((p) => (
-              <button type="button" class:list={['tile', { brand: p.logo }]} data-pick={p.id} aria-label={`${p.label.replace('­', '')}${p.sub ? `, ${p.sub}` : ''}`}>
-                {p.logo
-                  ? <BrandLogo id={p.logo} name={p.label} />
-                  : <span class="ico"><Icon name={p.id === 'employer' ? 'Briefcase' : 'CircleHelp'} size={20} /></span>}
-                <span class="t-text">
-                  {!p.logo && <b>{p.label}</b>}
-                  {p.sub && <small>{p.sub}</small>}
+              <button type="button" class="tile" data-pick={p.id}>
+                <span class="t-head">
+                  {p.logo && <BrandLogo id={p.logo} name={p.label} size={24} />}
+                  {p.id === 'employer' && (
+                    <span class="stack" aria-hidden="true">
+                      <BrandLogo id="activefit" name="Active&Fit" size={20} />
+                      <BrandLogo id="wellhub" name="Wellhub" size={20} />
+                      <BrandLogo id="peerfit" name="Peerfit" size={20} />
+                    </span>
+                  )}
+                  <b>{p.label}</b>
                 </span>
+                {p.sub && <small>{p.sub}</small>}
               </button>
             ))}
           </div>
@@ -96,7 +101,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
       <div class="progs">
         {insurancePrograms.map((p) => (
           <details id={p.id}>
-            <summary><BrandLogo id={p.id} name={p.name} size="sm" onlyIfFile /><span class="p-name">{p.name}</span><span class="chip">{p.audience.includes('medicare') ? 'Medicare' : 'Employer'}</span><Icon name="ChevronDown" size={16} /></summary>
+            <summary><BrandLogo id={p.id} name={p.name} size={28} fallback /><span class="p-name">{p.name}</span><span class="chip">{p.audience.includes('medicare') ? 'Medicare' : 'Employer'}</span><Icon name="ChevronDown" size={16} /></summary>
             <div class="p-body">
               <p class="small muted">{p.who}</p>
               <p class="small">{p.how}</p>
@@ -212,12 +217,12 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
   }
   .tile:hover { border-color: var(--accent); }
   .tile:active { transform: scale(.98); }
-  .tile { align-content: start; gap: 10px; padding: 12px; }
-  .tile b { font-weight: 600; font-size: var(--t-16); line-height: 1.25; }
+  .tile b { font-weight: 600; font-size: var(--t-16); line-height: 1.25; min-width: 0; }
   .tile small { font-size: var(--t-12); color: var(--fg-3); }
-  .t-text { display: grid; gap: 2px; padding: 0 2px; }
-  .ico { display: flex; align-items: center; justify-content: center; height: 44px; border-radius: var(--r-8); background: var(--surface-3); color: var(--fg-2); }
-  .tile:hover .ico { color: var(--accent-text); }
+  .t-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .stack { display: inline-flex; flex-shrink: 0; }
+  .stack :global(.badge) + :global(.badge) { margin-left: -6px; }
+  .stack :global(.badge) { box-shadow: 0 0 0 2px var(--bg-2); }
 
   [data-view='answer'] { display: grid; gap: 20px; }
   .back { justify-self: start; display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 6px 0; color: var(--fg-3); font-size: var(--t-13); cursor: pointer; }
@@ -239,8 +244,8 @@ const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: f
   .done[data-state='fail'] .i-ok { display: none; }
   .done[data-state='fail'] .i-fail { display: inline; }
   .done :global(a) { color: var(--fg); }
-  @media (max-width: 639px) { .tile { padding: 12px 14px; } .tile b { font-size: var(--t-14); } .tile:last-child { grid-column: 1 / -1; grid-template-columns: 56px 1fr; align-items: center; } .tile:last-child .ico { height: 44px; } }
-  @media (max-width: 379px) { .tiles { gap: 8px; } .tile { padding: 12px 10px; } .tile b { font-size: var(--t-13); } .tile small { font-size: var(--t-11); } .picker { padding: 18px 16px; } }
+  @media (max-width: 639px) { .tile { padding: 12px 14px; } .tile b { font-size: var(--t-14); } .tile:last-child { grid-column: 1 / -1; } }
+  @media (max-width: 379px) { .t-head { flex-wrap: wrap; row-gap: 6px; } .tiles { gap: 8px; } .tile { padding: 12px 10px; } .tile b { font-size: var(--t-13); } .tile small { font-size: var(--t-11); } .picker { padding: 18px 16px; } }
   .walkin { display: grid; gap: 6px; }
   .walk-title { display: flex; align-items: center; gap: 8px; font-weight: 600; }
   .walk-title :global(.icon) { color: var(--accent-text); }

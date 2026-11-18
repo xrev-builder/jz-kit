@@ -1,36 +1,26 @@
 ---
-// Shows an insurance / fitness-program logo from src/assets/insurance/<id>.(svg|png|webp|jpg).
-// Until the official file is added, a neutral name plate holds the same space so the layout never shifts.
-// Use official partner-kit files only; don't recreate brand marks.
-import type { ImageMetadata } from 'astro';
-import { getImage } from 'astro:assets';
-
-interface Props { id: string; name: string; size?: 'md' | 'sm'; onlyIfFile?: boolean }
-const { id, name, size = 'md', onlyIfFile = false } = Astro.props;
-const files = import.meta.glob<{ default: ImageMetadata }>('../assets/insurance/*.{svg,png,webp,jpg,jpeg}', { eager: true });
-const entry = Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.[a-z]+$/, '') === id);
-let src: string | undefined;
-if (entry) {
-  const meta = entry[1].default;
-  src = meta.format === 'svg' ? meta.src : (await getImage({ src: meta, height: size === 'md' ? 96 : 64, format: 'webp' })).src;
-}
+// Small brand badge next to an insurance / fitness-program name.
+// Source: each brand's own official site icon, stored in src/assets/insurance/<id>.png (64×64).
+// Inlined as a data URI (a few KB each), so no extra requests. Renders nothing if there's no file.
+interface Props { id: string; name: string; size?: number; fallback?: boolean }
+const { id, name, size = 28, fallback = false } = Astro.props;
+const initials = name.replace(/­/g, '').split(/[\s&]+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+const files = import.meta.glob<string>('../assets/insurance/*.png', { eager: true, query: '?inline', import: 'default' });
+const entry = Object.entries(files).find(([p]) => p.split('/').pop() === `${id}.png`);
+const src = entry?.[1];
 ---
-{(src || !onlyIfFile) && (
-  <span class:list={['plate', size, { has: src }]} aria-hidden={src ? undefined : 'true'}>
-    {src ? <img src={src} alt={`${name.replace(/­/g, '')} logo`} loading="lazy" decoding="async" /> : <span class="word">{name}</span>}
+{src ? (
+  <span class="badge" style={`--s:${size}px`}>
+    <img src={src} alt={`${name.replace(/­/g, '')} logo`} width={size} height={size} />
   </span>
-)}
+) : fallback ? (
+  <span class="badge empty" style={`--s:${size}px`} aria-hidden="true">{initials}</span>
+) : null}
 <style>
-  .plate {
-    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-    background: #fff; color: #1a1a1a; border-radius: var(--r-8);
-    padding: 6px 10px; overflow: hidden;
+  .badge {
+    width: var(--s); height: var(--s); flex-shrink: 0; display: inline-grid; place-items: center;
+    border-radius: 7px; background: #fff; overflow: hidden; box-shadow: 0 0 0 1px rgb(0 0 0 / .08);
   }
-  .md { height: 44px; width: 100%; }
-  .sm { height: 36px; width: 104px; padding: 4px 8px; }
-  .plate img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; }
-  .word { font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; text-align: center; hyphens: manual; overflow-wrap: break-word; max-width: 100%; }
-  .md .word { font-size: var(--t-14); }
-  .sm .word { font-size: var(--t-11); }
-  @media (max-width: 639px) { .md .word { font-size: var(--t-13); } }
+  .badge img { width: 100%; height: 100%; object-fit: contain; }
+  .empty { background: var(--surface-3); color: var(--fg-3); font-size: 10px; font-weight: 600; letter-spacing: .04em; box-shadow: none; }
 </style>

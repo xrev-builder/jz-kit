@@ -103,10 +103,9 @@ instead of being sent, so the flow can be tried without SMS/email accounts. Neve
 - **Insurance page (`/insurance/`)**: for each program in `src/data/insurance.ts`, fill `hype.centers`, `hype.covers`
   and `hype.cost` (cards show "details coming soon" until then); confirm the carrier shortcuts in `carriers`;
   confirm activation steps at the front desk; insurance check requests go to `LEAD_TO_INSURANCE` (default info@)
-- **Insurance logos**: get official logo files from each program's participating-gym marketing kit and drop them
-  in `src/assets/insurance/` named `humana`, `uhc`, `aetna`, `bcbs`, `silversneakers`, `silverfit`, `renewactive`,
-  `activefit`, `activefit-enterprise`, `prime`, `peerfit`, `wellhub` (`.svg` preferred, or `.png`/`.webp`).
-  They appear automatically on the insurance page; until then a name plate holds the space.
+- **Insurance logo badges**: the small badges on `/insurance/` are each brand's own official site icon
+  (`src/assets/insurance/<id>.png`, 64×64). Prime Fitness has none yet (shows initials). Replace any file with an
+  official partner-kit logo to upgrade it.
 - **Day pass texts**: a Twilio account (or similar) and a sending number for verification codes
 - **Day pass rules**: confirm what a day pass includes, the 18+ requirement, and the one-per-180-days limit
 - **Photos** for: women-only gym, steam/sauna, martial arts studio, child care, and real program photos
