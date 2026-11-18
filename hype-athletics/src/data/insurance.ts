@@ -79,7 +79,22 @@ export const insurancePrograms: InsuranceProgram[] = [
   },
 ];
 
-// Carrier → program shortcuts for the coverage finder. These reflect common pairings, not guarantees;
+// One-tap picker on /insurance/. Each pick gives an instant answer. Carrier pairings reflect common
+// plans, not guarantees, so the answer is always phrased as "often/usually" and offers a staff check.
+export type Pick = { id: string; label: string; sub?: string; programs: ProgramId[]; answer: string; known?: boolean };
+export const picks: Pick[] = [
+  { id: 'humana', label: 'Humana', sub: 'Medicare', programs: ['silversneakers'], answer: 'Many Humana Medicare plans include SilverSneakers, which HYPE accepts.' },
+  { id: 'uhc', label: 'UnitedHealthcare', sub: 'incl. AARP Medicare', programs: ['renewactive'], answer: 'UnitedHealthcare Medicare Advantage plans usually include Renew Active, which HYPE accepts.' },
+  { id: 'aetna', label: 'Aetna', sub: 'Medicare', programs: ['silversneakers'], answer: 'Many Aetna Medicare plans include SilverSneakers, which HYPE accepts.' },
+  { id: 'bcbs', label: 'Blue Cross', sub: 'Blue Shield of Michigan', programs: ['silversneakers'], answer: 'Many Blue Cross Medicare plans include a fitness benefit like SilverSneakers, which HYPE accepts.' },
+  { id: 'silversneakers', label: 'SilverSneakers', sub: 'I have it', programs: ['silversneakers'], answer: 'HYPE accepts SilverSneakers.', known: true },
+  { id: 'silverfit', label: 'Silver&Fit', sub: 'I have it', programs: ['silverfit'], answer: 'HYPE accepts Silver&Fit.', known: true },
+  { id: 'renewactive', label: 'Renew Active', sub: 'I have it', programs: ['renewactive'], answer: 'HYPE accepts Renew Active.', known: true },
+  { id: 'employer', label: 'Through my job', sub: 'Active&Fit, Wellhub, Peerfit…', programs: ['activefit', 'activefit-enterprise', 'prime', 'peerfit', 'wellhub'], answer: 'HYPE accepts Active&Fit, Prime Fitness, Peerfit and Wellhub through employers. Check your benefits portal or ask HR which one you have.' },
+  { id: 'other', label: 'Other / not sure', sub: 'We’ll check for you', programs: [], answer: 'No problem. Leave your number and we’ll find out what your plan covers.' },
+];
+
+// Carrier → program shortcuts (legacy finder; kept for reference). These reflect common pairings, not guarantees;
 // plans change every year, so the finder always tells people to confirm (or lets HYPE check).
 export const carriers: { id: string; name: string; likely: ProgramId[]; note?: string }[] = [
   { id: 'humana', name: 'Humana', likely: ['silversneakers'] },
