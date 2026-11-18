@@ -14,6 +14,12 @@ const today = new Date().toISOString().slice(0, 10);
 const upcoming = currentPrograms.filter((p) => p.start && p.start > today && p.url).sort((a, b) => a.start!.localeCompare(b.start!));
 const varied = upcoming.filter((p, i, a) => a.findIndex((x) => x.sport === p.sport && x.location === p.location) === i);
 const featured = [...varied, ...upcoming.filter((p) => !varied.includes(p))].slice(0, 6);
+const heroSlides = [
+  { src: 'dh-gym', label: 'Strength & turf · Dearborn Heights', pos: 'center 55%' },
+  { src: 'dh-courts-wide', label: '5 courts · Dearborn Heights', pos: 'center 60%' },
+  { src: 'dh-turf', label: 'Indoor turf · Dearborn Heights', pos: 'center 55%' },
+  { src: 'wayne-gym', label: 'Fitness floor · Wayne', pos: 'center 50%' },
+];
 const sportsList = ['Basketball', 'Soccer', 'Volleyball', 'Tae Kwon Do', 'Boxing', 'Wrestling', 'Futsal', 'Pickleball', 'Gymnastics', 'Karate', 'Zumba', 'Strength', 'Speed & agility'];
 const ld = {
   '@context': 'https://schema.org', '@type': 'WebSite', name: 'HYPE Athletics', url: 'https://hypeathletics.org/',
@@ -27,13 +33,20 @@ const ld = {
 
   <!-- 1 · Hero: one promise, one action -->
   <section class="hero">
-    <Photo src="dh-courts-wide" alt="" eager sizes="100vw" widths={[750, 1200, 1800, 2400]} class="hero-bg" position="center 60%" />
+    <div class="slides" aria-hidden="true">
+      {heroSlides.map((h, i) => (
+        <div class="slide" style={`--i:${i}`}>
+          <Photo src={h.src} alt="" eager={i === 0} sizes="100vw" widths={h.src === 'dh-courts-wide' ? [750, 1200, 1800, 2400] : [640, 960, 1400]} position={h.pos} />
+          <span class="slide-tag mono">{h.label}</span>
+        </div>
+      ))}
+    </div>
     <div class="wrap hero-in">
       <p class="eyebrow">Dearborn Heights · Wayne · Since {org.founded}</p>
-      <h1 class="display hero-h">This is<br />your <span class="accent">court.</span></h1>
-      <p class="lede">Courts, turf, a full gym and free child care. From <b class="mono">${from}</b>/month.</p>
+      <h1 class="display hero-h"><span class="ln">Transform your body.</span> <span class="ln accent">Transform your life.</span></h1>
+      <p class="lede">Courts, turf, a full gym, group classes, saunas and free child care. Two centers, one community. From <b class="mono">${from}</b>/month.</p>
       <div class="btn-row">
-        <a href="/day-pass/" class="btn btn-primary btn-lg" data-track="daypass_click" data-placement="hero">Get a free day pass<Icon name="ArrowRight" size={18} /></a>
+        <a href="/day-pass/" class="btn btn-primary btn-lg" data-track="daypass_click" data-placement="hero">Start today: free day pass<Icon name="ArrowRight" size={18} /></a>
         <a href="#plans" class="btn btn-secondary btn-lg" data-track="join_click" data-placement="hero">See plans</a>
       </div>
       <ul class="proof">
@@ -159,14 +172,25 @@ const ld = {
 
 <style>
   .hero { position: relative; min-height: calc(100svh - var(--header-h) - var(--mobile-bar)); max-height: 960px; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
-  .hero :global(.hero-bg) { position: absolute; inset: 0; z-index: -2; animation: zoom 18s var(--ease-out) both; }
+  /* Crossfade through four real spaces, 6s each. Reduced motion: first slide only. */
+  .slides { position: absolute; inset: 0; z-index: -2; }
+  .slide { position: absolute; inset: 0; opacity: 0; animation: fade 24s linear infinite; animation-delay: calc(var(--i) * 6s - 0.01s); }
+  .slide:first-child { opacity: 1; }
+  .slide :global(img) { animation: drift 24s linear infinite; animation-delay: inherit; }
+  @keyframes fade { 0% { opacity: 0; } 4% { opacity: 1; } 25% { opacity: 1; } 29% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes drift { 0% { transform: scale(1.1); } 30% { transform: scale(1); } 100% { transform: scale(1); } }
+  .slide:first-child { animation-name: fade-first; }
+  @keyframes fade-first { 0% { opacity: 1; } 25% { opacity: 1; } 29% { opacity: 0; } 96% { opacity: 0; } 100% { opacity: 1; } }
+  .slide-tag { position: absolute; right: max(20px, var(--gutter-r)); top: 20px; z-index: 1; font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgb(0 0 0 / .55); padding: 6px 10px; border-radius: var(--r-full); backdrop-filter: blur(6px); }
+  @media (prefers-reduced-motion: reduce) { .slide { animation: none !important; } .slide:not(:first-child) { display: none; } .slide :global(img) { animation: none !important; } }
   .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--hero-scrim), linear-gradient(0deg, rgb(0 0 0 / .65), transparent 50%); }
   @keyframes zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
   .hero-in { padding-block: 96px 56px; color: #fff; }
   @media (min-width: 900px) { .hero-in { padding-block: 120px 88px; } }
   .hero-in > * + * { margin-top: 22px; }
   .hero .eyebrow { color: rgb(255 255 255 / .75); }
-  .hero-h { font-size: clamp(4rem, 13vw, 10rem); line-height: .82; letter-spacing: -0.02em; animation: rise 700ms var(--ease-out) both 80ms; }
+  .hero-h .ln { display: block; white-space: nowrap; }
+  .hero-h { font-size: clamp(2.25rem, 9.6vw, 7.5rem); line-height: .9; letter-spacing: -0.02em; animation: rise 700ms var(--ease-out) both 80ms; }
   .hero-h .accent { color: #ff2847; }
   @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
   .hero .lede { color: rgb(255 255 255 / .86); max-width: 34ch; }
