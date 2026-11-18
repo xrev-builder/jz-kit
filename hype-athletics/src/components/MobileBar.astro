@@ -12,9 +12,8 @@ const { from, variant = 'join' } = Astro.props;
     </>
   ) : (
     <>
-      <div class="price"><span class="muted">From</span> <b class="mono">${from}</b><span class="muted">/mo</span></div>
-      <a href="/membership/#tour" class="btn btn-secondary btn-sm" data-track="tour_click" data-placement="mobile_bar">Book a tour</a>
-      <a href="/membership/#plans" class="btn btn-primary btn-sm" data-track="join_click" data-placement="mobile_bar">Join now</a>
+      <a href="/day-pass/" class="btn btn-secondary btn-sm grow" data-track="daypass_click" data-placement="mobile_bar">Free day pass</a>
+      <a href="/membership/#plans" class="btn btn-primary btn-sm grow" data-track="join_click" data-placement="mobile_bar">Join from ${from}/mo</a>
     </>
   )}
 </div>
@@ -26,10 +25,10 @@ const { from, variant = 'join' } = Astro.props;
     background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--line);
   }
-  .price { margin-right: auto; font-size: var(--t-13); white-space: nowrap; }
+  .price { margin-right: auto; font-size: var(--t-14); white-space: nowrap; }
+  .grow { flex: 1; }
   .price b { font-size: var(--t-18); color: var(--fg); }
   :global(html.nav-open) .mbar { display: none; }
   :global(body) { --mobile-bar: 64px; }
   @media (min-width: 900px) { .mbar { display: none; } :global(body) { --mobile-bar: 0px; } }
-  @media (max-width: 359px) { .price { display: none; } }
 </style>

@@ -123,6 +123,13 @@ const groups = only.map((loc) => ({ loc, name: locations[loc].name, items: space
   figcaption h3 { font-size: clamp(var(--t-40), 5vw, var(--t-64)); }
   figcaption p { color: rgb(255 255 255 / .85); max-width: 52ch; }
   .access { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  @media (max-width: 599px) {
+    figcaption { gap: 8px; padding: 20px; }
+    figcaption h3 { font-size: var(--t-32); }
+    figcaption p { font-size: var(--t-14); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .access { display: none; }
+    .stage { aspect-ratio: 4 / 5; }
+  }
   .access li { font-size: var(--t-12); padding: 3px 10px; border-radius: var(--r-full); border: 1px solid rgb(255 255 255 / .35); color: rgb(255 255 255 / .9); }
   .nav { position: absolute; right: 16px; top: 16px; z-index: 2; display: flex; gap: 8px; }
   .arrow { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgb(255 255 255 / .3); background: rgb(0 0 0 / .45); color: #fff; cursor: pointer; backdrop-filter: blur(8px); transition: background-color var(--d-micro) var(--ease); }

@@ -19,7 +19,7 @@ interface Props {
   jsonLd?: object | object[];
   bare?: boolean;            // use title as-is
   crumbs?: { name: string; href: string }[];   // breadcrumb trail (without Home)
-  bar?: 'join' | 'rental';                    // which sticky CTA phones see
+  bar?: 'join' | 'rental' | 'none';           // which sticky CTA phones see
 }
 const { title, description, ogPhoto = 'dh-courts', jsonLd, bare = false, crumbs, bar = 'join' } = Astro.props;
 const fullTitle = bare ? title : `${title} | HYPE Athletics`;
@@ -88,7 +88,7 @@ const ld = [orgLd, ...(crumbLd ? [crumbLd] : []), ...(jsonLd ? (Array.isArray(js
       <slot />
     </main>
     <Footer />
-    <MobileBar from={from} variant={bar} />
+    {bar !== 'none' && <MobileBar from={from} variant={bar} />}
   </body>
 </html>
 

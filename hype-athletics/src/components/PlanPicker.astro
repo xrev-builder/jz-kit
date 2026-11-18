@@ -57,9 +57,10 @@ const d0 = locs[0];
       {membership.included.map((i) => <li><Icon name="Check" size={14} />{i}</li>)}
     </ul>
     <a href={d0.join} class="btn btn-primary btn-lg cta" rel="noopener" target="_blank" data-join data-track="join_click" data-placement="plan_picker" data-plan="Individual" data-location={d0.id} data-pay="eft">
-      Start your 7-day free trial<Icon name="ArrowRight" size={18} />
+      Join online<Icon name="ArrowUpRight" size={18} />
     </a>
-    <p class="fine small muted">You’ll finish signing up on our secure member portal. Prefer to see it first? <a href="#tour">Book a free tour</a>.</p>
+    <a href="/day-pass/" class="btn btn-secondary btn-lg cta2" data-track="daypass_click" data-placement="plan_picker">Try it first: free day pass</a>
+    <p class="fine small muted">You’ll finish joining on our secure member portal.</p>
   </aside>
 </div>
 
@@ -112,6 +113,16 @@ const d0 = locs[0];
   .plans { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 640px) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .plans em { font-style: normal; font-size: var(--t-18); font-weight: 500; margin-top: 8px; color: var(--fg); }
+  @media (max-width: 639px) {
+    .plans { grid-template-columns: 1fr; gap: 8px; }
+    .plans label > span { grid-template-columns: 1fr auto; grid-template-areas: 'name price' 'note price'; align-items: center; padding: 14px 16px; }
+    .plans b { grid-area: name; }
+    .plans small { grid-area: note; }
+    .plans em { grid-area: price; margin: 0; font-size: var(--t-21); }
+    .steps { gap: 28px; }
+    .summary { padding: 24px 20px; position: static; }
+    .checks { gap: 10px; }
+  }
 
   .summary {
     position: sticky; top: calc(var(--header-h) + 24px);
@@ -123,5 +134,6 @@ const d0 = locs[0];
   .amt { font-size: clamp(var(--t-80), 12vw, 8.5rem); font-variant-numeric: tabular-nums; }
   .per { font-family: var(--font-body); font-style: normal; font-weight: 500; font-size: var(--t-16); color: var(--fg-3); align-self: flex-end; margin: 0 0 12px 8px; }
   .cta { width: 100%; margin-top: 28px; }
+  .cta2 { width: 100%; margin-top: 12px; }
   .fine { margin-top: 14px; }
 </style>

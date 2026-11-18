@@ -1,6 +1,7 @@
 // Cloudflare Worker that serves the built site from Workers KV (binding: SITE).
 // Used for the shareable preview at hypeathletics.xrev.co. Deployed by deploy/deploy-preview.py.
 // REDIRECTS and PREVIEW are injected by the deploy script.
+import { handleDayPass } from './daypass.js';
 
 const REDIRECTS = __REDIRECTS__;
 const PREVIEW = __PREVIEW__;
@@ -23,7 +24,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Forms: delivery isn't configured on the preview, so the site falls back to call/email buttons.
+    // Day pass: verified phone + email (server/daypass.js). On the preview, codes are shown on screen.
+    const dp = url.pathname.match(/^\/api\/daypass\/(start|verify|resend)\/?$/);
+    if (dp) return handleDayPass(request, env, dp[1]);
+
+    // Other forms: delivery isn't configured on the preview, so the site falls back to call/email buttons.
     if (url.pathname.startsWith('/api/')) {
       return new Response(JSON.stringify({ error: 'not_configured' }), { status: 503, headers: { 'content-type': 'application/json' } });
     }

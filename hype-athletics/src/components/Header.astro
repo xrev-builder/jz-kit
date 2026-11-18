@@ -62,6 +62,7 @@ const logins = [
           </div>
         </div>
       </div>
+      <a href="/day-pass/" class="btn btn-secondary btn-sm daypass" data-track="daypass_click" data-placement="header">Free day pass</a>
       <a href="/membership/#plans" class="btn btn-primary btn-sm join" data-track="join_click" data-placement="header">Join now</a>
       <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-mobile-btn>
         <span class="sr-only">Menu</span>
@@ -92,6 +93,10 @@ const logins = [
           </li>
         ))}
       </ul>
+      <div class="m-cta">
+        <a href="/day-pass/" class="btn btn-secondary btn-lg" data-track="daypass_click" data-placement="mobile_menu">Free day pass</a>
+        <a href="/membership/#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="mobile_menu">Join now</a>
+      </div>
       <div class="m-portals">
         <p class="eyebrow plain">Member portals</p>
         {logins.map((l) => <a href={l.href} rel="noopener" target="_blank" data-track="portal_click" data-portal={l.track}>{l.label}<Icon name="ArrowUpRight" size={16} /></a>)}
@@ -181,8 +186,11 @@ const logins = [
 
   .actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
   .login-label { display: none; }
-  @media (min-width: 560px) { .login-label { display: inline; } }
-  .join { margin-left: 6px; }
+  @media (min-width: 1280px), (min-width: 560px) and (max-width: 1119px) { .login-label { display: inline; } }
+  .join { margin-left: 6px; display: none; }
+  .daypass { display: none; margin-left: 6px; }
+  @media (min-width: 900px) { .join { display: inline-flex; } }
+  @media (min-width: 1280px) { .daypass { display: inline-flex; } }
   .icon-btn { width: 44px; height: 44px; display: inline-grid; place-items: center; border: 0; background: transparent; border-radius: var(--r-8); cursor: pointer; color: var(--fg); }
   .icon-btn:hover { background: var(--surface-2); }
   .i-close { display: none; }
@@ -203,6 +211,7 @@ const logins = [
   .m-group { padding-bottom: 16px; }
   .m-group ul { list-style: none; margin-top: 4px; }
   .m-group a { display: block; padding: 10px 0; text-decoration: none; color: var(--fg-2); font-size: var(--t-16); }
+  .m-cta { display: grid; gap: 12px; margin-top: 28px; }
   .m-portals { display: grid; gap: 4px; margin-top: 28px; }
   .m-portals a { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; text-decoration: none; color: var(--fg-2); border-bottom: 1px solid var(--line); }
 

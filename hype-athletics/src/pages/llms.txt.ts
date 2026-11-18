@@ -12,7 +12,7 @@ export const GET: APIRoute = () => {
   for (const l of Object.values(locations)) L.push(`- ${l.fullName}: ${l.street}, ${l.city}, ${l.region} ${l.zip}. Phone ${l.phone}. ${l.summary} https://hypeathletics.org/${l.id}/`);
   L.push('', '## Hours (Dearborn Heights and Wayne)');
   for (const h of hours) L.push(`- ${h.days}: ${h.time}`);
-  L.push('', '## Membership (monthly; bank draft price, credit card +$3)', `7-day free trial. Includes ${membership.included.join(', ').toLowerCase()}. Join: https://hypeathletics.org/membership/`);
+  L.push('', '## Membership (monthly; bank draft price, credit card +$3)', `Free day pass for first-time visitors (verify phone and email): https://hypeathletics.org/day-pass/. Includes ${membership.included.join(', ').toLowerCase()}. Join: https://hypeathletics.org/membership/`);
   for (const m of membership.locations) L.push(`- ${locations[m.id].name} (${m.access.toLowerCase()}): ` + m.tiers.map((t) => `${t.name} $${t.eft}`).join(', '));
   L.push(`- Insurance fitness programs accepted: ${membership.insurance.join(', ')}.`);
   L.push('', '## Programs currently listed', 'Register online via the program page or at the front desk. Full list: https://hypeathletics.org/programs/');

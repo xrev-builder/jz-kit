@@ -1,0 +1,295 @@
+---
+// Free day pass: details → verify phone + email codes → pass. Backend: server/daypass.js.
+import Icon from './Icon.astro';
+interface Props { id?: string }
+const { id = 'daypass' } = Astro.props;
+const preview = Boolean(import.meta.env.PUBLIC_PREVIEW);
+---
+<div class="dp" id={id} data-daypass>
+  <!-- Step 1 -->
+  <form class="step" data-step="1" novalidate>
+    <div class="hp" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off" /></label></div>
+    <div class="field">
+      <label for={`${id}-name`}>Full name</label>
+      <input class="input" id={`${id}-name`} name="name" autocomplete="name" required />
+      <p class="ferr" data-ferr="name"></p>
+    </div>
+    <div class="field">
+      <label for={`${id}-phone`}>Mobile number</label>
+      <input class="input" id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(313) 555-0123" required />
+      <p class="ferr" data-ferr="phone"></p>
+    </div>
+    <div class="field">
+      <label for={`${id}-email`}>Email</label>
+      <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" required />
+      <p class="ferr" data-ferr="email"></p>
+    </div>
+    <fieldset class="field">
+      <legend class="label">Center</legend>
+      <div class="seg">
+        <label><input type="radio" name="location" value="dearborn-heights" checked /><span>Dearborn Heights</span></label>
+        <label><input type="radio" name="location" value="wayne" /><span>Wayne</span></label>
+      </div>
+    </fieldset>
+    <div class="field">
+      <label for={`${id}-date`}>Day of your visit</label>
+      <select class="select" id={`${id}-date`} name="date" data-dates></select>
+      <p class="ferr" data-ferr="date"></p>
+    </div>
+    <label class="check">
+      <input type="checkbox" name="adult" required />
+      <span>I’m 18 or older</span>
+    </label>
+    <p class="ferr" data-ferr="adult"></p>
+    <p class="err" data-err role="alert" hidden></p>
+    <button class="btn btn-primary btn-lg go" type="submit" data-btn>Send my codes<Icon name="ArrowRight" size={18} /></button>
+    <p class="fine">We’ll text a code to your phone and email a code to you. One free day pass per person.</p>
+  </form>
+
+  <!-- Step 2 -->
+  <form class="step" data-step="2" hidden novalidate>
+    <div>
+      <p class="h4">Check your phone and inbox</p>
+      <p class="sub">We sent one code by text to <b data-to-phone></b> and one by email to <b data-to-email></b>.</p>
+    </div>
+    {preview && <p class="demo" data-demo hidden><Icon name="FlaskConical" size={14} /><span>Preview mode: codes aren’t sent yet. Use <b data-demo-sms></b> (text) and <b data-demo-email></b> (email).</span></p>}
+    <div class="codes">
+      <div class="field">
+        <label for={`${id}-sms`}><Icon name="MessageSquare" size={14} />Text code</label>
+        <input class="input code" id={`${id}-sms`} name="smsCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" required />
+        <button type="button" class="resend" data-resend="sms">Resend text</button>
+      </div>
+      <div class="field">
+        <label for={`${id}-mail`}><Icon name="Mail" size={14} />Email code</label>
+        <input class="input code" id={`${id}-mail`} name="emailCode" inputmode="numeric" maxlength="6" pattern="[0-9]*" required />
+        <button type="button" class="resend" data-resend="email">Resend email</button>
+      </div>
+    </div>
+    <p class="err" data-err role="alert" hidden></p>
+    <button class="btn btn-primary btn-lg go" type="submit" data-btn>Verify &amp; get my pass<Icon name="ArrowRight" size={18} /></button>
+    <button type="button" class="back" data-back>Change my details</button>
+  </form>
+
+  <!-- Step 3 -->
+  <div class="step pass-wrap" data-step="3" hidden tabindex="-1">
+    <div class="ticket">
+      <div class="t-top">
+        <span class="eyebrow plain">Free day pass</span>
+        <span class="ok"><Icon name="BadgeCheck" size={16} />Verified</span>
+      </div>
+      <p class="pass-id mono" data-pass-id></p>
+      <dl>
+        <div><dt>Name</dt><dd data-pass-name></dd></div>
+        <div><dt>Day</dt><dd data-pass-date></dd></div>
+        <div><dt>Where</dt><dd data-pass-loc></dd></div>
+      </dl>
+      <p class="t-note">Show this pass and a photo ID at the front desk. You’ll sign a quick waiver before your workout. {preview ? 'In the live site it’s also texted and emailed to you.' : 'We’ve also sent it to your phone and email.'}</p>
+    </div>
+    <div class="after">
+      <a href="/membership/#plans" class="btn btn-secondary" data-track="join_click" data-placement="daypass_done">See membership plans</a>
+      <a href="/facilities/" class="btn btn-ghost">Preview the facility<Icon name="ArrowRight" size={16} /></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Json = Record<string, any>;
+  const track = (n: string, p: Json = {}) => (window as any).hypeTrack?.(n, { ...p, page: location.pathname });
+
+  document.querySelectorAll<HTMLElement>('[data-daypass]').forEach((root) => {
+    const s1 = root.querySelector<HTMLFormElement>('[data-step="1"]')!;
+    const s2 = root.querySelector<HTMLFormElement>('[data-step="2"]')!;
+    const s3 = root.querySelector<HTMLElement>('[data-step="3"]')!;
+    const KEY = `daypass:${root.id}`;
+    let state: Json = {};
+    try { state = JSON.parse(sessionStorage.getItem(KEY) || '{}'); } catch {}
+    const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+
+    // Visit days: today + next 13 days, Detroit time
+    const sel = root.querySelector<HTMLSelectElement>('[data-dates]')!;
+    const base = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Detroit' }));
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(base); d.setDate(base.getDate() + i);
+      const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const label = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+      sel.add(new Option(label, iso));
+    }
+
+    const show = (n: number) => {
+      [s1, s2, s3].forEach((el, i) => (el.hidden = i !== n - 1));
+      const focusEl = n === 2 ? s2.querySelector<HTMLInputElement>('input[name=smsCode]') : n === 3 ? s3 : null;
+      focusEl?.focus({ preventScroll: true });
+      if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    const setErr = (form: HTMLElement, msg: string, html = false) => {
+      const e = form.querySelector<HTMLElement>('[data-err]')!;
+      if (!msg) { e.hidden = true; return; }
+      html ? (e.innerHTML = msg) : (e.textContent = msg); e.hidden = false;
+    };
+    const busy = (form: HTMLElement, on: boolean, label?: string) => {
+      const b = form.querySelector<HTMLButtonElement>('[data-btn]')!;
+      b.disabled = on; if (on) { b.dataset.label = b.innerHTML; b.textContent = label || 'Working…'; } else if (b.dataset.label) b.innerHTML = b.dataset.label;
+    };
+    const post = async (action: string, body: Json) => {
+      const r = await fetch(`/api/daypass/${action}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+      let data: Json = {}; try { data = await r.json(); } catch {}
+      return { status: r.status, data };
+    };
+    const showDemo = (demo?: Json) => {
+      const box = root.querySelector<HTMLElement>('[data-demo]');
+      if (!box || !demo) return;
+      if (demo.sms) box.querySelector('[data-demo-sms]')!.textContent = demo.sms;
+      if (demo.email) box.querySelector('[data-demo-email]')!.textContent = demo.email;
+      box.hidden = false;
+    };
+    const fallback = 'Online day passes aren’t available right now. Call <a href="tel:+13134360043">(313) 436-0043</a> and we’ll set one up.';
+
+    // Restore a pending verification after a refresh
+    if (state.id && state.expires > Date.now()) {
+      root.querySelector('[data-to-phone]')!.textContent = state.phone;
+      root.querySelector('[data-to-email]')!.textContent = state.email;
+      showDemo(state.demo);
+      show(2);
+    }
+
+    s1.addEventListener('input', () => track('form_start', { kind: 'daypass' }), { once: true });
+    // Clear a field's error as soon as the visitor fixes it
+    s1.addEventListener('input', (e) => { const n = (e.target as HTMLInputElement).name; const f = root.querySelector(`[data-ferr="${n}"]`); if (f) f.textContent = ''; });
+    s1.addEventListener('change', (e) => { const n = (e.target as HTMLInputElement).name; const f = root.querySelector(`[data-ferr="${n}"]`); if (f) f.textContent = ''; });
+    s1.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setErr(s1, '');
+      root.querySelectorAll<HTMLElement>('[data-ferr]').forEach((f) => (f.textContent = ''));
+      const fd = new FormData(s1);
+      const body: Json = Object.fromEntries(fd.entries());
+      body.adult = fd.get('adult') === 'on';
+      // quick client checks
+      const local: Json = {};
+      if (String(body.name).trim().length < 2) local.name = 'Please enter your full name.';
+      if (String(body.phone).replace(/\D/g, '').length < 10) local.phone = 'Enter a 10-digit mobile number.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(body.email).trim())) local.email = 'Enter a valid email address.';
+      if (!body.adult) local.adult = 'Day passes are for adults 18 and over.';
+      if (Object.keys(local).length) {
+        for (const [k, v] of Object.entries(local)) root.querySelector(`[data-ferr="${k}"]`)!.textContent = v as string;
+        s1.querySelector<HTMLInputElement>(`[name="${Object.keys(local)[0]}"]`)?.focus();
+        return;
+      }
+      busy(s1, true, 'Sending codes…');
+      try {
+        const { status, data } = await post('start', body);
+        if (status === 200) {
+          state = { id: data.id, phone: data.phone, email: data.email, demo: data.demo, expires: Date.now() + 9 * 60 * 1000 };
+          save();
+          root.querySelector('[data-to-phone]')!.textContent = data.phone;
+          root.querySelector('[data-to-email]')!.textContent = data.email;
+          showDemo(data.demo);
+          track('daypass_start', { location: body.location });
+          show(2);
+        } else if (status === 422 && data.fields) {
+          for (const [k, v] of Object.entries(data.fields)) { const el = root.querySelector(`[data-ferr="${k}"]`); if (el) el.textContent = v as string; }
+        } else if (status === 409) {
+          setErr(s1, 'You’ve already used a free day pass. Ready to make it official? <a href="/membership/#plans">Memberships start at $25/month</a>.', true);
+          track('daypass_repeat');
+        } else if (status === 429) {
+          setErr(s1, 'Too many requests. Please wait a bit and try again.');
+        } else {
+          setErr(s1, fallback, true); track('form_fallback', { kind: 'daypass' });
+        }
+      } catch { setErr(s1, fallback, true); }
+      finally { busy(s1, false); }
+    });
+
+    s2.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setErr(s2, '');
+      const fd = new FormData(s2);
+      const smsCode = String(fd.get('smsCode') || '').replace(/\D/g, '');
+      const emailCode = String(fd.get('emailCode') || '').replace(/\D/g, '');
+      if (smsCode.length !== 6 || emailCode.length !== 6) { setErr(s2, 'Enter both 6-digit codes.'); return; }
+      busy(s2, true, 'Verifying…');
+      try {
+        const { status, data } = await post('verify', { id: state.id, smsCode, emailCode });
+        if (status === 200) {
+          root.querySelector('[data-pass-id]')!.textContent = data.passId;
+          root.querySelector('[data-pass-name]')!.textContent = data.name;
+          root.querySelector('[data-pass-date]')!.textContent = data.dateLabel;
+          root.querySelector('[data-pass-loc]')!.textContent = data.locationLabel;
+          try { sessionStorage.removeItem(KEY); } catch {}
+          track('daypass_verified', { location: data.location });
+          show(3);
+        } else if (status === 401) {
+          const which = !data.sms && !data.email ? 'Both codes are' : !data.sms ? 'The text code is' : 'The email code is';
+          setErr(s2, `${which} incorrect. ${data.left} ${data.left === 1 ? 'try' : 'tries'} left.`);
+        } else if (status === 410 || status === 429) {
+          setErr(s2, 'Those codes expired. Start again to get new ones.');
+          try { sessionStorage.removeItem(KEY); } catch {}
+        } else { setErr(s2, fallback, true); }
+      } catch { setErr(s2, fallback, true); }
+      finally { busy(s2, false); }
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('[data-resend]').forEach((b) => b.addEventListener('click', async () => {
+      b.disabled = true; const t = b.textContent; b.textContent = 'Sending…';
+      try {
+        const { status, data } = await post('resend', { id: state.id, channel: b.dataset.resend });
+        b.textContent = status === 200 ? 'Sent' : status === 429 ? 'Limit reached' : 'Try again';
+        if (status === 200 && data.demo) { state.demo = { ...state.demo, ...data.demo }; save(); showDemo(state.demo); }
+        if (status === 410) setErr(s2, 'Those codes expired. Start again to get new ones.');
+      } catch { b.textContent = 'Try again'; }
+      setTimeout(() => { b.textContent = t; b.disabled = false; }, 4000);
+    }));
+
+    root.querySelector('[data-back]')!.addEventListener('click', () => { try { sessionStorage.removeItem(KEY); } catch {} show(1); });
+  });
+</script>
+
+<style>
+  .dp { position: relative; }
+  .step { display: grid; gap: 20px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .label { font-size: var(--t-13); font-weight: 500; color: var(--fg-2); margin-bottom: 6px; padding: 0; }
+  .field label { display: inline-flex; align-items: center; gap: 6px; }
+  .ferr { color: var(--accent-text); font-size: var(--t-13); min-height: 0; }
+  .ferr:empty { display: none; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .seg label { position: relative; cursor: pointer; }
+  .seg input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .seg span { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 12px; border-radius: var(--r-8); border: 1px solid var(--line-strong); background: var(--surface); font-weight: 500; font-size: var(--t-14); text-align: center; transition: all var(--d-micro) var(--ease); }
+  .seg input:checked + span { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .seg input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .check { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: var(--t-14); min-height: 44px; }
+  .check input { width: 20px; height: 20px; accent-color: var(--accent); }
+  .err { color: var(--accent-text); font-size: var(--t-14); font-weight: 500; }
+  .err :global(a) { color: var(--fg); }
+  .go { width: 100%; }
+  .go:disabled { opacity: .6; cursor: progress; }
+  .fine { font-size: var(--t-13); color: var(--fg-3); text-align: center; }
+  .sub { color: var(--fg-2); margin-top: 6px; font-size: var(--t-14); }
+  .sub b { color: var(--fg); font-weight: 500; }
+  .demo { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: var(--r-8); border: 1px dashed var(--line-strong); font-size: var(--t-13); color: var(--fg-2); }
+  .demo b { font-family: var(--font-mono); color: var(--fg); letter-spacing: .1em; }
+  .codes { display: grid; gap: 16px; }
+  @media (min-width: 520px) { .codes { grid-template-columns: 1fr 1fr; } }
+  .code { font-family: var(--font-mono); font-size: var(--t-25); letter-spacing: .3em; text-align: center; padding: 0 8px; min-height: 56px; }
+  .resend, .back { justify-self: start; background: none; border: 0; padding: 6px 0; font-size: var(--t-13); color: var(--fg-3); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 32px; }
+  .resend:hover, .back:hover { color: var(--fg); }
+  .back { justify-self: center; }
+
+  .pass-wrap { outline: none; }
+  .ticket {
+    position: relative; padding: 28px 24px; border-radius: var(--r-18); color: #fff; overflow: hidden;
+    background: radial-gradient(120% 90% at 100% 0%, rgb(255 255 255 / .16), transparent 55%), linear-gradient(135deg, #e1062c, #8f0019);
+  }
+  .ticket::after { content: ''; position: absolute; right: -40px; bottom: -40px; width: 180px; height: 180px; border: 18px solid rgb(255 255 255 / .1); border-radius: 50%; }
+  .t-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .t-top .eyebrow { color: rgb(255 255 255 / .85); }
+  .ok { display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-13); font-weight: 600; background: rgb(0 0 0 / .25); padding: 4px 10px; border-radius: var(--r-full); }
+  .pass-id { font-size: clamp(var(--t-32), 9vw, var(--t-52)); font-weight: 500; letter-spacing: .06em; margin: 18px 0; line-height: 1; }
+  .ticket dl { display: grid; gap: 10px; margin: 0; position: relative; z-index: 1; }
+  .ticket dl div { display: grid; grid-template-columns: 64px 1fr; gap: 12px; }
+  .ticket dt { font-family: var(--font-mono); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; opacity: .75; padding-top: 3px; }
+  .ticket dd { margin: 0; font-weight: 500; }
+  .t-note { margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgb(255 255 255 / .35); font-size: var(--t-14); opacity: .92; position: relative; z-index: 1; }
+  .after { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+</style>

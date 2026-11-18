@@ -18,6 +18,7 @@ import base64, json, os, subprocess, sys, tempfile
 ACCOUNT = 'ae8bcee803a82250768b47ea25778eed'
 ZONE = 'dee553f2d523d589d355d7c756ff4c18'          # xrev.co
 NAMESPACE = '5733b6a28702409cbfe14eda1334f2b6'      # hype-athletics-preview-site
+DAYPASS_NS = '6c5d7a1be1e24efcb31b9d153c9ca768'     # hype-athletics-preview-daypass
 SCRIPT = 'hype-athletics-preview'
 HOSTNAME = 'hypeathletics.xrev.co'
 API = f'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}'
@@ -87,16 +88,23 @@ def upload_worker():
     meta = {
         'main_module': 'worker.js',
         'compatibility_date': '2025-01-01',
-        'bindings': [{'type': 'kv_namespace', 'name': 'SITE', 'namespace_id': NAMESPACE}],
+        'bindings': [
+            {'type': 'kv_namespace', 'name': 'SITE', 'namespace_id': NAMESPACE},
+            {'type': 'kv_namespace', 'name': 'DAYPASS', 'namespace_id': DAYPASS_NS},
+            # Preview only: show verification codes on screen until SMS/email providers are configured.
+            {'type': 'plain_text', 'name': 'DAYPASS_DEMO', 'text': 'true'},
+        ],
     }
     with tempfile.TemporaryDirectory() as td:
         wpath = os.path.join(td, 'worker.js')
         open(wpath, 'w').write(src)
         mpath = os.path.join(td, 'metadata.json')
         open(mpath, 'w').write(json.dumps(meta))
+        dpath = os.path.join(ROOT, 'server', 'daypass.js')
         api('PUT', f'{API}/workers/scripts/{SCRIPT}',
             '-F', f'metadata=@{mpath};type=application/json',
-            '-F', f'worker.js=@{wpath};type=application/javascript+module')
+            '-F', f'worker.js=@{wpath};filename=worker.js;type=application/javascript+module',
+            '-F', f'daypass.js=@{dpath};filename=daypass.js;type=application/javascript+module')
 
 
 def main():

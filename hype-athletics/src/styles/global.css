@@ -248,3 +248,24 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   .reveal, .reveal-stagger > * { animation: none !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
 }
+
+/* ------------------------------------------------------------ Phones: more air, less text density */
+@media (max-width: 599px) {
+  :root { --gutter: max(22px, env(safe-area-inset-left, 0px)); --gutter-r: max(22px, env(safe-area-inset-right, 0px)); }
+  body { line-height: 1.65; }
+  .section { padding-block: 72px; }
+  .section.tight { padding-block: 40px; }
+  .sec-head { margin-bottom: 28px; gap: 16px; }
+  .sec-head .lede, .lede { font-size: var(--t-16); line-height: 1.6; }
+  .h2 { font-size: var(--t-40); }
+  .h3 { font-size: var(--t-25); }
+  .card-pad { padding: 20px; }
+  /* Primary actions stack full-width: easier to tap, nothing squeezed side by side */
+  .btn-row { flex-direction: column; align-items: stretch; gap: 10px; }
+  .btn-row > .btn { width: 100%; }
+  .btn-row > .btn-ghost { justify-content: center; }
+  .checks { gap: 14px; }
+  .marquee li { font-size: var(--t-21); padding: 10px 0; }
+  .marquee li::after { margin: 0 18px; width: 8px; height: 8px; }
+  .hide-sm { display: none !important; }
+}

@@ -64,4 +64,9 @@ const text = `${p.title} ${sport.name} ${loc.name} ${p.ages ?? ''} ${p.days ?? '
   .foot { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .fee { font-size: var(--t-13); min-width: 0; }
   .fee b { font-size: var(--t-21); font-weight: 500; color: var(--fg); }
+  @media (max-width: 599px) {
+    .pc { padding: 20px; gap: 10px; }
+    .fee .muted { display: none; }
+    .title { font-size: var(--t-21); }
+  }
 </style>

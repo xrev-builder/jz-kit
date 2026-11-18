@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 import { org, locations, hours, portals } from '../data/site';
 const year = new Date().getFullYear();
 const cols = [
-  { title: 'Join', links: [['Membership & prices', '/membership/'], ['Book a tour', '/membership/#tour'], ['Facility tour', '/facilities/'], ['Insurance memberships', '/silver-fitness-training/'], ['Personal training', '/personal-group-fitness/']] },
+  { title: 'Join', links: [['Membership & prices', '/membership/'], ['Free day pass', '/day-pass/'], ['Facility tour', '/facilities/'], ['Insurance memberships', '/silver-fitness-training/'], ['Personal training', '/personal-group-fitness/']] },
   { title: 'Play', links: [['All programs', '/programs/'], ['Basketball', '/basketball/'], ['Soccer', '/soccer/'], ['Adult leagues', '/adult-leagues/'], ['Summer Discovery', '/summer-discovery/']] },
   { title: 'HYPE', links: [['Rentals', '/rentals/'], ['Events', '/events/'], ['Our story', '/about-us/'], ['Community services', '/social-services/'], ['Donate', '/donate/'], ['Careers', '/careers/']] },
 ];
@@ -69,6 +69,7 @@ const cols = [
 <style>
   .site-footer { border-top: 1px solid var(--line); padding-block: 72px 32px; background: var(--bg); }
   .top { display: grid; gap: 40px; }
+  @media (max-width: 719px) { .top { grid-template-columns: 1fr 1fr; gap: 36px 24px; } .intro { grid-column: 1 / -1; } }
   @media (min-width: 720px) { .top { grid-template-columns: repeat(3, minmax(0, 1fr)); } .intro { grid-column: 1 / -1; } }
   @media (min-width: 1024px) { .top { grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); } .intro { grid-column: auto; } }
   .f-logo { display: block; width: 176px; }

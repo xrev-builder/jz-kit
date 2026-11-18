@@ -22,7 +22,7 @@ const ld = {
 ---
 <Base bare
   title="HYPE Athletics | Gym, Courts & Youth Sports in Dearborn Heights & Wayne, MI"
-  description={`Gym memberships from $${from}/month with free child care and group classes, plus youth leagues, camps and court rentals at HYPE Athletics in Dearborn Heights and Wayne, MI. Try 7 days free.`}
+  description={`Gym memberships from $${from}/month with free child care and group classes, plus youth leagues, camps and court rentals at HYPE Athletics in Dearborn Heights and Wayne, MI. Your first visit is free.`}
   jsonLd={ld}>
 
   <!-- 1 · Hero: one promise, one action -->
@@ -31,15 +31,15 @@ const ld = {
     <div class="wrap hero-in">
       <p class="eyebrow">Dearborn Heights · Wayne · Since {org.founded}</p>
       <h1 class="display hero-h">This is<br />your <span class="accent">court.</span></h1>
-      <p class="lede">Courts, turf, a full gym, classes and free child care, all under one roof. Memberships from <b class="mono">${from}</b> a month.</p>
+      <p class="lede">Courts, turf, a full gym and free child care. From <b class="mono">${from}</b>/month.</p>
       <div class="btn-row">
-        <a href="#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="hero">Try 7 days free<Icon name="ArrowRight" size={18} /></a>
-        <a href="/facilities/" class="btn btn-secondary btn-lg" data-track="tour_click" data-placement="hero"><Icon name="Play" size={16} />Take the tour</a>
+        <a href="/day-pass/" class="btn btn-primary btn-lg" data-track="daypass_click" data-placement="hero">Get a free day pass<Icon name="ArrowRight" size={18} /></a>
+        <a href="#plans" class="btn btn-secondary btn-lg" data-track="join_click" data-placement="hero">See plans</a>
       </div>
       <ul class="proof">
-        <li><Icon name="Check" size={14} />7-day free trial</li>
+        <li><Icon name="Check" size={14} />First visit free</li>
         <li><Icon name="Check" size={14} />Free child care</li>
-        <li><Icon name="Check" size={14} />Nonprofit since {org.founded}</li>
+        <li class="hide-xs"><Icon name="Check" size={14} />Nonprofit since {org.founded}</li>
       </ul>
     </div>
   </section>
@@ -70,8 +70,8 @@ const ld = {
       <div class="sec-head reveal">
         <div>
           <p class="eyebrow red">Membership</p>
-          <h2 class="display h2">Your first week<br />is on us</h2>
-          <p class="lede">Pick a center and a plan, then try everything free for 7 days.</p>
+          <h2 class="display h2">Pick your plan</h2>
+          <p class="lede">Choose a center and a plan. Not sure yet? Your first visit is free.</p>
         </div>
       </div>
       <PlanPicker />
@@ -149,10 +149,10 @@ const ld = {
     <div class="wrap close-in">
       <h2 class="display h2">See you on the court.</h2>
       <div class="btn-row">
-        <a href="/membership/#plans" class="btn btn-primary btn-lg" data-track="join_click" data-placement="footer_cta">Start your free week</a>
-        <a href="/membership/#tour" class="btn btn-secondary btn-lg" data-track="tour_click" data-placement="footer_cta">Book a tour</a>
+        <a href="/day-pass/" class="btn btn-primary btn-lg" data-track="daypass_click" data-placement="footer_cta">Get a free day pass</a>
+        <a href="/membership/#plans" class="btn btn-secondary btn-lg" data-track="join_click" data-placement="footer_cta">Join now</a>
       </div>
-      <p class="small muted">{Object.values(locations).slice(0, 2).map((l) => `${l.name} ${l.phone}`).join('  ·  ')}</p>
+      <p class="small muted phones">{Object.values(locations).slice(0, 2).map((l) => <span>{l.name} <a href={`tel:${l.phoneHref}`} class="mono">{l.phone}</a></span>)}</p>
     </div>
   </section>
 </Base>
@@ -175,11 +175,25 @@ const ld = {
   .hero :global(.btn-secondary:hover) { --bgc: rgb(255 255 255 / .1); }
   .proof { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: var(--t-14); color: rgb(255 255 255 / .8); }
   .proof li { display: inline-flex; align-items: center; gap: 6px; }
+  @media (max-width: 420px) { .hide-xs { display: none !important; } }
   .proof :global(.icon) { color: #ff5468; }
 
   .alt { margin-top: 24px; }
   .ages { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -12px 0 28px; }
   .ages span { margin-right: 6px; }
+  @media (max-width: 599px) {
+    .ages { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(-1 * var(--gutter-r)); padding-right: var(--gutter-r); }
+    .ages::-webkit-scrollbar { display: none; }
+    .ages span { display: none; }
+    .ages a { flex-shrink: 0; }
+    .reveal-stagger > :global(:nth-child(n+4)) { display: none; }
+    .stats dd { font-size: var(--t-40); }
+    .stats dt { font-size: var(--t-11); }
+    .split-card { min-height: 320px; }
+    .story { padding-block: 80px; }
+    .close { padding-block: 72px 88px; }
+    .hero-in > * + * { margin-top: 18px; }
+  }
   .ages a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--r-full); border: 1px solid var(--line-strong); text-decoration: none; font-size: var(--t-14); font-weight: 500; transition: all var(--d-micro) var(--ease); }
   .ages a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 
@@ -198,7 +212,7 @@ const ld = {
   .rent-copy > * + * { margin-top: 18px; }
   .rent-copy .btn-row { margin-top: 32px; }
   .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 32px 0 0; }
-  .stats div { border-top: 2px solid var(--accent); padding-top: 12px; display: flex; flex-direction: column-reverse; gap: 4px; }
+  .stats div { border-top: 2px solid var(--accent); padding-top: 12px; display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 4px; }
   .stats dt { font-size: var(--t-12); color: var(--fg-3); }
   .stats dd { margin: 0; font-size: var(--t-64); line-height: .9; font-variant-numeric: tabular-nums; }
   .rent-media { aspect-ratio: 4 / 3; border-radius: var(--r-18); overflow: hidden; }
@@ -216,4 +230,6 @@ const ld = {
   .close { padding-block: 96px 120px; text-align: center; }
   .close-in { display: grid; justify-items: center; gap: 28px; }
   .close .btn-row { justify-content: center; }
+  .phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+  .phones a { color: var(--fg-2); text-decoration: none; }
 </style>

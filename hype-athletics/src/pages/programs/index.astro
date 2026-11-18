@@ -120,6 +120,13 @@ const ld = {
   .chips label:hover span { border-color: var(--fg-3); }
   .chips input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
   .chips input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  @media (max-width: 599px) {
+    .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(-1 * var(--gutter-r)); padding-right: var(--gutter-r); }
+    .chips::-webkit-scrollbar { display: none; }
+    .chips label { flex-shrink: 0; }
+    .head .h1 { font-size: var(--t-52); }
+    .filters { margin-top: 28px; }
+  }
   .row { display: grid; gap: 14px; }
   @media (min-width: 720px) { .row { grid-template-columns: 220px 220px minmax(0, 1fr); } }
   .field label { margin-bottom: 4px; }

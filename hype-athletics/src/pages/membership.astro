@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import PlanPicker from '../components/PlanPicker.astro';
-import LeadForm from '../components/LeadForm.astro';
+import DayPass from '../components/DayPass.astro';
 import FacilityTour from '../components/FacilityTour.astro';
 import { membership, locations, hours } from '../data/site';
 
@@ -17,7 +17,7 @@ const perks = [
   { icon: 'Users', t: 'Women-only gym', d: 'A private gym and classes in Dearborn Heights.' },
 ];
 const faq = [
-  ['How does the free trial work?', 'Choose your center and plan above and start online. Your first 7 days are free so you can try the gym, classes and child care before you pay.'],
+  ['Can I try it before I join?', 'Yes. Claim a free day pass online: verify your phone and email, pick a day, and show the pass at the front desk. One per person.'],
   ['What’s the difference between the two centers?', 'A Dearborn Heights membership includes both HYPE facilities. A Wayne membership covers the Wayne center at a lower price.'],
   ['Why is bank draft cheaper?', 'Paying by monthly bank draft (EFT) saves $3 a month compared with credit card autopay.'],
   ['Does insurance cover my membership?', `HYPE accepts ${membership.insurance.slice(0, 4).join(', ')} and more. Bring your member ID to the front desk to activate.`],
@@ -38,14 +38,14 @@ const ld = [
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
 ];
 ---
-<Base title="Gym Membership · From $25/month · Try 7 Days Free" description={`HYPE Athletics memberships in Dearborn Heights and Wayne, MI from $${from}/month: full gym, group classes, free child care and Homework Club. Family and senior plans. Try 7 days free.`}
+<Base title="Gym Membership · From $25/month · First Visit Free" description={`HYPE Athletics memberships in Dearborn Heights and Wayne, MI from $${from}/month: full gym, group classes, free child care and Homework Club. Family and senior plans. First visit free with a day pass.`}
   ogPhoto="dh-fitness" jsonLd={ld} crumbs={[{ name: 'Membership', href: '/membership/' }]}>
 
   <section class="hero">
     <div class="wrap hero-in">
       <div>
         <p class="eyebrow red">Membership</p>
-        <h1 class="display h1">Join HYPE.<br />First week free.</h1>
+        <h1 class="display h1">Join HYPE</h1>
       </div>
       <p class="lede">A full gym, group classes, free child care and a community that shows up. Plans from <b class="mono">${from}</b>/month.</p>
     </div>
@@ -83,15 +83,15 @@ const ld = [
     </div>
   </section>
 
-  <section class="section" id="tour">
+  <section class="section" id="day-pass">
     <div class="wrap tour-grid">
       <div class="stack-16">
         <p class="eyebrow">Not ready to join?</p>
-        <h2 class="display h2">Book a free tour</h2>
-        <p class="muted">Tell us when works and we’ll show you around: the gym, the courts, child care, everything.</p>
+        <h2 class="display h2">Try it free for a day</h2>
+        <p class="muted">Verify your phone and email, pick a day, and show your pass at the front desk.</p>
         <div class="photo-sm"><Photo src="dh-gym" alt="The fitness floor at HYPE Dearborn Heights" sizes="(min-width: 960px) 460px, 100vw" widths={[480, 920]} /></div>
       </div>
-      <div class="card form-card"><LeadForm kind="tour" /></div>
+      <div class="card form-card"><DayPass id="m-daypass" /></div>
     </div>
   </section>
 
@@ -114,6 +114,11 @@ const ld = [
   .perks { list-style: none; display: grid; gap: 1px; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--line); border: 1px solid var(--line); border-radius: var(--r-12); overflow: hidden; }
   @media (min-width: 900px) { .perks { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .perks li { background: var(--surface); padding: 28px; display: grid; gap: 8px; align-content: start; }
+  @media (max-width: 599px) {
+    .perks { grid-template-columns: 1fr; }
+    .perks li { grid-template-columns: 28px 1fr; column-gap: 16px; row-gap: 4px; padding: 20px; }
+    .perks li :global(.icon) { grid-row: span 2; margin: 2px 0 0; }
+  }
   .perks :global(.icon) { color: var(--accent-text); margin-bottom: 8px; }
   .ins { display: grid; gap: 40px; align-items: center; }
   @media (min-width: 960px) { .ins { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; } }
@@ -122,8 +127,10 @@ const ld = [
   .tour-grid { display: grid; gap: 40px; }
   @media (min-width: 960px) { .tour-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 72px; align-items: start; } }
   .photo-sm { aspect-ratio: 16 / 10; border-radius: var(--r-12); overflow: hidden; margin-top: 28px; }
-  .form-card { padding: 28px; }
+  .form-card { padding: 24px 20px; }
   @media (min-width: 640px) { .form-card { padding: 36px; } }
+  .photo-sm { display: none; }
+  @media (min-width: 960px) { .photo-sm { display: block; } }
   .faq-wrap { display: grid; gap: 32px; }
   @media (min-width: 960px) { .faq-wrap { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; } }
   .qs { border-top: 1px solid var(--line); }

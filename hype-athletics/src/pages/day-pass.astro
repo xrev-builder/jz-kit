@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import DayPass from '../components/DayPass.astro';
+const faq = [
+  ['Is it really free?', 'Yes. One free day pass per person. No credit card needed.'],
+  ['Why verify my phone and email?', 'It keeps passes one per person and lets us send your pass to both.'],
+  ['What do I bring?', 'Your pass (text or email) and a photo ID. You’ll sign a quick waiver at the front desk.'],
+  ['Can I bring a friend?', 'Each guest gets their own free pass. Have them sign up here too.'],
+];
+const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) };
+---
+<Base title="Free Day Pass" description="Try HYPE Athletics free for a day. Claim a free day pass for our Dearborn Heights or Wayne gym in under a minute: verify your phone and email, then show your pass at the front desk."
+  ogPhoto="dh-gym" jsonLd={ld} bar="none" crumbs={[{ name: 'Membership', href: '/membership/' }, { name: 'Free day pass', href: '/day-pass/' }]}>
+  <section class="dp-sec">
+    <div class="wrap grid2">
+      <div class="intro">
+        <p class="eyebrow red">Free day pass</p>
+        <h1 class="display h1">Your first visit is on us</h1>
+        <p class="lede">Train, shoot around, see the place. Grab a pass in under a minute.</p>
+        <ul class="steps">
+          <li><span class="n mono">1</span>Tell us who you are</li>
+          <li><span class="n mono">2</span>Confirm the codes we text and email</li>
+          <li><span class="n mono">3</span>Show your pass at the front desk</li>
+        </ul>
+        <div class="ph"><Photo src="dh-gym" alt="The fitness floor at HYPE Dearborn Heights" sizes="(min-width: 960px) 480px, 100vw" widths={[480, 960]} /></div>
+      </div>
+      <div class="card form-card"><DayPass /></div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap faq">
+      <h2 class="display h3">Good to know</h2>
+      <dl>{faq.map(([q, a]) => <div><dt class="h4">{q}</dt><dd class="muted">{a}</dd></div>)}</dl>
+    </div>
+  </section>
+</Base>
+<style>
+  .dp-sec { padding-block: 40px 72px; }
+  @media (min-width: 960px) { .dp-sec { padding-block: 88px 112px; } }
+  .grid2 { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .grid2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; } }
+  .intro > * + * { margin-top: 20px; }
+  .intro .h1 { font-size: clamp(var(--t-52), 7vw, var(--t-80)); margin-top: 14px; }
+  .steps { list-style: none; display: grid; gap: 14px; margin-top: 28px; }
+  .steps li { display: flex; align-items: center; gap: 14px; color: var(--fg-2); }
+  .n { width: 32px; height: 32px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-strong); font-size: var(--t-13); color: var(--fg); }
+  .ph { display: none; aspect-ratio: 16 / 10; border-radius: var(--r-12); overflow: hidden; margin-top: 32px; }
+  @media (min-width: 960px) { .ph { display: block; } }
+  .form-card { padding: 24px 20px; }
+  @media (min-width: 640px) { .form-card { padding: 36px; } }
+  .faq { display: grid; gap: 28px; }
+  @media (min-width: 900px) { .faq { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 64px; } }
+  .faq dl { margin: 0; display: grid; gap: 24px; }
+  .faq dd { margin: 6px 0 0; }
+  .faq .h4 { font-size: var(--t-16); }
+</style>

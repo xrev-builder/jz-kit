@@ -59,6 +59,27 @@ python3 deploy/deploy-preview.py
 
 The production build (no `PUBLIC_PREVIEW`) is indexable and runs the form function in `functions/api/lead.js`.
 
+## Free day pass (`/day-pass/`)
+
+Replaces the old 7-day trial. A visitor enters name, mobile, email, center and visit day; we text one
+6-digit code and email another; both must be entered to get a pass (e.g. `HYPE-7K3Q9P`). The pass is
+shown on screen, texted and emailed to them, and emailed to the front desk. One free pass per phone
+number or email every 180 days; codes expire after 10 minutes and 5 wrong tries.
+
+Logic lives in `server/daypass.js` (used by both the Pages Function and the preview Worker).
+
+To send real codes, set these in Cloudflare (encrypted):
+
+| Variable | Purpose |
+|---|---|
+| `DAYPASS` | KV namespace binding (stores pending codes and issued passes) |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM` (or `TWILIO_MESSAGING_SERVICE_SID`) | Text-message codes |
+| `RESEND_API_KEY`, `LEAD_FROM` | Email codes and pass confirmations |
+| `DAYPASS_NOTIFY_TO` | Front-desk inbox for issued passes (default info@hypeathletics.org) |
+
+The preview at hypeathletics.xrev.co runs in demo mode (`DAYPASS_DEMO=true`): codes are shown on screen
+instead of being sent, so the flow can be tried without SMS/email accounts. Never set it in production.
+
 ## Search & AI answers (SEO/GEO)
 
 - Every page: unique title and description, canonical URL, Open Graph image, breadcrumbs
@@ -79,6 +100,8 @@ The production build (no `PUBLIC_PREVIEW`) is indexable and runs the form functi
 - **Member app**: if members use a mobile app, add store links in `portals`
 - **Wayne Senior Couple price**: old site lists $38 for both bank draft and card
 - **Form delivery**: choose an inbox/webhook and set `RESEND_API_KEY` or `LEAD_WEBHOOK_URL`
+- **Day pass texts**: a Twilio account (or similar) and a sending number for verification codes
+- **Day pass rules**: confirm what a day pass includes, the 18+ requirement, and the one-per-180-days limit
 - **Photos** for: women-only gym, steam/sauna, martial arts studio, child care, and real program photos
   to replace the stock images on some sport pages
 - **Testimonials**: real member and parent quotes (with permission) would strengthen the membership page

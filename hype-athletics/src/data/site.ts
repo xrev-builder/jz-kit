@@ -179,7 +179,7 @@ export const gymnastics = {
 
 export const membership = {
   signupUrl: 'https://signup.myiclubonline.com/iclub/signup/home.htm#plans?clubNumber=9554',
-  trial: 'Try 7 days free',
+  dayPass: 'Free day pass',
   locations: [
     {
       id: 'dearborn-heights' as LocationId,
