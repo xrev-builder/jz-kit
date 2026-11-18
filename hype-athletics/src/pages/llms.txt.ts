@@ -14,7 +14,7 @@ export const GET: APIRoute = () => {
   for (const h of hours) L.push(`- ${h.days}: ${h.time}`);
   L.push('', '## Membership (monthly; bank draft price, credit card +$3)', `Free day pass for first-time visitors (verify phone and email): https://hypeathletics.org/day-pass/. Includes ${membership.included.join(', ').toLowerCase()}. Join: https://hypeathletics.org/membership/`);
   for (const m of membership.locations) L.push(`- ${locations[m.id].name} (${m.access.toLowerCase()}): ` + m.tiers.map((t) => `${t.name} $${t.eft}`).join(', '));
-  L.push(`- Insurance fitness programs accepted: ${membership.insurance.join(', ')}.`);
+  L.push(`- Insurance and employer fitness programs accepted: ${membership.insurance.join(', ')}. Coverage finder and eligibility help: https://hypeathletics.org/insurance/`);
   L.push('', '## Programs currently listed', 'Register online via the program page or at the front desk. Full list: https://hypeathletics.org/programs/');
   for (const p of currentPrograms) {
     const bits = [p.ages, p.days, p.time, p.dates ?? (p.ongoing ? 'ongoing' : ''), p.fee && `${p.fee}${p.feeNote ? ' ' + p.feeNote : ''}`].filter(Boolean).join('; ');

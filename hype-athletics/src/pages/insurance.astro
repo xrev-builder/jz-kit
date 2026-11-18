@@ -1,0 +1,329 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { membership, locations } from '../data/site';
+import { insurancePrograms, carriers } from '../data/insurance';
+
+const TBD = 'Details coming soon';
+const medicare = insurancePrograms.filter((p) => p.audience.includes('medicare'));
+const employer = insurancePrograms.filter((p) => p.audience.includes('employer'));
+const seniorPlans = membership.locations.map((m) => ({
+  name: locations[m.id].name,
+  tiers: m.tiers.filter((t) => t.name.startsWith('Senior')),
+}));
+const finderData = JSON.stringify({
+  programs: Object.fromEntries(insurancePrograms.map((p) => [p.id, { name: p.name, who: p.who, how: p.how, url: p.url ?? '' }])),
+  carriers,
+  employer: employer.map((p) => p.id),
+});
+const faq = [
+  ['Is it really free?', 'With many Medicare plans, yes: the fitness benefit covers your membership at no cost to you. Some employer programs charge a small monthly fee. It depends on your plan, so check with your program or ask us to check.'],
+  ['Do I have to be 65 or older?', 'Medicare programs like SilverSneakers, Silver&Fit and Renew Active are for people on Medicare. Employer programs like Active&Fit, Peerfit and Wellhub have no age requirement.'],
+  ['What do I bring to sign up?', 'Your program member ID or confirmation code, and a photo ID. The front desk will set you up.'],
+  ['Can I use it at both HYPE centers?', 'Ask the front desk which centers your program covers. We’re confirming details for each program.'],
+  ['My plan changed this year. Am I still covered?', 'Fitness benefits can change every January. Check your new plan’s benefits, or send us your insurance company and we’ll look it up.'],
+];
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Insurance-covered gym membership at HYPE Athletics',
+    about: insurancePrograms.map((p) => ({ '@type': 'Thing', name: p.name })), provider: { '@id': 'https://hypeathletics.org/#org' } },
+];
+---
+<Base title="SilverSneakers, Renew Active & Insurance Gym Memberships"
+  description="Use your Medicare or employer fitness benefit at HYPE Athletics in Dearborn Heights and Wayne, MI. We accept SilverSneakers, Silver&Fit, Renew Active, Active&Fit, Prime Fitness, Peerfit and Wellhub."
+  ogPhoto="dh-fitness" jsonLd={ld} crumbs={[{ name: 'Membership', href: '/membership/' }, { name: 'Insurance memberships', href: '/insurance/' }]}>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="copy">
+        <p class="eyebrow red">Insurance &amp; employer benefits</p>
+        <h1 class="display h1">Your insurance may cover your membership</h1>
+        <p class="lede">Many Medicare plans and employers include a fitness benefit you can use at HYPE, often at no cost to you.</p>
+        <div class="btn-row">
+          <a href="#finder" class="btn btn-primary btn-lg" data-track="insurance_click" data-placement="hero">Find my program</a>
+          <a href="#check" class="btn btn-secondary btn-lg" data-track="insurance_click" data-placement="hero_check">Have us check</a>
+        </div>
+      </div>
+      <div class="media"><Photo src="dh-fitness" alt="The cardio floor at HYPE Dearborn Heights" eager sizes="(min-width: 960px) 560px, 100vw" widths={[480, 720, 1120]} /></div>
+    </div>
+  </section>
+
+  <!-- Finder -->
+  <section class="section tint" id="finder">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Two quick questions</p><h2 class="display h2">Find your program</h2></div></div>
+      <div class="finder card" data-finder data-json={finderData}>
+        <div class="q" data-q="1">
+          <p class="q-title"><span class="n mono">01</span>How do you get your health insurance?</p>
+          <div class="opts">
+            <button type="button" data-a="medicare"><Icon name="ShieldPlus" size={20} /><span><b>Medicare</b><small>Medicare Advantage or a Medicare Supplement plan</small></span></button>
+            <button type="button" data-a="employer"><Icon name="Briefcase" size={20} /><span><b>Through my job</b><small>Employer or union health plan</small></span></button>
+            <button type="button" data-a="unsure"><Icon name="CircleHelp" size={20} /><span><b>Not sure</b><small>We’ll figure it out with you</small></span></button>
+          </div>
+        </div>
+        <div class="q" data-q="2" hidden>
+          <p class="q-title"><span class="n mono">02</span>Who is your insurance company?</p>
+          <div class="opts carriers">
+            {carriers.map((c) => <button type="button" data-carrier={c.id}><span><b>{c.name}</b></span></button>)}
+          </div>
+        </div>
+        <div class="result" data-result hidden aria-live="polite"></div>
+        <button type="button" class="restart" data-restart hidden><Icon name="RotateCcw" size={14} />Start over</button>
+      </div>
+      <p class="small muted disclaimer">Plans and benefits change every year. This is a starting point, not a guarantee of coverage.</p>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section" id="programs">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Accepted at HYPE</p><h2 class="display h2">8 programs we take</h2></div></div>
+      {[['Medicare programs', medicare], ['Employer programs', employer]].map(([label, list]) => (
+        <div class="group">
+          <h3 class="h4 group-title">{label as string}</h3>
+          <div class="grid grid-2 progs">
+            {(list as typeof insurancePrograms).map((p) => (
+              <article class="prog card" id={p.id}>
+                <div class="p-head">
+                  <h4 class="display p-name">{p.name}</h4>
+                  <span class="chip">{p.audience.includes('medicare') ? 'Medicare' : 'Employer'}</span>
+                </div>
+                <p class="small muted">{p.who}</p>
+                {p.hype.centers || p.hype.covers || p.hype.cost ? (
+                  <dl class="at">
+                    <div><dt>Centers</dt><dd class:list={[!p.hype.centers && 'tbd']}>{p.hype.centers ?? TBD}</dd></div>
+                    <div><dt>Covers</dt><dd class:list={[!p.hype.covers && 'tbd']}>{p.hype.covers ?? TBD}</dd></div>
+                    <div><dt>Your cost</dt><dd class:list={[!p.hype.cost && 'tbd']}>{p.hype.cost ?? TBD}</dd></div>
+                  </dl>
+                ) : (
+                  <p class="tbd-line small">Centers, coverage and cost at HYPE: details coming soon</p>
+                )}
+                <p class="small how"><Icon name="Info" size={14} />{p.how}</p>
+                {p.url && <a href={p.url} class="link-arrow" rel="noopener" target="_blank" data-track="insurance_eligibility_click" data-program={p.id}>Check eligibility<Icon name="ArrowUpRight" size={14} /></a>}
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section tint">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">How it works</p><h2 class="display h2">Three steps to the gym</h2></div></div>
+      <ol class="steps">
+        <li><span class="n mono">01</span><h3 class="h4">Confirm your benefit</h3><p class="small muted">Use the finder above or your program’s website to confirm you’re eligible.</p></li>
+        <li><span class="n mono">02</span><h3 class="h4">Get your member ID</h3><p class="small muted">Your program gives you a member ID or confirmation code. Some apps let you choose HYPE as your gym.</p></li>
+        <li><span class="n mono">03</span><h3 class="h4">Bring it to the front desk</h3><p class="small muted">Show your member ID and a photo ID at Dearborn Heights or Wayne and we’ll set you up.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Not covered -->
+  <section class="section">
+    <div class="wrap fallback">
+      <div class="stack-16">
+        <p class="eyebrow">Not covered?</p>
+        <h2 class="display h2">Senior plans for members 59+</h2>
+        <p class="muted">If your plan doesn’t include a fitness benefit, our senior memberships include the gym and free group fitness classes.</p>
+        <div class="btn-row"><a href="/membership/#plans" class="btn btn-primary">See all plans</a><a href="/day-pass/" class="btn btn-secondary" data-track="daypass_click" data-placement="insurance">Try a free day pass</a></div>
+      </div>
+      <div class="senior">
+        {seniorPlans.map((l) => (
+          <div class="card s-card">
+            <p class="eyebrow plain">{l.name}</p>
+            <ul>{l.tiers.map((t) => <li><span>{t.name}</span><b class="mono">${t.eft}<small>/mo</small></b></li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Staff check -->
+  <section class="section tint" id="check">
+    <div class="wrap check-grid">
+      <div class="stack-16">
+        <p class="eyebrow">Let us do the legwork</p>
+        <h2 class="display h2">We’ll check your coverage</h2>
+        <p class="muted">Tell us your insurance company or program and we’ll call you back with what your plan covers at HYPE.</p>
+        <p class="small muted">Prefer to talk now? Call <a href="tel:+13134360043">(313) 436-0043</a>.</p>
+      </div>
+      <div class="card form-card"><LeadForm kind="insurance" id="ins-check" /></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="wrap faq-wrap">
+      <h2 class="display h2">Questions</h2>
+      <div class="qs">{faq.map(([q, a]) => <details><summary><span class="h4">{q}</span><span class="plus" aria-hidden="true"></span></summary><p class="muted">{a}</p></details>)}</div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  type P = { name: string; who: string; how: string; url: string };
+  const root = document.querySelector<HTMLElement>('[data-finder]')!;
+  const data = JSON.parse(root.dataset.json!) as { programs: Record<string, P>; carriers: { id: string; name: string; likely: string[]; note?: string }[]; employer: string[] };
+  const q1 = root.querySelector<HTMLElement>('[data-q="1"]')!;
+  const q2 = root.querySelector<HTMLElement>('[data-q="2"]')!;
+  const res = root.querySelector<HTMLElement>('[data-result]')!;
+  const restart = root.querySelector<HTMLButtonElement>('[data-restart]')!;
+  const track = (n: string, p: object) => (window as any).hypeTrack?.(n, { ...p, page: location.pathname });
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  const card = (id: string) => {
+    const p = data.programs[id];
+    return `<div class="r-prog"><p class="r-name">${esc(p.name)}</p><p class="r-who">${esc(p.who)}</p><p class="r-how">${esc(p.how)}</p>
+      <div class="r-actions">${p.url ? `<a class="btn btn-primary btn-sm" href="${p.url}" target="_blank" rel="noopener" data-track="insurance_eligibility_click" data-program="${id}">Check eligibility ↗</a>` : ''}
+      <a class="btn btn-secondary btn-sm" href="#programs" data-jump="${id}">Details at HYPE</a></div></div>`;
+  };
+  const show = (html: string) => { res.innerHTML = html; res.hidden = false; restart.hidden = false; res.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
+  const steps = `<ol class="r-steps"><li>Confirm your benefit on the program’s site or with your plan.</li><li>Get your member ID or confirmation code.</li><li>Bring it with a photo ID to the HYPE front desk.</li></ol>`;
+  const helpCta = `<p class="r-help">Rather we check for you? <a href="#check">Send us your plan</a> or call <a href="tel:+13134360043">(313) 436-0043</a>.</p>`;
+
+  q1.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-a]'); if (!b) return;
+    q1.querySelectorAll('[data-a]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const a = b.dataset.a!;
+    track('insurance_finder', { step: 1, answer: a });
+    if (a === 'medicare') { q2.hidden = false; res.hidden = true; q2.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); return; }
+    q2.hidden = true;
+    if (a === 'employer') {
+      show(`<p class="r-lead">Look for one of these in your benefits portal or ask HR:</p><div class="r-grid">${data.employer.map(card).join('')}</div>${steps}${helpCta}`);
+    } else {
+      show(`<p class="r-lead">No problem. Send us your insurance company and we’ll check what you’re eligible for, or call and we’ll look it up together.</p><div class="r-actions"><a class="btn btn-primary" href="#check">Have us check</a><a class="btn btn-secondary" href="tel:+13134360043">Call (313) 436-0043</a></div>`);
+    }
+  });
+  q2.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-carrier]'); if (!b) return;
+    q2.querySelectorAll('[data-carrier]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const c = data.carriers.find((x) => x.id === b.dataset.carrier)!;
+    track('insurance_finder', { step: 2, carrier: c.id });
+    const lead = c.likely.length === 1 ? `Your plan most likely includes <b>${esc(data.programs[c.likely[0]].name)}</b>.` : 'Your plan may include one of these:';
+    show(`<p class="r-lead">${lead}</p>${c.note ? `<p class="r-note">${esc(c.note)}</p>` : ''}<div class="r-grid">${c.likely.map(card).join('')}</div>${steps}${helpCta}`);
+  });
+  restart.addEventListener('click', () => {
+    q2.hidden = true; res.hidden = true; restart.hidden = true;
+    root.querySelectorAll('[aria-pressed]').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    q1.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+  // Prefill the staff-check form with what they picked
+  root.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href="#check"]'); if (!a) return;
+    const carrier = root.querySelector<HTMLElement>('[data-carrier][aria-pressed="true"] b')?.textContent;
+    const input = document.querySelector<HTMLInputElement>('#ins-check [data-insurer]');
+    if (carrier && input && !input.value) input.value = carrier;
+  });
+  // "Details at HYPE" highlights the matching card
+  root.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('[data-jump]'); if (!a) return;
+    e.preventDefault();
+    const el = document.getElementById(a.dataset.jump!);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el?.classList.add('flash'); setTimeout(() => el?.classList.remove('flash'), 1600);
+  });
+</script>
+
+<style>
+  .hero { padding-block: 48px 56px; }
+  @media (min-width: 960px) { .hero { padding-block: 88px; } }
+  .hero-grid { display: grid; gap: 36px; align-items: center; }
+  @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; } }
+  .copy > * + * { margin-top: 18px; }
+  .copy .h1 { font-size: clamp(var(--t-40), 6vw, var(--t-80)); margin-top: 14px; }
+  .copy .btn-row { margin-top: 28px; }
+  .media { aspect-ratio: 5 / 4; border-radius: var(--r-18); overflow: hidden; }
+  @media (max-width: 599px) { .media { aspect-ratio: 16 / 10; } }
+
+  /* Finder */
+  .finder { padding: 24px; display: grid; gap: 28px; }
+  @media (min-width: 640px) { .finder { padding: 36px; } }
+  .q-title { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: var(--t-18); margin-bottom: 16px; }
+  .n { font-size: var(--t-12); color: var(--accent-text); letter-spacing: .08em; }
+  .opts { display: grid; gap: 10px; }
+  @media (min-width: 720px) { .opts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .opts button {
+    display: flex; align-items: flex-start; gap: 14px; padding: 18px; text-align: left; cursor: pointer; min-height: 64px;
+    border-radius: var(--r-10); border: 1px solid var(--line-strong); background: var(--bg-2); color: var(--fg);
+    transition: border-color var(--d-micro) var(--ease), background-color var(--d-micro) var(--ease);
+  }
+  .opts button:hover { border-color: var(--fg-3); }
+  .opts button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .opts button > :global(.icon) { color: var(--accent-text); margin-top: 2px; }
+  .opts span { display: grid; gap: 4px; }
+  .opts b { font-weight: 600; }
+  .opts small { color: var(--fg-3); font-size: var(--t-13); }
+  .carriers { grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .carriers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .carriers button { min-height: 56px; align-items: center; }
+  .result { border-top: 1px solid var(--line); padding-top: 24px; display: grid; gap: 18px; }
+  .result :global(.r-lead) { font-size: var(--t-18); }
+  .result :global(.r-lead b) { color: var(--accent-text); }
+  .result :global(.r-note) { color: var(--fg-2); font-size: var(--t-14); }
+  .result :global(.r-grid) { display: grid; gap: 12px; }
+  @media (min-width: 720px) { .result :global(.r-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .result :global(.r-prog) { padding: 20px; border-radius: var(--r-10); background: var(--bg-2); border: 1px solid var(--line); display: grid; gap: 8px; }
+  .result :global(.r-name) { font-family: var(--font-display); font-style: italic; font-weight: 600; text-transform: uppercase; font-size: var(--t-25); line-height: 1; }
+  .result :global(.r-who), .result :global(.r-how) { font-size: var(--t-14); color: var(--fg-2); }
+  .result :global(.r-actions) { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .result :global(.r-steps) { padding-left: 20px; color: var(--fg-2); display: grid; gap: 6px; font-size: var(--t-14); }
+  .result :global(.r-help) { font-size: var(--t-14); color: var(--fg-3); }
+  .restart { justify-self: start; display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; color: var(--fg-3); font-size: var(--t-13); cursor: pointer; padding: 8px 0; text-decoration: underline; text-underline-offset: 3px; }
+  .restart:hover { color: var(--fg); }
+  .disclaimer { margin-top: 14px; }
+
+  /* Programs */
+  .group + .group { margin-top: 48px; }
+  .group-title { margin-bottom: 16px; color: var(--fg-2); }
+  .prog { padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: box-shadow var(--d-enter) var(--ease); }
+  .prog.flash { box-shadow: 0 0 0 2px var(--accent); }
+  .p-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .p-name { font-size: var(--t-32); line-height: 1; }
+  .at { margin: 4px 0 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-8); overflow: hidden; }
+  .at div { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 10px 14px; background: var(--bg-2); }
+  .at dt { font-family: var(--font-mono); font-size: var(--t-11); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); padding-top: 2px; }
+  .at dd { margin: 0; font-size: var(--t-14); }
+  .at dd.tbd { color: var(--fg-3); font-style: italic; }
+  .tbd-line { color: var(--fg-3); font-style: italic; padding: 10px 14px; border-radius: var(--r-8); border: 1px dashed var(--line-strong); }
+  .how { display: flex; gap: 8px; color: var(--fg-2); }
+  .how :global(.icon) { margin-top: 4px; color: var(--fg-3); }
+  .prog .link-arrow { margin-top: auto; }
+
+  /* Steps */
+  .steps { list-style: none; display: grid; gap: 16px; }
+  @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
+  .steps li { padding: 24px; border-radius: var(--r-12); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 8px; align-content: start; }
+  .steps .n { font-size: var(--t-13); }
+
+  /* Fallback */
+  .fallback { display: grid; gap: 36px; align-items: center; }
+  @media (min-width: 960px) { .fallback { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; } }
+  .senior { display: grid; gap: 12px; }
+  @media (min-width: 560px) { .senior { grid-template-columns: 1fr 1fr; } }
+  .s-card { padding: 22px; }
+  .s-card ul { list-style: none; margin-top: 12px; display: grid; gap: 10px; }
+  .s-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .s-card li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .s-card b { font-size: var(--t-21); font-weight: 500; }
+  .s-card small { font-size: var(--t-12); color: var(--fg-3); }
+
+  /* Check + FAQ */
+  .check-grid { display: grid; gap: 36px; }
+  @media (min-width: 960px) { .check-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 72px; align-items: start; } }
+  .form-card { padding: 24px 20px; }
+  @media (min-width: 640px) { .form-card { padding: 36px; } }
+  .faq-wrap { display: grid; gap: 28px; }
+  @media (min-width: 960px) { .faq-wrap { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; } }
+  .qs { border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+  .plus { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+  .plus::before, .plus::after { content: ''; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: var(--fg-3); transition: transform var(--d-std) var(--ease-out); }
+  .plus::after { transform: rotate(90deg); }
+  details[open] .plus::after { transform: rotate(0); }
+  details p { padding-bottom: 20px; max-width: 62ch; }
+</style>

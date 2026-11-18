@@ -14,6 +14,7 @@ const redirects = {
   '/summer-discovery-at-wayne': '/summer-discovery/',
   '/basketball-playoff-brackets': '/basketball/',
   '/amenities': '/facilities/',
+  '/silver-fitness-training': '/insurance/',
 };
 
 export default defineConfig({

@@ -205,7 +205,7 @@ export const membership = {
     },
   ],
   included: ['Free group fitness classes', 'Free child care', 'Free fitness assessment with a certified trainer', 'Free after-school Homework Club for kids on your membership'],
-  insurance: ['SilverSneakers', 'Silver & Fit', 'Active & Fit', 'Active & Fit Enterprise', 'Renew Active', 'Prime', 'PeerFit', 'Gympass'],
+  insurance: ['SilverSneakers', 'Silver&Fit', 'Renew Active', 'Active&Fit', 'Active&Fit Enterprise', 'Prime Fitness', 'Peerfit', 'Wellhub (Gympass)'],
   guestPass: '$10 per guest pass. Members get three guest passes a year; member and guest must both be 18+ with valid ID.',
 };
 

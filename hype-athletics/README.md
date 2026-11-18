@@ -100,6 +100,9 @@ instead of being sent, so the flow can be tried without SMS/email accounts. Neve
 - **Member app**: if members use a mobile app, add store links in `portals`
 - **Wayne Senior Couple price**: old site lists $38 for both bank draft and card
 - **Form delivery**: choose an inbox/webhook and set `RESEND_API_KEY` or `LEAD_WEBHOOK_URL`
+- **Insurance page (`/insurance/`)**: for each program in `src/data/insurance.ts`, fill `hype.centers`, `hype.covers`
+  and `hype.cost` (cards show "details coming soon" until then); confirm the carrier shortcuts in `carriers`;
+  confirm activation steps at the front desk; insurance check requests go to `LEAD_TO_INSURANCE` (default info@)
 - **Day pass texts**: a Twilio account (or similar) and a sending number for verification codes
 - **Day pass rules**: confirm what a day pass includes, the 18+ requirement, and the one-per-180-days limit
 - **Photos** for: women-only gym, steam/sauna, martial arts studio, child care, and real program photos

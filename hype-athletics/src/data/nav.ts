@@ -4,7 +4,21 @@ export type NavGroup = { title: string; links: NavLink[] };
 export type NavItem = { label: string; href: string; groups?: NavGroup[] };
 
 export const nav: NavItem[] = [
-  { label: 'Membership', href: '/membership/' },
+  {
+    label: 'Membership',
+    href: '/membership/',
+    groups: [
+      {
+        title: 'Join HYPE',
+        links: [
+          { label: 'Plans & pricing', href: '/membership/', desc: 'Individual, couple, family, senior' },
+          { label: 'Free day pass', href: '/day-pass/', desc: 'Try us before you join' },
+          { label: 'Use your insurance', href: '/insurance/', desc: 'SilverSneakers, Renew Active & more' },
+          { label: 'Facility tour', href: '/facilities/' },
+        ],
+      },
+    ],
+  },
   {
     label: 'Programs',
     href: '/programs/',
