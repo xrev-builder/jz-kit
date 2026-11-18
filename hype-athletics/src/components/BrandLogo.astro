@@ -1,0 +1,36 @@
+---
+// Shows an insurance / fitness-program logo from src/assets/insurance/<id>.(svg|png|webp|jpg).
+// Until the official file is added, a neutral name plate holds the same space so the layout never shifts.
+// Use official partner-kit files only; don't recreate brand marks.
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+interface Props { id: string; name: string; size?: 'md' | 'sm'; onlyIfFile?: boolean }
+const { id, name, size = 'md', onlyIfFile = false } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/insurance/*.{svg,png,webp,jpg,jpeg}', { eager: true });
+const entry = Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.[a-z]+$/, '') === id);
+let src: string | undefined;
+if (entry) {
+  const meta = entry[1].default;
+  src = meta.format === 'svg' ? meta.src : (await getImage({ src: meta, height: size === 'md' ? 96 : 64, format: 'webp' })).src;
+}
+---
+{(src || !onlyIfFile) && (
+  <span class:list={['plate', size, { has: src }]} aria-hidden={src ? undefined : 'true'}>
+    {src ? <img src={src} alt={`${name.replace(/­/g, '')} logo`} loading="lazy" decoding="async" /> : <span class="word">{name}</span>}
+  </span>
+)}
+<style>
+  .plate {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: #fff; color: #1a1a1a; border-radius: var(--r-8);
+    padding: 6px 10px; overflow: hidden;
+  }
+  .md { height: 44px; width: 100%; }
+  .sm { height: 36px; width: 104px; padding: 4px 8px; }
+  .plate img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; }
+  .word { font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; text-align: center; hyphens: manual; overflow-wrap: break-word; max-width: 100%; }
+  .md .word { font-size: var(--t-14); }
+  .sm .word { font-size: var(--t-11); }
+  @media (max-width: 639px) { .md .word { font-size: var(--t-13); } }
+</style>
